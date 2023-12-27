@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/screens/splash/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.delayed(const Duration(seconds: 3));
-  FlutterNativeSplash.remove();
+  await Future.delayed(const Duration(seconds: 2));
   runApp(const MyApp());
 }
 
@@ -22,7 +21,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: SplashScreen.routeName,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/constants.dart';
+import 'package:unibean_app/presentation/constants.dart';
 import 'package:unibean_app/presentation/screens/welcome/welcome_screen.dart';
 
 class Body extends StatefulWidget {
@@ -54,202 +54,198 @@ class _BodyState extends State<Body> {
       itemCount: splashData.length,
       itemBuilder: (context, index) {
         if (pageIndex == 2) {
-          return SafeArea(
-              child: Container(
+          return Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(
-                  splashData[index]['image']!,
-                ),
-              ),
+          color: Colors.white,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(
+              splashData[index]['image']!,
+            ),
+          ),
             ),
             child: Column(
-              children: [
-                SizedBox(
-                  height: 510 * hem,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(splashData.length,
-                      (index) => buildDot(fem, index: index)),
-                ),
-                SizedBox(
-                  height: 25 * hem,
-                ),
-                Text(
-                  splashData[index]['title']!,
-                  style: GoogleFonts.nunito(
-                      textStyle: TextStyle(
-                          fontSize: 20 * ffem,
-                          fontWeight: FontWeight.w900,
-                          height: 1.3625 * ffem / fem,
-                          color: Colors.black)),
-                ),
-                SizedBox(
-                  height: 20 * hem,
-                ),
-                SizedBox(
-                  height: 60 * hem,
-                  child: Text(
-                    splashData[index]['content']!,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 15 * ffem,
-                            fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
-                            color: kLowTextColor)),
-                  ),
-                ),
-                SizedBox(
-                  height: 20 * hem,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const WelcomeScreen(),
-                      ));
-                  },
-                  child: Container(
-                    width: 270 * fem,
-                    height: 45 * hem,
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        borderRadius: BorderRadius.circular(23 * fem)),
-                    child: Center(
-                      child: Text(
-                        splashData[index]['button']!,
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                fontSize: 17 * ffem,
-                                fontWeight: FontWeight.w600,
-                                height: 1.3625 * ffem / fem,
-                                color: Colors.white)),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          children: [
+            SizedBox(
+              height: 510 * hem,
             ),
-          ));
-        }
-        return SafeArea(
-            child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                splashData[index]['image']!,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(splashData.length,
+                  (index) => buildDot(fem, index: index)),
             ),
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 510 * hem,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                    splashData.length, (index) => buildDot(fem, index: index)),
-              ),
-              SizedBox(
-                height: 25 * hem,
-              ),
-              Text(
-                splashData[index]['title']!,
+            SizedBox(
+              height: 25 * hem,
+            ),
+            Text(
+              splashData[index]['title']!,
+              style: GoogleFonts.nunito(
+                  textStyle: TextStyle(
+                      fontSize: 20 * ffem,
+                      fontWeight: FontWeight.w900,
+                      height: 1.3625 * ffem / fem,
+                      color: Colors.black)),
+            ),
+            SizedBox(
+              height: 20 * hem,
+            ),
+            SizedBox(
+              height: 60 * hem,
+              child: Text(
+                splashData[index]['content']!,
+                textAlign: TextAlign.center,
                 style: GoogleFonts.nunito(
                     textStyle: TextStyle(
-                        fontSize: 20 * ffem,
-                        fontWeight: FontWeight.w900,
+                        fontSize: 15 * ffem,
+                        fontWeight: FontWeight.w600,
                         height: 1.3625 * ffem / fem,
-                        color: Colors.black)),
+                        color: kLowTextColor)),
               ),
-              SizedBox(
-                height: 20 * hem,
-              ),
-              SizedBox(
-                height: 60 * hem,
-                child: Text(
-                  splashData[index]['content']!,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                      textStyle: TextStyle(
-                          fontSize: 15 * ffem,
-                          fontWeight: FontWeight.w600,
-                          height: 1.3625 * ffem / fem,
-                          color: kLowTextColor)),
-                ),
-              ),
-              SizedBox(
-                height: 20 * hem,
-              ),
-              TextButton(
-                onPressed: () {
-                  if (pageIndex == 0) {
-                    setState(() {
-                      pageIndex += 1;
-                    });
-                    pageController.animateToPage(pageIndex,
-                        duration: kAnimationDuration, curve: Curves.linear);
-                  } else if (pageIndex == 1) {
-                    setState(() {
-                      pageIndex += 1;
-                    });
-                    pageController.animateToPage(pageIndex,
-                        duration: kAnimationDuration, curve: Curves.linear);
-                  } 
-                },
-                child: Container(
-                  width: 270 * fem,
-                  height: 45 * hem,
-                  decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(23 * fem)),
-                  child: Center(
-                    child: Text(
-                      splashData[index]['button']!,
-                      style: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              fontSize: 17 * ffem,
-                              fontWeight: FontWeight.w600,
-                              height: 1.3625 * ffem / fem,
-                              color: Colors.white)),
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const WelcomeScreen(),
-                      ));
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20 * hem),
+            ),
+            SizedBox(
+              height: 20 * hem,
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  WelcomeScreen.routeName,
+                 );
+              },
+              child: Container(
+                width: 270 * fem,
+                height: 45 * hem,
+                decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(23 * fem)),
+                child: Center(
                   child: Text(
-                    'Bỏ qua',
+                    splashData[index]['button']!,
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
-                            fontSize: 13 * ffem,
-                            fontWeight: FontWeight.w900,
+                            fontSize: 17 * ffem,
+                            fontWeight: FontWeight.w600,
                             height: 1.3625 * ffem / fem,
-                            color: kPrimaryColor)),
+                            color: Colors.white)),
                   ),
                 ),
-              )
-            ],
+              ),
+            ),
+          ],
+            ),
+          );
+        }
+        return Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+        color: Colors.white,
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage(
+            splashData[index]['image']!,
           ),
-        ));
+        ),
+          ),
+          child: Column(
+        children: [
+          SizedBox(
+            height: 510 * hem,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+                splashData.length, (index) => buildDot(fem, index: index)),
+          ),
+          SizedBox(
+            height: 25 * hem,
+          ),
+          Text(
+            splashData[index]['title']!,
+            style: GoogleFonts.nunito(
+                textStyle: TextStyle(
+                    fontSize: 20 * ffem,
+                    fontWeight: FontWeight.w900,
+                    height: 1.3625 * ffem / fem,
+                    color: Colors.black)),
+          ),
+          SizedBox(
+            height: 20 * hem,
+          ),
+          SizedBox(
+            height: 60 * hem,
+            child: Text(
+              splashData[index]['content']!,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(
+                  textStyle: TextStyle(
+                      fontSize: 15 * ffem,
+                      fontWeight: FontWeight.w600,
+                      height: 1.3625 * ffem / fem,
+                      color: kLowTextColor)),
+            ),
+          ),
+          SizedBox(
+            height: 20 * hem,
+          ),
+          TextButton(
+            onPressed: () {
+              if (pageIndex == 0) {
+                setState(() {
+                  pageIndex += 1;
+                });
+                pageController.animateToPage(pageIndex,
+                    duration: kAnimationDuration, curve: Curves.linear);
+              } else if (pageIndex == 1) {
+                setState(() {
+                  pageIndex += 1;
+                });
+                pageController.animateToPage(pageIndex,
+                    duration: kAnimationDuration, curve: Curves.linear);
+              } 
+            },
+            child: Container(
+              width: 270 * fem,
+              height: 45 * hem,
+              decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(23 * fem)),
+              child: Center(
+                child: Text(
+                  splashData[index]['button']!,
+                  style: GoogleFonts.nunito(
+                      textStyle: TextStyle(
+                          fontSize: 17 * ffem,
+                          fontWeight: FontWeight.w600,
+                          height: 1.3625 * ffem / fem,
+                          color: Colors.white)),
+                ),
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                  context,
+                  WelcomeScreen.routeName
+                 );
+            },
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20 * hem),
+              child: Text(
+                'Bỏ qua',
+                style: GoogleFonts.nunito(
+                    textStyle: TextStyle(
+                        fontSize: 13 * ffem,
+                        fontWeight: FontWeight.w900,
+                        height: 1.3625 * ffem / fem,
+                        color: kPrimaryColor)),
+              ),
+            ),
+          )
+        ],
+          ),
+        );
       },
     );
   }
