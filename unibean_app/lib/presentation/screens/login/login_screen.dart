@@ -15,14 +15,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        resizeToAvoidBottomInset: true,
+        extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        elevation: 0,
+        body: const Body(),
       ),
-      extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
-      body: const Body(),
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/screens/signup/screens/signup_7_screen.dart';
 
 class Body6 extends StatelessWidget {
   const Body6({super.key});
@@ -19,15 +22,15 @@ class Body6 extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/bg_signup_6.png'),
+          image: AssetImage('assets/images/bg_signup_5.png'),
         )),
         child: Column(
           children: [
             SizedBox(
-              height: 500 * hem,
+              height: 400 * hem,
             ),
             Text(
-              'Bạn đã sẵn sảng bắt đầu!',
+              'Nhập mã xác nhận',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -40,7 +43,7 @@ class Body6 extends StatelessWidget {
               height: 10 * hem,
             ),
             Text(
-              'Cảm ơn bạn đã đăng ký.\n Giờ đây, bạn có thể tham gia vào các sự kiện\n yêu thích, các kênh thông tin để tích lũy\n những ưu đãi hấp dẫn.',
+              'Nhập mã số xác nhận đã được gửi đến\n số điện thoại 0xxx xxx xxx',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -50,11 +53,39 @@ class Body6 extends StatelessWidget {
                       color: kLowTextColor)),
             ),
             SizedBox(
-              height: 60 * hem,
+              height: 30 * hem,
             ),
-       
+            Container(
+              width: 318 * fem,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15 * fem),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x0c000000),
+                      offset: Offset(0 * fem, 4 * fem),
+                      blurRadius: 2.5 * fem,
+                    )
+                  ]),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 25 * hem,
+                  ),
+                  OtpForm(),
+                  SizedBox(
+                    height: 25 * hem,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30 * hem,
+            ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, SignUp7Screen.routeName);
+              },
               child: Container(
                 width: 300 * fem,
                 height: 45 * hem,
@@ -63,7 +94,7 @@ class Body6 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(23 * fem)),
                 child: Center(
                   child: Text(
-                    'Bắt đầu',
+                    'Tiếp tục',
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
                             fontSize: 17 * ffem,
@@ -74,8 +105,70 @@ class Body6 extends StatelessWidget {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20 * hem),
+                  child: Text(
+                    'Bạn không nhận được mã xác nhận?',
+                    style: GoogleFonts.nunito(
+                        textStyle: TextStyle(
+                            fontSize: 13 * ffem,
+                            fontWeight: FontWeight.bold,
+                            height: 1.3625 * ffem / fem,
+                            color: kLowTextColor)),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    // Navigator.pushNamed(context, LoginScreen.routeName);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
+                    child: Text(
+                      'Gửi lại mã',
+                      style: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                              fontSize: 13 * ffem,
+                              fontWeight: FontWeight.w900,
+                              height: 1.3625 * ffem / fem,
+                              color: kPrimaryColor)),
+                    ),
+                  ),
+                )
+              ],
+            )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class OtpForm extends StatefulWidget {
+  const OtpForm({super.key});
+
+  @override
+  State<OtpForm> createState() => _OtpFormState();
+}
+
+class _OtpFormState extends State<OtpForm> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100.0,
+      child: OTPTextField(
+        length: 4,
+        width: MediaQuery.of(context).size.width,
+        fieldWidth: 50,
+        style: GoogleFonts.nunito(
+            textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 17,
+                fontWeight: FontWeight.w700)),
+        textFieldAlignment: MainAxisAlignment.spaceAround,
+        fieldStyle: FieldStyle.underline,
       ),
     );
   }

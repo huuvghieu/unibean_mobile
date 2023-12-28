@@ -3,7 +3,7 @@ import 'package:unibean_app/presentation/screens/signup/components/body.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const String routeName = '/signup_1';
+  static const String routeName = '/signup';
   static Route route() {
     return MaterialPageRoute(
         builder: (_) => const SignUpScreen(),
@@ -22,9 +22,7 @@ class SignUpScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBarSignUp(
-          hem: hem, ffem: ffem, fem: fem,
-          text: 'Bước 1/5'),
+        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: 'Bước 1/7'),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
         body: const Body(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/constants.dart';
 import 'package:unibean_app/presentation/screens/signup/screens/signup_5_screen.dart';
+import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
 
 class Body4 extends StatelessWidget {
   const Body4({super.key});
@@ -20,15 +21,26 @@ class Body4 extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/bg_signup_4.png'),
+          image: AssetImage('assets/images/bg_signup_1.png'),
         )),
         child: Column(
           children: [
             SizedBox(
-              height: 400 * hem,
+              height: 130 * hem,
+            ),
+            Container(
+              width: 190 * fem,
+              height: 210 * fem,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/signup_step4.png'))),
+            ),
+            SizedBox(
+              height: 10 * hem,
             ),
             Text(
-              'Số điện thoại của bạn',
+              'Các thông tin ở trường của bạn',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -38,10 +50,10 @@ class Body4 extends StatelessWidget {
                       color: Colors.black)),
             ),
             SizedBox(
-              height: 10 * hem,
+              height: 20 * hem,
             ),
             Text(
-              'Nhập số điện thoại của bạn,\n chúng tôi sẽ gửi đến bạn mã OTP để xác nhận',
+              'Để giúp việc xác thực thành công,\n mong bạn hãy cung cấp thông tin chính xác.',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -51,7 +63,7 @@ class Body4 extends StatelessWidget {
                       color: kLowTextColor)),
             ),
             SizedBox(
-              height: 30 * hem,
+              height: 40 * hem,
             ),
             Container(
               width: 318 * fem,
@@ -68,54 +80,27 @@ class Body4 extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 25 * hem,
+                    height: 40 * hem,
                   ),
-                  Container(
-                    height: 42 * hem,
-                    width: 272 * fem,
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      style: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17 * ffem,
-                              fontWeight: FontWeight.w700)),
-                      decoration: InputDecoration(
-                        labelText: 'SỐ ĐIỆN THOẠI',
-                        hintText: '0xxx xxx xxx',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelStyle: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15 * ffem,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        hintStyle: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17 * ffem,
-                                fontWeight: FontWeight.w700)),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 26 * fem, vertical: 10 * hem),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(28 * fem),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color:
-                                    const Color.fromARGB(255, 220, 220, 220)),
-                            gapPadding: 10),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(28 * fem),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color:
-                                    const Color.fromARGB(255, 220, 220, 220)),
-                            gapPadding: 10),
-                      ),
-                    ),
+                  TextFormFieldDefault(
+                    hem: hem,
+                    fem: fem,
+                    ffem: ffem,
+                    labelText: 'MÃ SỐ SINH VIÊN *',
+                    hintText: 'UNIBEAN123123',
                   ),
                   SizedBox(
                     height: 25 * hem,
+                  ),
+                  TextFormFieldDefault(
+                    hem: hem,
+                    fem: fem,
+                    ffem: ffem,
+                    labelText: 'CHUYÊN NGÀNH',
+                    hintText: 'Công nghệ thông tin',
+                  ),
+                  SizedBox(
+                    height: 40 * hem,
                   ),
                 ],
               ),
@@ -125,7 +110,8 @@ class Body4 extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, SignUp5Screen.routeName);
+                Navigator.pushReplacementNamed(context, SignUp5Screen.routeName,
+                    arguments: 7);
               },
               child: Container(
                 width: 300 * fem,

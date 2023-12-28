@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/screens/signup/components/body_5.dart';
+import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
-class SignUp5Screen extends StatelessWidget {
+class SignUp5Screen extends StatefulWidget {
   static const String routeName = '/signup_5';
   static Route route() {
     return MaterialPageRoute(
@@ -11,6 +12,23 @@ class SignUp5Screen extends StatelessWidget {
   }
 
   const SignUp5Screen({super.key});
+
+  @override
+  State<SignUp5Screen> createState() => _SignUp5ScreenState();
+}
+
+class _SignUp5ScreenState extends State<SignUp5Screen> {
+  late String title;
+
+  @override
+  void initState() {
+    if (SignUp1Screen.defaultStep == 7) {
+      title = 'Bước 6/7';
+    } else {
+      title = 'Bước 5/6';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +40,10 @@ class SignUp5Screen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBarSignUp(
-          hem: hem, ffem: ffem, fem: fem,
-          text: 'Bước 5/5'),
+        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        body: const Body5(),
+        body: Body5(),
       ),
     );
   }

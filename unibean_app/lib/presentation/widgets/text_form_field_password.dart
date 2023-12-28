@@ -2,56 +2,84 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/constants.dart';
 
-class TextFormFieldDefault extends StatelessWidget {
-  const TextFormFieldDefault(
+class TextFormFieldPassword extends StatefulWidget {
+  const TextFormFieldPassword(
       {super.key,
       required this.hem,
       required this.fem,
       required this.ffem,
       required this.labelText,
-      required this.hintText});
+      required this.hintText,
+      required this.isPassword});
 
   final double hem;
   final double fem;
   final double ffem;
   final String labelText;
   final String hintText;
+  final bool isPassword;
+
+  @override
+  State<TextFormFieldPassword> createState() => _TextFormFieldPasswordState();
+}
+
+class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
+  bool _isObscure = true;
+
+  @override
+  void initState() {
+    _isObscure = widget.isPassword;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42 * hem,
-      width: 272 * fem,
+      height: 42 * widget.hem,
+      width: 272 * widget.fem,
       child: TextFormField(
+        obscureText: _isObscure,
         style: GoogleFonts.nunito(
             textStyle: TextStyle(
                 color: Colors.black,
-                fontSize: 17 * ffem,
+                fontSize: 17 * widget.ffem,
                 fontWeight: FontWeight.w700)),
         decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                _isObscure = !_isObscure;
+              });
+            },
+            icon: Icon(widget.isPassword
+                ? _isObscure
+                    ? Icons.visibility
+                    : Icons.visibility_off
+                : null),
+          ),
+          labelText: widget.labelText,
+          hintText: widget.hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelStyle: GoogleFonts.nunito(
             textStyle: TextStyle(
                 color: kPrimaryColor,
-                fontSize: 15 * ffem,
+                fontSize: 15 * widget.ffem,
                 fontWeight: FontWeight.w900),
           ),
           hintStyle: GoogleFonts.nunito(
               textStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 17 * ffem,
+                  color: kLowTextColor,
+                  fontSize: 17 * widget.ffem,
                   fontWeight: FontWeight.w700)),
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 26 * fem, vertical: 10 * hem),
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 26 * widget.fem, vertical: 10 * widget.hem),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28 * fem),
+              borderRadius: BorderRadius.circular(28 * widget.fem),
               borderSide: BorderSide(
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
               gapPadding: 10),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28 * fem),
+              borderRadius: BorderRadius.circular(28 * widget.fem),
               borderSide: BorderSide(
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
               gapPadding: 10),

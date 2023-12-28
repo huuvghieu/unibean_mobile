@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/screens/signup/components/body_3.dart';
+import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
-class SignUp3Screen extends StatelessWidget {
+class SignUp3Screen extends StatefulWidget {
   static const String routeName = '/signup_3';
   static Route route() {
     return MaterialPageRoute(
@@ -11,6 +12,23 @@ class SignUp3Screen extends StatelessWidget {
   }
 
   const SignUp3Screen({super.key});
+
+  @override
+  State<SignUp3Screen> createState() => _SignUp3ScreenState();
+}
+
+class _SignUp3ScreenState extends State<SignUp3Screen> {
+  late String title;
+
+  @override
+  void initState() {
+    if (SignUp1Screen.defaultStep == 7) {
+      title = 'Bước 4/7';
+    } else {
+      title = 'Bước 3/6';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +40,7 @@ class SignUp3Screen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBarSignUp(
-          hem: hem, ffem: ffem, fem: fem,
-          text: 'Bước 3/5'),
+        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
         body: Body3(),

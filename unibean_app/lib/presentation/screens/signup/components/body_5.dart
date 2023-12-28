@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
 import 'package:unibean_app/presentation/constants.dart';
 import 'package:unibean_app/presentation/screens/signup/screens/signup_6_screen.dart';
 
@@ -22,7 +20,7 @@ class Body5 extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/bg_signup_5.png'),
+          image: AssetImage('assets/images/bg_signup_4.png'),
         )),
         child: Column(
           children: [
@@ -30,7 +28,7 @@ class Body5 extends StatelessWidget {
               height: 400 * hem,
             ),
             Text(
-              'Nhập mã xác nhận',
+              'Số điện thoại của bạn',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -43,7 +41,7 @@ class Body5 extends StatelessWidget {
               height: 10 * hem,
             ),
             Text(
-              'Nhập mã số xác nhận đã được gửi đến\n số điện thoại 0xxx xxx xxx',
+              'Nhập số điện thoại của bạn,\n chúng tôi sẽ gửi đến bạn mã OTP để xác nhận',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -72,7 +70,50 @@ class Body5 extends StatelessWidget {
                   SizedBox(
                     height: 25 * hem,
                   ),
-                  OtpForm(),
+                  Container(
+                    height: 42 * hem,
+                    width: 272 * fem,
+                    child: TextFormField(
+                      keyboardType: TextInputType.phone,
+                      style: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17 * ffem,
+                              fontWeight: FontWeight.w700)),
+                      decoration: InputDecoration(
+                        labelText: 'SỐ ĐIỆN THOẠI',
+                        hintText: '0xxx xxx xxx',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15 * ffem,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        hintStyle: GoogleFonts.nunito(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17 * ffem,
+                                fontWeight: FontWeight.w700)),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 26 * fem, vertical: 10 * hem),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(28 * fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(28 * fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 25 * hem,
                   ),
@@ -84,7 +125,7 @@ class Body5 extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, SignUp6Screen.routeName);
+                Navigator.pushNamed(context, SignUp6Screen.routeName);
               },
               child: Container(
                 width: 300 * fem,
@@ -105,70 +146,8 @@ class Body5 extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20 * hem),
-                  child: Text(
-                    'Bạn không nhận được mã xác nhận?',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 13 * ffem,
-                            fontWeight: FontWeight.bold,
-                            height: 1.3625 * ffem / fem,
-                            color: kLowTextColor)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    // Navigator.pushNamed(context, LoginScreen.routeName);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
-                    child: Text(
-                      'Gửi lại mã',
-                      style: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              fontSize: 13 * ffem,
-                              fontWeight: FontWeight.w900,
-                              height: 1.3625 * ffem / fem,
-                              color: kPrimaryColor)),
-                    ),
-                  ),
-                )
-              ],
-            )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class OtpForm extends StatefulWidget {
-  const OtpForm({super.key});
-
-  @override
-  State<OtpForm> createState() => _OtpFormState();
-}
-
-class _OtpFormState extends State<OtpForm> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100.0,
-      child: OTPTextField(
-        length: 4,
-        width: MediaQuery.of(context).size.width,
-        fieldWidth: 50,
-        style: GoogleFonts.nunito(
-            textStyle: TextStyle(
-                color: Colors.black,
-                fontSize: 17,
-                fontWeight: FontWeight.w700)),
-        textFieldAlignment: MainAxisAlignment.spaceAround,
-        fieldStyle: FieldStyle.underline,
       ),
     );
   }

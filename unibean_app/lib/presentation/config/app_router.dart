@@ -5,6 +5,8 @@ import 'package:unibean_app/presentation/screens/signup/screens/signup_3_screen.
 import 'package:unibean_app/presentation/screens/signup/screens/signup_4_screen.dart';
 import 'package:unibean_app/presentation/screens/signup/screens/signup_5_screen.dart';
 import 'package:unibean_app/presentation/screens/signup/screens/signup_6_screen.dart';
+import 'package:unibean_app/presentation/screens/signup/screens/signup_7_screen.dart';
+import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
 import 'package:unibean_app/presentation/screens/signup/screens/signup_screen.dart';
 import 'package:unibean_app/presentation/screens/splash/onboarding_screen.dart';
 import 'package:unibean_app/presentation/screens/splash/splash_screen.dart';
@@ -28,6 +30,9 @@ class AppRouter {
       case SignUpScreen.routeName:
         return SignUpScreen.route();
 
+      case SignUp1Screen.routeName:
+        return SignUp1Screen.route(step: settings.arguments as int);
+
       case SignUp2Screen.routeName:
         return SignUp2Screen.route();
 
@@ -41,7 +46,10 @@ class AppRouter {
         return SignUp5Screen.route();        
 
       case SignUp6Screen.routeName:
-        return SignUp6Screen.route();          
+        return SignUp6Screen.route();
+
+      case SignUp7Screen.routeName:
+        return SignUp7Screen.route();
       default:
         return _errorRoute();
     }

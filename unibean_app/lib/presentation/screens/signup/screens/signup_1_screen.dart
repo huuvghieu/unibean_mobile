@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/signup/components/body_2.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
+import 'package:unibean_app/presentation/screens/signup/components/body1.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
-class SignUp2Screen extends StatefulWidget {
-  static const String routeName = '/signup_2';
-  static Route route() {
+class SignUp1Screen extends StatefulWidget {
+  static const String routeName = '/signup_1';
+  static Route route({required int step}) {
     return MaterialPageRoute(
-        builder: (_) => SignUp2Screen(),
+        builder: (_) => SignUp1Screen(
+              step: step,
+            ),
         settings: const RouteSettings(name: routeName));
   }
 
-  const SignUp2Screen({super.key});
+  final int step;
+  static late int defaultStep;
+  const SignUp1Screen({required this.step, super.key});
 
   @override
-  State<SignUp2Screen> createState() => _SignUp2ScreenState();
+  State<SignUp1Screen> createState() => _SignUp1ScreenState();
 }
 
-class _SignUp2ScreenState extends State<SignUp2Screen> {
+class _SignUp1ScreenState extends State<SignUp1Screen> {
   late String title;
 
   @override
   void initState() {
-    if (SignUp1Screen.defaultStep == 7) {
-      title = 'Bước 3/7';
+    if (widget.step == 7) {
+      title = 'Bước 2/7';
+      SignUp1Screen.defaultStep = 7;
     } else {
-      title = 'Bước 2/6';
+      title = 'Bước 1/6';
+      SignUp1Screen.defaultStep = 6;
     }
     super.initState();
   }
@@ -43,7 +48,7 @@ class _SignUp2ScreenState extends State<SignUp2Screen> {
         appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        body: const Body2(),
+        body: const Body1(),
       ),
     );
   }

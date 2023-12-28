@@ -1,12 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:unibean_app/presentation/constants.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
+import 'package:unibean_app/presentation/screens/signup/screens/signup_2_screen.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
-import 'package:unibean_app/presentation/widgets/text_form_field_password.dart';
 
-class Body extends StatelessWidget {
-  const Body({super.key});
+class Body1 extends StatefulWidget {
+  const Body1({super.key});
+
+  @override
+  State<Body1> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body1> {
+  File? _selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +38,30 @@ class Body extends StatelessWidget {
             SizedBox(
               height: 130 * hem,
             ),
-            Container(
-              width: 210 * fem,
-              height: 210 * fem,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/images/signup_account.png'))),
-            ),
+            _selectedImage != null
+                ? Container(
+                    margin: EdgeInsets.only(bottom: 30 * hem),
+                    width: 180 * fem,
+                    height: 180 * hem,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: FileImage(_selectedImage!))),
+                  )
+                : Container(
+                    width: 210 * fem,
+                    height: 210 * fem,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/ava_signup.png'))),
+                  ),
             SizedBox(
               height: 10 * hem,
             ),
             Text(
-              'Chúng tôi sẽ kết nối với\n tài khoản của bạn!',
+              'Chúng tôi sẽ kết nối với\n Gmail của bạn!',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -80,48 +100,36 @@ class Body extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20 * hem,
+                    height: 40 * hem,
                   ),
                   TextFormFieldDefault(
                     hem: hem,
                     fem: fem,
                     ffem: ffem,
-                    labelText: 'TÀI KHOẢN',
-                    hintText: 'unibean123',
+                    labelText: 'GMAIL',
+                    hintText: 'unibean@fpt.edu.vn',
                   ),
                   SizedBox(
                     height: 25 * hem,
                   ),
-                  TextFormFieldPassword(
+                  TextFormFieldDefault(
                       hem: hem,
                       fem: fem,
                       ffem: ffem,
-                      labelText: 'MẬT KHẨU *',
-                      hintText: '******',
-                      isPassword: true),
+                      labelText: 'HỌ VÀ TÊN *',
+                      hintText: 'Mafalda Matias'),
                   SizedBox(
-                    height: 25 * hem,
-                  ),
-                  TextFormFieldPassword(
-                      hem: hem,
-                      fem: fem,
-                      ffem: ffem,
-                      labelText: 'XÁC NHẬN MẬT KHẨU *',
-                      hintText: '******',
-                      isPassword: true),
-                  SizedBox(
-                    height: 20 * hem,
+                    height: 40 * hem,
                   ),
                 ],
               ),
             ),
             SizedBox(
-              height: 30 * hem,
+              height: 20 * hem,
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, SignUp1Screen.routeName,
-                    arguments: 7);
+                Navigator.pushNamed(context, SignUp2Screen.routeName);
               },
               child: Container(
                 width: 300 * fem,
@@ -142,9 +150,37 @@ class Body extends StatelessWidget {
                 ),
               ),
             ),
+            InkWell(
+              onTap: () {
+                _pickerImageFromGallery();
+              },
+              child: Padding(
+                padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
+                child: Text(
+                  'Thêm hình cá nhân',
+                  style: GoogleFonts.nunito(
+                      textStyle: TextStyle(
+                          fontSize: 13 * ffem,
+                          fontWeight: FontWeight.w900,
+                          height: 1.3625 * ffem / fem,
+                          color: kPrimaryColor)),
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
+  }
+
+  Future _pickerImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+
+    setState(() {
+      _selectedImage = File(returnedImage.path);
+    });
   }
 }
