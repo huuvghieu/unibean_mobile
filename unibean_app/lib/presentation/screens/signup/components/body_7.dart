@@ -27,7 +27,7 @@ class Body7 extends StatelessWidget {
               height: 500 * hem,
             ),
             Text(
-              'Bạn đã sẵn sảng bắt đầu!',
+              'Bạn đã sẵn sàng bắt đầu!',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -52,9 +52,10 @@ class Body7 extends StatelessWidget {
             SizedBox(
               height: 60 * hem,
             ),
-       
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/landing-screen', (Route<dynamic> route) => false );
+              },
               child: Container(
                 width: 300 * fem,
                 height: 45 * hem,

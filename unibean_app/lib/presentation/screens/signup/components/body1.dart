@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:unibean_app/presentation/constants.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_2_screen.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
+
+import '../../screens.dart';
 
 class Body1 extends StatefulWidget {
   const Body1({super.key});

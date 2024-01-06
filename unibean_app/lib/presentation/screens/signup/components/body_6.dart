@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:unibean_app/presentation/constants.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_7_screen.dart';
+
+import '../../screens.dart';
 
 class Body6 extends StatelessWidget {
   const Body6({super.key});

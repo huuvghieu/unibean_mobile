@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
-import 'package:unibean_app/presentation/screens/splash/splash_screen.dart';
+
+import 'presentation/screens/screens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

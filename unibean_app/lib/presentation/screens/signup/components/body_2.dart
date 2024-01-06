@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/constants.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_3_screen.dart';
 import 'package:unibean_app/presentation/widgets/drop_down_text_field_default.dart';
+
+import '../../screens.dart';
 
 class Body2 extends StatelessWidget {
   const Body2({super.key});

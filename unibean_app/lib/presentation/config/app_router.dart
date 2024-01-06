@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/login/login_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_2_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_3_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_4_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_5_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_6_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_7_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_screen.dart';
-import 'package:unibean_app/presentation/screens/splash/onboarding_screen.dart';
-import 'package:unibean_app/presentation/screens/splash/splash_screen.dart';
-import 'package:unibean_app/presentation/screens/welcome/welcome_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/landing_screen/landing_screen_bloc.dart';
+import '../screens/screens.dart';
+
 
 class AppRouter {
+  static final LandingScreenBloc landingScreenBloc = LandingScreenBloc();
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case '/landing-screen':
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider<LandingScreenBloc>.value(
+                  value: landingScreenBloc,
+                  child: const LandingScreen(),
+                ));
+
       case SplashScreen.routeName:
         return SplashScreen.route();
 
@@ -43,13 +44,16 @@ class AppRouter {
         return SignUp4Screen.route();
 
       case SignUp5Screen.routeName:
-        return SignUp5Screen.route();        
+        return SignUp5Screen.route();
 
       case SignUp6Screen.routeName:
         return SignUp6Screen.route();
 
       case SignUp7Screen.routeName:
         return SignUp7Screen.route();
+
+      case ProfileTransactionHistoryScreen.routeName:
+        return ProfileTransactionHistoryScreen.route();  
       default:
         return _errorRoute();
     }

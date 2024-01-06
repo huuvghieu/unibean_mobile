@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/constants.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_1_screen.dart';
-import 'package:unibean_app/presentation/screens/signup/screens/signup_screen.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_password.dart';
+
+import '../../screens.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
