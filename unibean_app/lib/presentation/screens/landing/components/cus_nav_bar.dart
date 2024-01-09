@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models/nav_item.dart';
 import 'package:unibean_app/presentation/blocs/landing_screen/landing_screen_bloc.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/landing/components/nav_painter.dart';
 
 class CusNavBar extends StatelessWidget {
@@ -170,7 +170,3 @@ class CusNavBar extends StatelessWidget {
     );
   }
 }
-
-
-
-

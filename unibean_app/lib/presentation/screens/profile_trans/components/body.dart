@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -46,36 +46,34 @@ class Body extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 20*fem),
+                              padding: EdgeInsets.only(left: 20 * fem),
                               child: Text(
                                 'Hoàn thành thử thách no. #1234',
                                 style: GoogleFonts.nunito(
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.3625 * ffem / fem,
-                                  color: Colors.black
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:  EdgeInsets.only(left: 20*fem),
-                              child: Text('của chiến dịch "ABC"',
-                                  style: GoogleFonts.nunito(
                                     fontSize: 14 * ffem,
                                     fontWeight: FontWeight.w600,
                                     height: 1.3625 * ffem / fem,
-                                    color: Colors.black
-                                  )),
+                                    color: Colors.black),
+                              ),
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(left: 20*fem, top: 5*hem),
+                              padding: EdgeInsets.only(left: 20 * fem),
+                              child: Text('của chiến dịch "ABC"',
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 14 * ffem,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.3625 * ffem / fem,
+                                      color: Colors.black)),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(left: 20 * fem, top: 5 * hem),
                               child: Text('13:54 on 10/12/2022',
-                               style: GoogleFonts.nunito(
-                                    fontSize: 10 * ffem,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.3625 * ffem / fem,
-                                    color: kLowTextColor
-                                  )),
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 10 * ffem,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.3625 * ffem / fem,
+                                      color: kLowTextColor)),
                             ),
                           ],
                         ),

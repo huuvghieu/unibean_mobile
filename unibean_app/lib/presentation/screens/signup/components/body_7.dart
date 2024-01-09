@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 class Body7 extends StatelessWidget {
   const Body7({super.key});
@@ -54,7 +54,8 @@ class Body7 extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/landing-screen', (Route<dynamic> route) => false );
+                Navigator.pushNamedAndRemoveUntil(context, '/landing-screen',
+                    (Route<dynamic> route) => false);
               },
               child: Container(
                 width: 300 * fem,

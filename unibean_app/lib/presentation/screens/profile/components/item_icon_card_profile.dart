@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 class ItemIconCardProfile extends StatelessWidget {
   const ItemIconCardProfile({

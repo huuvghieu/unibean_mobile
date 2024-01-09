@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/screens/profile/components/body.dart';
+import 'package:unibean_app/presentation/screens/campaign/components/body.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class CampaignScreen extends StatelessWidget {
+  static const String routeName = '/campaign';
+
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const CampaignScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
+  const CampaignScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +25,16 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
           elevation: 0,
-          // flexibleSpace: Container(
-          //   decoration: const BoxDecoration(
-          //       image: DecorationImage(
-          //           image: AssetImage('assets/images/background_splash.png'),
-          //           fit: BoxFit.cover)),
-          // ),
-          toolbarHeight: 160 * hem,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/background_splash.png'),
+                    fit: BoxFit.cover)),
+          ),
+          toolbarHeight: 130 * hem,
           title: Padding(
-            padding:  EdgeInsets.only(left: 20*fem),
+            padding: EdgeInsets.only(left: 20 * fem),
             child: Text(
               'UNI Student Bean',
               style: GoogleFonts.nunito(
@@ -40,16 +48,18 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             // SvgPicture.asset('assets/icons/notification-icon.svg')
             Padding(
-              padding:  EdgeInsets.only(right: 20*fem),
+              padding: EdgeInsets.only(right: 20 * fem),
               child: IconButton(
-                icon:  Icon(Icons.notifications, color: Colors.white,
-                size: 35*fem,),
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                  size: 35 * fem,
+                ),
                 onPressed: () {},
               ),
             ),
           ],
         ),
-        extendBodyBehindAppBar: true,
         extendBody: true,
         body: Body(),
       ),

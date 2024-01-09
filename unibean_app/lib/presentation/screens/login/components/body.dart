@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_password.dart';
 
@@ -100,7 +100,6 @@ class Body extends StatelessWidget {
             SizedBox(
               height: 25 * hem,
             ),
-
             TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, SignUp1Screen.routeName,

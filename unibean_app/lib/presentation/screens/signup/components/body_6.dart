@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../screens.dart';
 
@@ -85,7 +85,8 @@ class Body6 extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, SignUp7Screen.routeName);
+                Navigator.pushReplacementNamed(
+                    context, SignUp7Screen.routeName);
               },
               child: Container(
                 width: 300 * fem,

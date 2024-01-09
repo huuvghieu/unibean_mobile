@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../blocs/landing_screen/landing_screen_bloc.dart';
 import '../screens/screens.dart';
-
 
 class AppRouter {
   static final LandingScreenBloc landingScreenBloc = LandingScreenBloc();
@@ -53,7 +51,20 @@ class AppRouter {
         return SignUp7Screen.route();
 
       case ProfileTransactionHistoryScreen.routeName:
-        return ProfileTransactionHistoryScreen.route();  
+        return ProfileTransactionHistoryScreen.route();
+
+      case CampaignScreen.routeName:
+        return CampaignScreen.route();
+
+      case CampaignListScreen.routeName:
+        return CampaignListScreen.route();
+
+      case CampaignDetailScreen.routeName:
+        return CampaignDetailScreen.route();
+
+      case BrandDetailScreen.routeName:
+        return BrandDetailScreen.route();
+
       default:
         return _errorRoute();
     }

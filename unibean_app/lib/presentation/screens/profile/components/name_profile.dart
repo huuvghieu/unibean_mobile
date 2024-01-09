@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 class NameProfile extends StatelessWidget {
   const NameProfile({
@@ -28,16 +28,13 @@ class NameProfile extends StatelessWidget {
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
                       fontSize: 16 * ffem,
-                      fontWeight:
-                          FontWeight.w800,
-                      height:
-                          1.3625 * ffem / fem,
+                      fontWeight: FontWeight.w800,
+                      height: 1.3625 * ffem / fem,
                       color: Colors.black)),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-                bottom: 5 * hem, left: 5 * fem),
+            padding: EdgeInsets.only(bottom: 5 * hem, left: 5 * fem),
             child: Icon(
               Icons.check_circle,
               color: kPrimaryColor,

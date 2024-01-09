@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:unibean_app/presentation/blocs/landing_screen/landing_screen_bloc.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/campaign/campaign_screen.dart';
 import 'package:unibean_app/presentation/screens/landing/components/cus_nav_bar.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 
@@ -64,7 +65,7 @@ class LandingScreen extends StatelessWidget {
 }
 
 const List<Widget> bottomNavScreen = [
-  Text('Index 0: Chiến Dịch'),
+  CampaignScreen(),
   Text('Index 1: Kho Voucher'),
   Text('Index 2: Thành Tựu'),
   ProfileScreen()

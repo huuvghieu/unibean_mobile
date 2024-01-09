@@ -13,3 +13,7 @@ export 'splash/splash_screen.dart';
 export 'splash/onboarding_screen.dart';
 export 'profile/profile_screen.dart';
 export 'profile_trans/profile_trans_screen.dart';
+export 'campaign/campaign_screen.dart';
+export 'campaign_list/campaign_list_screen.dart';
+export 'campaign_detail/campaign_detail_screen.dart';
+export 'brand_detail/brand_detail_screen.dart';

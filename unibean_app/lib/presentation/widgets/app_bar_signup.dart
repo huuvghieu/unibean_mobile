@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 class AppBarSignUp extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarSignUp({
-    super.key,
-    required this.hem,
-    required this.ffem,
-    required this.fem,
-    required this.text
-  });
+  const AppBarSignUp(
+      {super.key,
+      required this.hem,
+      required this.ffem,
+      required this.fem,
+      required this.text});
 
   final double hem;
   final double ffem;
@@ -35,7 +34,7 @@ class AppBarSignUp extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(140);
 }

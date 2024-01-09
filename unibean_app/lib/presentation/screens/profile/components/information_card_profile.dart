@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/profile/components/item_icon_card_profile.dart';
 import 'package:unibean_app/presentation/screens/profile/components/name_profile.dart';
 import 'package:unibean_app/presentation/screens/profile/components/student_code_profile.dart';
@@ -138,12 +138,14 @@ class InformationCardProfile extends StatelessWidget {
                             color: Colors.grey[100],
                           ),
                           child: Center(
-                              child: SvgPicture.asset(
-              'assets/icons/qr-unbean-icon.svg',
-              colorFilter: ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
-              height: 18 * fem,
-              width: 18 * fem,
-            ),),
+                            child: SvgPicture.asset(
+                              'assets/icons/qr-unbean-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  kPrimaryColor, BlendMode.srcIn),
+                              height: 18 * fem,
+                              width: 18 * fem,
+                            ),
+                          ),
                         ),
                       ),
                       Text(

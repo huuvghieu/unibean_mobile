@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/constants.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 class ButtonProfile extends StatelessWidget {
   const ButtonProfile(
@@ -13,8 +13,7 @@ class ButtonProfile extends StatelessWidget {
       required this.title,
       required this.onPressed,
       this.widthIcon = 15,
-      this.heightIcon = 15
-      });
+      this.heightIcon = 15});
 
   final double fem;
   final double hem;
@@ -77,7 +76,7 @@ class ButtonProfile extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 10 * hem, left: 20 * fem),
             child: SizedBox(
-              width: 130*fem,
+              width: 130 * fem,
               child: Text(
                 title,
                 style: GoogleFonts.nunito(
