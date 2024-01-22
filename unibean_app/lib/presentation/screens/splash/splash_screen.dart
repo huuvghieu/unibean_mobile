@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/splash/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,21 +20,25 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool animate = false;
+  var box = Hive.box('myBox');
+  var launchApp = false;
 
   @override
   void initState() {
     super.initState();
+    checkLaunchApp();
     startAnimation();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: double.infinity,
-        height: double.infinity,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/background_splash.png'))),
+                image: AssetImage('assets/images/bg-splash.png'),
+                fit: BoxFit.cover)),
         child: Center(
             child: AnimatedOpacity(
           opacity: animate ? 1.0 : 0.0,
@@ -50,15 +56,30 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     await Future.delayed(const Duration(milliseconds: 1800));
     if (context.mounted) {
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const OnBoardingScreen(),
-          transitionDuration: const Duration(seconds: 1),
-          transitionsBuilder: (_, a, __, c) =>
-              FadeTransition(opacity: a, child: c),
-        ),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) {
+              if (launchApp) {
+                return const WelcomeScreen();
+              }
+              return const OnBoardingScreen();
+            },
+            transitionDuration: const Duration(seconds: 1),
+            transitionsBuilder: (_, a, __, c) =>
+                FadeTransition(opacity: a, child: c),
+          ),
+          (Route<dynamic> route) => false);
+    }
+  }
+
+  void checkLaunchApp() {
+    var check = box.get('launchApp');
+    if (check == null || check == false) {
+      launchApp = false;
+      box.put('launchApp', true);
+    } else {
+      launchApp = true;
     }
   }
 }

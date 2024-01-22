@@ -30,7 +30,7 @@ class AppRouter {
         return SignUpScreen.route();
 
       case SignUp1Screen.routeName:
-        return SignUp1Screen.route(step: settings.arguments as int);
+        return SignUp1Screen.route(register: settings.arguments as bool);
 
       case SignUp2Screen.routeName:
         return SignUp2Screen.route();
@@ -65,6 +65,18 @@ class AppRouter {
       case BrandDetailScreen.routeName:
         return BrandDetailScreen.route();
 
+      case VoucherScreen.routeName:
+        return VoucherScreen.route();
+
+      case FilterVoucherScreen.routeName:
+        return FilterVoucherScreen.route();
+
+      case VoucherDetailScreen.routeName:
+        return VoucherDetailScreen.route();
+
+      case ChallengeScreen.routeName:
+        return ChallengeScreen.route();
+
       default:
         return _errorRoute();
     }
@@ -78,5 +90,9 @@ class AppRouter {
               ),
             ),
         settings: const RouteSettings(name: '/'));
+  }
+
+  void dispose() {
+    landingScreenBloc.close();
   }
 }

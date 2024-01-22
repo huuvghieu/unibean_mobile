@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/welcome/welcome_screen.dart';
+import 'package:unibean_app/presentation/screens/student_features/welcome/welcome_screen.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -18,7 +18,7 @@ class _BodyState extends State<Body> {
       'image': 'assets/images/onboarding1.png',
       'title': 'Xin chào!',
       'content':
-          'Tìm kiếm nững thông tin hữu ích,\n những hoạt động thú vị và\n những phần quà đặc biệt.',
+          'Tìm kiếm những thông tin hữu ích,\n những hoạt động thú vị và những phần quà đặc biệt.',
       'button': 'Tiếp tục'
     },
     {
@@ -44,6 +44,7 @@ class _BodyState extends State<Body> {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
+
     return PageView.builder(
       controller: pageController,
       onPageChanged: (value) {
@@ -68,7 +69,7 @@ class _BodyState extends State<Body> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 510 * hem,
+                  height: 530 * hem,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -108,10 +109,10 @@ class _BodyState extends State<Body> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      WelcomeScreen.routeName,
-                    );
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        WelcomeScreen.routeName,
+                        (Route<dynamic> route) => false);
                   },
                   child: Container(
                     width: 270 * fem,
@@ -136,112 +137,117 @@ class _BodyState extends State<Body> {
             ),
           );
         }
-        return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                splashData[index]['image']!,
-              ),
-            ),
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 510 * hem,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                    splashData.length, (index) => buildDot(fem, index: index)),
-              ),
-              SizedBox(
-                height: 25 * hem,
-              ),
-              Text(
-                splashData[index]['title']!,
-                style: GoogleFonts.nunito(
-                    textStyle: TextStyle(
-                        fontSize: 20 * ffem,
-                        fontWeight: FontWeight.w900,
-                        height: 1.3625 * ffem / fem,
-                        color: Colors.black)),
-              ),
-              SizedBox(
-                height: 20 * hem,
-              ),
-              SizedBox(
-                height: 60 * hem,
-                child: Text(
-                  splashData[index]['content']!,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                      textStyle: TextStyle(
-                          fontSize: 15 * ffem,
-                          fontWeight: FontWeight.w600,
-                          height: 1.3625 * ffem / fem,
-                          color: kLowTextColor)),
+        return SingleChildScrollView(
+          child: Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              // color: Colors.white,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(
+                  splashData[index]['image']!,
                 ),
               ),
-              SizedBox(
-                height: 20 * hem,
-              ),
-              TextButton(
-                onPressed: () {
-                  if (pageIndex == 0) {
-                    setState(() {
-                      pageIndex += 1;
-                    });
-                    pageController.animateToPage(pageIndex,
-                        duration: kAnimationDuration, curve: Curves.linear);
-                  } else if (pageIndex == 1) {
-                    setState(() {
-                      pageIndex += 1;
-                    });
-                    pageController.animateToPage(pageIndex,
-                        duration: kAnimationDuration, curve: Curves.linear);
-                  }
-                },
-                child: Container(
-                  width: 270 * fem,
-                  height: 45 * hem,
-                  decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(23 * fem)),
-                  child: Center(
-                    child: Text(
-                      splashData[index]['button']!,
-                      style: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              fontSize: 17 * ffem,
-                              fontWeight: FontWeight.w600,
-                              height: 1.3625 * ffem / fem,
-                              color: Colors.white)),
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 520 * hem,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(splashData.length,
+                      (index) => buildDot(fem, index: index)),
+                ),
+                SizedBox(
+                  height: 25 * hem,
+                ),
+                Text(
+                  splashData[index]['title']!,
+                  style: GoogleFonts.nunito(
+                      textStyle: TextStyle(
+                          fontSize: 20 * ffem,
+                          fontWeight: FontWeight.w900,
+                          height: 1.3625 * ffem / fem,
+                          color: Colors.black)),
+                ),
+                SizedBox(
+                  height: 20 * hem,
+                ),
+                Container(
+                  height: 60 * hem,
+                  child: Text(
+                    splashData[index]['content']!,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.nunito(
+                        textStyle: TextStyle(
+                            fontSize: 15 * ffem,
+                            fontWeight: FontWeight.w600,
+                            height: 1.3625 * ffem / fem,
+                            color: kLowTextColor)),
+                  ),
+                ),
+                SizedBox(
+                  height: 20 * hem,
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (pageIndex == 0) {
+                      setState(() {
+                        pageIndex += 1;
+                      });
+                      pageController.animateToPage(pageIndex,
+                          duration: kAnimationDuration, curve: Curves.linear);
+                    } else if (pageIndex == 1) {
+                      setState(() {
+                        pageIndex += 1;
+                      });
+                      pageController.animateToPage(pageIndex,
+                          duration: kAnimationDuration, curve: Curves.linear);
+                    }
+                  },
+                  child: Container(
+                    width: 270 * fem,
+                    height: 45 * hem,
+                    decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.circular(23 * fem)),
+                    child: Center(
+                      child: Text(
+                        splashData[index]['button']!,
+                        style: GoogleFonts.nunito(
+                            textStyle: TextStyle(
+                                fontSize: 17 * ffem,
+                                fontWeight: FontWeight.w600,
+                                height: 1.3625 * ffem / fem,
+                                color: Colors.white)),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, WelcomeScreen.routeName);
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20 * hem),
-                  child: Text(
-                    'Bỏ qua',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 13 * ffem,
-                            fontWeight: FontWeight.w900,
-                            height: 1.3625 * ffem / fem,
-                            color: kPrimaryColor)),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        WelcomeScreen.routeName,
+                        (Route<dynamic> route) => false);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 20 * hem),
+                    child: Text(
+                      'Bỏ qua',
+                      style: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                              fontSize: 13 * ffem,
+                              fontWeight: FontWeight.w900,
+                              height: 1.3625 * ffem / fem,
+                              color: kPrimaryColor)),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         );
       },

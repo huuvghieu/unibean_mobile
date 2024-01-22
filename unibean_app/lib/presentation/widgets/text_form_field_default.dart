@@ -2,27 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
+// ignore: must_be_immutable
 class TextFormFieldDefault extends StatelessWidget {
-  const TextFormFieldDefault(
+  TextFormFieldDefault(
       {super.key,
       required this.hem,
       required this.fem,
       required this.ffem,
       required this.labelText,
-      required this.hintText});
+      required this.hintText,
+      required this.validator,
+      required this.textController});
 
   final double hem;
   final double fem;
   final double ffem;
   final String labelText;
   final String hintText;
+  final FormFieldValidator<String> validator;
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42 * hem,
       width: 272 * fem,
+      // color: Colors.red,
       child: TextFormField(
+        validator: validator,
+        controller: textController,
         style: GoogleFonts.nunito(
             textStyle: TextStyle(
                 color: Colors.black,
@@ -40,7 +47,7 @@ class TextFormFieldDefault extends StatelessWidget {
           ),
           hintStyle: GoogleFonts.nunito(
               textStyle: TextStyle(
-                  color: Colors.black,
+                  color: kLowTextColor,
                   fontSize: 17 * ffem,
                   fontWeight: FontWeight.w700)),
           contentPadding:
@@ -51,6 +58,11 @@ class TextFormFieldDefault extends StatelessWidget {
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
               gapPadding: 10),
           focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28 * fem),
+              borderSide: BorderSide(
+                  width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
+              gapPadding: 10),
+          errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28 * fem),
               borderSide: BorderSide(
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),

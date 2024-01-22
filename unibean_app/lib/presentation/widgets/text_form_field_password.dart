@@ -10,7 +10,10 @@ class TextFormFieldPassword extends StatefulWidget {
       required this.ffem,
       required this.labelText,
       required this.hintText,
-      required this.isPassword});
+      required this.isPassword,
+      required this.validator,
+      required this.textController,
+      });
 
   final double hem;
   final double fem;
@@ -18,6 +21,8 @@ class TextFormFieldPassword extends StatefulWidget {
   final String labelText;
   final String hintText;
   final bool isPassword;
+  final FormFieldValidator<String> validator;
+  final TextEditingController textController;
 
   @override
   State<TextFormFieldPassword> createState() => _TextFormFieldPasswordState();
@@ -35,10 +40,11 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42 * widget.hem,
       width: 272 * widget.fem,
       child: TextFormField(
         obscureText: _isObscure,
+        validator: widget.validator,
+        controller: widget.textController,
         style: GoogleFonts.nunito(
             textStyle: TextStyle(
                 color: Colors.black,
@@ -79,6 +85,12 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
               gapPadding: 10),
           focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28 * widget.fem),
+              borderSide: BorderSide(
+                  width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
+              gapPadding: 10),
+
+          errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28 * widget.fem),
               borderSide: BorderSide(
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
