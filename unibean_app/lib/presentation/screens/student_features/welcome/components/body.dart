@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/login/login_screen.dart';
+import 'package:unibean_app/presentation/screens/login/login_screen.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -59,7 +60,10 @@ class Body extends StatelessWidget {
             height: 20 * hem,
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/landing-screen', (Route<dynamic> route) => false);
+            },
             child: Container(
               width: 270 * fem,
               height: 45 * hem,
@@ -96,7 +100,8 @@ class Body extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, LoginScreen.routeName);
+                  // Navigator.pushNamed(context, LoginScreen.routeName);
+                  context.go(LoginScreen.routeName);
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),

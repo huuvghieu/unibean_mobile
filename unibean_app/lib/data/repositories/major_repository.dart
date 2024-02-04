@@ -5,7 +5,7 @@ import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:http/http.dart' as http;
 
-class MajorRepositoryIml implements MajorRepository {
+class MajorRepositoryImp implements MajorRepository {
   String endPoint = '${baseURL}majors';
   String sort = 'Id%2Cdesc';
   int page = 1;

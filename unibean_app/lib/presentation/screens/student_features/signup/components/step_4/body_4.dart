@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
-
-import '../../../../screens.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_4/form_4.dart';
 
 class Body4 extends StatelessWidget {
   const Body4({super.key});
@@ -70,88 +68,7 @@ class Body4 extends StatelessWidget {
                   SizedBox(
                     height: 40 * hem,
                   ),
-                  Container(
-                    width: 318 * fem,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15 * fem),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0x0c000000),
-                            offset: Offset(0 * fem, 4 * fem),
-                            blurRadius: 2.5 * fem,
-                          )
-                        ]),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 40 * hem,
-                        ),
-                        TextFormFieldDefault(
-                          hem: hem,
-                          fem: fem,
-                          ffem: ffem,
-                          labelText: 'MÃ SỐ SINH VIÊN *',
-                          hintText: 'UNIBEAN123123',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'MSSV không được bỏ trống';
-                            }
-                            return null;
-                          },
-                          textController: TextEditingController(),
-                        ),
-                        SizedBox(
-                          height: 25 * hem,
-                        ),
-                        TextFormFieldDefault(
-                          hem: hem,
-                          fem: fem,
-                          ffem: ffem,
-                          labelText: 'CHUYÊN NGÀNH',
-                          hintText: 'Công nghệ thông tin',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Chuyên ngành không được bỏ trống';
-                            }
-                            return null;
-                          },
-                          textController: TextEditingController(),
-                        ),
-                        SizedBox(
-                          height: 40 * hem,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10 * hem,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(
-                          context, SignUp5Screen.routeName,
-                          arguments: 7);
-                    },
-                    child: Container(
-                      width: 300 * fem,
-                      height: 45 * hem,
-                      decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(23 * fem)),
-                      child: Center(
-                        child: Text(
-                          'Tiếp tục',
-                          style: GoogleFonts.nunito(
-                              textStyle: TextStyle(
-                                  fontSize: 17 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.3625 * ffem / fem,
-                                  color: Colors.white)),
-                        ),
-                      ),
-                    ),
-                  ),
+                  FormBody4(fem: fem, hem: hem, ffem: ffem)
                 ],
               ),
             ),
@@ -161,3 +78,4 @@ class Body4 extends StatelessWidget {
     );
   }
 }
+

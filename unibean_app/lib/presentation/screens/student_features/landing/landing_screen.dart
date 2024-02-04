@@ -5,6 +5,7 @@ import 'package:unibean_app/presentation/blocs/landing_screen/landing_screen_blo
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/landing/components/cus_nav_bar.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
+import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -13,13 +14,14 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    // double ffem = fem * 0.97;
+    double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return BlocBuilder<LandingScreenBloc, LandingScreenState>(
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
+            appBar: _buildAppbar(state.tabIndex, hem, fem, ffem),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: Container(
@@ -53,8 +55,8 @@ class LandingScreen extends StatelessWidget {
                 ),
               ),
             ),
-            extendBody: true,
             body: bottomNavScreen.elementAt(state.tabIndex),
+            extendBody: true,
             bottomNavigationBar: CusNavBar(),
           ),
         );
@@ -69,3 +71,10 @@ const List<Widget> bottomNavScreen = [
   ChallengeScreen(),
   ProfileScreen()
 ];
+PreferredSizeWidget? _buildAppbar(
+    int tabIndex, double hem, double fem, double ffem) {
+  if (tabIndex == 0 || tabIndex == 1) {
+    return AppBarCampaign(hem: hem, ffem: ffem, fem: fem);
+  }
+  return null;
+}

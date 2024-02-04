@@ -1,6 +1,6 @@
 export 'student_features/welcome/welcome_screen.dart';
 export 'student_features/landing/landing_screen.dart';
-export 'student_features/login/login_screen.dart';
+export 'login/login_screen.dart';
 export 'student_features/signup/screens/signup_1_screen.dart';
 export 'student_features/signup/screens/signup_2_screen.dart';
 export 'student_features/signup/screens/signup_3_screen.dart';

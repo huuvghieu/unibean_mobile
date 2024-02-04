@@ -15,7 +15,7 @@ class User extends Equatable {
   final String dateCreated;
   final String dateUpdated;
   final String dateVerified;
-  final String description;
+  final String? description;
   final bool state;
   final bool status;
 

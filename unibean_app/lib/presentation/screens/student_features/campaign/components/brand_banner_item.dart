@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models/brand_model.dart';
-import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_detail/brand_detail_screen.dart';
 
 class BrandBannerItem extends StatelessWidget {
@@ -26,7 +25,7 @@ class BrandBannerItem extends StatelessWidget {
         Navigator.pushNamed(context, BrandDetailScreen.routeName);
       },
       child: Container(
-        margin: EdgeInsets.only(left: 20 * fem, right: 20 * fem),
+        margin: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
         child: Column(
           children: [
             Container(
@@ -45,7 +44,7 @@ class BrandBannerItem extends StatelessWidget {
                     textStyle: TextStyle(
                   fontSize: 13 * ffem,
                   height: heightText,
-                  color: kLowTextColor,
+                  color: Colors.grey,
                   fontWeight: FontWeight.normal,
                 )),
               ),

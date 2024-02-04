@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../blocs/landing_screen/landing_screen_bloc.dart';
+// import 'package:unibean_app/presentation/blocs/blocs.dart';
 import '../screens/screens.dart';
 
 class AppRouter {
-  static final LandingScreenBloc landingScreenBloc = LandingScreenBloc();
+  // static final LandingScreenBloc landingScreenBloc = LandingScreenBloc();
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/landing-screen':
         return MaterialPageRoute(
-            builder: (_) => BlocProvider<LandingScreenBloc>.value(
-                  value: landingScreenBloc,
-                  child: const LandingScreen(),
-                ));
+          builder: (_) => const LandingScreen(),
+        );
 
       case SplashScreen.routeName:
         return SplashScreen.route();
@@ -92,7 +89,7 @@ class AppRouter {
         settings: const RouteSettings(name: '/'));
   }
 
-  void dispose() {
-    landingScreenBloc.close();
-  }
+  // void dispose() {
+  //   landingScreenBloc.close();
+  // }
 }

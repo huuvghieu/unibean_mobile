@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/challenge/components/body.dart';
+
+import '../../../widgets/card_for_unknow.dart';
 
 class ChallengeScreen extends StatelessWidget {
   static const String routeName = '/challenge-student';
@@ -20,7 +24,24 @@ class ChallengeScreen extends StatelessWidget {
     double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
+    final roleState = context.watch<RoleAppBloc>().state;
+    return authenScreen(roleState, fem, hem, ffem, context);
+  }
 
+  Widget authenScreen(roleState, fem, hem, ffem, context) {
+    if (roleState is RoleAppUnknown) {
+      return _buildUnknown(fem, hem, ffem);
+    } else if (roleState is RoleAppStudentVerified) {
+      return _buildVerifiedStudent(fem, hem, ffem);
+    }
+    return _buildUnknown(fem, hem, ffem);
+  }
+
+  Widget _buildUnknown(double fem, double hem, double ffem) {
+    return CardForUnknow(fem: fem, hem: hem, ffem: ffem);
+  }
+
+  Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
     return SafeArea(
       child: DefaultTabController(
         length: 3,

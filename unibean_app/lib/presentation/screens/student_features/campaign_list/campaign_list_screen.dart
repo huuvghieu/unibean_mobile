@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/body.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/filter_showdal_bottom.dart';
 
+import '../../../blocs/blocs.dart';
+
 class CampaignListScreen extends StatelessWidget {
   static const String routeName = '/campaign-list-student';
-
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => const CampaignListScreen(),
+      builder: (_) => BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if(state is AuthenticationFailed)
+          Navigator.pushNamedAndRemoveUntil(
+              context, LoginScreen.routeName, (Route<dynamic> route) => false);
+        },
+        child: CampaignListScreen(),
+      ),
       settings: const RouteSettings(name: routeName),
     );
   }
@@ -106,5 +116,3 @@ class CampaignListScreen extends StatelessWidget {
     );
   }
 }
-
-

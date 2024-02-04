@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-
-import '../../../../screens.dart';
-
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/form_5.dart';
 class Body5 extends StatelessWidget {
   const Body5({super.key});
 
@@ -54,102 +52,13 @@ class Body5 extends StatelessWidget {
             SizedBox(
               height: 30 * hem,
             ),
-            Container(
-              width: 318 * fem,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15 * fem),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x0c000000),
-                      offset: Offset(0 * fem, 4 * fem),
-                      blurRadius: 2.5 * fem,
-                    )
-                  ]),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 25 * hem,
-                  ),
-                  Container(
-                    height: 42 * hem,
-                    width: 272 * fem,
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      style: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17 * ffem,
-                              fontWeight: FontWeight.w700)),
-                      decoration: InputDecoration(
-                        labelText: 'SỐ ĐIỆN THOẠI',
-                        hintText: '0xxx xxx xxx',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelStyle: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15 * ffem,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        hintStyle: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17 * ffem,
-                                fontWeight: FontWeight.w700)),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 26 * fem, vertical: 10 * hem),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(28 * fem),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color:
-                                    const Color.fromARGB(255, 220, 220, 220)),
-                            gapPadding: 10),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(28 * fem),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color:
-                                    const Color.fromARGB(255, 220, 220, 220)),
-                            gapPadding: 10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25 * hem,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 30 * hem,
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, SignUp6Screen.routeName);
-              },
-              child: Container(
-                width: 300 * fem,
-                height: 45 * hem,
-                decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(23 * fem)),
-                child: Center(
-                  child: Text(
-                    'Tiếp tục',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 17 * ffem,
-                            fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
-                            color: Colors.white)),
-                  ),
-                ),
-              ),
-            ),
+            FormBody5(fem: fem, hem: hem, ffem: ffem)
           ],
         ),
       ),
     );
   }
 }
+
+
+

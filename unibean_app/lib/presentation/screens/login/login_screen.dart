@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/student_features/login/components/body.dart';
+import 'package:unibean_app/presentation/screens/login/components/body.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login';
@@ -13,14 +13,14 @@ class LoginScreen extends StatelessWidget {
   static Route route() {
     return PageRouteBuilder(
         pageBuilder: (_, __, ___) => LoginScreen(),
-        transitionDuration: Duration(seconds: 1),
-        transitionsBuilder: (_, a, __, c) {
-          const begin = Offset(-1.0, 0.0);
+        transitionDuration: Duration(milliseconds: 400),
+        transitionsBuilder: (_, animation, __, child) {
+          const begin = Offset(0.0, 1.0);
           const end = Offset.zero;
           var tween = Tween(begin: begin, end: end);
-          var offsetAnimation = a.drive(tween);
+          var offsetAnimation = animation.drive(tween);
 
-          return SlideTransition(position: offsetAnimation, child: c);
+          return SlideTransition(position: offsetAnimation, child: child);
         },
         settings: const RouteSettings(name: routeName));
   }

@@ -22,19 +22,19 @@ class MemberShipCard extends StatelessWidget {
     return Center(
       child: SizedBox(
         width: 360 * fem,
-        height: 200 * hem,
+        height: 210 * hem,
         child: Stack(
           children: [
             Container(
               width: 350 * fem,
-              height: 200 * hem,
+              height: 210 * hem,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20 * fem),
                   boxShadow: [
                     BoxShadow(
                         color: const Color.fromARGB(255, 150, 150, 150),
-                        offset: Offset(10 * fem, 10 * fem),
-                        blurRadius: 10 * fem)
+                        offset: Offset(0 * fem, 0 * fem),
+                        blurRadius: 5 * fem)
                   ],
                   image: DecorationImage(
                       image: AssetImage('assets/images/bg-card-level.png'),
@@ -43,7 +43,7 @@ class MemberShipCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 25 * hem, left: 30 * fem),
+                    padding: EdgeInsets.only(top: 25 * hem, left: 35 * fem),
                     child: Container(
                       // color: Colors.red,
                       width: 250 * fem,
@@ -53,16 +53,18 @@ class MemberShipCard extends StatelessWidget {
                             textStyle: TextStyle(
                           fontSize: 20 * ffem,
                           height: heightText,
-                          color: kDarkPrimaryColor,
+                          color: kPrimaryColor,
                           fontWeight: FontWeight.w800,
                         )),
                       ),
                     ),
                   ),
-                  Row(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 30 * hem, left: 30 * fem),
+                        padding: EdgeInsets.only(top: 20*hem, left: 50*fem),
                         child: Text(
                           'Số dư:',
                           style: GoogleFonts.nunito(
@@ -74,52 +76,59 @@ class MemberShipCard extends StatelessWidget {
                           )),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10 * fem, top: 30 * hem),
-                        child: Row(
-                          children: [
-                            Text(
-                              '10',
-                              style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(
-                                fontSize: 20 * ffem,
-                                height: heightText,
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.w900,
-                              )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 20 * fem, top: 0 * hem),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '10',
+                                  style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(
+                                    fontSize: 20 * ffem,
+                                    height: heightText,
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.w900,
+                                  )),
+                                ),
+                                SvgPicture.asset(
+                                  'assets/icons/green-bean-icon.svg',
+                                  width: 30 * fem,
+                                  height: 35 * fem,
+                                )
+                              ],
                             ),
-                            SvgPicture.asset(
-                              'assets/icons/green-bean-icon.svg',
-                              width: 30 * fem,
-                              height: 35 * fem,
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10 * fem, top: 30 * hem),
-                        child: Row(
-                          children: [
-                            Text(
-                              '10',
-                              style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(
-                                fontSize: 20 * ffem,
-                                height: heightText,
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.w900,
-                              )),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 20 * fem, top: 0 * hem),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '10',
+                                  style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(
+                                    fontSize: 20 * ffem,
+                                    height: heightText,
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.w900,
+                                  )),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 4 * fem),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/red-bean-icon.svg',
+                                    width: 30 * fem,
+                                    height: 27 * fem,
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 4 * fem),
-                              child: SvgPicture.asset(
-                                'assets/icons/red-bean-icon.svg',
-                                width: 30 * fem,
-                                height: 27 * fem,
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       )
                     ],
                   )
@@ -127,40 +136,24 @@ class MemberShipCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 130 * hem,
-              left: 255 * fem,
+              top: 160 * hem,
+              left: 260 * fem,
               child: Container(
                 width: 100 * fem,
-                height: 37 * hem,
+                height: 40 * hem,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10 * fem),
+                    borderRadius: BorderRadius.circular(5 * fem),
                     color: kDarkPrimaryColor),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: 12.5 * fem, right: 5 * fem),
-                      child: Text(
-                        'SILVER',
-                        style: GoogleFonts.nunito(
-                          color: Colors.white,
-                          height: heightText,
-                          fontSize: 14 * ffem,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
+                child: Center(
+                  child: Text(
+                    'SE161967',
+                    style: GoogleFonts.nunito(
+                      color: Colors.white,
+                      height: heightText,
+                      fontSize: 14 * ffem,
+                      fontWeight: FontWeight.w900,
                     ),
-                    Container(
-                      width: 20 * fem,
-                      height: 27 * fem,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/upload-file-2ac29.appspot.com/o/levels%2F01HK4J583PKDM0J672X26GSEX2.png?alt=media&token=8c70f59e-68cd-42c4-84ad-c3b18a78a7df',
-                        ),
-                      )),
-                    )
-                  ],
+                  ),
                 ),
               ),
             ),

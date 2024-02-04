@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -14,9 +13,9 @@ class CampaignCarousel extends StatefulWidget {
 class _CampaignCarouselState extends State<CampaignCarousel> {
   int activeIndex = 0;
   final assetImg = [
-    'assets/images/campaign-banner-img.png',
-    'assets/images/campaign-banner-img.png',
-    'assets/images/campaign-banner-img.png',
+    'assets/images/highlands-campaign.jpg',
+    'assets/images/koi-campaign.jpg',
+    'assets/images/highlands-campaign.jpg',
   ];
   @override
   Widget build(BuildContext context) {
@@ -26,12 +25,13 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
           child: CarouselSlider.builder(
             itemCount: assetImg.length,
             options: CarouselOptions(
-              height: 130,
+              // height: 
               autoPlay: true,
               // clipBehavior: Clip.none,
               // reverse: true,
-              autoPlayInterval: Duration(seconds: 2),
+              autoPlayInterval: Duration(seconds: 10),
               enlargeCenterPage: true,
+
               enlargeStrategy: CenterPageEnlargeStrategy.height,
               onPageChanged: (index, reason) {
                 setState(() {
@@ -56,11 +56,11 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
 
   Widget buildImage(String assetImage, int index) => Container(
         width: 300,
-        height: 100,
+        margin: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
-                fit: BoxFit.cover, image: AssetImage(assetImage))),
+                fit: BoxFit.fill, image: AssetImage(assetImage))),
       );
 
   Widget buildIndicator() => AnimatedSmoothIndicator(

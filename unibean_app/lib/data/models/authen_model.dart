@@ -1,12 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:unibean_app/data/models.dart';
 
 class AuthenModel extends Equatable {
   final String jwt;
-  final Object user;
+  final UserModel userModel;
   final String role;
 
-  AuthenModel({required this.jwt, required this.user, required this.role});
+  AuthenModel({required this.jwt, required this.userModel, required this.role});
+
+  factory AuthenModel.fromJson(Map<String, dynamic> json) {
+    var userModel = UserModel.fromJson(json['user']);
+    return AuthenModel(
+        jwt: json['jwt'], userModel: userModel, role: json['role']);
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jwt'] = this.jwt;
+    data['user'] = this.userModel.toJson();
+    data['role'] = this.role;
+    return data;
+  }
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [jwt, userModel, role];
 }

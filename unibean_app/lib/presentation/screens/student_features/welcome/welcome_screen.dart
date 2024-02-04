@@ -15,10 +15,6 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      // ),
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
       body: const Body(),

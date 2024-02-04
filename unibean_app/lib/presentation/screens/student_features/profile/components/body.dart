@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/button_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/information_card_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_trans/profile_trans_screen.dart';
+
+import '../../../../blocs/blocs.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -58,6 +63,22 @@ class Body extends StatelessWidget {
                               fem: fem,
                               hem: hem,
                               ffem: ffem,
+                              widthIcon: 16,
+                              heightIcon: 16,
+                              onPressed: () {
+                                Navigator.pushNamed(context,
+                                    ProfileTransactionHistoryScreen.routeName);
+                              },
+                              svgIcon: 'assets/icons/change-bean-icon.svg',
+                              title: 'Đổi bean lấy quà',
+                            ),
+                            SizedBox(
+                              height: 10 * hem,
+                            ),
+                            ButtonProfile(
+                              fem: fem,
+                              hem: hem,
+                              ffem: ffem,
                               widthIcon: 20,
                               heightIcon: 20,
                               onPressed: () {
@@ -91,13 +112,14 @@ class Body extends StatelessWidget {
                             SizedBox(
                               height: 10 * hem,
                             ),
+                            //button logout
                             ButtonProfile(
                                 fem: fem,
                                 hem: hem,
                                 ffem: ffem,
                                 svgIcon: 'assets/icons/logout-icon.svg',
                                 title: 'Đăng xuất',
-                                onPressed: () {}),
+                                onPressed: () => _dialogLogout(context)),
                           ],
                         ),
                       )),
@@ -108,5 +130,50 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _dialogLogout(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Bạn có muốn đăng xuất không?',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(
+                  textStyle: TextStyle(
+                      fontSize: 17,
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.w700)),
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Không',
+                    style: GoogleFonts.nunito(
+                        textStyle:
+                            TextStyle(color: Colors.black, fontSize: 15)),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.read<RoleAppBloc>().add(RoleAppEnd());
+                    context
+                        .read<LandingScreenBloc>()
+                        .add(TabChange(tabIndex: 0));
+                  },
+                  child: Text(
+                    'Có',
+                    style: GoogleFonts.nunito(
+                        textStyle:
+                            TextStyle(color: Colors.black, fontSize: 15)),
+                  )),
+            ],
+          );
+        });
   }
 }

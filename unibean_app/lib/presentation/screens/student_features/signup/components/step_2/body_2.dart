@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/form_2.dart';
+
 class Body2 extends StatelessWidget {
   const Body2({super.key});
 
@@ -19,12 +20,21 @@ class Body2 extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/bg_signup_2.png'),
+          image: AssetImage('assets/images/bg_signup_1.png'),
         )),
         child: Column(
           children: [
             SizedBox(
-              height: 400 * hem,
+              height: 80 * hem,
+            ),
+            Container(
+              width: 300 * fem,
+              height: 330 * hem,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                          'assets/images/bg_signup_2-removebg.png'))),
             ),
             Text(
               'Trường bạn đang học',
@@ -59,5 +69,3 @@ class Body2 extends StatelessWidget {
     );
   }
 }
-
-

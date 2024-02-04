@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-import 'package:unibean_app/presentation/screens/splash/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/splash';

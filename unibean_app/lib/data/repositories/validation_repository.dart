@@ -4,7 +4,6 @@ import 'package:unibean_app/domain/repositories.dart';
 
 import '../../presentation/config/constants.dart';
 import 'package:http/http.dart' as http;
-
 class ValidationRepositoryImp implements ValidationRepository {
   String endPoint = '${baseURL}validations';
 
@@ -38,6 +37,44 @@ class ValidationRepositoryImp implements ValidationRepository {
       Map<String, String> body = {'userName': userName};
 
       http.Response response = await http.post(Uri.parse('$endPoint/username'),
+          headers: headers, body: jsonEncode(body));
+
+      if (response.statusCode == 200) {
+        return '';
+      }
+      return response.body;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<String> validateStudentCode({required String studentCode}) async {
+    try {
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
+
+      Map<String, String> body = {'code': studentCode};
+
+      http.Response response = await http.post(Uri.parse('$endPoint/code'),
+          headers: headers, body: jsonEncode(body));
+
+      if (response.statusCode == 200) {
+        return '';
+      }
+      return response.body;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<String> validatePhoneNumber({required String phoneNumber}) async {
+    try {
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
+
+      Map<String, String> body = {'phone': phoneNumber};
+
+      http.Response response = await http.post(Uri.parse('$endPoint/phone'),
           headers: headers, body: jsonEncode(body));
 
       if (response.statusCode == 200) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:unibean_app/presentation/blocs/validation/validation_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
@@ -30,7 +29,6 @@ class FormBody extends StatefulWidget {
 
 class _FormBodyState extends State<FormBody> {
   final _formKey = GlobalKey<FormState>();
-  var box = Hive.box('myBox');
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
@@ -192,9 +190,9 @@ class _FormBodyState extends State<FormBody> {
                           .validateUserName(userNameController.text)
                           .then((value) {
                         if (value == '') {
-                          box.put('userNameSignUp', userNameController.text);
-                          box.put('passSignUp', userNameController.text);
-                          box.put('confPassSignUp', confirmPassController.text);
+                          // box.put('userNameSignUp', userNameController.text);
+                          // box.put('passSignUp', userNameController.text);
+                          // box.put('confPassSignUp', confirmPassController.text);
                           Navigator.pushNamed(context, SignUp1Screen.routeName,
                               arguments: true);
                         } else {

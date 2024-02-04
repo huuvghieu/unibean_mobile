@@ -4,3 +4,7 @@ export 'models/major_model.dart';
 export 'models/api_response.dart';
 export 'models/university_model.dart';
 export 'models/authen_model.dart';
+export 'models/campus_model.dart';
+export 'models/gender_model.dart';
+export 'models/user_model.dart';
+export 'models/campaign_model.dart';

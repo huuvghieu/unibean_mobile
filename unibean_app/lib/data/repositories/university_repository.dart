@@ -13,8 +13,9 @@ class UniversityRepositoryImp implements UniversityRepository {
   int limit = 10;
 
   @override
-  Future<ApiResponse<List<UniversityModel>>?> fetchUnversities({int? page}) async{
-        try {
+  Future<ApiResponse<List<UniversityModel>>?> fetchUnversities(
+      {int? page}) async {
+    try {
       final Map<String, String> headers = {'Content-Type': 'application/json'};
       if (page == null) {
         page = this.page;
@@ -26,8 +27,10 @@ class UniversityRepositoryImp implements UniversityRepository {
       if (response.statusCode == 200) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         ApiResponse<List<UniversityModel>> apiResponse =
-            ApiResponse<List<UniversityModel>>.fromJson(result,
-                (data) => data.map((e) => UniversityModel.fromJson(e)).toList());
+            ApiResponse<List<UniversityModel>>.fromJson(
+                result,
+                (data) =>
+                    data.map((e) => UniversityModel.fromJson(e)).toList());
         print(apiResponse.result);
         return apiResponse;
       } else {

@@ -84,7 +84,7 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
         ),
         hintStyle: GoogleFonts.nunito(
             textStyle: TextStyle(
-                color: Colors.black,
+                color: kLowTextColor,
                 fontSize: 17 * widget.ffem,
                 fontWeight: FontWeight.w700)),
         contentPadding: EdgeInsets.symmetric(
@@ -100,10 +100,10 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
             gapPadding: 10),
       ),
-      value: universities[0].id,
+      // value: universities[0].id,
       onChanged: (newValue) {
         setState(() {
-          // wid
+          context.read<CampusBloc>().add(LoadCampus(universityId: newValue.toString()));
         });
       },
       items: universities.map((u) {

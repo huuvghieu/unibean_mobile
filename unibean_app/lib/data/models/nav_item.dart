@@ -29,7 +29,7 @@ class NavItem {
           'assets/icons/voucher-navbar-icon.svg',
           colorFilter: ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
         ),
-        "Kho Voucher"),
+        "Kho Ưu Đãi"),
     NavItem(
         SvgPicture.asset(
           'assets/icons/reward-navbar-icon.svg',

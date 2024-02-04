@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:unibean_app/presentation/blocs/validation/validation_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
@@ -33,7 +32,7 @@ class _FormBody1State extends State<FormBody1> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  var box = Hive.box('myBox');
+  // var box = Hive.box('myBox');
 
   @override
   Widget build(BuildContext context) {
@@ -168,8 +167,8 @@ class _FormBody1State extends State<FormBody1> {
                           .validateEmail(emailController.text)
                           .then((value) {
                         if (value == '') {
-                          box.put('nameSignUp', nameController.text);
-                          box.put('avatarSignUp', widget.avatar);
+                          // box.put('nameSignUp', nameController.text);
+                          // box.put('avatarSignUp', widget.avatar);
                           Navigator.pushNamed(context, SignUp2Screen.routeName,
                               arguments: SignUp1Screen.defaultRegister);
                         } else {
