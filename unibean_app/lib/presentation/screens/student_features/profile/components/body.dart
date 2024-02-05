@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/button_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/information_card_profile.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_products/product_screen.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_trans/profile_trans_screen.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_voucher/profile_voucher_screen.dart';
 
 import '../../../../blocs/blocs.dart';
 
@@ -67,7 +69,7 @@ class Body extends StatelessWidget {
                               heightIcon: 16,
                               onPressed: () {
                                 Navigator.pushNamed(context,
-                                    ProfileTransactionHistoryScreen.routeName);
+                                    ProductScreen.routeName);
                               },
                               svgIcon: 'assets/icons/change-bean-icon.svg',
                               title: 'Đổi bean lấy quà',
@@ -96,8 +98,11 @@ class Body extends StatelessWidget {
                                 hem: hem,
                                 ffem: ffem,
                                 svgIcon: 'assets/icons/voucher-navbar-icon.svg',
-                                title: 'Uni Student Bean',
-                                onPressed: () {}),
+                                title: 'Ưu đãi của bạn',
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, ProfileVoucherScreen.routeName);
+                                }),
                             SizedBox(
                               height: 10 * hem,
                             ),

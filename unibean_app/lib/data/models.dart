@@ -8,3 +8,5 @@ export 'models/campus_model.dart';
 export 'models/gender_model.dart';
 export 'models/user_model.dart';
 export 'models/campaign_model.dart';
+export 'models/voucher_model.dart';
+export 'models/product_model.dart';

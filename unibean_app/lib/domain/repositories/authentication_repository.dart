@@ -4,4 +4,6 @@ abstract class AuthenticationRepository {
   const AuthenticationRepository();
 
   Future<AuthenModel?> loginWithAccount(String userName, String password);
+
+  
 }

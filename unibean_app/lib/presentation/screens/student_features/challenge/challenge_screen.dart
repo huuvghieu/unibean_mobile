@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/challenge/components/body.dart';
+import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
 
 import '../../../widgets/card_for_unknow.dart';
 
@@ -38,7 +39,9 @@ class ChallengeScreen extends StatelessWidget {
   }
 
   Widget _buildUnknown(double fem, double hem, double ffem) {
-    return CardForUnknow(fem: fem, hem: hem, ffem: ffem);
+    return Scaffold(
+        appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+        body: CardForUnknow(fem: fem, hem: hem, ffem: ffem));
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {

@@ -5,6 +5,8 @@ import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/body.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
 
+import '../../../widgets/app_bar_campaign.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -30,7 +32,9 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildUnknown(double fem, double hem, double ffem) {
-    return CardForUnknow(fem: fem, hem: hem, ffem: ffem);
+    return Scaffold(
+        appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+        body: CardForUnknow(fem: fem, hem: hem, ffem: ffem));
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {

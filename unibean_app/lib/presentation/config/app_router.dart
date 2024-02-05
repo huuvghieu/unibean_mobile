@@ -50,6 +50,12 @@ class AppRouter {
       case ProfileTransactionHistoryScreen.routeName:
         return ProfileTransactionHistoryScreen.route();
 
+      case ProfileVoucherScreen.routeName:
+        return ProfileVoucherScreen.route();
+
+      case ProductScreen.routeName:
+        return ProductScreen.route();
+
       case CampaignScreen.routeName:
         return CampaignScreen.route();
 

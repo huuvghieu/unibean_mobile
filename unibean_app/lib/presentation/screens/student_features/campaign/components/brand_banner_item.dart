@@ -44,7 +44,7 @@ class BrandBannerItem extends StatelessWidget {
                     textStyle: TextStyle(
                   fontSize: 13 * ffem,
                   height: heightText,
-                  color: Colors.grey,
+                  color: Colors.black,
                   fontWeight: FontWeight.normal,
                 )),
               ),

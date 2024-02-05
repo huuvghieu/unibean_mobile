@@ -35,13 +35,7 @@ class Body extends StatelessWidget {
                 ),
                 BlocBuilder<RoleAppBloc, RoleAppState>(
                   builder: (context, state) {
-                    if (state is RoleAppLoading) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: kPrimaryColor,
-                        ),
-                      );
-                    } else if (state is RoleAppStudentVerified) {
+                    if (state is RoleAppStudentVerified) {
                       return MemberShipCard(
                           fem: fem,
                           hem: hem,

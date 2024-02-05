@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 
+
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/splash';
 
@@ -21,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool animate = false;
   var box = Hive.box('myBox');
   var launchApp = false;
+  
 
   @override
   void initState() {

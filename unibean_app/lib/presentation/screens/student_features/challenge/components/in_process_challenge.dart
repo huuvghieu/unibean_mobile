@@ -62,20 +62,24 @@ class InProcessChallenge extends StatelessWidget {
                             )
                           ],
                         ),
-                        Stack(
+                          Container(
+                            // color: Colors.red,
+                width: 340 * fem,
+                height: 190 * hem,
+                child: Stack(
                   children: [
                     Container(
                       width: 330 * fem,
                       height: 185 * hem,
                       margin: EdgeInsets.only(
-                          top: 25 * hem, left: 20 * fem, right: 20 * fem),
+                          left: 20 * fem, right: 20 * fem),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15 * fem),
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
                                 color: Color(0x0c000000),
-                                offset: Offset(10 * fem, 10 * fem),
+                                offset: Offset(0 * fem, 10 * fem),
                                 blurRadius: 5 * fem)
                           ]),
                       child: Column(
@@ -154,6 +158,7 @@ class InProcessChallenge extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
                       ],
                       
                     ),

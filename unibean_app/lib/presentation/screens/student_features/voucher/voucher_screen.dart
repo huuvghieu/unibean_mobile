@@ -24,13 +24,7 @@ class VoucherScreen extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
     final roleState = context.watch<RoleAppBloc>().state;
 
-    return BlocListener<RoleAppBloc, RoleAppState>(
-        listener: (context, state) {
-          // if (state is RoleAppUnknown) {
-          //   Navigator.pushNamed(context, LoginScreen.routeName);
-          // }
-        },
-        child: authenScreen(roleState, fem, hem, ffem, context));
+    return authenScreen(roleState, fem, hem, ffem, context);
   }
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
