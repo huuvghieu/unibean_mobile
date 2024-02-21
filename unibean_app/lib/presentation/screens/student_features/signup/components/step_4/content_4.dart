@@ -52,7 +52,13 @@ class Content4 extends StatelessWidget {
               hem: widget.hem,
               fem: widget.fem,
               ffem: widget.ffem,
-              labelText: 'CHUYÊN NGÀNH',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Chuyên ngành không được bỏ trống';
+                }
+                return null;
+              },
+              labelText: 'CHUYÊN NGÀNH *',
               hintText: 'Chọn chuyên ngành'),
           SizedBox(
             height: 40 * widget.hem,

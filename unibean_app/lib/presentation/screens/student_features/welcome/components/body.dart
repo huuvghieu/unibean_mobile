@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/login/login_screen.dart';
@@ -100,8 +99,8 @@ class Body extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  // Navigator.pushNamed(context, LoginScreen.routeName);
-                  context.go(LoginScreen.routeName);
+                  Navigator.pushNamed(context, LoginScreen.routeName);
+                 
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),

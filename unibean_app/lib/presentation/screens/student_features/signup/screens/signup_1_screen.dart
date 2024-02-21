@@ -8,14 +8,9 @@ class SignUp1Screen extends StatefulWidget {
   static const String routeName = '/signup_1';
 
   static Route route({required bool register}) {
-    return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => SignUp1Screen(
-              register: register,
-            ),
-        transitionDuration: Duration(seconds: 1),
-        transitionsBuilder: (_, a, __, c) =>
-            FadeTransition(opacity: a, child: c),
-        settings: const RouteSettings(name: routeName));
+    return MaterialPageRoute(
+        builder: (_) => SignUp1Screen(register: register),
+        settings: const RouteSettings(arguments: routeName));
   }
 
   final bool register;
@@ -33,10 +28,10 @@ class _SignUp1ScreenState extends State<SignUp1Screen> {
   @override
   void initState() {
     if (widget.register == true) {
-      title = 'Bước 2/7';
+      title = 'Bước 2/8';
       SignUp1Screen.defaultRegister = true;
     } else {
-      title = 'Bước 1/6';
+      title = 'Bước 1/7';
       SignUp1Screen.defaultRegister = false;
     }
     super.initState();

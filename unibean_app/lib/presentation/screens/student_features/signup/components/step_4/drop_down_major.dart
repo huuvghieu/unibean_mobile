@@ -12,14 +12,15 @@ class DropDownMajor extends StatefulWidget {
   final double ffem;
   final String labelText;
   final String hintText;
-  const DropDownMajor({
-    super.key,
-    required this.hem,
-    required this.fem,
-    required this.ffem,
-    required this.labelText,
-    required this.hintText,
-  });
+  final FormFieldValidator<String> validator;
+  const DropDownMajor(
+      {super.key,
+      required this.hem,
+      required this.fem,
+      required this.ffem,
+      required this.labelText,
+      required this.hintText,
+      required this.validator});
 
   @override
   State<DropDownMajor> createState() => _DropDownMajorState();
@@ -36,7 +37,6 @@ class _DropDownMajorState extends State<DropDownMajor> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 43 * widget.hem,
       width: 272 * widget.fem,
       child: BlocConsumer<MajorBloc, MajorState>(
         listener: (context, state) {
@@ -63,6 +63,7 @@ class _DropDownMajorState extends State<DropDownMajor> {
 
   DropdownButtonFormField<String> _dropDownMajorLoaded() {
     return DropdownButtonFormField(
+      validator: widget.validator,
       style: GoogleFonts.nunito(
           textStyle: TextStyle(
               color: Colors.black,
@@ -91,6 +92,11 @@ class _DropDownMajorState extends State<DropDownMajor> {
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
             gapPadding: 10),
         focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(28 * widget.fem),
+            borderSide: BorderSide(
+                width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
+            gapPadding: 10),
+        errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(28 * widget.fem),
             borderSide: BorderSide(
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),

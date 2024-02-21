@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
+import 'package:unibean_app/domain/repositories.dart';
 
 import '../../../data/models.dart';
 
@@ -8,7 +9,8 @@ part 'role_app_event.dart';
 part 'role_app_state.dart';
 
 class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
-  RoleAppBloc() : super(RoleAppUnknown()) {
+  final StudentRepository studentRepository;
+  RoleAppBloc(this.studentRepository) : super(RoleAppUnknown()) {
     on<RoleAppStart>(_onStartRoleApp);
     on<RoleAppEnd>(_onEndRoleApp);
   }
@@ -18,10 +20,13 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
     emit(RoleAppLoading());
     try {
       final authenModel = await AuthenLocalDataSource.getAuthen();
-      bool isVerify = authenModel!.userModel.isVerify;
+      final student = await
+          studentRepository.fetchStudentById(id: authenModel!.userModel.userId);
+      bool isVerify = authenModel.userModel.isVerify;
       String role = authenModel.role;
-      if (role == 'Student' && isVerify == true) {
-        emit(RoleAppStudentVerified(authenModel: authenModel));
+      if (role == 'Student' && isVerify == true && student != null) {
+        emit(RoleAppStudentVerified(authenModel: authenModel,
+        studentModel: student));
       } else if (role == 'Student' && isVerify == false) {
         emit(RoleAppStudentUnverified());
       } else if (role == 'Store') {

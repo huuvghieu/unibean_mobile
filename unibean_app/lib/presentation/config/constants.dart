@@ -9,6 +9,7 @@ const kDarkPrimaryColor = Color(0xff1d4d4f);
 const kLowTextColor = Color(0xff989da3);
 const kbgWhiteColor = Color(0xfff8f6fb);
 const klighGreyColor = Color(0xffececf1);
+const kErrorTextColor = Color(0xffba1c1c);
 
 //strings
 const String baseURL = 'https://unibean.azurewebsites.net/api/v1/';
@@ -32,5 +33,3 @@ final RegExp phoneNumberPattern = RegExp(r'^\d{10}$');
 
 //response failed from api
 final String invalidStudentCode = '["Student code is already in use"]';
-
-

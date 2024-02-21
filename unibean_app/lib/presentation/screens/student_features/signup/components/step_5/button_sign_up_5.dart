@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/form_5.dart';
-
-import '../../../../../config/constants.dart';
-import '../../../../../cubits/validation/validation_cubit.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/form_body_5.dart';
 
 class ButtonSignUp5 extends StatelessWidget {
-  const ButtonSignUp5(
-      {super.key, required this.widget, required this.onPressed});
+  const ButtonSignUp5({
+    super.key,
+    required this.widget,
+    required this.onPressed,
+  });
 
   final FormBody5 widget;
   final VoidCallback onPressed;
@@ -16,6 +18,10 @@ class ButtonSignUp5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      // onPressed: () {
+      //   Navigator.pushNamed(context, SignUp5Screen.routeName,
+      //       arguments: SignUp1Screen.defaultRegister);
+      // },
       onPressed: onPressed,
       child: Container(
         width: 300 * widget.fem,
@@ -28,7 +34,7 @@ class ButtonSignUp5 extends StatelessWidget {
             if (state is ValidationInProcess) {
               return Center(
                 child: CircularProgressIndicator(
-                  color: kPrimaryColor,
+                  color: Colors.white,
                 ),
               );
             }

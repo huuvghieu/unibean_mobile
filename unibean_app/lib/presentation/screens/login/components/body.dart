@@ -84,6 +84,8 @@ class Body extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, SignUpScreen.routeName);
+                      // Navigator.pushNamed(context, SignUp6Screen.routeName,
+                      //         arguments: true);
                   },
                   child: Padding(
                     padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),

@@ -168,7 +168,7 @@ class Body extends StatelessWidget {
                                                         15 * fem),
                                                 image: DecorationImage(
                                                     image: AssetImage(
-                                                        CampaignModel
+                                                        CampaignDemo
                                                             .listCampaign[0]
                                                             .assetImage),
                                                     fit: BoxFit.fill)),
@@ -179,7 +179,7 @@ class Body extends StatelessWidget {
                                                 right: 12 * fem,
                                                 top: 10 * hem),
                                             child: Text(
-                                              CampaignModel
+                                              CampaignDemo
                                                   .listCampaign[0].name,
                                               style: GoogleFonts.nunito(
                                                   textStyle: TextStyle(
@@ -218,7 +218,7 @@ class Body extends StatelessWidget {
                                                         15 * fem),
                                                 image: DecorationImage(
                                                     image: AssetImage(
-                                                        CampaignModel
+                                                        CampaignDemo
                                                             .listCampaign[1]
                                                             .assetImage),
                                                     fit: BoxFit.fill)),
@@ -229,7 +229,7 @@ class Body extends StatelessWidget {
                                                 right: 12 * fem,
                                                 top: 10 * hem),
                                             child: Text(
-                                              CampaignModel
+                                              CampaignDemo
                                                   .listCampaign[1].name,
                                               style: GoogleFonts.nunito(
                                                   textStyle: TextStyle(

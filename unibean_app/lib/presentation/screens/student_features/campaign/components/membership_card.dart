@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 class MemberShipCard extends StatelessWidget {
@@ -10,12 +11,14 @@ class MemberShipCard extends StatelessWidget {
     required this.hem,
     required this.ffem,
     required this.heightText,
+    required this.studentModel,
   });
 
   final double fem;
   final double hem;
   final double ffem;
   final double heightText;
+  final StudentModel studentModel;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class MemberShipCard extends StatelessWidget {
                       // color: Colors.red,
                       width: 250 * fem,
                       child: Text(
-                        'Xin Chào,\nPhạm Quốc Thịnh!',
+                        'Xin Chào,\n${studentModel.fullName}',
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
                           fontSize: 20 * ffem,
@@ -64,7 +67,7 @@ class MemberShipCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 20*hem, left: 50*fem),
+                        padding: EdgeInsets.only(top: 20 * hem, left: 50 * fem),
                         child: Text(
                           'Số dư:',
                           style: GoogleFonts.nunito(
@@ -85,7 +88,7 @@ class MemberShipCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '10',
+                                  '${studentModel.greenWalletBalance.toStringAsFixed(0)}',
                                   style: GoogleFonts.nunito(
                                       textStyle: TextStyle(
                                     fontSize: 20 * ffem,
@@ -108,7 +111,7 @@ class MemberShipCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '10',
+                                  '${studentModel.redWalletBalance.toStringAsFixed(0)}',
                                   style: GoogleFonts.nunito(
                                       textStyle: TextStyle(
                                     fontSize: 20 * ffem,
@@ -146,7 +149,7 @@ class MemberShipCard extends StatelessWidget {
                     color: kDarkPrimaryColor),
                 child: Center(
                   child: Text(
-                    'SE161967',
+                    '${studentModel.code}',
                     style: GoogleFonts.nunito(
                       color: Colors.white,
                       height: heightText,
@@ -158,14 +161,15 @@ class MemberShipCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 5 * hem,
-              right: 20 * fem,
+              top: 10 * hem,
+              right: 25 * fem,
               child: Container(
-                width: 110 * fem,
-                height: 110 * hem,
+                width: 90 * fem,
+                height: 90 * hem,
                 decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(100),
                     image: DecorationImage(
-                        image: AssetImage('assets/images/ava_signup.png'),
+                        image: NetworkImage('${studentModel.avatar}'),
                         fit: BoxFit.cover)),
               ),
             ),

@@ -158,7 +158,16 @@ class _FormBody1State extends State<FormBody1> {
                       context
                           .read<ValidationCubit>()
                           .validateEmail(emailController.text)
-                          .then((value) => null);
+                          .then((value) {
+                        if (value == '') {
+                          // box.put('nameSignUp', nameController.text);
+                          // box.put('avatarSignUp', widget.avatar);
+                          Navigator.pushNamed(context, SignUp2Screen.routeName,
+                              arguments: SignUp1Screen.defaultRegister);
+                        } else {
+                          return null;
+                        }
+                      });
                     }
                   } else {
                     if (_formKey.currentState!.validate()) {

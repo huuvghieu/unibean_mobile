@@ -8,6 +8,7 @@ import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
+import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';
 
 import 'presentation/blocs/blocs.dart';
@@ -40,17 +41,23 @@ class MyApp extends StatelessWidget {
             create: (_) => AuthenticationRepositoryImp()),
         RepositoryProvider<ValidationRepository>(
             create: (_) => ValidationRepositoryImp()),
+        RepositoryProvider<VerificationRepository>(
+            create: (_) => VerificationRepositoryImp()),
         RepositoryProvider<UniversityRepository>(
             create: (_) => UniversityRepositoryImp()),
         RepositoryProvider<CampusRepository>(
             create: (_) => CampusRepositoryImp()),
         RepositoryProvider<MajorRepository>(
             create: (_) => MajorRepositoryImp()),
+        RepositoryProvider<StudentRepository>(
+            create: (_) => StudentRepositoryImp()),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => LandingScreenBloc()),
-          BlocProvider(create: (context) => RoleAppBloc()..add(RoleAppStart())),
+          BlocProvider(
+              create: (context) =>
+                  RoleAppBloc(StudentRepositoryImp())..add(RoleAppStart())),
           BlocProvider(
             create: (context) => AuthenticationBloc(
                 authenticationRepository: AuthenticationRepositoryImp())
@@ -59,6 +66,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => ValidationCubit(ValidationRepositoryImp())
                 ..loadingValidation()),
+          BlocProvider(
+              create: (context) =>
+                  VerificationCubit(VerificationRepositoryImp())
+                    ..loadingVerification()),
           BlocProvider(
               create: (context) => UniversityBloc(
                   universityRepository: UniversityRepositoryImp())

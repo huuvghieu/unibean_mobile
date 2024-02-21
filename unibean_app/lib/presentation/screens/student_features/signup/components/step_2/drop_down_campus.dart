@@ -12,6 +12,9 @@ class DropDownCampus extends StatefulWidget {
   final double ffem;
   final String labelText;
   final String hintText;
+  final TextEditingController campusController;
+    final FormFieldValidator<String> validator;
+
   const DropDownCampus({
     super.key,
     required this.hem,
@@ -19,6 +22,8 @@ class DropDownCampus extends StatefulWidget {
     required this.ffem,
     required this.labelText,
     required this.hintText,
+    required this.campusController,
+    required this.validator
   });
 
   @override
@@ -36,7 +41,7 @@ class _DropDownCampusState extends State<DropDownCampus> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 43 * widget.hem,
+      // height: 43 * widget.hem,
       width: 272 * widget.fem,
       child: BlocConsumer<CampusBloc, CampusState>(
         listener: (context, state) {
@@ -63,6 +68,7 @@ class _DropDownCampusState extends State<DropDownCampus> {
 
   DropdownButtonFormField<String> _dropDownUniversityLoaded() {
     return DropdownButtonFormField(
+      validator: widget.validator,
       style: GoogleFonts.nunito(
           textStyle: TextStyle(
               color: Colors.black,
@@ -95,11 +101,15 @@ class _DropDownCampusState extends State<DropDownCampus> {
             borderSide: BorderSide(
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
             gapPadding: 10),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(28 * widget.fem),
+            borderSide: BorderSide(
+                width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
+            gapPadding: 10),
       ),
-      // value: campuses[0].id,
       onChanged: (newValue) {
         setState(() {
-          // wid
+          widget.campusController.text = newValue!;
         });
       },
       items: campuses.map((u) {

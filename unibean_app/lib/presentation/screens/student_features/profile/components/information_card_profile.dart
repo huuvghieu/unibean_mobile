@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/models/student_model.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile/components/item_icon_card_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/name_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/student_code_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/unitiversity_name_profile.dart';
@@ -13,11 +13,13 @@ class InformationCardProfile extends StatelessWidget {
     required this.hem,
     required this.fem,
     required this.ffem,
+    required this.studentModel,
   });
 
   final double hem;
   final double fem;
   final double ffem;
+  final StudentModel studentModel;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +59,8 @@ class InformationCardProfile extends StatelessWidget {
                     height: 80 * fem,
                     child: FittedBox(
                       child: Image(
-                          image: AssetImage(
-                        'assets/images/bulldog.png',
+                          image: NetworkImage(
+                        '${studentModel.avatar}',
                       )),
                       fit: BoxFit.cover,
                     ),
@@ -78,7 +80,7 @@ class InformationCardProfile extends StatelessWidget {
                       NameProfile(fem: fem, ffem: ffem, hem: hem),
                       //email
                       Text(
-                        'hieuvhse161967@fpt.edu.vn',
+                        '${studentModel.email}',
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
                                 fontSize: 10 * ffem,
@@ -87,9 +89,19 @@ class InformationCardProfile extends StatelessWidget {
                                 color: kLowTextColor)),
                       ),
                       //student code
-                      StudentCodeProfile(hem: hem, fem: fem, ffem: ffem),
+                      StudentCodeProfile(
+                        hem: hem,
+                        fem: fem,
+                        ffem: ffem,
+                        studentCode: studentModel.code,
+                      ),
                       //university name
-                      UniversityProfile(fem: fem, hem: hem, ffem: ffem)
+                      UniversityProfile(
+                        fem: fem,
+                        hem: hem,
+                        ffem: ffem,
+                        university: studentModel.universityName,
+                      )
                     ],
                   ),
                 ),
@@ -110,22 +122,9 @@ class InformationCardProfile extends StatelessWidget {
                 top: 10 * hem,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ItemIconCardProfile(
-                    fem: fem,
-                    hem: hem,
-                    ffem: ffem,
-                    svgAssetName: 'assets/icons/post-icon-profile.svg',
-                    title: '10 Posts',
-                  ),
-                  ItemIconCardProfile(
-                    fem: fem,
-                    hem: hem,
-                    ffem: ffem,
-                    svgAssetName: 'assets/icons/friends-icon-profile.svg',
-                    title: '15 Friends',
-                  ),
+                
                   Column(
                     children: [
                       InkWell(

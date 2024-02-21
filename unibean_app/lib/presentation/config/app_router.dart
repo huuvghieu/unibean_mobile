@@ -45,7 +45,10 @@ class AppRouter {
         return SignUp6Screen.route();
 
       case SignUp7Screen.routeName:
-        return SignUp7Screen.route();
+        return SignUp7Screen.route(phoneNumber: settings.arguments as String);
+
+      case SignUp8Screen.routeName:
+        return SignUp8Screen.route();        
 
       case ProfileTransactionHistoryScreen.routeName:
         return ProfileTransactionHistoryScreen.route();

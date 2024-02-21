@@ -6,11 +6,8 @@ import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 class SignUp4Screen extends StatefulWidget {
   static const String routeName = '/signup_4';
   static Route route() {
-    return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => SignUp4Screen(),
-        transitionDuration: Duration(seconds: 1),
-        transitionsBuilder: (_, a, __, c) =>
-            FadeTransition(opacity: a, child: c),
+    return MaterialPageRoute(
+        builder: (_) => SignUp4Screen(),
         settings: const RouteSettings(name: routeName));
   }
 
@@ -26,9 +23,9 @@ class _SignUp4ScreenState extends State<SignUp4Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 5/7';
+      title = 'Bước 5/8';
     } else {
-      title = 'Bước 4/6';
+      title = 'Bước 4/7';
     }
     super.initState();
   }

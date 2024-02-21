@@ -34,7 +34,6 @@ class _DropDownGenderState extends State<DropDownGender> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 43 * widget.hem,
         width: 272 * widget.fem,
         child: DropdownButtonFormField(
           style: GoogleFonts.nunito(

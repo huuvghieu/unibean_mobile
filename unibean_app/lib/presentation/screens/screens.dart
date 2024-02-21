@@ -8,6 +8,7 @@ export 'student_features/signup/screens/signup_4_screen.dart';
 export 'student_features/signup/screens/signup_5_screen.dart';
 export 'student_features/signup/screens/signup_6_screen.dart';
 export 'student_features/signup/screens/signup_7_screen.dart';
+export 'student_features/signup/screens/signup_8_screen.dart';
 export 'student_features/signup/screens/signup_screen.dart';
 export 'splash/splash_screen.dart';
 export 'splash/onboarding_screen.dart';

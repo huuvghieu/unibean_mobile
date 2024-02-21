@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinput/pinput.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_7/otp_form.dart';
+
+// import '../../../../screens.dart';
 
 class Body7 extends StatelessWidget {
-  const Body7({super.key});
+  final String phoneNumber;
+  const Body7({super.key, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +17,19 @@ class Body7 extends StatelessWidget {
     double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
+
+    final defaultPinTheme = PinTheme(
+        width: 50 * fem,
+        height: 60 * hem,
+        textStyle: GoogleFonts.nunito(
+            textStyle: TextStyle(
+                fontSize: 22 * ffem,
+                fontWeight: FontWeight.w900,
+                height: 1.3625 * ffem / fem,
+                color: Colors.black)),
+        decoration: BoxDecoration(
+            // color: kPrimaryColor,
+            border: Border(bottom: BorderSide(color: Colors.black))));
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
@@ -19,15 +37,15 @@ class Body7 extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage('assets/images/bg_signup_6.png'),
+          image: AssetImage('assets/images/bg_signup_5.png'),
         )),
         child: Column(
           children: [
             SizedBox(
-              height: 500 * hem,
+              height: 400 * hem,
             ),
             Text(
-              'Bạn đã sẵn sàng bắt đầu!',
+              'Nhập mã xác nhận',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -40,7 +58,7 @@ class Body7 extends StatelessWidget {
               height: 10 * hem,
             ),
             Text(
-              'Cảm ơn bạn đã đăng ký.\n Giờ đây, bạn có thể tham gia vào các sự kiện\n yêu thích, các kênh thông tin để tích lũy\n những ưu đãi hấp dẫn.',
+              'Nhập mã số xác nhận đã được gửi đến\n số điện thoại $phoneNumber',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -50,35 +68,15 @@ class Body7 extends StatelessWidget {
                       color: kLowTextColor)),
             ),
             SizedBox(
-              height: 60 * hem,
+              height: 30 * hem,
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/landing-screen',
-                    (Route<dynamic> route) => false);
-              },
-              child: Container(
-                width: 300 * fem,
-                height: 45 * hem,
-                decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(23 * fem)),
-                child: Center(
-                  child: Text(
-                    'Bắt đầu',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 17 * ffem,
-                            fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
-                            color: Colors.white)),
-                  ),
-                ),
-              ),
-            ),
+            OTPForm(fem: fem, hem: hem, defaultPinTheme: defaultPinTheme, ffem: ffem),
           ],
         ),
       ),
     );
   }
 }
+
+
+

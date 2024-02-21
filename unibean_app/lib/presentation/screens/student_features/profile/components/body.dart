@@ -22,117 +22,134 @@ class Body extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
     return SingleChildScrollView(
-      child: Container(
-        // color: Colors.black,
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/background_splash.png'),
-                fit: BoxFit.cover)),
-        child: Column(
-          children: [
-            Container(
+      child: BlocBuilder<RoleAppBloc, RoleAppState>(
+        builder: (context, state) {
+          if (state is RoleAppStudentVerified) {
+            return Container(
+              // color: Colors.black,
+              width: double.infinity,
               height: MediaQuery.of(context).size.height,
-              child: Stack(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background_splash.png'),
+                      fit: BoxFit.cover)),
+              child: Column(
                 children: [
-                  //background body
-                  Positioned(
-                    left: 0 * fem,
-                    top: 180 * hem,
-                    child: Align(
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          color: Color(0xfff8f6fb)),
-                    ),
-                  ),
-
-                  //widget information of profile
-                  InformationCardProfile(hem: hem, fem: fem, ffem: ffem),
-
-                  Positioned(
-                      left: 0 * fem,
-                      top: 350 * hem,
-                      child: Container(
-                        // color: Colors.red,
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-
-                        child: Column(
-                          children: [
-                            ButtonProfile(
-                              fem: fem,
-                              hem: hem,
-                              ffem: ffem,
-                              widthIcon: 16,
-                              heightIcon: 16,
-                              onPressed: () {
-                                Navigator.pushNamed(context,
-                                    ProductScreen.routeName);
-                              },
-                              svgIcon: 'assets/icons/change-bean-icon.svg',
-                              title: 'Đổi bean lấy quà',
-                            ),
-                            SizedBox(
-                              height: 10 * hem,
-                            ),
-                            ButtonProfile(
-                              fem: fem,
-                              hem: hem,
-                              ffem: ffem,
-                              widthIcon: 20,
-                              heightIcon: 20,
-                              onPressed: () {
-                                Navigator.pushNamed(context,
-                                    ProfileTransactionHistoryScreen.routeName);
-                              },
-                              svgIcon: 'assets/icons/transaction-icon.svg',
-                              title: 'Lịch sử giao dịch',
-                            ),
-                            SizedBox(
-                              height: 10 * hem,
-                            ),
-                            ButtonProfile(
-                                fem: fem,
-                                hem: hem,
-                                ffem: ffem,
-                                svgIcon: 'assets/icons/voucher-navbar-icon.svg',
-                                title: 'Ưu đãi của bạn',
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, ProfileVoucherScreen.routeName);
-                                }),
-                            SizedBox(
-                              height: 10 * hem,
-                            ),
-                            ButtonProfile(
-                                fem: fem,
-                                hem: hem,
-                                ffem: ffem,
-                                svgIcon:
-                                    'assets/icons/update-information-icon.svg',
-                                title: 'Cập nhật thông tin',
-                                onPressed: () {}),
-                            SizedBox(
-                              height: 10 * hem,
-                            ),
-                            //button logout
-                            ButtonProfile(
-                                fem: fem,
-                                hem: hem,
-                                ffem: ffem,
-                                svgIcon: 'assets/icons/logout-icon.svg',
-                                title: 'Đăng xuất',
-                                onPressed: () => _dialogLogout(context)),
-                          ],
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: [
+                        //background body
+                        Positioned(
+                          left: 0 * fem,
+                          top: 180 * hem,
+                          child: Align(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                color: Color(0xfff8f6fb)),
+                          ),
                         ),
-                      )),
+
+                        //widget information of profile
+                        InformationCardProfile(
+                          hem: hem,
+                          fem: fem,
+                          ffem: ffem,
+                          studentModel: state.studentModel,
+                        ),
+
+                        Positioned(
+                            left: 0 * fem,
+                            top: 350 * hem,
+                            child: Container(
+                              // color: Colors.red,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+
+                              child: Column(
+                                children: [
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 16,
+                                    heightIcon: 16,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, ProductScreen.routeName);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/change-bean-icon.svg',
+                                    title: 'Đổi bean lấy quà',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 20,
+                                    heightIcon: 20,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context,
+                                          ProfileTransactionHistoryScreen
+                                              .routeName);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/transaction-icon.svg',
+                                    title: 'Lịch sử giao dịch',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon:
+                                          'assets/icons/voucher-navbar-icon.svg',
+                                      title: 'Ưu đãi của bạn',
+                                      onPressed: () {
+                                        Navigator.pushNamed(context,
+                                            ProfileVoucherScreen.routeName);
+                                      }),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon:
+                                          'assets/icons/update-information-icon.svg',
+                                      title: 'Cập nhật thông tin',
+                                      onPressed: () {}),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  //button logout
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon: 'assets/icons/logout-icon.svg',
+                                      title: 'Đăng xuất',
+                                      onPressed: () => _dialogLogout(context)),
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
+            );
+          }
+          return Container();
+        },
       ),
     );
   }

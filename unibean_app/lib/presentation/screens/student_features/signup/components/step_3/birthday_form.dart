@@ -9,12 +9,14 @@ class BirthdayForm extends StatefulWidget {
       required this.hem,
       required this.fem,
       required this.ffem,
+      required this.validator,
       required this.controller});
 
   final double hem;
   final double fem;
   final double ffem;
   final TextEditingController controller;
+  final FormFieldValidator<String> validator;
 
   @override
   State<BirthdayForm> createState() => _BirthdayFormState();
@@ -31,9 +33,9 @@ class _BirthdayFormState extends State<BirthdayForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42 * widget.hem,
       width: 272 * widget.fem,
       child: TextFormField(
+        validator: widget.validator,
         style: GoogleFonts.nunito(
             textStyle: TextStyle(
                 color: Colors.black,
@@ -64,6 +66,11 @@ class _BirthdayFormState extends State<BirthdayForm> {
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
               gapPadding: 10),
           focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(28 * widget.fem),
+              borderSide: BorderSide(
+                  width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
+              gapPadding: 10),
+          errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28 * widget.fem),
               borderSide: BorderSide(
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),

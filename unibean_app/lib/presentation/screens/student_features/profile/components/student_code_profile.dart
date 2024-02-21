@@ -8,19 +8,20 @@ class StudentCodeProfile extends StatelessWidget {
     required this.hem,
     required this.fem,
     required this.ffem,
+    required this.studentCode,
   });
 
   final double hem;
   final double fem;
   final double ffem;
+  final String studentCode;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10*hem, bottom: 5*hem),
+      padding: EdgeInsets.only(top: 10 * hem, bottom: 5 * hem),
       child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
               width: 12 * fem,
@@ -32,7 +33,7 @@ class StudentCodeProfile extends StatelessWidget {
             width: 5 * fem,
           ),
           Text(
-            'SE161967',
+            studentCode,
             style: GoogleFonts.nunito(
                 textStyle: TextStyle(
                     fontSize: 10 * ffem,

@@ -4,7 +4,8 @@ class User extends Equatable {
   final String id;
   final String userId;
   final String name;
-  final String roleId;
+  final int roleId;
+  final String role;
   final String roleName;
   final String userName;
   final String phone;
@@ -16,7 +17,8 @@ class User extends Equatable {
   final String dateUpdated;
   final String dateVerified;
   final String? description;
-  final bool state;
+  final int stateId;
+  final String state;
   final bool status;
 
   User(
@@ -24,6 +26,7 @@ class User extends Equatable {
       required this.userId,
       required this.name,
       required this.roleId,
+      required this.role,
       required this.roleName,
       required this.userName,
       required this.phone,
@@ -36,6 +39,7 @@ class User extends Equatable {
       required this.dateVerified,
       required this.description,
       required this.state,
+      required this.stateId,
       required this.status});
 
   @override
@@ -44,6 +48,7 @@ class User extends Equatable {
         this.userId,
         this.name,
         this.roleId,
+        this.role,
         this.roleName,
         this.userName,
         this.phone,
@@ -56,6 +61,7 @@ class User extends Equatable {
         this.dateVerified,
         this.description,
         this.state,
+        this.stateId,
         this.status
       ];
 }

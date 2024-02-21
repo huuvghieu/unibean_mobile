@@ -7,7 +7,7 @@ class SignUp6Screen extends StatefulWidget {
   static const String routeName = '/signup_6';
   static Route route() {
     return MaterialPageRoute(
-        builder: (_) => const SignUp6Screen(),
+        builder: (_) => SignUp6Screen(),
         settings: const RouteSettings(name: routeName));
   }
 
@@ -23,9 +23,9 @@ class _SignUp6ScreenState extends State<SignUp6Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 7/7';
+      title = 'Bước 7/8';
     } else {
-      title = 'Bước 6/6';
+      title = 'Bước 6/7';
     }
     super.initState();
   }
@@ -43,7 +43,7 @@ class _SignUp6ScreenState extends State<SignUp6Screen> {
         appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        body: const Body6(),
+        body: Body6(),
       ),
     );
   }

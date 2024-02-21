@@ -12,6 +12,7 @@ class DropDownUniversity extends StatefulWidget {
   final double ffem;
   final String labelText;
   final String hintText;
+    final FormFieldValidator<String> validator;
   const DropDownUniversity({
     super.key,
     required this.hem,
@@ -19,6 +20,7 @@ class DropDownUniversity extends StatefulWidget {
     required this.ffem,
     required this.labelText,
     required this.hintText,
+    required this.validator
   });
 
   @override
@@ -36,7 +38,6 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 43 * widget.hem,
       width: 272 * widget.fem,
       child: BlocConsumer<UniversityBloc, UniversityState>(
         listener: (context, state) {
@@ -67,6 +68,7 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
 
   DropdownButtonFormField<String> _dropDownUniversityLoaded() {
     return DropdownButtonFormField(
+      validator: widget.validator,
       style: GoogleFonts.nunito(
           textStyle: TextStyle(
               color: Colors.black,
@@ -99,11 +101,19 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
             borderSide: BorderSide(
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
             gapPadding: 10),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(28 * widget.fem),
+            borderSide: BorderSide(
+                width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
+            gapPadding: 10),
       ),
-      // value: universities[0].id,
+      // value: null,
       onChanged: (newValue) {
         setState(() {
-          context.read<CampusBloc>().add(LoadCampus(universityId: newValue.toString()));
+          context
+              .read<CampusBloc>()
+              .add(LoadCampus(universityId: newValue.toString()));
+          
         });
       },
       items: universities.map((u) {

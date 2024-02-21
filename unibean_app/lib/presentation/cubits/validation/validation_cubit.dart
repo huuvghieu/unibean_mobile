@@ -60,7 +60,7 @@ class ValidationCubit extends Cubit<ValidationState> {
         if (check == invalidStudentCode) {
           check = 'Mã sinh viên đã được sử dụng';
         }
-        emit(CheckInvitedCodeFailed(error: check, check: false));
+        emit(CheckStudentCodeFailed(error: check, check: false));
         return check;
       }
     } catch (e) {}
@@ -74,7 +74,27 @@ class ValidationCubit extends Cubit<ValidationState> {
           await validationRepository.validatePhoneNumber(phoneNumber: phone);
       print(check);
       if (check == '') {
-        emit(CheckStudentCodeSuccess());
+        emit(CheckPhoneSuccess());
+        return '';
+      } else {
+        // if (check == invalidStudentCode) {
+        //   check = 'Mã sinh viên đã được sử dụng';
+        // }
+        emit(CheckPhoneFailed(error: check, check: false));
+        return check;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  Future<String?> validateInviteCode(String inviteCode) async {
+    emit(ValidationInProcess());
+    try {
+      var check = await validationRepository.validateInviteCode(
+          inviteCode: inviteCode);
+      print(check);
+      if (check == '') {
+        emit(CheckInvitedCodeSuccess());
         return '';
       } else {
         // if (check == invalidStudentCode) {

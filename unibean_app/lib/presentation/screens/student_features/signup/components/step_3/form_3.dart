@@ -63,6 +63,19 @@ class _FormBody3State extends State<FormBody3> {
                   fem: widget.fem,
                   ffem: widget.ffem,
                   controller: widget.dobController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ngày sinh không được bỏ trống';
+                    } else {
+                      DateTime? dateValue = DateTime.parse(value.toString());
+                      DateTime currentDate = DateTime.now();
+                      int? age = currentDate.year - dateValue.year;
+                      if (age < 18 || age >= 100) {
+                        return 'Độ tuổi không hợp lệ';
+                      }
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 20 * widget.hem,
@@ -75,7 +88,9 @@ class _FormBody3State extends State<FormBody3> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushNamed(context, SignUp4Screen.routeName);
+              if (_formKey.currentState!.validate()) {
+                Navigator.pushNamed(context, SignUp4Screen.routeName);
+              }
             },
             child: Container(
               width: 300 * widget.fem,

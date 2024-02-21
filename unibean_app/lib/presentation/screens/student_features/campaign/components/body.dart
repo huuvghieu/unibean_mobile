@@ -40,7 +40,8 @@ class Body extends StatelessWidget {
                           fem: fem,
                           hem: hem,
                           ffem: ffem,
-                          heightText: heightText);
+                          heightText: heightText,
+                          studentModel: state.studentModel,);
                     } else if (state is RoleAppStudentUnverified) {
                       return CardForUnVerified(fem: fem, hem: hem, ffem: ffem);
                     } else if (state is RoleAppUnknown) {
@@ -216,7 +217,7 @@ class Body extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15 * fem),
                                 image: DecorationImage(
-                                    image: AssetImage(CampaignModel
+                                    image: AssetImage(CampaignDemo
                                         .listCampaign[0].assetImage),
                                     fit: BoxFit.fill)),
                           ),
@@ -224,7 +225,7 @@ class Body extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 left: 12 * fem, right: 12 * fem, top: 10 * hem),
                             child: Text(
-                              CampaignModel.listCampaign[0].name,
+                              CampaignDemo.listCampaign[0].name,
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
                                 fontSize: 12 * ffem,
@@ -257,7 +258,7 @@ class Body extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15 * fem),
                                 image: DecorationImage(
-                                    image: AssetImage(CampaignModel
+                                    image: AssetImage(CampaignDemo
                                         .listCampaign[1].assetImage),
                                     fit: BoxFit.fill)),
                           ),
@@ -265,7 +266,7 @@ class Body extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 left: 12 * fem, right: 12 * fem, top: 10 * hem),
                             child: Text(
-                              CampaignModel.listCampaign[1].name,
+                              CampaignDemo.listCampaign[1].name,
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
                                 fontSize: 12 * ffem,

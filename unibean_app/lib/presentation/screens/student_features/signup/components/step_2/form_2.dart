@@ -29,8 +29,10 @@ class FormBody2 extends StatefulWidget {
 
 class _FormBody2State extends State<FormBody2> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController campusController = TextEditingController();
   File? _selectedFrontCard;
   File? _selectedBackCard;
+  String? errorCard;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -60,6 +62,12 @@ class _FormBody2State extends State<FormBody2> {
                   ffem: widget.ffem,
                   hintText: 'Chọn trường học',
                   labelText: 'TRƯỜNG *',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Trường không được bỏ trống';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 20 * widget.hem,
@@ -70,6 +78,13 @@ class _FormBody2State extends State<FormBody2> {
                   ffem: widget.ffem,
                   hintText: 'Chọn cơ sở',
                   labelText: 'CƠ SỞ *',
+                  campusController: campusController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Cơ sở không được bỏ trống';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 20 * widget.hem,
@@ -171,6 +186,27 @@ class _FormBody2State extends State<FormBody2> {
                           ),
                   ],
                 ),
+                errorCard != null
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          top: 2 * widget.hem,
+                          left: 45 * widget.fem,
+                        ),
+                        child: SizedBox(
+                          width: 270 * widget.fem,
+                          child: Text(
+                            errorCard.toString(),
+                            style: GoogleFonts.nunito(
+                                fontSize: 12 * widget.ffem,
+                                fontWeight: FontWeight.normal,
+                                height: 1.3625 * widget.ffem / widget.fem,
+                                color: Color(0xffba1c1c)),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 5 * widget.hem,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(top: 10 * widget.hem),
                   child: SizedBox(
@@ -187,7 +223,7 @@ class _FormBody2State extends State<FormBody2> {
                   ),
                 ),
                 SizedBox(
-                  height: 20 * widget.hem,
+                  height: 5 * widget.hem,
                 ),
               ],
             ),
@@ -200,7 +236,13 @@ class _FormBody2State extends State<FormBody2> {
             hem: widget.hem,
             ffem: widget.ffem,
             onPressed: () {
-               Navigator.pushNamed(context, SignUp3Screen.routeName);
+              if (_selectedBackCard == null || _selectedFrontCard == null) {
+                setState(() {
+                  errorCard = 'Thẻ sinh viên không được bỏ trống';
+                });
+              } else if (_formKey.currentState!.validate()) {
+                Navigator.pushNamed(context, SignUp3Screen.routeName);
+              }
             },
           ),
         ],

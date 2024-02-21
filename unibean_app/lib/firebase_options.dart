@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCSBkoGAwaJMubvQ1xHjUnjfSqfDuwgy4U',
-    appId: '1:1069589510922:web:2476c0a087ef9a3a5298f3',
-    messagingSenderId: '1069589510922',
-    projectId: 'unibean-app',
-    authDomain: 'unibean-app.firebaseapp.com',
-    storageBucket: 'unibean-app.appspot.com',
-    measurementId: 'G-5YR7GVZGJ4',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDlcgROJQwxJMhhT4MWE8NLoxQkvewUhQo',
-    appId: '1:1069589510922:android:49effad45b88b80e5298f3',
-    messagingSenderId: '1069589510922',
-    projectId: 'unibean-app',
-    storageBucket: 'unibean-app.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBhFuwZun40p4n6PlODuESanoXRJd5XiX0',
-    appId: '1:1069589510922:ios:3fc5aa0e7fb40aac5298f3',
-    messagingSenderId: '1069589510922',
-    projectId: 'unibean-app',
-    storageBucket: 'unibean-app.appspot.com',
-    iosBundleId: 'com.example.unibeanApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBhFuwZun40p4n6PlODuESanoXRJd5XiX0',
-    appId: '1:1069589510922:ios:0c654335f3a7c0bc5298f3',
-    messagingSenderId: '1069589510922',
-    projectId: 'unibean-app',
-    storageBucket: 'unibean-app.appspot.com',
-    iosBundleId: 'com.example.unibeanApp.RunnerTests',
+    apiKey: 'AIzaSyBHoQmuBB1DzIbKZhtj0rvrrctPSfPl0hU',
+    appId: '1:804634450758:android:7db0d1ecf115769880a347',
+    messagingSenderId: '804634450758',
+    projectId: 'unibean-414815',
+    storageBucket: 'unibean-414815.appspot.com',
   );
 }

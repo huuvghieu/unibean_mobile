@@ -11,10 +11,12 @@ final class RoleAppUnknown extends RoleAppState {
 
 final class RoleAppStudentVerified extends RoleAppState {
   final AuthenModel authenModel;
+  final StudentModel studentModel;
 
-  RoleAppStudentVerified({required this.authenModel});
+  RoleAppStudentVerified(
+      {required this.authenModel, required this.studentModel});
   @override
-  List<Object?> get props => [authenModel];
+  List<Object?> get props => [authenModel, studentModel];
 }
 
 final class RoleAppStudentUnverified extends RoleAppState {

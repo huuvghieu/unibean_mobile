@@ -85,4 +85,23 @@ class ValidationRepositoryImp implements ValidationRepository {
       throw Exception(e.toString());
     }
   }
+  
+  @override
+  Future<String> validateInviteCode({required String inviteCode}) async {
+   try {
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
+
+      Map<String, String> body = {'inviteCode': inviteCode};
+
+      http.Response response = await http.post(Uri.parse('$endPoint/invite-code'),
+          headers: headers, body: jsonEncode(body));
+
+      if (response.statusCode == 200) {
+        return '';
+      }
+      return response.body;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

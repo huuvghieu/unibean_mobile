@@ -8,17 +8,18 @@ class UniversityProfile extends StatelessWidget {
     required this.fem,
     required this.hem,
     required this.ffem,
+    required this.university
   });
 
   final double fem;
   final double hem;
   final double ffem;
+  final String university;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment:
-          MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
             width: 12 * fem,
@@ -30,7 +31,7 @@ class UniversityProfile extends StatelessWidget {
           width: 5 * fem,
         ),
         Text(
-          'FPT University',
+          university,
           style: GoogleFonts.nunito(
               textStyle: TextStyle(
                   fontSize: 10 * ffem,

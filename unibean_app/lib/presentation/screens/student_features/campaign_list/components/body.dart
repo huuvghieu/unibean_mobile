@@ -62,7 +62,7 @@ class Body extends StatelessWidget {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15 * fem),
                                   image: DecorationImage(
-                                      image: AssetImage(CampaignModel
+                                      image: AssetImage(CampaignDemo
                                           .listCampaign[1].assetImage),
                                       fit: BoxFit.fill)),
                             ),
@@ -75,7 +75,7 @@ class Body extends StatelessWidget {
                                 Container(
                                   width: 200 * fem,
                                   child:
-                                      Text(CampaignModel.listCampaign[0].name,
+                                      Text(CampaignDemo.listCampaign[0].name,
                                         softWrap: true,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,

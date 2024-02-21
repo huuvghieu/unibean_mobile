@@ -72,13 +72,15 @@ class _FormLoginState extends State<FormLogin> {
               if (_formKey.currentState!.validate()) {
                 context.read<AuthenticationBloc>().add(LoginAccount(
                     userName: userNameController.text,
-                    password: passwordController.text));
+                    password: passwordController.text.toString()));
               }
             },
           ),
           ButtonLoginByGmail(
             widget: widget,
-            onPressed: () {},
+            onPressed: () {
+              context.read<AuthenticationBloc>().add(LoginGmail());
+            },
           ),
         ],
       ),

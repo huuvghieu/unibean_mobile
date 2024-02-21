@@ -14,7 +14,19 @@ class AuthenLocalDataSource {
 
   static Future<String?> getToken() async {
     final sf = await SharedPreferences.getInstance();
-    return sf.getString('token');
+    String? token = sf.getString('token');
+    return token;
+  }
+
+  static Future<void> saveVerificationId(String verificationId) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('verificationId', verificationId);
+  }
+
+  static Future<String?> getVerificationId() async {
+    final sf = await SharedPreferences.getInstance();
+    String? verificationId = sf.getString('verificationId');
+    return verificationId;
   }
 
   static Future<void> saveAuthen(String authenString) async {

@@ -26,6 +26,34 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
         this.authenModel = AuthenModel.fromJson(result);
         String authenString = jsonEncode(AuthenModel.fromJson(result));
         AuthenLocalDataSource.saveAuthen(authenString);
+        AuthenLocalDataSource.saveToken(authenModel.jwt);
+        return this.authenModel;
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<AuthenModel?> loginWithGmail(String idToken) async {
+    try {
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
+
+      Map<String, String> body = {'idToken': idToken};
+
+      http.Response response = await http.post(
+          Uri.parse('$endPoint/login/google'),
+          headers: headers,
+          body: jsonEncode(body));
+
+      if (response.statusCode == 200 || response.statusCode == 301) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        this.authenModel = AuthenModel.fromJson(result);
+        String authenString = jsonEncode(AuthenModel.fromJson(result));
+        AuthenLocalDataSource.saveAuthen(authenString);
+        AuthenLocalDataSource.saveToken(authenModel.jwt);
         return this.authenModel;
       }
       return null;

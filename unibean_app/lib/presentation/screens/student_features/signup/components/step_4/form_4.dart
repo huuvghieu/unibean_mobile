@@ -89,7 +89,13 @@ class _FormBody4State extends State<FormBody4> {
                           hem: widget.hem,
                           fem: widget.fem,
                           ffem: widget.ffem,
-                          labelText: 'CHUYÊN NGÀNH',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Chuyên ngành không được bỏ trống';
+                            }
+                            return null;
+                          },
+                          labelText: 'CHUYÊN NGÀNH *',
                           hintText: 'Chọn chuyên ngành'),
                       SizedBox(
                         height: 40 * widget.hem,
@@ -110,7 +116,7 @@ class _FormBody4State extends State<FormBody4> {
               return ButtonSignUp4(
                   widget: widget,
                   onPressed: () {
-                    if (state is CheckInvitedCodeFailed) {
+                    if (state is CheckStudentCodeFailed) {
                       if (_formKey.currentState!.validate()) {
                         context
                             .read<ValidationCubit>()
@@ -149,4 +155,3 @@ class _FormBody4State extends State<FormBody4> {
     );
   }
 }
-

@@ -5,12 +5,9 @@ import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 class SignUpScreen extends StatelessWidget {
   static const String routeName = '/signup';
   static Route route() {
-    return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => SignUpScreen(),
-        transitionDuration: Duration(seconds: 1),
-        transitionsBuilder: (_, a, __, c) =>
-            FadeTransition(opacity: a, child: c),
-        settings: const RouteSettings(name: routeName));
+    return MaterialPageRoute(
+        builder: (_) => const SignUpScreen(),
+        settings: const RouteSettings(arguments: SignUpScreen.routeName));
   }
 
   const SignUpScreen({super.key});

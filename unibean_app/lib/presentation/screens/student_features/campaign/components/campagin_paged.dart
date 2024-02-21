@@ -161,7 +161,7 @@ class CampaignPaged extends StatelessWidget {
                               alignment: Alignment.center,
                               child: Image(
                                 image: AssetImage(
-                                  CampaignModel.listCampaign[index].assetImage,
+                                  CampaignDemo.listCampaign[index].assetImage,
                                 ),
                                 fit: BoxFit.cover,
                                 height: 150.0,
@@ -170,7 +170,7 @@ class CampaignPaged extends StatelessWidget {
                       ],
                     ),
                     Text(
-                     CampaignModel.listCampaign[index].name,
+                     CampaignDemo.listCampaign[index].name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

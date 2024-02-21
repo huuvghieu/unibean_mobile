@@ -18,7 +18,9 @@ class UserModel extends User {
       required super.dateVerified,
       required super.description,
       required super.state,
-      required super.status});
+      required super.status,
+      required super.role,
+      required super.stateId});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -26,6 +28,7 @@ class UserModel extends User {
         userId: json['userId'],
         name: json['name'],
         roleId: json['roleId'],
+        role: json['role'],
         roleName: json['roleName'],
         userName: json['userName'],
         phone: json['phone'],
@@ -38,6 +41,7 @@ class UserModel extends User {
         dateVerified: json['dateVerified'],
         description: json['description'],
         state: json['state'],
+        stateId: json['stateId'],
         status: json['status']);
   }
   Map<String, dynamic> toJson() {
@@ -46,6 +50,7 @@ class UserModel extends User {
     data['userId'] = this.userId;
     data['name'] = this.name;
     data['roleId'] = this.roleId;
+    data['role'] = this.role;
     data['roleName'] = this.roleName;
     data['userName'] = this.userName;
     data['phone'] = this.phone;
@@ -58,6 +63,7 @@ class UserModel extends User {
     data['dateVerified'] = this.dateVerified;
     data['description'] = this.description;
     data['state'] = this.state;
+    data['stateId'] = this.stateId;
     data['status'] = this.status;
     return data;
   }
