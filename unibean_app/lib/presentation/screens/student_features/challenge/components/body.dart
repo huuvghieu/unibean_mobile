@@ -12,18 +12,10 @@ class Body extends StatelessWidget {
         InProcessChallenge(),
         
         //complete Challenge
-        Container(
-          child: Center(
-            child: Text('Nhan thuong'),
-          ),
-        ),
+         InProcessChallenge(),
 
         //completed Challenge
-        Container(
-          child: Center(
-            child: Text('Da hoan thanh'),
-          ),
-        ),
+         InProcessChallenge(),
       ],
     );
   }

@@ -2,7 +2,6 @@ part of 'major_bloc.dart';
 
 sealed class MajorState extends Equatable {
   const MajorState();
-
 }
 
 final class MajorInitial extends MajorState {
@@ -10,7 +9,7 @@ final class MajorInitial extends MajorState {
   List<Object?> get props => [];
 }
 
-final class MajorInProcess extends MajorState {
+final class MajorLoading extends MajorState {
   @override
   List<Object?> get props => [];
 }

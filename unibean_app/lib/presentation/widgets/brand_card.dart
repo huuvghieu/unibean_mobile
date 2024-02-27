@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/data/models/brand_model.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_detail/brand_detail_screen.dart';
 
-class BrandBannerItem extends StatelessWidget {
-  const BrandBannerItem(
+class BrandCard extends StatelessWidget {
+  const BrandCard(
       {super.key,
       required this.fem,
       required this.hem,
       required this.ffem,
-      required this.heightText,
-      required this.index});
+      required this.brandModel});
 
   final double fem;
   final double hem;
   final double ffem;
-  final double heightText;
-  final int index;
+  final BrandModel brandModel;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +32,17 @@ class BrandBannerItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10 * fem),
                   image: DecorationImage(
-                      image: AssetImage(Brand.listBrand[index].assetImage))),
+                      image: NetworkImage(brandModel.logo),
+                      fit: BoxFit.cover
+                      )),
             ),
             Padding(
               padding: EdgeInsets.only(top: 5 * hem),
               child: Text(
-                Brand.listBrand[index].name,
+                brandModel.brandName,
                 style: GoogleFonts.nunito(
                     textStyle: TextStyle(
                   fontSize: 13 * ffem,
-                  height: heightText,
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
                 )),

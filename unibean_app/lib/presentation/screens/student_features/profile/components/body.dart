@@ -22,11 +22,11 @@ class Body extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
     return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
       child: BlocBuilder<RoleAppBloc, RoleAppState>(
         builder: (context, state) {
           if (state is RoleAppStudentVerified) {
             return Container(
-              // color: Colors.black,
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
@@ -45,9 +45,10 @@ class Body extends StatelessWidget {
                           top: 180 * hem,
                           child: Align(
                             child: Container(
+                              
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
-                                color: Color(0xfff8f6fb)),
+                                color: klighGreyColor),
                           ),
                         ),
 

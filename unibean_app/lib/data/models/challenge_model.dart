@@ -3,19 +3,14 @@ import 'package:unibean_app/domain/entities.dart';
 class ChallengeModel extends Challenge {
   ChallengeModel(
       {required super.id,
-      required super.challengeId,
-      required super.challengeTypeId,
-      required super.challengeType,
-      required super.challengeTypeName,
+      required super.typeId,
+      required super.type,
+      required super.typeName,
       required super.challengeName,
-      required super.challengeImage,
-      required super.studentId,
-      required super.studentName,
       required super.amount,
-      required super.current,
       required super.condition,
-      required super.isCompleted,
-      required super.isClaimed,
+      required super.image,
+      required super.fileName,
       required super.dateCreated,
       required super.dateUpdated,
       required super.description,
@@ -25,19 +20,14 @@ class ChallengeModel extends Challenge {
   factory ChallengeModel.fromJson(Map<String, dynamic> json) {
     return ChallengeModel(
       id: json['id'],
-      challengeId: json['challengeId'],
-      challengeTypeId: json['challengeTypeId'],
-      challengeType: json['challengeType'],
-      challengeTypeName: json['challengeTypeName'],
+      typeId: json['typeId'],
+      type: json['type'],
+      typeName: json['typeName'],
       challengeName: json['challengeName'],
-      challengeImage: json['challengeImage'],
-      studentId: json['studentId'],
-      studentName: json['studentName'],
       amount: json['amount'],
-      current: json['current'],
       condition: json['condition'],
-      isCompleted: json['isCompleted'],
-      isClaimed: json['isClaimed'],
+      image: json['image'],
+      fileName: json['fileName'],
       dateCreated: json['dateCreated'],
       dateUpdated: json['dateUpdated'],
       description: json['description'],
@@ -49,19 +39,14 @@ class ChallengeModel extends Challenge {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['challengeId'] = this.challengeId;
-    data['challengeTypeId'] = this.challengeTypeId;
-    data['challengeType'] = this.challengeType;
-    data['challengeTypeName'] = this.challengeTypeName;
+    data['typeId'] = this.typeId;
+    data['type'] = this.type;
+    data['typeName'] = this.typeName;
     data['challengeName'] = this.challengeName;
-    data['challengeImage'] = this.challengeImage;
-    data['studentId'] = this.studentId;
-    data['studentName'] = this.studentName;
     data['amount'] = this.amount;
-    data['current'] = this.current;
     data['condition'] = this.condition;
-    data['isCompleted'] = this.isCompleted;
-    data['isClaimed'] = this.isClaimed;
+    data['image'] = this.image;
+    data['fileName'] = this.fileName;
     data['dateCreated'] = this.dateCreated;
     data['dateUpdated'] = this.dateUpdated;
     data['description'] = this.description;

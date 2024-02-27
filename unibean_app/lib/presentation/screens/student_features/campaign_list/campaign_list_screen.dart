@@ -13,9 +13,9 @@ class CampaignListScreen extends StatelessWidget {
     return MaterialPageRoute(
       builder: (_) => BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
-          if(state is AuthenticationFailed)
-          Navigator.pushNamedAndRemoveUntil(
-              context, LoginScreen.routeName, (Route<dynamic> route) => false);
+          if (state is AuthenticationFailed)
+            Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName,
+                (Route<dynamic> route) => false);
         },
         child: CampaignListScreen(),
       ),

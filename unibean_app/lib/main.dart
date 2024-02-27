@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
+import 'package:unibean_app/presentation/blocs/voucher/voucher_bloc.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
@@ -51,6 +52,12 @@ class MyApp extends StatelessWidget {
             create: (_) => MajorRepositoryImp()),
         RepositoryProvider<StudentRepository>(
             create: (_) => StudentRepositoryImp()),
+        RepositoryProvider<CampaignRepository>(
+            create: (_) => CampaignRepositoryImp()),
+        RepositoryProvider<BrandRepository>(
+            create: (_) => BrandRepositoryImp()),
+        RepositoryProvider<VoucherRepository>(
+            create: (_) => VoucherRepositoryImp()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -73,7 +80,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => UniversityBloc(
                   universityRepository: UniversityRepositoryImp())
-                ..add(LoadUniversity())),
+                ..add(LoadUniversities())),
           BlocProvider(
             create: (context) => CampusBloc(CampusRepositoryImp()),
           ),
@@ -81,13 +88,28 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 MajorBloc(majorRepository: MajorRepositoryImp())
                   ..add(LoadMajor()),
-          )
+          ),
+          BlocProvider(
+            create: (context) =>
+                CampaignBloc(campaignRepository: CampaignRepositoryImp())
+                  ..add(LoadCampaigns()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                BrandBloc(brandRepository: BrandRepositoryImp())
+                  ..add(LoadBrands()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                VoucherBloc(voucherRepository: VoucherRepositoryImp())
+                  ..add(LoadVouchers()),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Unibean',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
             useMaterial3: true,
           ),
           onGenerateRoute: AppRouter.onGenerateRoute,

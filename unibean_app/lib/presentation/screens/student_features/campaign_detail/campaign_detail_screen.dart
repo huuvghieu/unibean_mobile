@@ -67,7 +67,6 @@ class CampaignDetailScreen extends StatelessWidget {
             ),
           ),
           leadingWidth: double.infinity,
-         
         ),
         body: Body(),
       ),

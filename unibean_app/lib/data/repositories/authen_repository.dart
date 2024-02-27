@@ -48,7 +48,7 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
           headers: headers,
           body: jsonEncode(body));
 
-      if (response.statusCode == 200 || response.statusCode == 301) {
+      if (response.statusCode == 200 || response.statusCode == 303) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         this.authenModel = AuthenModel.fromJson(result);
         String authenString = jsonEncode(AuthenModel.fromJson(result));

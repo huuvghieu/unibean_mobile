@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/data/models.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign/components/brand_banner_item.dart';
+import 'package:unibean_app/presentation/widgets/brand_card.dart';
+import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_carousel.dart';
+import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_list_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/membership_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign_list/campaign_list_screen.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
+
+import '../../../screens.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -23,6 +26,31 @@ class Body extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
     double heightText = 1.3625 * ffem / fem;
 
+    final roleState = context.read<RoleAppBloc>().state;
+
+    var roleWidget = (switch (roleState) {
+      RoleAppUnknown() => CardForUnknow(fem: fem, hem: hem, ffem: ffem),
+      RoleAppStudentUnverified() =>
+        CardForUnVerified(fem: fem, hem: hem, ffem: ffem),
+      RoleAppStudentVerified(
+        // ignore: unused_local_variable
+        authenModel: final authenModel,
+        studentModel: final studentModel
+      ) =>
+        MemberShipCard(
+            fem: fem,
+            hem: hem,
+            ffem: ffem,
+            heightText: heightText,
+            studentModel: studentModel),
+      RoleAppStore() => Container(),
+      RoleAppLoading() => Container(
+          child: Center(
+              child: Lottie.asset('assets/animations/loading-screen.json',
+                  width: 50 * fem, height: 50 * hem)),
+        )
+    });
+
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -30,292 +58,310 @@ class Body extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 20 * hem,
-                ),
-                BlocBuilder<RoleAppBloc, RoleAppState>(
-                  builder: (context, state) {
-                    if (state is RoleAppStudentVerified) {
-                      return MemberShipCard(
-                          fem: fem,
-                          hem: hem,
-                          ffem: ffem,
-                          heightText: heightText,
-                          studentModel: state.studentModel,);
-                    } else if (state is RoleAppStudentUnverified) {
-                      return CardForUnVerified(fem: fem, hem: hem, ffem: ffem);
-                    } else if (state is RoleAppUnknown) {
-                      return CardForUnknow(fem: fem, hem: hem, ffem: ffem);
-                    }
-                    return CardForUnknow(fem: fem, hem: hem, ffem: ffem);
-                  },
-                ),
-                SizedBox(
-                  height: 20 * hem,
-                ),
+                //RoleWidget
                 Container(
-                  margin: EdgeInsets.only(left: 10 * fem),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: EdgeInsets.only(top: 10 * fem, bottom: 10 * fem),
+                    color: kbgWhiteColor,
+                    child: roleWidget),
+                SizedBox(
+                  height: 10 * hem,
+                ),
+
+                //Hôm nay có gì
+                Container(
+                  color: kbgWhiteColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Hôm nay có gì?',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                          fontSize: 18 * ffem,
-                          height: heightText,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                        )),
+                      Container(
+                        margin: EdgeInsets.only(left: 10 * fem),
+                        child: Padding(
+                          padding:
+                              EdgeInsets.only(top: 10 * hem, bottom: 10 * hem),
+                          child: Text(
+                            'Hôm nay có gì?',
+                            style: GoogleFonts.nunito(
+                                textStyle: TextStyle(
+                              fontSize: 20 * ffem,
+                              height: heightText,
+                              color: kDarkPrimaryColor,
+                              fontWeight: FontWeight.w800,
+                            )),
+                          ),
+                        ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, CampaignListScreen.routeName);
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                      BlocBuilder<CampaignBloc, CampaignState>(
+                        builder: (context, state) {
+                          if (state is CampaignsLoaded) {
+                            return CampaignCarousel(
+                              campaigns: state.campaigns,
+                            );
+                          }
+                          return Container(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          );
                         },
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(top: 5 * hem, right: 10 * fem),
-                          child: Text(
-                            'Xem thêm',
-                            style: GoogleFonts.nunito(
-                                textStyle: TextStyle(
-                              fontSize: 12 * ffem,
-                              height: heightText,
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold,
-                            )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 25 * hem,
-                ),
-                CampaignCarousel(),
-                SizedBox(
-                  height: 25 * hem,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10 * fem),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Thương hiệu',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                          fontSize: 18 * ffem,
-                          height: heightText,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                        )),
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(top: 5 * hem, right: 10 * fem),
-                          child: Text(
-                            'Xem thêm',
-                            style: GoogleFonts.nunito(
-                                textStyle: TextStyle(
-                              fontSize: 12 * ffem,
-                              height: heightText,
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold,
-                            )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20 * hem,
-                ),
-                SizedBox(
-                    height: 120 * hem,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: Brand.listBrand.length,
-                      itemBuilder: (context, index) {
-                        return BrandBannerItem(
-                            fem: fem,
-                            hem: hem,
-                            ffem: ffem,
-                            heightText: heightText,
-                            index: index);
-                      },
-                    )),
-                SizedBox(
-                  height: 15 * hem,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10 * fem),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Chiến dịch mới',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                          fontSize: 18 * ffem,
-                          height: heightText,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                        )),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(top: 5 * hem, right: 10 * fem),
-                          child: Text(
-                            'Xem tất cả',
-                            style: GoogleFonts.nunito(
-                                textStyle: TextStyle(
-                              fontSize: 12 * ffem,
-                              height: heightText,
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold,
-                            )),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
                 SizedBox(
                   height: 10 * hem,
                 ),
-                // CampaignPaged()
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 180 * fem,
-                      height: 240 * hem,
-                      margin: EdgeInsets.only(left: 5 * fem),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15 * fem),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0 * fem, 10 * fem),
-                                blurRadius: 5 * fem)
-                          ]),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 165 * fem,
-                            height: 170 * hem,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15 * fem),
-                                image: DecorationImage(
-                                    image: AssetImage(CampaignDemo
-                                        .listCampaign[0].assetImage),
-                                    fit: BoxFit.fill)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 12 * fem, right: 12 * fem, top: 10 * hem),
-                            child: Text(
-                              CampaignDemo.listCampaign[0].name,
+
+                //Đề xuất cho bạn
+                Container(
+                  color: kbgWhiteColor,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 10 * fem),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Đề xuất cho bạn',
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
-                                fontSize: 12 * ffem,
+                                fontSize: 20 * ffem,
+                                height: heightText,
                                 color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w800,
                               )),
                             ),
-                          )
-                        ],
+                            InkWell(
+                              onTap: () {
+                                if (roleState is RoleAppUnknown) {
+                                  Navigator.pushNamed(
+                                      context, LoginScreen.routeName);
+                                }
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 5 * hem, right: 10 * fem),
+                                child: Text(
+                                  'Xem tất cả',
+                                  style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(
+                                    fontSize: 12 * ffem,
+                                    height: heightText,
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 180 * fem,
-                      height: 240 * hem,
-                      margin: EdgeInsets.only(left: 5 * fem),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15 * fem),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0 * fem, 10 * fem),
-                                blurRadius: 5 * fem)
-                          ]),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 165 * fem,
-                            height: 170 * hem,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15 * fem),
-                                image: DecorationImage(
-                                    image: AssetImage(CampaignDemo
-                                        .listCampaign[1].assetImage),
-                                    fit: BoxFit.fill)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 12 * fem, right: 12 * fem, top: 10 * hem),
-                            child: Text(
-                              CampaignDemo.listCampaign[1].name,
-                              style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(
-                                fontSize: 12 * ffem,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              )),
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                      // CampaignPaged()
+                      BlocBuilder<CampaignBloc, CampaignState>(
+                        builder: (context, state) {
+                          if (state is CampaignsLoaded) {
+                            return SizedBox(
+                                height: 290 * hem,
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: state.campaigns.length,
+                                  itemBuilder: (context, index) {
+                                    return CampaignCard(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      campaignModel: state.campaigns[index],
+                                      onTap: () {
+                                        if (roleState is RoleAppUnknown) {
+                                          Navigator.pushNamed(
+                                              context, LoginScreen.routeName);
+                                        }
+                                      },
+                                    );
+                                  },
+                                ));
+                          }
+                          return Container(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: kPrimaryColor,
+                              ),
                             ),
-                          )
-                        ],
+                          );
+                        },
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                    ],
+                  ),
                 ),
 
                 SizedBox(
-                  height: 20 * hem,
+                  height: 10 * hem,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 180 * fem,
-                      height: 233 * hem,
-                      margin: EdgeInsets.only(left: 5 * fem),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15 * fem),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0 * fem, 10 * fem),
-                                blurRadius: 5 * fem)
-                          ]),
-                    ),
-                    Container(
-                      width: 180 * fem,
-                      height: 233 * hem,
-                      margin: EdgeInsets.only(left: 5 * fem),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15 * fem),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0 * fem, 10 * fem),
-                                blurRadius: 5 * fem)
-                          ]),
-                    ),
-                  ],
+//Các thwung hiệu
+                Container(
+                  color: kbgWhiteColor,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10 * fem),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10 * hem),
+                              child: Text(
+                                'Các thương hiệu',
+                                style: GoogleFonts.nunito(
+                                    textStyle: TextStyle(
+                                  fontSize: 20 * ffem,
+                                  height: heightText,
+                                  color: kDarkPrimaryColor,
+                                  fontWeight: FontWeight.w800,
+                                )),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                if (roleState is RoleAppUnknown) {
+                                  Navigator.pushNamed(
+                                      context, LoginScreen.routeName);
+                                }
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 5 * hem, right: 10 * fem),
+                                child: Text(
+                                  'Xem thêm',
+                                  style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(
+                                    fontSize: 12 * ffem,
+                                    height: heightText,
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15 * hem,
+                      ),
+                      BlocBuilder<BrandBloc, BrandState>(
+                          builder: (context, state) {
+                        if (state is BrandsLoaded) {
+                          return SizedBox(
+                              height: 120 * hem,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.brands.length,
+                                itemBuilder: (context, index) {
+                                  return BrandCard(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      brandModel: state.brands[index]);
+                                },
+                              ));
+                        }
+                        return Container(
+                            child: Center(
+                                child: Lottie.asset(
+                                    'assets/animations/loading-screen.json',
+                                    width: 50 * fem,
+                                    height: 50 * hem)));
+                      }),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10 * hem,
+                ),
+
+                //Chiến dịch ưu đãi
+                Container(
+                  color: kbgWhiteColor,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 10 * fem),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Chiến dịch ưu đãi',
+                              style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(
+                                fontSize: 20 * ffem,
+                                height: heightText,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w800,
+                              )),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                      // CampaignPaged()
+                      BlocBuilder<CampaignBloc, CampaignState>(
+                        builder: (context, state) {
+                          if (state is CampaignsLoaded) {
+                            return ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: state.campaigns.length,
+                              itemBuilder: (context, index) {
+                                return CampaignListCard(
+                                  fem: fem,
+                                  hem: hem,
+                                  ffem: ffem,
+                                  campaignModel: state.campaigns[index],
+                                  onTap: () {
+                                    if (roleState is RoleAppUnknown) {
+                                      Navigator.pushNamed(
+                                          context, LoginScreen.routeName);
+                                    }
+                                  },
+                                );
+                              },
+                            );
+                          }
+                          return Container(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 10 * hem,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             )

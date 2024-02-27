@@ -41,26 +41,29 @@ class AuthenticationBloc
   Future<void> _onLoginGmail(
       LoginGmail event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationInProcess());
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-        // clientId:
-        //     '804634450758-vgn23eplevqjsteaor767781qea9hl27.apps.googleusercontent.com'
-        
-            );
-    final auth = FirebaseAuth.instance;
+  
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    // final auth = await FirebaseAuth.instance;
     try {
-      //slect google account
+      //select google account
       final userAccount = await googleSignIn.signIn();
+      
       //get authendication object from account
       final GoogleSignInAuthentication googleAuthen =
           await userAccount!.authentication;
 
       //create OAuthCredentials from auth Object
+      // ignore: unused_local_variable
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuthen.accessToken, idToken: googleAuthen.idToken);
 
       //Login to firebase using the credentials
-      final userCredential = await auth.signInWithCredential(credential);
+      // final userCredential = await auth.signInWithCredential(credential);
+
       String idToken = googleAuthen.idToken.toString();
+
+      print(idToken);
+
       var authenModel = await authenticationRepository.loginWithGmail(idToken);
       if (authenModel != null) {
         emit(AuthenticationSuccess());

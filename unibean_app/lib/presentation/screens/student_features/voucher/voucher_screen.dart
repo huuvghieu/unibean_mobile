@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/voucher/components/body.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
@@ -33,7 +34,7 @@ class VoucherScreen extends StatelessWidget {
     } else if (roleState is RoleAppStudentVerified) {
       return _buildVerifiedStudent(fem, hem, ffem);
     }
-    return _buildUnKnown(fem, hem, ffem);
+    return _buildVerifiedStudent(fem, hem, ffem);
   }
 
   Widget _buildUnKnown(double fem, double hem, double ffem) {
@@ -41,6 +42,16 @@ class VoucherScreen extends StatelessWidget {
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
-    return Body();
+    return BlocBuilder<VoucherBloc, VoucherState>(
+      builder: (context, state) {
+        if (state is VouchersLoaded) {
+          return Body();
+        }
+        return Center(
+          child: Container(
+              child: Lottie.asset('assets/animations/loading-screen.json')),
+        );
+      },
+    );
   }
 }

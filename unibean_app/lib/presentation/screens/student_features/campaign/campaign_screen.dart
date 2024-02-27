@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/body.dart';
 
 class CampaignScreen extends StatelessWidget {
@@ -15,6 +18,17 @@ class CampaignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Body();
+    return BlocBuilder<CampaignBloc, CampaignState>(
+      builder: (context, state) {
+        if (state is CampaignsLoaded) {
+          return Body();
+         
+        }
+        return Center(
+          child: Container(
+              child: Lottie.asset('assets/animations/loading-screen.json')),
+        );
+      },
+    );
   }
 }

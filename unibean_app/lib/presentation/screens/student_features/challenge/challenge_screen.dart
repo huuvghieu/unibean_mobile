@@ -5,6 +5,7 @@ import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/challenge/components/body.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
 
+import '../../../config/constants.dart';
 import '../../../widgets/card_for_unknow.dart';
 
 class ChallengeScreen extends StatelessWidget {
@@ -41,7 +42,10 @@ class ChallengeScreen extends StatelessWidget {
   Widget _buildUnknown(double fem, double hem, double ffem) {
     return Scaffold(
         appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
-        body: CardForUnknow(fem: fem, hem: hem, ffem: ffem));
+        body: Container(
+            color: klighGreyColor,
+            child:
+                Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem))));
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
@@ -49,6 +53,7 @@ class ChallengeScreen extends StatelessWidget {
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
+          backgroundColor: klighGreyColor,
           appBar: AppBar(
             elevation: 0,
             flexibleSpace: Container(

@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
-class CardVoucherHotItem extends StatelessWidget {
-  const CardVoucherHotItem(
+class VoucherCard extends StatelessWidget {
+  const VoucherCard(
       {super.key,
       required this.fem,
       required this.hem,
       required this.ffem,
-      required this.nameVoucher,
-      required this.rate,
-      required this.price,
-      required this.assetName});
+      required this.voucherModel});
 
   final double fem;
   final double hem;
   final double ffem;
-  final String nameVoucher;
-  final String rate;
-  final double price;
-  final String assetName;
+  final VoucherModel voucherModel;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +40,14 @@ class CardVoucherHotItem extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15 * fem),
                 image: DecorationImage(
-                    image: AssetImage(assetName), fit: BoxFit.fill)),
+                    image: AssetImage('assets/images/voucher-1.png'),
+                    fit: BoxFit.fill)),
           ),
           Padding(
             padding:
                 EdgeInsets.only(left: 12 * fem, right: 12 * fem, top: 10 * hem),
             child: Text(
-              nameVoucher,
+              voucherModel.voucherName,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
                 fontSize: 13 * ffem,
@@ -77,7 +73,7 @@ class CardVoucherHotItem extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 2 * fem),
                       child: Text(
-                        rate,
+                        voucherModel.rate.toString(),
                         style: GoogleFonts.nunito(
                             fontSize: 18 * ffem,
                             color: Colors.black,
@@ -91,7 +87,7 @@ class CardVoucherHotItem extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 2 * fem),
                       child: Text(
-                        price.toString(),
+                        '${voucherModel.price.toStringAsFixed(0)}',
                         style: GoogleFonts.nunito(
                             fontSize: 18 * ffem,
                             color: kPrimaryColor,

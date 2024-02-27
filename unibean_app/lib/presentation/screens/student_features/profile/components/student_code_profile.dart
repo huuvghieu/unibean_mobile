@@ -24,8 +24,8 @@ class StudentCodeProfile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-              width: 12 * fem,
-              height: 12 * hem,
+              width: 15 * fem,
+              height: 15 * hem,
               child: SvgPicture.asset(
                 'assets/icons/id-card-icon.svg',
               )),
@@ -36,7 +36,7 @@ class StudentCodeProfile extends StatelessWidget {
             studentCode,
             style: GoogleFonts.nunito(
                 textStyle: TextStyle(
-                    fontSize: 10 * ffem,
+                    fontSize: 13 * ffem,
                     height: 1.3625 * ffem / fem,
                     fontWeight: FontWeight.w600,
                     color: Colors.black)),

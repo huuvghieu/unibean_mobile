@@ -156,7 +156,7 @@ class CardForUnknow extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 10 * hem),
                 child: Text(
-                  'Đăng nhập để xem được \nnhiều chiến dịch và ưu đãi hơn',
+                  'Đăng nhập để được xem \nnhiều chiến dịch và ưu đãi hơn',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(
                       textStyle: TextStyle(

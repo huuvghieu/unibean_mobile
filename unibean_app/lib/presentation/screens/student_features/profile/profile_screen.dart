@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/body.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
 
+import '../../../config/constants.dart';
 import '../../../widgets/app_bar_campaign.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -27,6 +29,16 @@ class ProfileScreen extends StatelessWidget {
       return _buildUnknown(fem, hem, ffem);
     } else if (roleState is RoleAppStudentVerified) {
       return _buildVerifiedStudent(fem, hem, ffem);
+    } else if (roleState is RoleAppLoading) {
+      return Scaffold(
+          appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+          body: Container(
+              color: klighGreyColor,
+              child: Center(
+                child: Container(
+                    child:
+                        Lottie.asset('assets/animations/loading-screen.json')),
+              )));
     }
     return _buildUnknown(fem, hem, ffem);
   }
@@ -34,7 +46,10 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildUnknown(double fem, double hem, double ffem) {
     return Scaffold(
         appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
-        body: CardForUnknow(fem: fem, hem: hem, ffem: ffem));
+        body: Container(
+            color: klighGreyColor,
+            child:
+                Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem))));
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {

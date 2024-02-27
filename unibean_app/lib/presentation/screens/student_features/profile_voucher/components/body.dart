@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 
-import '../../../../../data/models.dart';
-import '../../voucher/components/card_voucher_new_item.dart';
+import '../../voucher/components/voucher_list_card.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -22,24 +24,34 @@ class Body extends StatelessWidget {
             SizedBox(
               height: 20 * fem,
             ),
-            Column(
-              children: [
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: VoucherModel.listCampaign.length,
-                  itemBuilder: (context, index) {
-                    return CardVoucherNewItem(
-                      fem: fem,
-                      hem: hem,
-                      ffem: ffem,
-                      name: VoucherModel.listCampaign[index].name,
-                      assetName: VoucherModel.listCampaign[index].assetImage,
-                      quality: 5,
-                    );
-                  },
-                ),
-              ],
+            BlocBuilder<VoucherBloc, VoucherState>(
+              builder: (context, state) {
+                if (state is VouchersLoaded) {
+                  return Column(
+                    children: [
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.vouchers.length,
+                        itemBuilder: (context, index) {
+                          return VoucherListCard(
+                            fem: fem,
+                            hem: hem,
+                            ffem: ffem,
+                            voucherModel: state.vouchers[index],
+                            onPressed: () {
+                              
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                }
+                return Center(
+                    child: Lottie.asset('assets/animations/loading-screen.json',
+                        width: 50 * fem, height: 50 * hem));
+              },
             )
           ]),
         )

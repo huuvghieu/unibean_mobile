@@ -83,7 +83,7 @@ class InformationCardProfile extends StatelessWidget {
                         '${studentModel.email}',
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
-                                fontSize: 10 * ffem,
+                                fontSize: 13 * ffem,
                                 height: 1.3625 * ffem / fem,
                                 fontWeight: FontWeight.w600,
                                 color: kLowTextColor)),
@@ -151,7 +151,7 @@ class InformationCardProfile extends StatelessWidget {
                         'Show QR',
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
-                                fontSize: 10 * fem,
+                                fontSize: 11 * fem,
                                 fontWeight: FontWeight.w600,
                                 height: 1.3625 * ffem / fem,
                                 color: kLowTextColor)),

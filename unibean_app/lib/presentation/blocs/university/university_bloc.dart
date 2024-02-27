@@ -11,12 +11,12 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
 
   UniversityBloc({required this.universityRepository})
       : super(UniversityInitial()) {
-    on<LoadUniversity>(_onLoadUniversity);
+    on<LoadUniversities>(_onLoadUniversity);
   }
 
   Future<void> _onLoadUniversity(
-      LoadUniversity event, Emitter<UniversityState> emit) async {
-    emit(UniversityInProcess());
+      LoadUniversities event, Emitter<UniversityState> emit) async {
+    emit(UniversityLoading());
     try {
       var apiResponse = await universityRepository.fetchUnversities();
       emit(UniversityLoaded(universities: apiResponse!.result.toList()));

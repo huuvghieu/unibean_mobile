@@ -15,10 +15,10 @@ class CampusBloc extends Bloc<CampusEvent, CampusState> {
 
   Future<void> _onLoadCampusByUniversityId(
       LoadCampus event, Emitter<CampusState> emit) async {
-    emit(CampusInProcess());
+    emit(CampusLoading());
     try {
-      var apiResponse = await campusRepository
-                .fetchCampusByUniId(uniId: event.universityId);
+      var apiResponse =
+          await campusRepository.fetchCampusByUniId(uniId: event.universityId);
       emit(CampusLoaded(campuses: apiResponse!.result.toList()));
     } catch (e) {
       emit(CampusFailed(error: e.toString()));

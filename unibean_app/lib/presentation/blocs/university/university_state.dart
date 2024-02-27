@@ -9,7 +9,7 @@ final class UniversityInitial extends UniversityState {
   List<Object?> get props => [];
 }
 
-final class UniversityInProcess extends UniversityState {
+final class UniversityLoading extends UniversityState {
   @override
   List<Object?> get props => [];
 }

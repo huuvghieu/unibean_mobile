@@ -13,18 +13,17 @@ class DropDownCampus extends StatefulWidget {
   final String labelText;
   final String hintText;
   final TextEditingController campusController;
-    final FormFieldValidator<String> validator;
+  final FormFieldValidator<String> validator;
 
-  const DropDownCampus({
-    super.key,
-    required this.hem,
-    required this.fem,
-    required this.ffem,
-    required this.labelText,
-    required this.hintText,
-    required this.campusController,
-    required this.validator
-  });
+  const DropDownCampus(
+      {super.key,
+      required this.hem,
+      required this.fem,
+      required this.ffem,
+      required this.labelText,
+      required this.hintText,
+      required this.campusController,
+      required this.validator});
 
   @override
   State<DropDownCampus> createState() => _DropDownCampusState();
@@ -50,7 +49,7 @@ class _DropDownCampusState extends State<DropDownCampus> {
           }
         },
         builder: (context, state) {
-          if (state is CampusInProcess) {
+          if (state is CampusLoading) {
             return Center(
               child: CircularProgressIndicator(
                 color: kPrimaryColor,

@@ -45,7 +45,7 @@ class _DropDownMajorState extends State<DropDownMajor> {
           }
         },
         builder: (context, state) {
-          if (state is MajorInProcess) {
+          if (state is MajorLoading) {
             return Center(
               child: CircularProgressIndicator(
                 color: kPrimaryColor,

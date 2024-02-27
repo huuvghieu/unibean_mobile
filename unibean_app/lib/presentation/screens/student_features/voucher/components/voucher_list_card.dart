@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
-class CardVoucherNewItem extends StatelessWidget {
-  const CardVoucherNewItem(
+import '../../../../../data/models.dart';
+
+class VoucherListCard extends StatelessWidget {
+  const VoucherListCard(
       {super.key,
       required this.fem,
       required this.hem,
       required this.ffem,
-      required this.name,
-      required this.assetName,
-      required this.quality});
+      required this.voucherModel,
+      required this.onPressed});
 
   final double fem;
   final double hem;
   final double ffem;
-  final String name;
-  final String assetName;
-  final int quality;
+  final VoucherModel voucherModel;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class CardVoucherNewItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(top: 15 * hem, left: 10 * fem, right: 10 * fem),
         width: 340 * fem,
-        height: 150 * hem,
+        height: 180 * hem,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15 * fem),
             color: Colors.white,
@@ -41,25 +41,49 @@ class CardVoucherNewItem extends StatelessWidget {
                   blurRadius: 5 * fem)
             ]),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              width: 110 * fem,
-              height: 110 * hem,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15 * fem),
-                  image: DecorationImage(
-                      image: AssetImage(assetName), fit: BoxFit.fill)),
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10 * fem),
+                  bottomLeft: Radius.circular(10 * fem)),
+              child: Container(
+                width: 140 * fem,
+                height: 180 * hem,
+                child: Image.asset(
+                  // campaignModel.image,
+                  'assets/images/voucher2.jpg',
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/images/campaign-default.png',
+                    );
+                  },
+                ),
+              ),
             ),
             SizedBox(
-              width: 15 * fem,
+              width: 5 * fem,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 5 * hem, bottom: 5 * hem),
+                  child: Text(voucherModel.brandName,
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                        fontSize: 13 * ffem,
+                        color: kDarkPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                      ))),
+                ),
                 Container(
                   width: 200 * fem,
-                  child: Text(name,
+                  child: Text(voucherModel.voucherName,
                       softWrap: true,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -71,7 +95,7 @@ class CardVoucherNewItem extends StatelessWidget {
                       ))),
                 ),
                 SizedBox(
-                  height: 5*hem,
+                  height: 5 * hem,
                 ),
                 Container(
                   width: 200 * fem,
@@ -96,11 +120,11 @@ class CardVoucherNewItem extends StatelessWidget {
                       ))),
                 ),
                 SizedBox(
-                  height: 5*hem,
+                  height: 5 * hem,
                 ),
                 Container(
                   width: 200 * fem,
-                  child: Text('Số lượng: $quality',
+                  child: Text('Số lượng: ${voucherModel.numberOfItems}',
                       softWrap: true,
                       style: GoogleFonts.nunito(
                           textStyle: TextStyle(
@@ -108,6 +132,27 @@ class CardVoucherNewItem extends StatelessWidget {
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
                       ))),
+                ),
+                TextButton(
+                  onPressed: onPressed,
+                  child: Container(
+                      margin: EdgeInsets.only(left: 100 * fem),
+                      width: 85 * fem,
+                      height: 30 * hem,
+                      decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          border: Border.all(color: kPrimaryColor),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          'Thu nhập',
+                          style: GoogleFonts.nunito(
+                              textStyle: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white)),
+                        ),
+                      )),
                 ),
               ],
             )

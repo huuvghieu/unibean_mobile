@@ -46,7 +46,7 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
           }
         },
         builder: (context, state) {
-          if (state is UniversityInProcess) {
+          if (state is UniversityLoading) {
             return Center(
               child: CircularProgressIndicator(
                 color: kPrimaryColor,

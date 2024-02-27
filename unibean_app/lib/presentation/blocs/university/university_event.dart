@@ -4,7 +4,7 @@ sealed class UniversityEvent extends Equatable {
   const UniversityEvent();
 }
 
-final class LoadUniversity extends UniversityEvent{
+final class LoadUniversities extends UniversityEvent{
   @override
   List<Object?> get props => [];
 }

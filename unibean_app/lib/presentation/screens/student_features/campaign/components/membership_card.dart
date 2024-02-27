@@ -24,12 +24,12 @@ class MemberShipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: 360 * fem,
+        width: 350 * fem,
         height: 210 * hem,
         child: Stack(
           children: [
             Container(
-              width: 350 * fem,
+              width: 340 * fem,
               height: 210 * hem,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20 * fem),
@@ -51,7 +51,7 @@ class MemberShipCard extends StatelessWidget {
                       // color: Colors.red,
                       width: 250 * fem,
                       child: Text(
-                        'Xin Chào,\n${studentModel.fullName}',
+                        'Xin Chào,\n   ${studentModel.fullName}',
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
                           fontSize: 20 * ffem,
@@ -116,12 +116,12 @@ class MemberShipCard extends StatelessWidget {
                                       textStyle: TextStyle(
                                     fontSize: 20 * ffem,
                                     height: heightText,
-                                    color: kPrimaryColor,
+                                    color: Colors.red,
                                     fontWeight: FontWeight.w900,
                                   )),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 4 * fem),
+                                  padding: EdgeInsets.only(left: 2*fem,bottom: 4 *hem),
                                   child: SvgPicture.asset(
                                     'assets/icons/red-bean-icon.svg',
                                     width: 30 * fem,
@@ -140,7 +140,7 @@ class MemberShipCard extends StatelessWidget {
             ),
             Positioned(
               top: 160 * hem,
-              left: 260 * fem,
+              left: 250 * fem,
               child: Container(
                 width: 100 * fem,
                 height: 40 * hem,

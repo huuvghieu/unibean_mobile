@@ -37,9 +37,13 @@ class AuthenLocalDataSource {
   static Future<AuthenModel?> getAuthen() async {
     final sf = await SharedPreferences.getInstance();
     String? authenString = sf.getString('authenString');
-    Map<String, dynamic> json = jsonDecode(authenString!);
-    AuthenModel? authenModel = AuthenModel.fromJson(json);
-    return authenModel;
+    if (authenString == null) {
+      return null;
+    } else {
+      Map<String, dynamic> json = jsonDecode(authenString);
+      AuthenModel? authenModel = AuthenModel.fromJson(json);
+      return authenModel;
+    }
   }
 
   static Future<void> removeAuthen() async {

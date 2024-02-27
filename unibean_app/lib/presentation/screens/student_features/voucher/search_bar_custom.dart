@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/voucher/components/filter/filter_body.dart';
+
+import 'filter_voucher_screen.dart';
 
 class SearchBarCustom extends StatefulWidget {
   const SearchBarCustom({super.key});
@@ -136,7 +137,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          const FilterBody(),
+          const FilterVoucherScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;

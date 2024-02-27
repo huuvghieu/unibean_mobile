@@ -56,6 +56,7 @@ class LandingScreen extends StatelessWidget {
               ),
             ),
             body: bottomNavScreen.elementAt(state.tabIndex),
+            backgroundColor: klighGreyColor,
             extendBody: true,
             bottomNavigationBar: CusNavBar(),
           ),
@@ -71,6 +72,7 @@ const List<Widget> bottomNavScreen = [
   ChallengeScreen(),
   ProfileScreen()
 ];
+
 PreferredSizeWidget? _buildAppbar(
     int tabIndex, double hem, double fem, double ffem) {
   if (tabIndex == 0 || tabIndex == 1) {

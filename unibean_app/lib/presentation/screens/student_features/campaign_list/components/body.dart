@@ -67,48 +67,45 @@ class Body extends StatelessWidget {
                                       fit: BoxFit.fill)),
                             ),
                             SizedBox(
-                              width: 15*fem,
+                              width: 15 * fem,
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
                                   width: 200 * fem,
-                                  child:
-                                      Text(CampaignDemo.listCampaign[0].name,
-                                        softWrap: true,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.nunito(
-                                              textStyle: TextStyle(
-                                            fontSize: 12 * ffem,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w900,
-                                          ))),
+                                  child: Text(CampaignDemo.listCampaign[0].name,
+                                      softWrap: true,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.nunito(
+                                          textStyle: TextStyle(
+                                        fontSize: 12 * ffem,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w900,
+                                      ))),
                                 ),
-                                 Container(
+                                Container(
                                   width: 200 * fem,
-                                  child:
-                                      Text('Thời gian tham gia Minigame',
-                                        softWrap: true,
-                                          style: GoogleFonts.nunito(
-                                              textStyle: TextStyle(
-                                            fontSize: 12 * ffem,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.normal,
-                                          ))),
+                                  child: Text('Thời gian tham gia Minigame',
+                                      softWrap: true,
+                                      style: GoogleFonts.nunito(
+                                          textStyle: TextStyle(
+                                        fontSize: 12 * ffem,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                      ))),
                                 ),
-                                 Container(
+                                Container(
                                   width: 200 * fem,
-                                  child:
-                                      Text('từ ngày 25/01 - 01/02/2024',
-                                        softWrap: true,
-                                          style: GoogleFonts.nunito(
-                                              textStyle: TextStyle(
-                                            fontSize: 12 * ffem,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.normal,
-                                          ))),
+                                  child: Text('từ ngày 25/01 - 01/02/2024',
+                                      softWrap: true,
+                                      style: GoogleFonts.nunito(
+                                          textStyle: TextStyle(
+                                        fontSize: 12 * ffem,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                      ))),
                                 ),
                               ],
                             )

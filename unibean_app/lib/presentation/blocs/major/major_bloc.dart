@@ -13,9 +13,8 @@ class MajorBloc extends Bloc<MajorEvent, MajorState> {
     on<LoadMajor>(_onLoadMajors);
   }
 
-    Future<void> _onLoadMajors(
-      LoadMajor event, Emitter<MajorState> emit) async {
-    emit(MajorInProcess());
+  Future<void> _onLoadMajors(LoadMajor event, Emitter<MajorState> emit) async {
+    emit(MajorLoading());
     try {
       var apiResponse = await majorRepository.fetchMajors();
       emit(MajorLoaded(majors: apiResponse!.result.toList()));
