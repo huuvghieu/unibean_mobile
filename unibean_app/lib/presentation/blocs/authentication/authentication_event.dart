@@ -29,3 +29,13 @@ final class LoginGmail extends AuthenticationEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class RegisterAccount extends AuthenticationEvent {
+  final CreateAuthenModel createAuthenModel;
+
+  RegisterAccount({required this.createAuthenModel});
+  
+  @override
+  List<Object?> get props => [createAuthenModel];
+  
+}

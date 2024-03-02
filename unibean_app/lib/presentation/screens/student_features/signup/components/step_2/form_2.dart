@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:unibean_app/presentation/screens/student_features/signup/compone
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/drop_down_campus.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/upload_back_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/upload_front_card.dart';
+import '../../../../../../data/datasource/authen_local_datasource.dart';
 import '../../../../screens.dart';
 import 'drop_down_university.dart';
 
@@ -235,12 +237,19 @@ class _FormBody2State extends State<FormBody2> {
             fem: widget.fem,
             hem: widget.hem,
             ffem: widget.ffem,
-            onPressed: () {
+            onPressed: () async {
               if (_selectedBackCard == null || _selectedFrontCard == null) {
                 setState(() {
                   errorCard = 'Thẻ sinh viên không được bỏ trống';
                 });
               } else if (_formKey.currentState!.validate()) {
+                final createAuthenModel =
+                    await AuthenLocalDataSource.getCreateAuthen();
+                createAuthenModel!.campusId = campusController.text;
+                createAuthenModel.studentFrontCard = _selectedFrontCard!.path;
+                createAuthenModel.studentBackCard = _selectedFrontCard!.path;
+                String createAuthenString = jsonEncode(createAuthenModel);
+                AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
                 Navigator.pushNamed(context, SignUp3Screen.routeName);
               }
             },

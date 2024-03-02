@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-
-// ignore: must_be_immutable
 class Student extends Equatable {
   final String id;
   final String majorId;
@@ -13,7 +11,7 @@ class Student extends Equatable {
   final String campusName;
   final String campusImage;
   final String accountId;
-  String? userName;
+  final String userName;
   final String studentCardFront;
   final String fileNameFront;
   final String studentCardBack;
@@ -27,7 +25,7 @@ class Student extends Equatable {
   final String phone;
   final String avatar;
   final String imageName;
-  dynamic address;
+  final String address;
   final double totalIncome;
   final double totalSpending;
   final String dateCreated;
@@ -47,7 +45,7 @@ class Student extends Equatable {
   final String redWalletName;
   final double redWalletBalance;
   final int following;
-  dynamic inviter;
+  final String inviter;
   final int invitee;
 
   Student(
@@ -62,7 +60,7 @@ class Student extends Equatable {
       required this.campusName,
       required this.campusImage,
       required this.accountId,
-      this.userName,
+      required this.userName,
       required this.studentCardFront,
       required this.fileNameFront,
       required this.studentCardBack,
@@ -76,7 +74,7 @@ class Student extends Equatable {
       required this.phone,
       required this.avatar,
       required this.imageName,
-      this.address,
+      required this.address,
       required this.totalIncome,
       required this.totalSpending,
       required this.dateCreated,
@@ -96,7 +94,7 @@ class Student extends Equatable {
       required this.redWalletName,
       required this.redWalletBalance,
       required this.following,
-      this.inviter,
+      required this.inviter,
       required this.invitee});
 
   @override

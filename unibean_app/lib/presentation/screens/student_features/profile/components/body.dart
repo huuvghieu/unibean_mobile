@@ -4,9 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/button_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/information_card_profile.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile/components/unverified_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_products/product_screen.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_trans/profile_trans_screen.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_voucher/profile_voucher_screen.dart';
+import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../../blocs/blocs.dart';
 
@@ -45,7 +47,6 @@ class Body extends StatelessWidget {
                           top: 180 * hem,
                           child: Align(
                             child: Container(
-                              
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
                                 color: klighGreyColor),
@@ -130,6 +131,72 @@ class Body extends StatelessWidget {
                                       onPressed: () {}),
                                   SizedBox(
                                     height: 10 * hem,
+                                  ),
+                                  //button logout
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon: 'assets/icons/logout-icon.svg',
+                                      title: 'Đăng xuất',
+                                      onPressed: () => _dialogLogout(context)),
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else if (state is RoleAppStudentUnverified) {
+            return Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background_splash.png'),
+                      fit: BoxFit.cover)),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: [
+                        //background body
+                        Positioned(
+                          left: 0 * fem,
+                          top: 180 * hem,
+                          child: Align(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                color: klighGreyColor),
+                          ),
+                        ),
+
+                        //widget information of profile
+                        UnverifiedCard(
+                            hem: hem,
+                            fem: fem,
+                            ffem: ffem,
+                            authenModel: state.authenModel),
+
+                        Positioned(
+                            left: 0 * fem,
+                            top: 350 * hem,
+                            child: Container(
+                              // color: Colors.red,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+
+                              child: Column(
+                                children: [
+                                  CardForUnVerified(
+                                      fem: fem, hem: hem, ffem: ffem),
+
+                                  SizedBox(
+                                    height: 20 * hem,
                                   ),
                                   //button logout
                                   ButtonProfile(

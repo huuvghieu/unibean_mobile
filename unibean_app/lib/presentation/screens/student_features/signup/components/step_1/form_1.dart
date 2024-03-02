@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 // import 'package:unibean_app/presentation/blocs/validation/validation_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
@@ -90,7 +93,7 @@ class _FormBody1State extends State<FormBody1> {
                         fem: widget.fem,
                         ffem: widget.ffem,
                         labelText: 'GMAIL',
-                        hintText: 'unibean@fpt.edu.vn',
+                        hintText: 'Nhập gmail...',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Email không được bỏ trống';
@@ -104,13 +107,19 @@ class _FormBody1State extends State<FormBody1> {
                       SizedBox(
                         height: 3 * widget.hem,
                       ),
-                      Text(
-                        state.error.toString(),
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                color: Colors.red,
-                                fontSize: 12 * widget.ffem,
-                                fontWeight: FontWeight.w700)),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 48 * widget.fem),
+                          child: Text(
+                            state.error.toString(),
+                            style: GoogleFonts.nunito(
+                                textStyle: TextStyle(
+                                    color: kErrorTextColor,
+                                    fontSize: 12 * widget.ffem,
+                                    fontWeight: FontWeight.normal)),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 25 * widget.hem,
@@ -120,7 +129,7 @@ class _FormBody1State extends State<FormBody1> {
                         fem: widget.fem,
                         ffem: widget.ffem,
                         labelText: 'HỌ VÀ TÊN *',
-                        hintText: 'Mafalda Matias',
+                        hintText: 'Nhập họ và tên...',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Họ và tên không được bỏ trống';
@@ -158,10 +167,16 @@ class _FormBody1State extends State<FormBody1> {
                       context
                           .read<ValidationCubit>()
                           .validateEmail(emailController.text)
-                          .then((value) {
+                          .then((value) async {
                         if (value == '') {
-                          // box.put('nameSignUp', nameController.text);
-                          // box.put('avatarSignUp', widget.avatar);
+                          final createAuthenModel =
+                              await AuthenLocalDataSource.getCreateAuthen();
+                          createAuthenModel!.email = emailController.text;
+                          createAuthenModel.fullName = nameController.text;
+                          String createAuthenString =
+                              jsonEncode(createAuthenModel);
+                          AuthenLocalDataSource.saveCreateAuthen(
+                              createAuthenString);
                           Navigator.pushNamed(context, SignUp2Screen.routeName,
                               arguments: SignUp1Screen.defaultRegister);
                         } else {
@@ -174,10 +189,16 @@ class _FormBody1State extends State<FormBody1> {
                       context
                           .read<ValidationCubit>()
                           .validateEmail(emailController.text)
-                          .then((value) {
+                          .then((value) async {
                         if (value == '') {
-                          // box.put('nameSignUp', nameController.text);
-                          // box.put('avatarSignUp', widget.avatar);
+                          final createAuthenModel =
+                              await AuthenLocalDataSource.getCreateAuthen();
+                          createAuthenModel!.email = emailController.text;
+                          createAuthenModel.fullName = nameController.text;
+                          String createAuthenString =
+                              jsonEncode(createAuthenModel);
+                          AuthenLocalDataSource.saveCreateAuthen(
+                              createAuthenString);
                           Navigator.pushNamed(context, SignUp2Screen.routeName,
                               arguments: SignUp1Screen.defaultRegister);
                         } else {

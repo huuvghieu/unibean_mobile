@@ -27,7 +27,7 @@ class ButtonLoginByGmail extends StatelessWidget {
             borderRadius: BorderRadius.circular(23 * widget.fem)),
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
-            if (state is AuthenticationInProcess) {
+            if (state is AuthenticationInProcessByGmail) {
               return Center(
                 child: CircularProgressIndicator(
                   color: Colors.white,

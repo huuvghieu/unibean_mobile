@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../../../../data/models.dart';
@@ -13,6 +14,7 @@ class DropDownMajor extends StatefulWidget {
   final String labelText;
   final String hintText;
   final FormFieldValidator<String> validator;
+  final TextEditingController majorController;
   const DropDownMajor(
       {super.key,
       required this.hem,
@@ -20,7 +22,8 @@ class DropDownMajor extends StatefulWidget {
       required this.ffem,
       required this.labelText,
       required this.hintText,
-      required this.validator});
+      required this.validator,
+      required this.majorController});
 
   @override
   State<DropDownMajor> createState() => _DropDownMajorState();
@@ -47,8 +50,11 @@ class _DropDownMajorState extends State<DropDownMajor> {
         builder: (context, state) {
           if (state is MajorLoading) {
             return Center(
-              child: CircularProgressIndicator(
-                color: kPrimaryColor,
+              child: Lottie.asset(
+                'assets/animations/loading-screen.json',
+                width: 50*widget.fem,
+                height: 50*widget.hem
+
               ),
             );
           } else if (state is MajorLoaded) {
@@ -105,7 +111,7 @@ class _DropDownMajorState extends State<DropDownMajor> {
       // value: campuses[0].id,
       onChanged: (newValue) {
         setState(() {
-          // wid
+          widget.majorController.text = newValue!;
         });
       },
       items: majors.map((u) {

@@ -27,7 +27,7 @@ class ContentForm extends StatelessWidget {
           fem: widget.fem,
           ffem: widget.ffem,
           labelText: 'TÀI KHOẢN',
-          hintText: 'unibean123',
+          hintText: 'Nhập tài khoản...',
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Tài khoản không được bỏ trống';
@@ -46,7 +46,7 @@ class ContentForm extends StatelessWidget {
           fem: widget.fem,
           ffem: widget.ffem,
           labelText: 'MẬT KHẨU *',
-          hintText: '******',
+          hintText: 'Nhập mật khẩu...',
           isPassword: true,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -66,7 +66,7 @@ class ContentForm extends StatelessWidget {
           fem: widget.fem,
           ffem: widget.ffem,
           labelText: 'XÁC NHẬN MẬT KHẨU *',
-          hintText: '******',
+          hintText: 'Nhập xác nhận...',
           isPassword: true,
           validator: (value) {
             if (value == null || value.isEmpty) {

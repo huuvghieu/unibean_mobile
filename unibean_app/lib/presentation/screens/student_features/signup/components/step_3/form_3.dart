@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/birthday_form.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/drop_down_gender.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/screens/signup_4_screen.dart';
+
+import '../../../../../../data/datasource/authen_local_datasource.dart';
 
 class FormBody3 extends StatefulWidget {
   const FormBody3({
@@ -25,6 +29,7 @@ class FormBody3 extends StatefulWidget {
 
 class _FormBody3State extends State<FormBody3> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController genderController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -52,8 +57,15 @@ class _FormBody3State extends State<FormBody3> {
                   fem: widget.fem,
                   hem: widget.hem,
                   ffem: widget.ffem,
-                  hintText: 'Khác',
+                  hintText: 'Chọn giới tính',
                   labelText: 'GIỚI TÍNH *',
+                  genderController: genderController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Giới tính không được bỏ trống';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 20 * widget.hem,
@@ -87,8 +99,14 @@ class _FormBody3State extends State<FormBody3> {
             height: 20 * widget.hem,
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
+                final createAuthenModel =
+                    await AuthenLocalDataSource.getCreateAuthen();
+                createAuthenModel!.gender = int.parse(genderController.text);
+                createAuthenModel.dateofBirth = widget.dobController.text;
+                String createAuthenString = jsonEncode(createAuthenModel);
+                AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
                 Navigator.pushNamed(context, SignUp4Screen.routeName);
               }
             },

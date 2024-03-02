@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
+import '../screens/screens.dart';
+
 class CardForUnVerified extends StatelessWidget {
   const CardForUnVerified({
     super.key,
@@ -105,7 +107,7 @@ class CardForUnVerified extends StatelessWidget {
                                       BorderRadius.circular(100 * fem),
                                   color:
                                       const Color.fromARGB(255, 178, 247, 180)),
-                              child:  Icon(
+                              child: Icon(
                                 Icons.check_rounded,
                                 color: kPrimaryColor,
                                 size: 25 * fem,
@@ -159,7 +161,10 @@ class CardForUnVerified extends StatelessWidget {
                 ),
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, SignUp1Screen.routeName,
+                        arguments: false);
+                  },
                   child: Container(
                       width: 120 * fem,
                       height: 40 * hem,
@@ -168,7 +173,7 @@ class CardForUnVerified extends StatelessWidget {
                           borderRadius: BorderRadius.circular(23 * fem)),
                       child: Center(
                         child: Text(
-                          'Đăng nhập',
+                          'Xác thức',
                           style: GoogleFonts.nunito(
                               textStyle: TextStyle(
                                   fontSize: 14 * ffem,

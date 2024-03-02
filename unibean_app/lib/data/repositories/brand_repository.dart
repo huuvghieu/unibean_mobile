@@ -13,14 +13,18 @@ class BrandRepositoryImp implements BrandRepository {
   int limit = 10;
 
   @override
-  Future<ApiResponse<List<BrandModel>>?> fecthBrands({int? page}) async {
+  Future<ApiResponse<List<BrandModel>>?> fecthBrands(
+      {int? page, int? limit}) async {
     try {
       final Map<String, String> headers = {'Content-Type': 'application/json'};
       if (page == null) {
         page = this.page;
       }
+      if (limit == null) {
+        limit = this.limit;
+      }
       http.Response response = await http.get(
-          Uri.parse('$endPoint?sort=$sort&page=$page&limit=100'),
+          Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {

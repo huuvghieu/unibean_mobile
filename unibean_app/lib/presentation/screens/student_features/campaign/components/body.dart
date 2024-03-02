@@ -60,7 +60,7 @@ class Body extends StatelessWidget {
               children: [
                 //RoleWidget
                 Container(
-                    padding: EdgeInsets.only(top: 10 * fem, bottom: 10 * fem),
+                    padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
                     color: kbgWhiteColor,
                     child: roleWidget),
                 SizedBox(
@@ -69,6 +69,7 @@ class Body extends StatelessWidget {
 
                 //Hôm nay có gì
                 Container(
+                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
                   color: kbgWhiteColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,15 +77,14 @@ class Body extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Padding(
-                          padding:
-                              EdgeInsets.only(top: 10 * hem, bottom: 10 * hem),
+                          padding: EdgeInsets.only(bottom: 10 * hem),
                           child: Text(
                             'Hôm nay có gì?',
                             style: GoogleFonts.nunito(
                                 textStyle: TextStyle(
                               fontSize: 20 * ffem,
                               height: heightText,
-                              color: kDarkPrimaryColor,
+                              color: Colors.green,
                               fontWeight: FontWeight.w800,
                             )),
                           ),
@@ -119,6 +119,7 @@ class Body extends StatelessWidget {
                 //Đề xuất cho bạn
                 Container(
                   color: kbgWhiteColor,
+                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
                   child: Column(
                     children: [
                       SizedBox(
@@ -127,15 +128,15 @@ class Body extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Đề xuất cho bạn',
+                              'ĐỀ XUẤT CHO BẠN',
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
-                                fontSize: 20 * ffem,
+                                fontSize: 18 * ffem,
                                 height: heightText,
-                                color: Colors.black,
+                                color: Colors.green,
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
@@ -146,18 +147,18 @@ class Body extends StatelessWidget {
                                       context, LoginScreen.routeName);
                                 }
                               },
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 5 * hem, right: 10 * fem),
-                                child: Text(
-                                  'Xem tất cả',
-                                  style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(
-                                    fontSize: 12 * ffem,
-                                    height: heightText,
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                              child: Container(
+                                height: 22*hem,
+                                width: 22*fem,
+                                margin: EdgeInsets.only(left: 8*fem),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(80)
+                                ),
+                                child: Icon(
+                                  Icons.arrow_forward_rounded,
+                                  size: 18*fem,
+                                  color: kDarkPrimaryColor,
                                 ),
                               ),
                             )
@@ -172,7 +173,7 @@ class Body extends StatelessWidget {
                         builder: (context, state) {
                           if (state is CampaignsLoaded) {
                             return SizedBox(
-                                height: 290 * hem,
+                                height: 295 * hem,
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
@@ -212,25 +213,27 @@ class Body extends StatelessWidget {
                 SizedBox(
                   height: 10 * hem,
                 ),
-//Các thwung hiệu
+
+                //Các thwung hiệu
                 Container(
                   color: kbgWhiteColor,
+                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
                   child: Column(
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(top: 10 * hem),
+                              padding: EdgeInsets.only(top: 5 * hem),
                               child: Text(
-                                'Các thương hiệu',
+                                'THƯƠNG HIỆU',
                                 style: GoogleFonts.nunito(
                                     textStyle: TextStyle(
-                                  fontSize: 20 * ffem,
+                                  fontSize: 18 * ffem,
                                   height: heightText,
-                                  color: kDarkPrimaryColor,
+                                  color: Colors.green,
                                   fontWeight: FontWeight.w800,
                                 )),
                               ),
@@ -240,20 +243,23 @@ class Body extends StatelessWidget {
                                 if (roleState is RoleAppUnknown) {
                                   Navigator.pushNamed(
                                       context, LoginScreen.routeName);
+                                } else {
+                                  Navigator.pushNamed(
+                                      context, BrandListScreen.routeName);
                                 }
                               },
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 5 * hem, right: 10 * fem),
-                                child: Text(
-                                  'Xem thêm',
-                                  style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(
-                                    fontSize: 12 * ffem,
-                                    height: heightText,
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                              child: Container(
+                                height: 22*hem,
+                                width: 22*fem,
+                                margin: EdgeInsets.only(left: 8*fem),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(80)
+                                ),
+                                child: Icon(
+                                  Icons.arrow_forward_rounded,
+                                  size: 18*fem,
+                                  color: kDarkPrimaryColor,
                                 ),
                               ),
                             )
@@ -261,7 +267,7 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 15 * hem,
+                        height: 12 * hem,
                       ),
                       BlocBuilder<BrandBloc, BrandState>(
                           builder: (context, state) {
@@ -271,7 +277,7 @@ class Body extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: state.brands.length,
+                                itemCount: 5,
                                 itemBuilder: (context, index) {
                                   return BrandCard(
                                       fem: fem,
@@ -298,6 +304,7 @@ class Body extends StatelessWidget {
                 //Chiến dịch ưu đãi
                 Container(
                   color: kbgWhiteColor,
+                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
                   child: Column(
                     children: [
                       SizedBox(
@@ -309,12 +316,12 @@ class Body extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Chiến dịch ưu đãi',
+                              'CHIẾN DỊCH ƯU ĐÃI',
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
-                                fontSize: 20 * ffem,
+                                fontSize: 18 * ffem,
                                 height: heightText,
-                                color: Colors.black,
+                                color: Colors.green,
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
@@ -322,7 +329,7 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 10 * hem,
+                        height: 12 * hem,
                       ),
                       // CampaignPaged()
                       BlocBuilder<CampaignBloc, CampaignState>(

@@ -28,7 +28,7 @@ class ContentFrom1 extends StatelessWidget {
           fem: widget.fem,
           ffem: widget.ffem,
           labelText: 'GMAIL *',
-          hintText: 'unibean@fpt.edu.vn',
+          hintText: 'Nhập gmail...',
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Email không được bỏ trống';
@@ -47,7 +47,7 @@ class ContentFrom1 extends StatelessWidget {
           fem: widget.fem,
           ffem: widget.ffem,
           labelText: 'HỌ VÀ TÊN *',
-          hintText: 'Mafalda Matias',
+          hintText: 'Nhập họ và tên...',
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Họ và tên không được bỏ trống';

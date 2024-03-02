@@ -58,8 +58,8 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                             child: Container(
                               width: 300,
                               height: 160,
-                              child: Image.asset(
-                                'assets/images/highlands-campaign.jpg',
+                              child: Image.network(
+                                campaign.image,
                                 fit: BoxFit.fill,
                                 errorBuilder: (context, error, stackTrace) {
                                   return Image.asset(
@@ -86,7 +86,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                         softWrap: true,
                                         style: GoogleFonts.nunito(
                                             textStyle: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 15,
                                           color: Colors.black,
                                           fontWeight: FontWeight.w900,
                                         )),

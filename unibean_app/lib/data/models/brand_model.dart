@@ -93,4 +93,35 @@ class BrandModel extends Brand {
     data['greenWalletBalance'] = this.greenWalletBalance;
     return data;
   }
+  // BrandModel copyWith({
+  //   required String id,
+  // required String accountId,
+  // required String brandName,
+  // required String acronym,
+  // required String userName,
+  // required String address,
+  // required String logo,
+  // required String logoFileName,
+  // required String coverPhoto,
+  // required String coverFileName,
+  // required String email,
+  // required String phone,
+  // required String link,
+  // required String openingHours,
+  // required String closingHours,
+  // required double totalIncome,
+  // required double totalSpending,
+  // required String dateCreated,
+  // required String dateUpdated,
+  // required String description,
+  // required bool state,
+  // required bool status,
+  // required bool isFavor,
+  // required int greenWalletId,
+  // required String greenWallet,
+  // required String greenWalletName,
+  // required double greenWalletBalance,
+  // }){
+
+  // }
 }

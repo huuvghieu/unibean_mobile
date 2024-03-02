@@ -30,14 +30,16 @@ class Body extends StatelessWidget {
     var roleWidget = (switch (roleState) {
       RoleAppUnknown() =>
         Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem)),
-      RoleAppStudentUnverified() =>
-        Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem)),
-      RoleAppStudentVerified(
+      RoleAppStudentUnverified(
         // ignore: unused_local_variable
+        authenModel: final authenModel,
+      ) =>
+        _buildVerified(fem, hem, ffem, null, authenModel),
+      RoleAppStudentVerified(
         authenModel: final authenModel,
         studentModel: final studentModel
       ) =>
-        _buildVerified(fem, hem, ffem, studentModel),
+        _buildVerified(fem, hem, ffem, studentModel, authenModel),
       RoleAppStore() => Container(),
       RoleAppLoading() => Container(
           child: Center(
@@ -49,8 +51,14 @@ class Body extends StatelessWidget {
     return roleWidget;
   }
 
-  Widget _buildVerified(
-      double fem, double hem, double ffem, StudentModel student) {
+  Widget _buildVerified(double fem, double hem, double ffem,
+      StudentModel? student, AuthenModel? authen) {
+    String studentName = '';
+    if (student != null) {
+      studentName = student.fullName;
+    } else if (student == null && authen != null) {
+      studentName = authen.userModel.email;
+    }
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -67,7 +75,8 @@ class Body extends StatelessWidget {
                         padding: EdgeInsets.only(top: 20 * hem),
                         child: Center(
                           child: Text(
-                            'Xin chào, ${student.fullName}!',
+                            'Xin chào, ${studentName}!',
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.nunito(
                                 textStyle: TextStyle(
                                     color: Colors.black,
@@ -307,9 +316,7 @@ class Body extends StatelessWidget {
                                       hem: hem,
                                       ffem: ffem,
                                       voucherModel: state.vouchers[index],
-                                      onPressed: (){
-                                        
-                                      },
+                                      onPressed: () {},
                                     );
                                   },
                                 ),

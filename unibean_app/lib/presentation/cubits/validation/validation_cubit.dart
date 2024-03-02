@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../domain/repositories.dart';
 
@@ -38,7 +37,7 @@ class ValidationCubit extends Cubit<ValidationState> {
       print(check);
       if (check == '') {
         emit(CheckUserNameSuccess());
-        return '';
+        return check;
       } else {
         emit(CheckUserNameFailed(error: check, check: false));
         return check;
@@ -57,9 +56,6 @@ class ValidationCubit extends Cubit<ValidationState> {
         emit(CheckStudentCodeSuccess());
         return '';
       } else {
-        if (check == invalidStudentCode) {
-          check = 'Mã sinh viên đã được sử dụng';
-        }
         emit(CheckStudentCodeFailed(error: check, check: false));
         return check;
       }
@@ -77,9 +73,6 @@ class ValidationCubit extends Cubit<ValidationState> {
         emit(CheckPhoneSuccess());
         return '';
       } else {
-        // if (check == invalidStudentCode) {
-        //   check = 'Mã sinh viên đã được sử dụng';
-        // }
         emit(CheckPhoneFailed(error: check, check: false));
         return check;
       }
@@ -90,16 +83,13 @@ class ValidationCubit extends Cubit<ValidationState> {
   Future<String?> validateInviteCode(String inviteCode) async {
     emit(ValidationInProcess());
     try {
-      var check = await validationRepository.validateInviteCode(
-          inviteCode: inviteCode);
+      var check =
+          await validationRepository.validateInviteCode(inviteCode: inviteCode);
       print(check);
       if (check == '') {
         emit(CheckInvitedCodeSuccess());
         return '';
       } else {
-        // if (check == invalidStudentCode) {
-        //   check = 'Mã sinh viên đã được sử dụng';
-        // }
         emit(CheckInvitedCodeFailed(error: check, check: false));
         return check;
       }

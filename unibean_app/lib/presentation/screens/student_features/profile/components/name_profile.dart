@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/config/constants.dart';
+// import 'package:unibean_app/presentation/config/constants.dart';
 
 class NameProfile extends StatelessWidget {
-  const NameProfile({
-    super.key,
-    required this.fem,
-    required this.ffem,
-    required this.hem,
-  });
+  const NameProfile(
+      {super.key,
+      required this.fem,
+      required this.ffem,
+      required this.hem,
+      required this.name});
 
   final double fem;
   final double ffem;
   final double hem;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150 * fem,
+    return Container(
+      width: 160 * fem,
       child: Row(
         children: [
           Flexible(
             child: Text(
-              'Le Quang Vinh',
+              name,
               // softWrap: true,
               maxLines: 2,
               style: GoogleFonts.nunito(
@@ -33,14 +34,7 @@ class NameProfile extends StatelessWidget {
                       color: Colors.black)),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 5 * hem, left: 5 * fem),
-            child: Icon(
-              Icons.check_circle,
-              color: kPrimaryColor,
-              size: 12.5 * fem,
-            ),
-          )
+         
         ],
       ),
     );

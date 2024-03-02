@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/button_sign_up_5.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/content_5.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/textformfield_invited_code.dart';
 
+import '../../../../../../data/datasource/authen_local_datasource.dart';
+import '../../../../../config/constants.dart';
 import '../../../../screens.dart';
 
 class FormBody5 extends StatefulWidget {
@@ -58,8 +63,25 @@ class _FormBody5State extends State<FormBody5> {
                         fem: widget.fem,
                         ffem: widget.ffem,
                         labelText: 'MÃ GIỚI THIỆU',
-                        hintText: '123123123',
+                        hintText: 'Nhập mã giới thiệu...',
                         textController: codeController,
+                      ),
+                      SizedBox(
+                        height: 3 * widget.hem,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 48 * widget.fem),
+                          child: Text(
+                            state.error.toString(),
+                            style: GoogleFonts.nunito(
+                                textStyle: TextStyle(
+                                    color: kErrorTextColor,
+                                    fontSize: 12 * widget.ffem,
+                                    fontWeight: FontWeight.normal)),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -80,8 +102,15 @@ class _FormBody5State extends State<FormBody5> {
                       context
                           .read<ValidationCubit>()
                           .validateInviteCode(codeController.text)
-                          .then((value) {
+                          .then((value) async {
                         if (value == '') {
+                          final createAuthenModel =
+                              await AuthenLocalDataSource.getCreateAuthen();
+                          createAuthenModel!.inviteCode = codeController.text;
+                          String createAuthenString =
+                              jsonEncode(createAuthenModel);
+                          AuthenLocalDataSource.saveCreateAuthen(
+                              createAuthenString);
                           Navigator.pushNamed(context, SignUp6Screen.routeName,
                               arguments: SignUp1Screen.defaultRegister);
                         } else {
@@ -92,8 +121,15 @@ class _FormBody5State extends State<FormBody5> {
                       context
                           .read<ValidationCubit>()
                           .validateInviteCode(codeController.text)
-                          .then((value) {
+                          .then((value) async {
                         if (value == '') {
+                          final createAuthenModel =
+                              await AuthenLocalDataSource.getCreateAuthen();
+                          createAuthenModel!.inviteCode = codeController.text;
+                          String createAuthenString =
+                              jsonEncode(createAuthenModel);
+                          AuthenLocalDataSource.saveCreateAuthen(
+                              createAuthenString);
                           Navigator.pushNamed(context, SignUp6Screen.routeName,
                               arguments: SignUp1Screen.defaultRegister);
                         } else {

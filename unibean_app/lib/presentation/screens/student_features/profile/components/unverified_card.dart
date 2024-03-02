@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/data/models/student_model.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/name_profile.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile/components/student_code_profile.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile/components/unitiversity_name_profile.dart';
 
-class InformationCardProfile extends StatelessWidget {
-  const InformationCardProfile({
+class UnverifiedCard extends StatelessWidget {
+  const UnverifiedCard({
     super.key,
     required this.hem,
     required this.fem,
     required this.ffem,
-    required this.studentModel,
+    required this.authenModel,
   });
 
   final double hem;
   final double fem;
   final double ffem;
-  final StudentModel studentModel;
+  final AuthenModel authenModel;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +57,8 @@ class InformationCardProfile extends StatelessWidget {
                     height: 80 * fem,
                     child: FittedBox(
                       child: Image(
-                          image: NetworkImage(
-                        '${studentModel.avatar}',
+                          image: AssetImage(
+                        'assets/images/ava_signup.png',
                       )),
                       fit: BoxFit.cover,
                     ),
@@ -81,32 +79,61 @@ class InformationCardProfile extends StatelessWidget {
                         fem: fem,
                         ffem: ffem,
                         hem: hem,
-                        name: studentModel.fullName,
+                        name: authenModel.userModel.email,
                       ),
-                      //email
-                      Text(
-                        '${studentModel.email}',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                fontSize: 13 * ffem,
-                                height: 1.3625 * ffem / fem,
-                                fontWeight: FontWeight.w600,
-                                color: kLowTextColor)),
-                      ),
+                   
                       //student code
-                      StudentCodeProfile(
-                        hem: hem,
-                        fem: fem,
-                        ffem: ffem,
-                        studentCode: studentModel.code,
+                      Padding(
+                        padding:
+                            EdgeInsets.only(top: 10 * hem, bottom: 5 * hem),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                                width: 15 * fem,
+                                height: 15 * hem,
+                                child: SvgPicture.asset(
+                                  'assets/icons/id-card-icon.svg',
+                                )),
+                            SizedBox(
+                              width: 5 * fem,
+                            ),
+                            Text(
+                              '',
+                              style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(
+                                      fontSize: 13 * ffem,
+                                      height: 1.3625 * ffem / fem,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black)),
+                            ),
+                          ],
+                        ),
                       ),
                       //university name
-                      UniversityProfile(
-                        fem: fem,
-                        hem: hem,
-                        ffem: ffem,
-                        university: studentModel.universityName,
-                      )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                              width: 15 * fem,
+                              height: 15 * hem,
+                              child: SvgPicture.asset(
+                                'assets/icons/university-icon.svg',
+                              )),
+                          SizedBox(
+                            width: 5 * fem,
+                          ),
+                          Text(
+                            '',
+                            style: GoogleFonts.nunito(
+                                textStyle: TextStyle(
+                                    fontSize: 13 * ffem,
+                                    height: 1.3625 * ffem / fem,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black)),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -6,4 +6,6 @@ abstract class AuthenticationRepository {
   Future<AuthenModel?> loginWithAccount(String userName, String password);
 
   Future<AuthenModel?> loginWithGmail(String idToken);
+
+  Future<bool> registerAccount(CreateAuthenModel createAuthenModel);
 }

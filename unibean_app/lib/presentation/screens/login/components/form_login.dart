@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:unibean_app/presentation/screens/login/components/button_login.dart';
 import 'package:unibean_app/presentation/screens/login/components/button_login_gmail.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
@@ -44,6 +45,8 @@ class _FormLoginState extends State<FormLogin> {
       AuthenticationSuccess() => _buildAuthIntial(userNameController,
           passwordController, widget.fem, widget.hem, widget.ffem),
       AuthenticationInProcess() => _buildAuthIntial(userNameController,
+          passwordController, widget.fem, widget.hem, widget.ffem),
+      AuthenticationInProcessByGmail() => _buildAuthIntial(userNameController,
           passwordController, widget.fem, widget.hem, widget.ffem),
     });
 

@@ -28,19 +28,30 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
         bool isVerify = authenModel.userModel.isVerify;
         String role = authenModel.role;
         String state = authenModel.userModel.state;
+        String description = authenModel.userModel.description;
         if (role == 'Student' &&
             isVerify == true &&
             student != null &&
             (state == 'Active' || state == 'IsActive')) {
           emit(RoleAppStudentVerified(
               authenModel: authenModel, studentModel: student));
-        } else if (role == 'Student' &&
+        } 
+        else if (role == 'Student' &&
+            description == 'Create by logging in with Google') {
+          emit(RoleAppStudentUnverified(
+              authenModel: authenModel));
+        } 
+        else if (role == 'Student' &&
             isVerify == false &&
+            student != null &&
             (state == 'Pending' || state == 'Rejected')) {
-          emit(RoleAppStudentUnverified());
-        } else if (role == 'Store') {
+          emit(RoleAppStudentUnverified(
+              authenModel: authenModel));
+        } 
+        else if (role == 'Store') {
           emit(RoleAppStore());
-        } else {
+        } 
+        else {
           emit(RoleAppUnknown());
         }
       }

@@ -34,7 +34,7 @@ class Content5 extends StatelessWidget {
             fem: widget.fem,
             ffem: widget.ffem,
             labelText: 'MÃ GIỚI THIỆU',
-            hintText: '123123123',
+            hintText: 'Nhập mã giới thiệu...',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Mã giới thiệu không được bỏ trống';

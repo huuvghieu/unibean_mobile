@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:unibean_app/data/models/authen_model.dart';
+import 'package:unibean_app/data/models/create_authen_model.dart';
 import 'package:unibean_app/domain/repositories.dart';
 
 import '../../presentation/config/constants.dart';
@@ -57,6 +58,59 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
         return this.authenModel;
       }
       return null;
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> registerAccount(CreateAuthenModel createAuthenModel) async {
+    try {
+      final Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json'
+      };
+      var request =
+          http.MultipartRequest('POST', Uri.parse('$endPoint/register'));
+
+      //thêm file cho request
+      request.files.add(await http.MultipartFile.fromPath(
+          'StudentCardFront', createAuthenModel.studentFrontCard!));
+      request.files.add(await http.MultipartFile.fromPath(
+          'StudentCardBack', createAuthenModel.studentBackCard!));
+
+      //thêm headers
+      request.headers.addAll(headers);
+
+      //thêm field cho request
+      request.fields.addAll({
+        'UserName': createAuthenModel.userName!,
+        'Password': createAuthenModel.password!,
+        'PasswordConfirmed': createAuthenModel.passwordConfirmed!,
+        'MajorId': createAuthenModel.majorId!,
+        'CampusId': createAuthenModel.campusId!,
+        'FullName': createAuthenModel.fullName!,
+        'Code': createAuthenModel.code!,
+        'Gender': createAuthenModel.gender.toString(),
+        'InviteCode': createAuthenModel.inviteCode!,
+        'Email': createAuthenModel.email!,
+        'DateOfBirth': createAuthenModel.dateofBirth!,
+        'Phone': createAuthenModel.phoneNumber!,
+        'Address': '',
+        'Description': '',
+        'State': 'true',
+      });
+
+      //gửi request
+      var response = await request.send();
+
+      if (response.statusCode == 201) {
+        print(response);
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e);
       throw Exception(e.toString());

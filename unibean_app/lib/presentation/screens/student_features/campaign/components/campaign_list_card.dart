@@ -47,9 +47,8 @@ class CampaignListCard extends StatelessWidget {
             child: Container(
               width: 130*fem,
               height: 160*hem,
-              child: Image.asset(
-                // campaignModel.image,
-                CampaignDemo.listCampaign[0].assetImage,
+              child: Image.network(
+                campaignModel.image,
                 fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(

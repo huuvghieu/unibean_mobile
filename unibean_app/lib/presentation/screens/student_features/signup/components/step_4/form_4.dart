@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_4/button_sign_up_4.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_4/drop_down_major.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
 
+import '../../../../../config/constants.dart';
 import '../../../../screens.dart';
 import 'content_4.dart';
 
@@ -28,6 +32,7 @@ class FormBody4 extends StatefulWidget {
 class _FormBody4State extends State<FormBody4> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController studentCodeController = TextEditingController();
+  TextEditingController majorController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class _FormBody4State extends State<FormBody4> {
           BlocBuilder<ValidationCubit, ValidationState>(
             builder: (context, state) {
               print(state);
-              if (state is CheckInvitedCodeFailed) {
+              if (state is CheckStudentCodeFailed) {
                 return Container(
                   width: 318 * widget.fem,
                   decoration: BoxDecoration(
@@ -70,33 +75,40 @@ class _FormBody4State extends State<FormBody4> {
                         },
                         textController: studentCodeController,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 5 * widget.hem, right: 20 * widget.fem),
-                        child: Text(
-                          state.error.toString(),
-                          style: GoogleFonts.nunito(
-                              textStyle: TextStyle(
-                                  color: const Color.fromARGB(255, 219, 49, 37),
-                                  fontSize: 12 * widget.ffem,
-                                  height: 1.3625 * widget.ffem / widget.fem)),
+                      SizedBox(
+                        height: 3 * widget.hem,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 48 * widget.fem),
+                          child: Text(
+                            state.error.toString(),
+                            style: GoogleFonts.nunito(
+                                textStyle: TextStyle(
+                                    color: kErrorTextColor,
+                                    fontSize: 12 * widget.ffem,
+                                    fontWeight: FontWeight.normal)),
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 20 * widget.hem,
                       ),
                       DropDownMajor(
-                          hem: widget.hem,
-                          fem: widget.fem,
-                          ffem: widget.ffem,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Chuyên ngành không được bỏ trống';
-                            }
-                            return null;
-                          },
-                          labelText: 'CHUYÊN NGÀNH *',
-                          hintText: 'Chọn chuyên ngành'),
+                        hem: widget.hem,
+                        fem: widget.fem,
+                        ffem: widget.ffem,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Chuyên ngành không được bỏ trống';
+                          }
+                          return null;
+                        },
+                        labelText: 'CHUYÊN NGÀNH *',
+                        hintText: 'Chọn chuyên ngành',
+                        majorController: majorController,
+                      ),
                       SizedBox(
                         height: 40 * widget.hem,
                       ),
@@ -105,7 +117,10 @@ class _FormBody4State extends State<FormBody4> {
                 );
               }
               return Content4(
-                  widget: widget, studentCodeController: studentCodeController);
+                widget: widget,
+                studentCodeController: studentCodeController,
+                majorController: majorController,
+              );
             },
           ),
           SizedBox(
@@ -121,8 +136,18 @@ class _FormBody4State extends State<FormBody4> {
                         context
                             .read<ValidationCubit>()
                             .validateStudentCode(studentCodeController.text)
-                            .then((value) {
+                            .then((value) async {
                           if (value == '') {
+                            final createAuthenModel =
+                                await AuthenLocalDataSource.getCreateAuthen();
+                            createAuthenModel!.code =
+                                studentCodeController.text;
+                            createAuthenModel.majorId = majorController.text;
+                            String createAuthenString =
+                                jsonEncode(createAuthenModel);
+                            AuthenLocalDataSource.saveCreateAuthen(
+                                createAuthenString);
+                            print(createAuthenString);
                             Navigator.pushNamed(
                                 context, SignUp5Screen.routeName,
                                 arguments: SignUp1Screen.defaultRegister);
@@ -136,8 +161,17 @@ class _FormBody4State extends State<FormBody4> {
                         context
                             .read<ValidationCubit>()
                             .validateStudentCode(studentCodeController.text)
-                            .then((value) {
+                            .then((value) async {
                           if (value == '') {
+                            final createAuthenModel =
+                                await AuthenLocalDataSource.getCreateAuthen();
+                            createAuthenModel!.code =
+                                studentCodeController.text;
+                            createAuthenModel.majorId = majorController.text;
+                            String createAuthenString =
+                                jsonEncode(createAuthenModel);
+                            AuthenLocalDataSource.saveCreateAuthen(
+                                createAuthenString);
                             Navigator.pushNamed(
                                 context, SignUp5Screen.routeName,
                                 arguments: SignUp1Screen.defaultRegister);

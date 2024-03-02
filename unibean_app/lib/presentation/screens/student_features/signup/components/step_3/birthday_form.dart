@@ -45,7 +45,7 @@ class _BirthdayFormState extends State<BirthdayForm> {
         controller: widget.controller,
         decoration: InputDecoration(
           labelText: 'NGÀY SINH *',
-          hintText: '01/01/2000',
+          hintText: 'Chọn ngày sinh...',
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelStyle: GoogleFonts.nunito(
             textStyle: TextStyle(

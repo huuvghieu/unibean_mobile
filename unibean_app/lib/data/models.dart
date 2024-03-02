@@ -13,3 +13,4 @@ export 'models/product_model.dart';
 export 'models/student_model.dart';
 export 'models/campaign_demo.dart';
 export 'models/challenge_model.dart';
+export 'models/create_authen_model.dart';

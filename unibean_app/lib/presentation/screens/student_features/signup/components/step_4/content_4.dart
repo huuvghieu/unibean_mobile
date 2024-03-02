@@ -6,10 +6,12 @@ import 'form_4.dart';
 
 class Content4 extends StatelessWidget {
   const Content4(
-      {super.key, required this.widget, required this.studentCodeController});
+      {super.key, required this.widget, required this.studentCodeController,
+      required this.majorController});
 
   final FormBody4 widget;
   final TextEditingController studentCodeController;
+  final TextEditingController majorController;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,9 @@ class Content4 extends StatelessWidget {
                 return null;
               },
               labelText: 'CHUYÊN NGÀNH *',
-              hintText: 'Chọn chuyên ngành'),
+              hintText: 'Chọn chuyên ngành',
+              majorController: majorController,
+              ),
           SizedBox(
             height: 40 * widget.hem,
           ),

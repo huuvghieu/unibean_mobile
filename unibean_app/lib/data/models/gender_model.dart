@@ -10,7 +10,7 @@ class GenderModel extends Equatable {
   List<Object?> get props => [id,name];
 
   static final genders = <GenderModel>[
-    GenderModel(id: 0, name: 'Nam'),
-    GenderModel(id: 1, name: 'Nữ')
+    GenderModel(id: 1, name: 'Nữ'),
+    GenderModel(id: 2, name: 'Nam')
   ];
 }

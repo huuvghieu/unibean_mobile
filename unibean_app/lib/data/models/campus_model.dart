@@ -32,16 +32,16 @@ class CampusModel extends Campus {
         campusName: json['campusName'],
         openingHours: json['openingHours'],
         closingHours: json['closingHours'],
-        address: json['address'],
-        phone: json['phone'],
-        email: json['email'],
-        link: json['link'],
-        image: json['image'],
-        fileName: json['fileName'],
+        address: json['address'] ?? '',
+        phone: json['phone'] ?? '',
+        email: json['email'] ?? '',
+        link: json['link'] ?? '',
+        image: json['image'] ?? '',
+        fileName: json['fileName'] ?? '',
         dateCreated: json['dateCreated'],
         dateUpdated: json['dateUpdated'],
-        description: json['description'],
-        state: json['state'],
-        status: json['status']);
+        description: json['description'] ?? '',
+        state: json['state'] ?? '',
+        status: json['status'] ?? true);
   }
 }

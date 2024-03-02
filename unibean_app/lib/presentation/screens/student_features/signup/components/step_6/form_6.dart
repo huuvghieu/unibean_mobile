@@ -1,4 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 // import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/content_6.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/phone_number_text_field.dart';
 
 import '../../../../../cubits/validation/validation_cubit.dart';
@@ -31,7 +34,15 @@ class FormBody6 extends StatefulWidget {
 class _FormBody6State extends State<FormBody6> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
   String? errorString;
+
+  @override
+  void initState() {
+    countryController.text = "+84";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -55,22 +66,126 @@ class _FormBody6State extends State<FormBody6> {
                 SizedBox(
                   height: 25 * widget.hem,
                 ),
-                PhoneNumberTextField(
-                  hem: widget.hem,
-                  fem: widget.fem,
-                  ffem: widget.ffem,
-                  labelText: 'SỐ ĐIỆN THOẠI *',
-                  hintText: '0xxx xxx xxx',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Số điện thoại không được bỏ trống';
+                BlocBuilder<ValidationCubit, ValidationState>(
+                  builder: (context, state) {
+                    if (state is CheckPhoneFailed) {
+                      return Column(
+                        children: [
+                          Container(
+                            width: 272 * widget.fem,
+                            height: 80 * widget.hem,
+                            child: InputDecorator(
+                              decoration: InputDecoration(
+                                labelText: 'SỐ ĐIỆN THOẠI *',
+                                // hintText: hintText,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                labelStyle: GoogleFonts.nunito(
+                                  textStyle: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15 * widget.ffem,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 26 * widget.fem,
+                                    vertical: 10 * widget.hem),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(28 * widget.fem),
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: const Color.fromARGB(
+                                            255, 220, 220, 220)),
+                                    gapPadding: 10),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(28 * widget.fem),
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: const Color.fromARGB(
+                                            255, 220, 220, 220)),
+                                    gapPadding: 10),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(28 * widget.fem),
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: const Color.fromARGB(
+                                            255, 220, 220, 220)),
+                                    gapPadding: 10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 40,
+                                    child: TextField(
+                                      readOnly: true,
+                                      controller: countryController,
+                                      style: GoogleFonts.nunito(
+                                          textStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17 * widget.ffem,
+                                              fontWeight: FontWeight.w700)),
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    "|",
+                                    style: TextStyle(
+                                        fontSize: 33, color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                      child: PhoneNumberTextField(
+                                    fem: widget.fem,
+                                    ffem: widget.ffem,
+                                    hem: widget.hem,
+                                    textController: phoneNumberController,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Số điện thoại không được bỏ trống';
+                                      } else if (!phoneNumberPattern
+                                          .hasMatch(value)) {
+                                        return 'Số điện thoại không hợp lệ';
+                                      }
+                                      return null;
+                                    },
+                                  ))
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3 * widget.hem,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 48 * widget.fem),
+                              child: Text(
+                                state.error.toString(),
+                                style: GoogleFonts.nunito(
+                                    textStyle: TextStyle(
+                                        color: kErrorTextColor,
+                                        fontSize: 12 * widget.ffem,
+                                        fontWeight: FontWeight.normal)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
                     }
-                    // else if (!phoneNumberPattern.hasMatch(value)) {
-                    //   return 'Số điện thoại không hợp lệ';
-                    // }
-                    return null;
+                    return Content6(
+                        widget: widget,
+                        countryController: countryController,
+                        phoneNumberController: phoneNumberController);
                   },
-                  textController: phoneNumberController,
                 ),
                 errorString != null
                     ? Padding(
@@ -111,52 +226,20 @@ class _FormBody6State extends State<FormBody6> {
                       if (_formKey.currentState!.validate()) {
                         context
                             .read<ValidationCubit>()
-                            .validatePhoneNumber(phoneNumberController.text)
+                            .validatePhoneNumber(
+                                '${countryController.text + phoneNumberController.text}')
                             .then((value) async {
                           if (value == '') {
                             await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber: phoneNumberController.text,
+                              phoneNumber:
+                                  '${countryController.text + phoneNumberController.text}',
                               verificationCompleted:
                                   (PhoneAuthCredential credential) {
-                                Navigator.pushNamed(
-                                    context, SignUp6Screen.routeName);
-                              },
-                              verificationFailed: (FirebaseAuthException e) {
-                                if (e.code == 'invalid-phone-number') {
-                                  setState(() {
-                                    errorString = 'Số điện thoại không hợp lệ';
-                                  });
-                                }
-                              },
-                              codeSent:
-                                  (String verificationId, int? resendToken) {},
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {},
-                            );
-                          } else {
-                            setState(() {
-                              if (state.error ==
-                                  '["Số điện thoại không hợp lệ"]') {
-                                errorString = 'Số điện thoại không hợp lệ';
-                              }
-                            });
-                          }
-                        });
-                      }
-                    } else {
-                      if (_formKey.currentState!.validate()) {
-                        context
-                            .read<ValidationCubit>()
-                            .validatePhoneNumber(phoneNumberController.text)
-                            .then((value) async {
-                          if (value == '') {
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber: phoneNumberController.text,
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {
-                                Navigator.pushNamed(
-                                    context, SignUp6Screen.routeName,
-                                    arguments: phoneNumberController.text);
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  Navigator.pushNamed(
+                                      context, SignUp7Screen.routeName,
+                                      arguments: phoneNumberController.text);
+                                });
                               },
                               verificationFailed: (FirebaseAuthException e) {
                                 if (e.code == 'invalid-phone-number') {
@@ -176,9 +259,88 @@ class _FormBody6State extends State<FormBody6> {
                                     verificationId);
                               },
                             );
-                            Navigator.pushNamed(
-                                context, SignUp7Screen.routeName,
-                                arguments: phoneNumberController.text);
+                            //save phonenumber
+                            final createAuthenModel =
+                                await AuthenLocalDataSource.getCreateAuthen();
+                            createAuthenModel!.phoneNumber =
+                                '${countryController.text + phoneNumberController.text}';
+                            String createAuthenString =
+                                jsonEncode(createAuthenModel);
+                            AuthenLocalDataSource.saveCreateAuthen(
+                                createAuthenString);
+                            Future.delayed(const Duration(seconds: 2), () {
+                              Navigator.pushNamed(
+                                  context, SignUp7Screen.routeName,
+                                  arguments: phoneNumberController.text);
+                            });
+                          } else {
+                            setState(() {
+                              if (state.error ==
+                                  '["Số điện thoại không hợp lệ"]') {
+                                errorString = 'Số điện thoại không hợp lệ';
+                              }
+                            });
+                          }
+                        });
+                        Future.delayed(const Duration(seconds: 2), () {
+                          Navigator.pushNamed(context, SignUp7Screen.routeName,
+                              arguments: phoneNumberController.text);
+                        });
+                      }
+                    } else {
+                      if (_formKey.currentState!.validate()) {
+                        context
+                            .read<ValidationCubit>()
+                            .validatePhoneNumber(
+                                '${countryController.text + phoneNumberController.text}')
+                            .then((value) async {
+                          if (value == '') {
+                            await FirebaseAuth.instance.verifyPhoneNumber(
+                              phoneNumber:
+                                  '${countryController.text + phoneNumberController.text}',
+                              verificationCompleted:
+                                  (PhoneAuthCredential credential) {
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  Navigator.pushNamed(
+                                      context, SignUp7Screen.routeName,
+                                      arguments: phoneNumberController.text);
+                                });
+                              },
+                              verificationFailed: (FirebaseAuthException e) {
+                                if (e.code == 'invalid-phone-number') {
+                                  setState(() {
+                                    errorString = 'Số điện thoại không hợp lệ';
+                                  });
+                                }
+                              },
+                              codeSent: (String verificationId,
+                                  int? resendToken) async {
+                                AuthenLocalDataSource.saveVerificationId(
+                                    verificationId);
+                              },
+                              codeAutoRetrievalTimeout:
+                                  (String verificationId) {
+                                AuthenLocalDataSource.saveVerificationId(
+                                    verificationId);
+                              },
+                            );
+
+                            //save phonenumber
+                            final createAuthenModel =
+                                await AuthenLocalDataSource.getCreateAuthen();
+                            createAuthenModel!.phoneNumber =
+                                '${countryController.text + phoneNumberController.text}';
+                            String createAuthenString =
+                                jsonEncode(createAuthenModel);
+                            print(createAuthenString);
+                            AuthenLocalDataSource.saveCreateAuthen(
+                                createAuthenString);
+                            //go to next screen
+                            Future.delayed(const Duration(seconds: 2), () {
+                              Navigator.pushNamed(
+                                  context, SignUp7Screen.routeName,
+                                  arguments: phoneNumberController.text);
+                            });
                           } else {
                             if (value == '["Số điện thoại không hợp lệ"]') {
                               setState(() {

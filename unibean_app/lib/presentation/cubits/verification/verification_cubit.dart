@@ -25,7 +25,7 @@ class VerificationCubit extends Cubit<VerificationState> {
         emit(OTPVerificationSuccess());
         return check;
       } else {
-        emit(OTPVerificationFailed());
+        emit(OTPVerificationFailed(error: 'Mã không hợp lệ'));
         return false;
       }
     } catch (e) {}

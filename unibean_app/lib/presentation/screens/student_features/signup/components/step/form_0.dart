@@ -1,14 +1,19 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
+import 'package:unibean_app/data/models.dart';
 // import 'package:unibean_app/presentation/blocs/validation/validation_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step/button_sign_up.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step/content_form.dart';
-import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_password.dart';
-
+import '../../../../../widgets/text_form_field_default.dart';
 import '../../../../screens.dart';
 
 class FormBody extends StatefulWidget {
@@ -62,7 +67,7 @@ class _FormBodyState extends State<FormBody> {
                     color: kLowTextColor)),
           ),
           SizedBox(
-            height: 40 * widget.hem,
+            height: 30 * widget.hem,
           ),
           Container(
               width: 318 * widget.fem,
@@ -84,19 +89,19 @@ class _FormBodyState extends State<FormBody> {
                   BlocBuilder<ValidationCubit, ValidationState>(
                     builder: (context, state) {
                       if (state is CheckUserNameFailed) {
-                        Column(
+                        return Column(
                           children: [
                             TextFormFieldDefault(
                               hem: widget.hem,
                               fem: widget.fem,
                               ffem: widget.ffem,
                               labelText: 'TÀI KHOẢN',
-                              hintText: 'unibean123',
+                              hintText: 'Nhập tài khoản...',
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Tài khoản không được bỏ trống';
                                 } else if (!userNamePattern.hasMatch(value)) {
-                                  return 'Tài khoản phải chứa ký tự thường \nhoặc số có độ dài từ 5 đến 50 ký tự';
+                                  return 'Tài khoản phải chứa ký tự thường hoặc số,\ncó độ dài từ 5 đến 50 ký tự';
                                 }
                                 return null;
                               },
@@ -105,13 +110,16 @@ class _FormBodyState extends State<FormBody> {
                             SizedBox(
                               height: 3 * widget.hem,
                             ),
-                            Text(
-                              state.error.toString(),
-                              style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 12 * widget.ffem,
-                                      fontWeight: FontWeight.w700)),
+                            Padding(
+                              padding: EdgeInsets.only(right: 44 * widget.fem),
+                              child: Text(
+                                state.error.toString(),
+                                style: GoogleFonts.nunito(
+                                    textStyle: TextStyle(
+                                        color: kErrorTextColor,
+                                        fontSize: 12 * widget.ffem,
+                                        fontWeight: FontWeight.normal)),
+                              ),
                             ),
                             SizedBox(
                               height: 25 * widget.hem,
@@ -121,7 +129,7 @@ class _FormBodyState extends State<FormBody> {
                               fem: widget.fem,
                               ffem: widget.ffem,
                               labelText: 'MẬT KHẨU *',
-                              hintText: '******',
+                              hintText: 'Nhập mật khẩu...',
                               isPassword: true,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -141,7 +149,7 @@ class _FormBodyState extends State<FormBody> {
                               fem: widget.fem,
                               ffem: widget.ffem,
                               labelText: 'XÁC NHẬN MẬT KHẨU *',
-                              hintText: '******',
+                              hintText: 'Nhập xác nhận...',
                               isPassword: true,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -181,7 +189,24 @@ class _FormBodyState extends State<FormBody> {
                       context
                           .read<ValidationCubit>()
                           .validateUserName(userNameController.text)
-                          .then((value) => null);
+                          .then((value) {
+                        if (value == '') {
+                          CreateAuthenModel createAuthenModel =
+                              CreateAuthenModel(
+                            userName: userNameController.text,
+                            password: passController.text,
+                            passwordConfirmed: confirmPassController.text,
+                          );
+                          String createAuthenString =
+                              jsonEncode(createAuthenModel);
+                          AuthenLocalDataSource.saveCreateAuthen(
+                              createAuthenString);
+                          Navigator.pushNamed(context, SignUp1Screen.routeName,
+                              arguments: true);
+                        } else {
+                          return null;
+                        }
+                      });
                     }
                   } else {
                     if (_formKey.currentState!.validate()) {
@@ -190,9 +215,16 @@ class _FormBodyState extends State<FormBody> {
                           .validateUserName(userNameController.text)
                           .then((value) {
                         if (value == '') {
-                          // box.put('userNameSignUp', userNameController.text);
-                          // box.put('passSignUp', userNameController.text);
-                          // box.put('confPassSignUp', confirmPassController.text);
+                          CreateAuthenModel createAuthenModel =
+                              CreateAuthenModel(
+                            userName: userNameController.text,
+                            password: passController.text,
+                            passwordConfirmed: confirmPassController.text,
+                          );
+                          String createAuthenString =
+                              jsonEncode(createAuthenModel);
+                          AuthenLocalDataSource.saveCreateAuthen(
+                              createAuthenString);
                           Navigator.pushNamed(context, SignUp1Screen.routeName,
                               arguments: true);
                         } else {

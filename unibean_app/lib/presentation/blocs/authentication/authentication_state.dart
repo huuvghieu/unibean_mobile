@@ -21,6 +21,10 @@ final class AuthenticationInProcess extends AuthenticationState {
   List<Object?> get props => [];
 }
 
+final class AuthenticationInProcessByGmail extends AuthenticationState {
+  @override
+  List<Object?> get props => [];
+}
 final class AuthenticationFailed extends AuthenticationState {
   final String error;
 

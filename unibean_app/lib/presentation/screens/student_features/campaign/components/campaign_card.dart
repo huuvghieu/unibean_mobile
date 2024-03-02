@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
@@ -23,34 +24,37 @@ class CampaignCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var formatter = NumberFormat('#,##,000');
+
     return Container(
-      width: 180 * fem,
-      margin: EdgeInsets.only(left: 5 * fem),
+      width: 172 * fem,
+      margin: EdgeInsets.only(left: 15 * fem),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15 * fem),
         color: Colors.white,
-        // boxShadow: [
-        //   BoxShadow(
-        //       color: Color(0x0c000000),
-        //       offset: Offset(0 * fem, 10 * fem),
-        //       blurRadius: 5 * fem)
-        // ]
+        boxShadow: [
+          BoxShadow(
+              color: Color(0x0c000000),
+              offset: Offset(0 * fem, 5 * fem),
+              blurRadius: 5 * fem)
+        ]
       ),
       child: InkWell(
         onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            Container(
+              padding: EdgeInsets.only(top: 5*hem, right: 5*fem, left: 5*fem),
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10 * fem),
                     topRight: Radius.circular(10 * fem)),
                 child: Container(
-                  height: 170 * hem,
+                  height: 150 * hem,
                   width: 180 * fem,
-                  child: Image.asset(
-                    CampaignDemo.listCampaign[1].assetImage,
+                  child: Image.network(
+                    campaignModel.image,
                     fit: BoxFit.fill,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
@@ -71,10 +75,12 @@ class CampaignCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
+                Container(
+                  width: 150*fem,
                   padding: EdgeInsets.only(top: 5 * hem),
                   child: Text(
                     campaignModel.brandName,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
@@ -86,15 +92,16 @@ class CampaignCard extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
+            Container(
               padding: EdgeInsets.only(
-                  left: 10 * fem, right: 12 * fem, top: 5 * hem),
+                  left: 10 * fem, right: 10 * fem, top: 5 * hem),
               child: Text(
                 campaignModel.campaignName,
                 overflow: TextOverflow.ellipsis,
+                maxLines: 2,
                 style: GoogleFonts.nunito(
                     textStyle: TextStyle(
-                  fontSize: 13 * ffem,
+                  fontSize: 14 * ffem,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 )),
@@ -117,7 +124,7 @@ class CampaignCard extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 2 * fem),
                   child: Text(
-                    '${campaignModel.totalIncome.toStringAsFixed(0)}',
+                    '${formatter.format(campaignModel.totalIncome)}',
                     style: GoogleFonts.nunito(
                         textStyle: TextStyle(
                       fontSize: 12 * ffem,
@@ -137,15 +144,15 @@ class CampaignCard extends StatelessWidget {
                 )
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 75 * fem),
+            Align(
+              alignment: Alignment.center,
               child: TextButton(
                 onPressed: () {},
                 child: Container(
-                    width: 85 * fem,
+                    width: 80 * fem,
                     height: 30 * hem,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: kPrimaryColor,
                         border: Border.all(color: kPrimaryColor),
                         borderRadius: BorderRadius.circular(5)),
                     child: Center(
@@ -155,7 +162,7 @@ class CampaignCard extends StatelessWidget {
                             textStyle: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: kPrimaryColor)),
+                                color: Colors.white)),
                       ),
                     )),
               ),

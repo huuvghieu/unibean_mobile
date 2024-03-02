@@ -3,13 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
-
 class DropDownGender extends StatefulWidget {
   final double hem;
   final double fem;
   final double ffem;
   final String labelText;
   final String hintText;
+  final TextEditingController genderController;
+    final FormFieldValidator<String> validator;
   const DropDownGender({
     super.key,
     required this.hem,
@@ -17,15 +18,15 @@ class DropDownGender extends StatefulWidget {
     required this.ffem,
     required this.labelText,
     required this.hintText,
+    required this.genderController,
+    required this.validator
   });
 
   @override
-  State<DropDownGender> createState() =>
-      _DropDownGenderState();
+  State<DropDownGender> createState() => _DropDownGenderState();
 }
 
 class _DropDownGenderState extends State<DropDownGender> {
-
   @override
   void dispose() {
     super.dispose();
@@ -69,9 +70,9 @@ class _DropDownGenderState extends State<DropDownGender> {
                     width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
                 gapPadding: 10),
           ),
-          value: GenderModel.genders[0].id,
           onChanged: (newValue) {
             setState(() {
+              widget.genderController.text = newValue.toString();
             });
           },
           items: GenderModel.genders.map((g) {

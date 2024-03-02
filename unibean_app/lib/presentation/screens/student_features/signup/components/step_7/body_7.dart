@@ -58,7 +58,7 @@ class Body7 extends StatelessWidget {
               height: 10 * hem,
             ),
             Text(
-              'Nhập mã số xác nhận đã được gửi đến\n số điện thoại $phoneNumber',
+              'Nhập mã số xác nhận đã được gửi đến\n số điện thoại +84$phoneNumber',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
@@ -70,13 +70,16 @@ class Body7 extends StatelessWidget {
             SizedBox(
               height: 30 * hem,
             ),
-            OTPForm(fem: fem, hem: hem, defaultPinTheme: defaultPinTheme, ffem: ffem),
+            OTPForm(
+              fem: fem,
+              hem: hem,
+              defaultPinTheme: defaultPinTheme,
+              ffem: ffem,
+              phoneNumber: '+84$phoneNumber',
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-
-

@@ -36,7 +36,7 @@ class ChallengeScreen extends StatelessWidget {
     } else if (roleState is RoleAppStudentVerified) {
       return _buildVerifiedStudent(fem, hem, ffem);
     }
-    return _buildUnknown(fem, hem, ffem);
+    return _buildVerifiedStudent(fem, hem, ffem);
   }
 
   Widget _buildUnknown(double fem, double hem, double ffem) {

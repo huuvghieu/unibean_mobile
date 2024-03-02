@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/domain/repositories.dart';
 
 part 'authentication_event.dart';
@@ -15,6 +16,7 @@ class AuthenticationBloc
     on<StartAuthen>(_onStartAuthen);
     on<LoginAccount>(_onLoginAccount);
     on<LoginGmail>(_onLoginGmail);
+    on<RegisterAccount>(_onRegisterAccount);
   }
   Future<void> _onStartAuthen(
       StartAuthen event, Emitter<AuthenticationState> emit) async {
@@ -40,14 +42,14 @@ class AuthenticationBloc
 
   Future<void> _onLoginGmail(
       LoginGmail event, Emitter<AuthenticationState> emit) async {
-    emit(AuthenticationInProcess());
-  
+    emit(AuthenticationInProcessByGmail());
+
     final GoogleSignIn googleSignIn = GoogleSignIn();
     // final auth = await FirebaseAuth.instance;
     try {
       //select google account
       final userAccount = await googleSignIn.signIn();
-      
+
       //get authendication object from account
       final GoogleSignInAuthentication googleAuthen =
           await userAccount!.authentication;
@@ -70,6 +72,24 @@ class AuthenticationBloc
       } else {
         emit(
             AuthenticationFailed(error: 'Tài khoản hoặc mật khẩu không đúng!'));
+      }
+    } catch (e) {
+      emit(AuthenticationFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onRegisterAccount(
+      RegisterAccount event, Emitter<AuthenticationState> emit) async {
+    emit(AuthenticationInProcess());
+    try {
+      var registerCheck = await authenticationRepository.registerAccount(
+        event.createAuthenModel
+      );
+      if (registerCheck) {
+        emit(AuthenticationSuccess());
+      } else {
+        emit(
+            AuthenticationFailed(error: 'Đăng ký thất bại!'));
       }
     } catch (e) {
       emit(AuthenticationFailed(error: e.toString()));

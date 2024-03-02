@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
@@ -48,9 +49,8 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
         builder: (context, state) {
           if (state is UniversityLoading) {
             return Center(
-              child: CircularProgressIndicator(
-                color: kPrimaryColor,
-              ),
+              child: Lottie.asset('assets/animations/loading-screen.json',
+              width: 50*widget.fem, height: 50*widget.hem)
             );
           } else if (state is UniversityLoaded) {
             universities = state.universities.toList();

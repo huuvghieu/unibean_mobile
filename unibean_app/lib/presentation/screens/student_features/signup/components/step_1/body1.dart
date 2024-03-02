@@ -71,24 +71,24 @@ class _BodyState extends State<Body1> {
                     hem: hem,
                     avatar: _selectedImage,
                   ),
-                  InkWell(
-                    onTap: () {
-                      // _pickerImageFromGallery();
-                      _imageModelBottomSheet(context);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
-                      child: Text(
-                        'Thêm hình cá nhân',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                fontSize: 13 * ffem,
-                                fontWeight: FontWeight.w900,
-                                height: 1.3625 * ffem / fem,
-                                color: kPrimaryColor)),
-                      ),
-                    ),
-                  )
+                  // InkWell(
+                  //   onTap: () {
+                  //     // _pickerImageFromGallery();
+                  //     _imageModelBottomSheet(context);
+                  //   },
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
+                  //     child: Text(
+                  //       'Thêm hình cá nhân',
+                  //       style: GoogleFonts.nunito(
+                  //           textStyle: TextStyle(
+                  //               fontSize: 13 * ffem,
+                  //               fontWeight: FontWeight.w900,
+                  //               height: 1.3625 * ffem / fem,
+                  //               color: kPrimaryColor)),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),

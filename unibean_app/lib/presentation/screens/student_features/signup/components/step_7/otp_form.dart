@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_7/button_signup_7.dart';
+
+import '../../../../../../data/datasource/authen_local_datasource.dart';
 
 class OTPForm extends StatefulWidget {
   const OTPForm({
@@ -14,12 +18,14 @@ class OTPForm extends StatefulWidget {
     required this.hem,
     required this.defaultPinTheme,
     required this.ffem,
+    required this.phoneNumber,
   });
 
   final double fem;
   final double hem;
   final PinTheme defaultPinTheme;
   final double ffem;
+  final String phoneNumber;
 
   @override
   State<OTPForm> createState() => _OTPFormState();
@@ -29,6 +35,7 @@ class _OTPFormState extends State<OTPForm> {
   final _formKey = GlobalKey<FormState>();
   final pinController = TextEditingController();
   final focusNode = FocusNode();
+  String? errorString;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -67,8 +74,29 @@ class _OTPFormState extends State<OTPForm> {
                     },
                   ),
                 ),
+                errorString != null
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          top: 2 * widget.hem,
+                          left: 45 * widget.fem,
+                        ),
+                        child: SizedBox(
+                          width: 270 * widget.fem,
+                          child: Text(
+                            errorString.toString(),
+                            style: GoogleFonts.nunito(
+                                fontSize: 12 * widget.ffem,
+                                fontWeight: FontWeight.normal,
+                                height: 1.3625 * widget.ffem / widget.fem,
+                                color: kErrorTextColor),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 5 * widget.hem,
+                      ),
                 SizedBox(
-                  height: 25 * widget.hem,
+                  height: 20 * widget.hem,
                 ),
               ],
             ),
@@ -82,23 +110,43 @@ class _OTPFormState extends State<OTPForm> {
                 widget: widget,
                 onPressed: () {
                   if (state is OTPVerificationFailed) {
+                    setState(() {
+                      errorString = state.error;
+                    });
                     if (_formKey.currentState!.validate()) {
                       context
                           .read<VerificationCubit>()
                           .verifyOTP(pinController.text)
-                          .then((value) => null);
+                          .then((value) async {
+                        if (value!) {
+                          final createAuthenModel =
+                              await AuthenLocalDataSource.getCreateAuthen();
+                          context.read<AuthenticationBloc>().add(
+                              RegisterAccount(
+                                  createAuthenModel: createAuthenModel!));
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              SignUp8Screen.routeName,
+                              (Route<dynamic> route) => false);
+                        } else {}
+                      });
                     }
                   } else {
                     if (_formKey.currentState!.validate()) {
                       context
                           .read<VerificationCubit>()
                           .verifyOTP(pinController.text)
-                          .then((value) {
+                          .then((value) async {
                         if (value!) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              SignUp8Screen.routeName,
-                              (Route<dynamic> route) => false);
+                          final createAuthenModel =
+                              await AuthenLocalDataSource.getCreateAuthen();
+                          context.read<AuthenticationBloc>().add(
+                              RegisterAccount(
+                                  createAuthenModel: createAuthenModel!));
+                          // Navigator.pushNamedAndRemoveUntil(
+                          //     context,
+                          //     SignUp8Screen.routeName,
+                          //     (Route<dynamic> route) => false);
                         } else {}
                       });
                     }
@@ -123,8 +171,29 @@ class _OTPFormState extends State<OTPForm> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  // Navigator.pushNamed(context, LoginScreen.routeName);
+                onTap: () async {
+                  await FirebaseAuth.instance.verifyPhoneNumber(
+                    phoneNumber: widget.phoneNumber,
+                    verificationCompleted: (PhoneAuthCredential credential) {
+                      Future.delayed(const Duration(seconds: 2), () {
+                        Navigator.pushNamed(context, SignUp7Screen.routeName,
+                            arguments: widget.phoneNumber);
+                      });
+                    },
+                    verificationFailed: (FirebaseAuthException e) {
+                      if (e.code == 'invalid-phone-number') {
+                        setState(() {
+                          errorString = 'Số điện thoại không hợp lệ';
+                        });
+                      }
+                    },
+                    codeSent: (String verificationId, int? resendToken) async {
+                      AuthenLocalDataSource.saveVerificationId(verificationId);
+                    },
+                    codeAutoRetrievalTimeout: (String verificationId) {
+                      AuthenLocalDataSource.saveVerificationId(verificationId);
+                    },
+                  );
                 },
                 child: Padding(
                   padding: EdgeInsets.only(

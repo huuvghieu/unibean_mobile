@@ -70,6 +70,9 @@ class AppRouter {
 
       case BrandDetailScreen.routeName:
         return BrandDetailScreen.route();
+        
+      case BrandListScreen.routeName:
+        return BrandListScreen.route();
 
       case VoucherScreen.routeName:
         return VoucherScreen.route();

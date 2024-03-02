@@ -29,7 +29,7 @@ final RegExp passwordPattern = RegExp(
 
 final RegExp userNamePattern = RegExp(r'^(?=.*[a-z0-9])[a-z0-9]{5,50}$');
 
-final RegExp phoneNumberPattern = RegExp(r'^\d{10}$');
+final RegExp phoneNumberPattern = RegExp(r'^\d{9}$');
 
 //response failed from api
 final String invalidStudentCode = '["Student code is already in use"]';
