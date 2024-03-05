@@ -7,3 +7,4 @@ export 'entities/campaign.dart';
 export 'entities/challenge.dart';
 export 'entities/voucher.dart';
 export 'entities/brand.dart';
+export 'entities/voucher_student.dart';

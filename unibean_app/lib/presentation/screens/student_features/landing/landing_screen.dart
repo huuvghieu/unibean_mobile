@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/blocs/landing_screen/landing_screen_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/landing/components/cus_nav_bar.dart';
@@ -44,7 +45,16 @@ class LandingScreen extends StatelessWidget {
                   backgroundColor: kPrimaryColor,
                   elevation: 5 * fem,
                   shape: const CircleBorder(),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final studentId =
+                        await AuthenLocalDataSource.getStudentId();
+                    if (studentId != null) {
+                      Navigator.pushNamed(context, QRScreen.routeName,
+                          arguments: studentId);
+                    }else {
+                        Navigator.pushNamed(context, LoginScreen.routeName);
+                    }
+                  },
                   child: Container(
                     width: 20 * fem,
                     height: 20 * hem,

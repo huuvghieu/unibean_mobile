@@ -7,3 +7,5 @@ export 'role/role_app_bloc.dart';
 export 'campaign/campaign_bloc.dart';
 export 'brand/brand_bloc.dart';
 export 'voucher/voucher_bloc.dart';
+export 'challenge/challenge_bloc.dart';
+export 'student/student_bloc.dart';

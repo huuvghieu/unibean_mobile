@@ -28,6 +28,7 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
         String authenString = jsonEncode(AuthenModel.fromJson(result));
         AuthenLocalDataSource.saveAuthen(authenString);
         AuthenLocalDataSource.saveToken(authenModel.jwt);
+        AuthenLocalDataSource.saveStudentId(authenModel.userModel.userId);
         return this.authenModel;
       }
       return null;

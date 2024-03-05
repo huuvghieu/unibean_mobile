@@ -7,3 +7,5 @@ final class LoadVouchers extends VoucherEvent {
   @override
   List<Object?> get props => [];
 }
+
+

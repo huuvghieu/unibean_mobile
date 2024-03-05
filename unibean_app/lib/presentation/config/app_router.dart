@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unibean_app/data/models.dart';
 // import 'package:unibean_app/presentation/blocs/blocs.dart';
 import '../screens/screens.dart';
 
@@ -48,7 +49,7 @@ class AppRouter {
         return SignUp7Screen.route(phoneNumber: settings.arguments as String);
 
       case SignUp8Screen.routeName:
-        return SignUp8Screen.route();        
+        return SignUp8Screen.route();
 
       case ProfileTransactionHistoryScreen.routeName:
         return ProfileTransactionHistoryScreen.route();
@@ -69,13 +70,17 @@ class AppRouter {
         return CampaignDetailScreen.route();
 
       case BrandDetailScreen.routeName:
-        return BrandDetailScreen.route();
-        
+        return BrandDetailScreen.route(
+            brandModel: settings.arguments as BrandModel);
+
       case BrandListScreen.routeName:
         return BrandListScreen.route();
 
       case VoucherScreen.routeName:
         return VoucherScreen.route();
+
+      case QRScreen.routeName:
+        return QRScreen.route(id: settings.arguments as String);
 
       case FilterVoucherScreen.routeName:
         return FilterVoucherScreen.route();

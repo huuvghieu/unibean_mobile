@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_carousel.dart';
 import 'package:unibean_app/presentation/widgets/brand_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_carousel.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_list_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/membership_card.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
@@ -52,6 +53,7 @@ class Body extends StatelessWidget {
     });
 
     return CustomScrollView(
+      controller: context.read<CampaignBloc>().scrollController,
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate([
@@ -60,16 +62,16 @@ class Body extends StatelessWidget {
               children: [
                 //RoleWidget
                 Container(
-                    padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
+                    padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
                     color: kbgWhiteColor,
                     child: roleWidget),
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
                 //Hôm nay có gì
                 Container(
-                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
+                  padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
                   color: kbgWhiteColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,12 +81,12 @@ class Body extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 10 * hem),
                           child: Text(
-                            'Hôm nay có gì?',
+                            'HÔM NAY CÓ GÌ',
                             style: GoogleFonts.nunito(
                                 textStyle: TextStyle(
                               fontSize: 20 * ffem,
                               height: heightText,
-                              color: Colors.green,
+                              color: Colors.black,
                               fontWeight: FontWeight.w800,
                             )),
                           ),
@@ -113,18 +115,16 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
                 //Đề xuất cho bạn
                 Container(
                   color: kbgWhiteColor,
-                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
+                  padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 10 * hem,
-                      ),
+
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Row(
@@ -136,7 +136,7 @@ class Body extends StatelessWidget {
                                   textStyle: TextStyle(
                                 fontSize: 18 * ffem,
                                 height: heightText,
-                                color: Colors.green,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
@@ -148,16 +148,15 @@ class Body extends StatelessWidget {
                                 }
                               },
                               child: Container(
-                                height: 22*hem,
-                                width: 22*fem,
-                                margin: EdgeInsets.only(left: 8*fem),
+                                height: 22 * hem,
+                                width: 22 * fem,
+                                margin: EdgeInsets.only(left: 8 * fem),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(80)
-                                ),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(80)),
                                 child: Icon(
                                   Icons.arrow_forward_rounded,
-                                  size: 18*fem,
+                                  size: 18 * fem,
                                   color: kDarkPrimaryColor,
                                 ),
                               ),
@@ -211,13 +210,13 @@ class Body extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
                 //Các thwung hiệu
                 Container(
                   color: kbgWhiteColor,
-                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
+                  padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
                   child: Column(
                     children: [
                       Container(
@@ -233,7 +232,7 @@ class Body extends StatelessWidget {
                                     textStyle: TextStyle(
                                   fontSize: 18 * ffem,
                                   height: heightText,
-                                  color: Colors.green,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w800,
                                 )),
                               ),
@@ -249,16 +248,15 @@ class Body extends StatelessWidget {
                                 }
                               },
                               child: Container(
-                                height: 22*hem,
-                                width: 22*fem,
-                                margin: EdgeInsets.only(left: 8*fem),
+                                height: 22 * hem,
+                                width: 22 * fem,
+                                margin: EdgeInsets.only(left: 8 * fem),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(80)
-                                ),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(80)),
                                 child: Icon(
                                   Icons.arrow_forward_rounded,
-                                  size: 18*fem,
+                                  size: 18 * fem,
                                   color: kDarkPrimaryColor,
                                 ),
                               ),
@@ -298,13 +296,13 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
                 //Chiến dịch ưu đãi
                 Container(
                   color: kbgWhiteColor,
-                  padding: EdgeInsets.only(top: 20 * fem, bottom: 20 * fem),
+                  padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
                   child: Column(
                     children: [
                       SizedBox(
@@ -321,7 +319,7 @@ class Body extends StatelessWidget {
                                   textStyle: TextStyle(
                                 fontSize: 18 * ffem,
                                 height: heightText,
-                                color: Colors.green,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
@@ -334,24 +332,34 @@ class Body extends StatelessWidget {
                       // CampaignPaged()
                       BlocBuilder<CampaignBloc, CampaignState>(
                         builder: (context, state) {
-                          if (state is CampaignsLoaded) {
+                          if (state is CampaignLoading) {
+                           return shimmerLoading(1);
+                          } else if (state is CampaignsLoaded) {
                             return ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: state.campaigns.length,
+                              itemCount:
+                                  context.read<CampaignBloc>().isLoadingMore
+                                      ? state.campaigns.length + 1
+                                      : state.campaigns.length,
                               itemBuilder: (context, index) {
-                                return CampaignListCard(
-                                  fem: fem,
-                                  hem: hem,
-                                  ffem: ffem,
-                                  campaignModel: state.campaigns[index],
-                                  onTap: () {
-                                    if (roleState is RoleAppUnknown) {
-                                      Navigator.pushNamed(
-                                          context, LoginScreen.routeName);
-                                    }
-                                  },
-                                );
+                                if (index >= state.campaigns.length) {
+                                  return shimmerLoading(1);
+                                } 
+                                else {
+                                  return CampaignListCard(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    campaignModel: state.campaigns[index],
+                                    onTap: () {
+                                      if (roleState is RoleAppUnknown) {
+                                        Navigator.pushNamed(
+                                            context, LoginScreen.routeName);
+                                      }
+                                    },
+                                  );
+                                }
                               },
                             );
                           }
@@ -377,4 +385,27 @@ class Body extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget shimmerLoading(pageSize) {
+  return ListView.builder(
+    itemCount: pageSize,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10),
+          height: 160,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      );
+    },
+  );
 }

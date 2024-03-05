@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
@@ -19,94 +21,154 @@ class VoucherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat('#,##,000');
     return Container(
-      width: 180 * fem,
-      height: 260 * hem,
-      margin: EdgeInsets.only(left: 5 * fem),
+      width: 172 * fem,
+      margin: EdgeInsets.only(left: 15 * fem),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15 * fem),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Color(0x0c000000),
-                offset: Offset(0 * fem, 10 * fem),
-                blurRadius: 5 * fem)
-          ]),
+        borderRadius: BorderRadius.circular(15 * fem),
+        color: Colors.white,
+      ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            width: 165 * fem,
-            height: 170 * hem,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15 * fem),
-                image: DecorationImage(
-                    image: AssetImage('assets/images/voucher-1.png'),
-                    fit: BoxFit.fill)),
-          ),
-          Padding(
             padding:
-                EdgeInsets.only(left: 12 * fem, right: 12 * fem, top: 10 * hem),
+                EdgeInsets.only(top: 5 * hem, right: 5 * fem, left: 5 * fem),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10 * fem),
+                  topRight: Radius.circular(10 * fem)),
+              child: Container(
+                height: 150 * hem,
+                width: 180 * fem,
+                child: Image.network(
+                  voucherModel.image,
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 170 * fem,
+                      height: 180 * hem,
+                      child: Icon(
+                        Icons.error_outlined,
+                        size: 50 * fem,
+                        color: kPrimaryColor,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: 150 * fem,
+              padding: EdgeInsets.only(top: 5 * hem),
+              child: Text(
+                voucherModel.brandName,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.nunito(
+                    textStyle: TextStyle(
+                  fontSize: 13 * ffem,
+                  color: kDarkPrimaryColor,
+                  fontWeight: FontWeight.normal,
+                )),
+              ),
+            ),
+          ),
+          Container(
+            padding:
+                EdgeInsets.only(left: 10 * fem, right: 10 * fem, top: 5 * hem),
             child: Text(
               voucherModel.voucherName,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               style: GoogleFonts.nunito(
                   textStyle: TextStyle(
-                fontSize: 13 * ffem,
+                fontSize: 14 * ffem,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               )),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 5 * hem),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 5 * fem),
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10 * fem),
+                    child: Text(
+                      '${formatter.format(voucherModel.price)}',
+                      style: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                        fontSize: 15 * ffem,
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                      )),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 2 * fem),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 2 * fem, top: 2 * hem, bottom: 2 * hem),
+                    child: SvgPicture.asset(
+                      'assets/icons/green-bean-icon.svg',
+                      width: 23 * fem,
+                      height: 20 * fem,
+                    ),
+                  )
+                ],
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Container(
+                    width: 50 * fem,
+                    height: 20 * hem,
+                    decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        border: Border.all(color: kPrimaryColor),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Center(
                       child: Text(
-                        voucherModel.rate.toString(),
+                        'Xem',
                         style: GoogleFonts.nunito(
-                            fontSize: 18 * ffem,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
+                            textStyle: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white)),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 2 * fem),
-                      child: Text(
-                        '${voucherModel.price.toStringAsFixed(0)}',
-                        style: GoogleFonts.nunito(
-                            fontSize: 18 * ffem,
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 5 * fem),
-                      child: SvgPicture.asset(
-                        'assets/icons/green-bean-icon.svg',
-                        width: 30 * fem,
-                        height: 30 * fem,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )
+                    )),
+              ),
+              // Row(
+              //   children: [
+              //     Padding(
+              //       padding: EdgeInsets.only(left: 2 * fem),
+              //       child: Text(
+              //         '${formatter.format(voucherModel.price)}',
+              //         style: GoogleFonts.nunito(
+              //             textStyle: TextStyle(
+              //           fontSize: 13 * ffem,
+              //           color: kPrimaryColor,
+              //           fontWeight: FontWeight.normal,
+              //         )),
+              //       ),
+              //     ),
+              //     Padding(
+              //       padding: EdgeInsets.only(
+              //           left: 2 * fem, top: 2 * hem, bottom: 2 * hem),
+              //       child: SvgPicture.asset(
+              //         'assets/icons/green-bean-icon.svg',
+              //         width: 20 * fem,
+              //         height: 17 * fem,
+              //       ),
+              //     )
+              //   ],
+              // ),
+            ],
+          ),
         ],
       ),
     );

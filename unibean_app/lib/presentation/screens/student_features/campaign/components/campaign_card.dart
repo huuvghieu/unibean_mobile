@@ -32,17 +32,13 @@ class CampaignCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15 * fem),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x0c000000),
-              offset: Offset(0 * fem, 5 * fem),
-              blurRadius: 5 * fem)
-        ]
+        
       ),
       child: InkWell(
         onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               padding: EdgeInsets.only(top: 5*hem, right: 5*fem, left: 5*fem),

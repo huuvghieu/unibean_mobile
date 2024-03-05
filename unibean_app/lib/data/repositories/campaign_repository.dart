@@ -10,7 +10,7 @@ class CampaignRepositoryImp implements CampaignRepository {
   String endPoint = '${baseURL}campaigns';
   String sort = 'Id%2Cdesc';
   int page = 1;
-  int limit = 10;
+  int limit = 3;
 
   @override
   Future<ApiResponse<List<CampaignModel>>?> fecthCampaigns(
@@ -24,7 +24,7 @@ class CampaignRepositoryImp implements CampaignRepository {
         limit = this.limit;
       }
       http.Response response = await http.get(
-          Uri.parse('$endPoint?sort=$sort&page=$page&limit=100'),
+          Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {

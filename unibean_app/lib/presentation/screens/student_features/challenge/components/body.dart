@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/student_features/challenge/components/in_process_challenge.dart';
+import 'package:unibean_app/presentation/screens/student_features/challenge/components/is_claimed_challenge.dart';
+
+import 'in_process_challenge.dart';
+import 'is_completed_challenge.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -10,12 +13,12 @@ class Body extends StatelessWidget {
       children: [
         //In process Challenge
         InProcessChallenge(),
-        
+
         //complete Challenge
-         InProcessChallenge(),
+        IsCompletedChallenge(),
 
         //completed Challenge
-         InProcessChallenge(),
+        IsClaimedChallenge()
       ],
     );
   }

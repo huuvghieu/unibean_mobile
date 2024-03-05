@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_detail/components/others_infor_brand_detail.dart';
 
@@ -9,11 +10,13 @@ class InformationCardBrandDetail extends StatelessWidget {
     required this.hem,
     required this.fem,
     required this.ffem,
+    required this.brandModel,
   });
 
   final double hem;
   final double fem;
   final double ffem;
+  final BrandModel brandModel;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +52,20 @@ class InformationCardBrandDetail extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10 * fem),
                   child: Container(
-                    width: 80 * hem,
-                    height: 80 * fem,
-                    child: FittedBox(
-                      child: Image(
-                          image: AssetImage(
-                        'assets/images/fcode-banner.png',
-                      )),
-                      fit: BoxFit.cover,
+                    height: 80 * hem,
+                    width: 80 * fem,
+                    child: Image.network(
+                      brandModel.logo,
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          child: Icon(
+                            Icons.error,
+                            size: 50 * fem,
+                            color: kPrimaryColor,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -77,7 +86,7 @@ class InformationCardBrandDetail extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                'F-Code Club',
+                                brandModel.brandName,
                                 // softWrap: true,
                                 maxLines: 2,
                                 style: GoogleFonts.nunito(
@@ -93,7 +102,7 @@ class InformationCardBrandDetail extends StatelessWidget {
                       ),
                       //email
                       Text(
-                        'Since on 01/01/2021',
+                        'Bắt đầu ${brandModel.dateCreated}',
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
                                 fontSize: 10 * ffem,
@@ -147,4 +156,3 @@ class InformationCardBrandDetail extends StatelessWidget {
     );
   }
 }
-

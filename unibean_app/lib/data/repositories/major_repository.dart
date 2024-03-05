@@ -27,7 +27,6 @@ class MajorRepositoryImp implements MajorRepository {
         ApiResponse<List<MajorModel>> apiResponse =
             ApiResponse<List<MajorModel>>.fromJson(result,
                 (data) => data.map((e) => MajorModel.fromJson(e)).toList());
-        print(apiResponse.result);
         return apiResponse;
       } else {
         return null;

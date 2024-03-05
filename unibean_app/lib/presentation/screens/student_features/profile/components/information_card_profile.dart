@@ -3,9 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models/student_model.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile/components/item_icon_card_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/name_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/student_code_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/unitiversity_name_profile.dart';
+
+import '../../../screens.dart';
 
 class InformationCardProfile extends StatelessWidget {
   const InformationCardProfile({
@@ -127,12 +130,21 @@ class InformationCardProfile extends StatelessWidget {
                 top: 10 * hem,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  ItemIconCardProfile(
+                      fem: fem,
+                      hem: hem,
+                      ffem: ffem,
+                      title: '${studentModel.following.toString()} theo dõi',
+                      svgAssetName: 'assets/icons/friends-icon-profile.svg'),
                   Column(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, QRScreen.routeName,
+                              arguments: studentModel.id);
+                        },
                         child: Container(
                           width: 40 * fem,
                           height: 40 * hem,

@@ -35,23 +35,17 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
             (state == 'Active' || state == 'IsActive')) {
           emit(RoleAppStudentVerified(
               authenModel: authenModel, studentModel: student));
-        } 
-        else if (role == 'Student' &&
+        } else if (role == 'Student' &&
             description == 'Create by logging in with Google') {
-          emit(RoleAppStudentUnverified(
-              authenModel: authenModel));
-        } 
-        else if (role == 'Student' &&
+          emit(RoleAppStudentUnverified(authenModel: authenModel));
+        } else if (role == 'Student' &&
             isVerify == false &&
             student != null &&
             (state == 'Pending' || state == 'Rejected')) {
-          emit(RoleAppStudentUnverified(
-              authenModel: authenModel));
-        } 
-        else if (role == 'Store') {
+          emit(RoleAppStudentUnverified(authenModel: authenModel));
+        } else if (role == 'Store') {
           emit(RoleAppStore());
-        } 
-        else {
+        } else {
           emit(RoleAppUnknown());
         }
       }
@@ -64,6 +58,7 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
       RoleAppEnd event, Emitter<RoleAppState> emit) async {
     try {
       AuthenLocalDataSource.removeAuthen();
+      AuthenLocalDataSource.clearAuthen();
       emit(RoleAppUnknown());
     } catch (e) {
       print(e);

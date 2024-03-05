@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
+import 'package:unibean_app/presentation/blocs/challenge/challenge_bloc.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
@@ -56,6 +57,8 @@ class MyApp extends StatelessWidget {
             create: (_) => BrandRepositoryImp()),
         RepositoryProvider<VoucherRepository>(
             create: (_) => VoucherRepositoryImp()),
+        RepositoryProvider<ChallengeRepository>(
+            create: (_) => ChallengeRepositoryImp()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -101,6 +104,11 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 VoucherBloc(voucherRepository: VoucherRepositoryImp())
                   ..add(LoadVouchers()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                ChallengeBloc(challengeRepository: ChallengeRepositoryImp())
+                  ..add(LoadChallenge()),
           ),
         ],
         child: MaterialApp(

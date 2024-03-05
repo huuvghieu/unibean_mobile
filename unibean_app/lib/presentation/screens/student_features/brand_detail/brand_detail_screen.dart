@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_detail/components/body.dart';
 
 class BrandDetailScreen extends StatelessWidget {
   static const String routeName = '/brand-detail-student';
 
-  static Route route() {
+  static Route route({required BrandModel brandModel}) {
     return MaterialPageRoute(
-      builder: (_) => const BrandDetailScreen(),
+      builder: (_) =>  BrandDetailScreen(brandModel: brandModel,),
       settings: const RouteSettings(arguments: routeName),
     );
   }
 
-  const BrandDetailScreen({super.key});
+  final BrandModel brandModel;
+  const BrandDetailScreen({super.key, required this.brandModel});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class BrandDetailScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             child: Padding(
-              padding: EdgeInsets.only(left: 25*fem),
+              padding: EdgeInsets.only(left: 25 * fem),
               child: Icon(
                 Icons.arrow_back_rounded,
                 color: Colors.white,
@@ -43,7 +45,7 @@ class BrandDetailScreen extends StatelessWidget {
         ),
         extendBodyBehindAppBar: true,
         extendBody: true,
-        body: Body(),
+        body: Body(brandModel: brandModel,),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
@@ -29,7 +30,7 @@ class VoucherListCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(top: 15 * hem, left: 10 * fem, right: 10 * fem),
         width: 340 * fem,
-        height: 180 * hem,
+        height: 170 * hem,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15 * fem),
             color: Colors.white,
@@ -50,27 +51,30 @@ class VoucherListCard extends StatelessWidget {
               child: Container(
                 width: 140 * fem,
                 height: 180 * hem,
-                child: Image.asset(
-                  // campaignModel.image,
-                  'assets/images/voucher2.jpg',
+                child: Image.network(
+                  voucherModel.image,
                   fit: BoxFit.fill,
                   errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                      'assets/images/campaign-default.png',
+                    return Icon(
+                      Icons.error_outlined,
+                      size: 50 * fem,
+                      color: kPrimaryColor,
                     );
                   },
                 ),
               ),
             ),
             SizedBox(
-              width: 5 * fem,
+              width: 8 * fem,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 5 * hem, bottom: 5 * hem),
                   child: Text(voucherModel.brandName,
+                  textAlign: TextAlign.center,
                       softWrap: true,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -78,7 +82,7 @@ class VoucherListCard extends StatelessWidget {
                           textStyle: TextStyle(
                         fontSize: 13 * ffem,
                         color: kDarkPrimaryColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                       ))),
                 ),
                 Container(
@@ -98,19 +102,10 @@ class VoucherListCard extends StatelessWidget {
                   height: 5 * hem,
                 ),
                 Container(
-                  width: 200 * fem,
-                  child: Text('Thời gian sử dụng ưu đãi',
-                      softWrap: true,
-                      style: GoogleFonts.nunito(
-                          textStyle: TextStyle(
-                        fontSize: 12 * ffem,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ))),
-                ),
-                Container(
-                  width: 200 * fem,
-                  child: Text('từ ngày 25/01 - 01/02/2024',
+                  width: 170 * fem,
+                  child: Text(voucherModel.description,
+                  overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                       softWrap: true,
                       style: GoogleFonts.nunito(
                           textStyle: TextStyle(
@@ -133,26 +128,27 @@ class VoucherListCard extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                       ))),
                 ),
-                TextButton(
-                  onPressed: onPressed,
-                  child: Container(
-                      margin: EdgeInsets.only(left: 100 * fem),
-                      width: 85 * fem,
-                      height: 30 * hem,
-                      decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          border: Border.all(color: kPrimaryColor),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Text(
-                          'Thu nhập',
-                          style: GoogleFonts.nunito(
-                              textStyle: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white)),
-                        ),
-                      )),
+                Container(
+                  margin: EdgeInsets.only(left: 120 * fem),
+                  width: 80 * fem,
+                  height: 32 * hem,
+                  decoration: BoxDecoration(
+                      color: kPrimaryColor,
+                      border: Border.all(color: kPrimaryColor),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: TextButton(
+                    onPressed: onPressed,
+                    child: Center(
+                      child: Text(
+                        'Thu nhập',
+                        style: GoogleFonts.nunito(
+                            textStyle: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white)),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             )

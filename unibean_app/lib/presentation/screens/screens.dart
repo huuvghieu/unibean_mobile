@@ -25,3 +25,4 @@ export 'student_features/challenge/challenge_screen.dart';
 export 'student_features/profile_voucher/profile_voucher_screen.dart';
 export 'student_features/profile_products/product_screen.dart';
 export 'student_features/brand_list/brand_list_screen.dart';
+export 'student_features/qr/qr_screen.dart';

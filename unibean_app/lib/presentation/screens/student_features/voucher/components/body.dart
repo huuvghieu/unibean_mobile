@@ -106,44 +106,46 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
-                //Thương hiệu
+              //Các thwung hiệu
                 Container(
                   color: kbgWhiteColor,
+                  padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
                   child: Column(
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(top: 10 * hem),
+                              padding: EdgeInsets.only(top: 5 * hem),
                               child: Text(
-                                'Các thương hiệu',
+                                'THƯƠNG HIỆU',
                                 style: GoogleFonts.nunito(
                                     textStyle: TextStyle(
-                                  fontSize: 20 * ffem,
-                                  color: kDarkPrimaryColor,
+                                  fontSize: 18 * ffem,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w800,
                                 )),
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 5 * hem, right: 10 * fem),
-                                child: Text(
-                                  'Xem thêm',
-                                  style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(
-                                    fontSize: 12 * ffem,
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                              onTap: () {
+                              },
+                              child: Container(
+                                height: 22 * hem,
+                                width: 22 * fem,
+                                margin: EdgeInsets.only(left: 8 * fem),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(80)),
+                                child: Icon(
+                                  Icons.arrow_forward_rounded,
+                                  size: 18 * fem,
+                                  color: kDarkPrimaryColor,
                                 ),
                               ),
                             )
@@ -151,7 +153,7 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 15 * hem,
+                        height: 12 * hem,
                       ),
                       BlocBuilder<BrandBloc, BrandState>(
                           builder: (context, state) {
@@ -161,7 +163,7 @@ class Body extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: state.brands.length,
+                                itemCount: 5,
                                 itemBuilder: (context, index) {
                                   return BrandCard(
                                       fem: fem,
@@ -182,21 +184,23 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
                 //GỢi ý cho bạn
                 Container(
                   color: kbgWhiteColor,
+                  padding: EdgeInsets.only(top: 20*hem, bottom: 20*fem),
                   child: Column(
                     children: [
+
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Gợi ý cho bạn',
+                              'GỢI Ý CHO BẠN',
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
                                 fontSize: 18 * ffem,
@@ -205,18 +209,20 @@ class Body extends StatelessWidget {
                               )),
                             ),
                             InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 5 * hem, right: 10 * fem),
-                                child: Text(
-                                  'Xem thêm',
-                                  style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 12 * ffem,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                              onTap: () {
+                              
+                              },
+                              child: Container(
+                                height: 22 * hem,
+                                width: 22 * fem,
+                                margin: EdgeInsets.only(left: 8 * fem),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(80)),
+                                child: Icon(
+                                  Icons.arrow_forward_rounded,
+                                  size: 18 * fem,
+                                  color: kDarkPrimaryColor,
                                 ),
                               ),
                             )
@@ -230,7 +236,7 @@ class Body extends StatelessWidget {
                         builder: (context, state) {
                           if (state is VouchersLoaded) {
                             return SizedBox(
-                                height: 260 * hem,
+                                height: 275 * hem,
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
@@ -253,18 +259,19 @@ class Body extends StatelessWidget {
                         },
                       ),
                       SizedBox(
-                        height: 15 * hem,
+                        height: 20 * hem,
                       ),
                     ],
                   ),
                 ),
 
                 SizedBox(
-                  height: 10 * hem,
+                  height: 5 * hem,
                 ),
 
                 //Ưu đãi tốt
                 Container(
+                  padding: EdgeInsets.only(top: 15*hem, bottom: 15*hem),
                   color: kbgWhiteColor,
                   child: Column(
                     children: [
@@ -274,7 +281,7 @@ class Body extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Ưu đãi tốt',
+                              'ƯU ĐÃI TỐT',
                               style: GoogleFonts.nunito(
                                   textStyle: TextStyle(
                                 fontSize: 18 * ffem,
@@ -282,22 +289,7 @@ class Body extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 5 * hem, right: 10 * fem),
-                                child: Text(
-                                  'Xem thêm',
-                                  style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 12 * ffem,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                                ),
-                              ),
-                            )
+                            
                           ],
                         ),
                       ),

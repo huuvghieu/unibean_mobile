@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/challenge/components/body.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
@@ -8,7 +9,7 @@ import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
 import '../../../config/constants.dart';
 import '../../../widgets/card_for_unknow.dart';
 
-class ChallengeScreen extends StatelessWidget {
+class ChallengeScreen extends StatefulWidget {
   static const String routeName = '/challenge-student';
 
   static Route route() {
@@ -20,6 +21,14 @@ class ChallengeScreen extends StatelessWidget {
   const ChallengeScreen({super.key});
 
   @override
+  State<ChallengeScreen> createState() => _ChallengeScreenState();
+}
+
+class _ChallengeScreenState extends State<ChallengeScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
   Widget build(BuildContext context) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
@@ -28,6 +37,17 @@ class ChallengeScreen extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
     final roleState = context.watch<RoleAppBloc>().state;
     return authenScreen(roleState, fem, hem, ffem, context);
+  }
+
+  @override
+  void initState() {
+    // tabController = TabController(length: 3, vsync: this);
+    // tabController.addListener(() {
+    //   if(tabController.index == 0){
+    //     context.read<ChallengeBloc>().add()
+    //   }
+    // });
+    super.initState();
   }
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
@@ -62,7 +82,7 @@ class ChallengeScreen extends StatelessWidget {
                       image: AssetImage('assets/images/background_splash.png'),
                       fit: BoxFit.cover)),
             ),
-            toolbarHeight: 130 * hem,
+            toolbarHeight: 120 * hem,
             title: Padding(
               padding: EdgeInsets.only(left: 20 * fem, top: 20 * hem),
               child: Text(
@@ -90,6 +110,7 @@ class ChallengeScreen extends StatelessWidget {
               ),
             ],
             bottom: TabBar(
+              // controller: tabController,
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 3,
@@ -108,6 +129,7 @@ class ChallengeScreen extends StatelessWidget {
                 height: 1.3625 * ffem / fem,
                 fontWeight: FontWeight.w700,
               )),
+              onTap: (index) {},
               tabs: [
                 Tab(
                   text: 'Đang thực hiện',
@@ -118,7 +140,18 @@ class ChallengeScreen extends StatelessWidget {
             ),
           ),
           extendBody: true,
-          body: Body(),
+          body: BlocBuilder<ChallengeBloc, ChallengeState>(
+            builder: (context, state) {
+              if (state is ChallengeLoading) {
+                return Center(
+                  child: Lottie.asset('assets/animations/loading-screen.json'),
+                );
+              } else if (state is ChallengesLoaded) {
+                return Body();
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

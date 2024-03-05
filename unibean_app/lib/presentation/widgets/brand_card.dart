@@ -20,7 +20,8 @@ class BrandCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, BrandDetailScreen.routeName);
+        Navigator.pushNamed(context, BrandDetailScreen.routeName,
+            arguments: brandModel);
       },
       child: Container(
         margin: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
@@ -32,9 +33,7 @@ class BrandCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10 * fem),
                   image: DecorationImage(
-                      image: NetworkImage(brandModel.logo),
-                      fit: BoxFit.cover
-                      )),
+                      image: NetworkImage(brandModel.logo), fit: BoxFit.cover)),
             ),
             Padding(
               padding: EdgeInsets.only(top: 5 * hem),

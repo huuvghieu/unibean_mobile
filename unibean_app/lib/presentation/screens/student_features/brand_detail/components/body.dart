@@ -5,7 +5,9 @@ import 'package:unibean_app/presentation/screens/student_features/brand_detail/c
 import '../../../../../data/models.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
+  const Body({super.key, required this.brandModel});
+
+  final BrandModel brandModel;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,11 @@ class Body extends StatelessWidget {
 
                         //widget information of profile
                         InformationCardBrandDetail(
-                            hem: hem, fem: fem, ffem: ffem),
+                          hem: hem,
+                          fem: fem,
+                          ffem: ffem,
+                          brandModel: brandModel,
+                        ),
 
                         Positioned(
                           left: 0 * fem,
@@ -78,7 +84,7 @@ class Body extends StatelessWidget {
                                       left: 25 * fem,
                                       right: 25 * fem),
                                   child: Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget nunc feugiat phasellus ultricies congue libero quis. Aliquet pellentesque a, arcu mattis. Urna eget interdum accumsan aliquam.',
+                                   brandModel.description,
                                     textAlign: TextAlign.justify,
                                     softWrap: true,
                                     style: GoogleFonts.nunito(
@@ -179,8 +185,7 @@ class Body extends StatelessWidget {
                                                 right: 12 * fem,
                                                 top: 10 * hem),
                                             child: Text(
-                                              CampaignDemo
-                                                  .listCampaign[0].name,
+                                              CampaignDemo.listCampaign[0].name,
                                               style: GoogleFonts.nunito(
                                                   textStyle: TextStyle(
                                                 fontSize: 12 * ffem,
@@ -229,8 +234,7 @@ class Body extends StatelessWidget {
                                                 right: 12 * fem,
                                                 top: 10 * hem),
                                             child: Text(
-                                              CampaignDemo
-                                                  .listCampaign[1].name,
+                                              CampaignDemo.listCampaign[1].name,
                                               style: GoogleFonts.nunito(
                                                   textStyle: TextStyle(
                                                 fontSize: 12 * ffem,

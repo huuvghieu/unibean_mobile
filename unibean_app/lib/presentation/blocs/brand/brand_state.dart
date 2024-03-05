@@ -29,3 +29,11 @@ final class BrandsFailed extends BrandState {
   @override
   List<Object?> get props => [error];
 }
+
+final class BrandByIdLoaded extends BrandState{
+    final BrandModel brand;
+
+  BrandByIdLoaded({required this.brand});
+  @override
+  List<Object?> get props => [brand];
+}

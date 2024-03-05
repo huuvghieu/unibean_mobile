@@ -8,3 +8,4 @@ export 'repositories/student_repository.dart';
 export 'repositories/campaign_repository.dart';
 export 'repositories/brand_repository.dart';
 export 'repositories/voucher_repository.dart';
+export 'repositories/challenge_repository.dart';

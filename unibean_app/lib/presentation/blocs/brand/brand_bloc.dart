@@ -17,6 +17,7 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
 
     on<LoadBrands>(_onLoadBrands);
     on<LoadMoreBrands>(_onLoadMoreBrands);
+    on<LoadBrandById>(_onLoadBrandById);
   }
 
   int page = 1;
@@ -46,6 +47,18 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
             brands: List.from((this.state as BrandsLoaded).brands)
               ..addAll(apiResponse!.result)));
       }
+    } catch (e) {
+      emit(BrandsFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadBrandById(
+      LoadBrandById event, Emitter<BrandState> emit) async {
+    emit(BrandLoading());
+    try {
+      final brandModel =
+          await brandRepository.fecthBrandById(id: event.brandModel.id);
+      emit(BrandByIdLoaded(brand: brandModel!));
     } catch (e) {
       emit(BrandsFailed(error: e.toString()));
     }

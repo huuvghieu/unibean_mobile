@@ -18,6 +18,17 @@ class AuthenLocalDataSource {
     return token;
   }
 
+  static Future<void> saveStudentId(String studentId) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('studentId', studentId);
+  }
+
+  static Future<String?> getStudentId() async {
+    final sf = await SharedPreferences.getInstance();
+    String? token = sf.getString('studentId');
+    return token;
+  }
+
   static Future<void> saveVerificationId(String verificationId) async {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('verificationId', verificationId);
@@ -33,7 +44,7 @@ class AuthenLocalDataSource {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('authenString', authenString);
   }
-  
+
   static Future<AuthenModel?> getAuthen() async {
     final sf = await SharedPreferences.getInstance();
     String? authenString = sf.getString('authenString');
@@ -50,7 +61,7 @@ class AuthenLocalDataSource {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('createAuthenString', authenString);
   }
-  
+
   static Future<CreateAuthenModel?> getCreateAuthen() async {
     final sf = await SharedPreferences.getInstance();
     String? authenString = sf.getString('createAuthenString');
@@ -62,8 +73,15 @@ class AuthenLocalDataSource {
       return createAuthenModel;
     }
   }
+
   static Future<void> removeAuthen() async {
     final sf = await SharedPreferences.getInstance();
     sf.remove('authenString');
+  }
+
+  static Future<void> clearAuthen() async {
+    final sf = await SharedPreferences.getInstance();
+
+    await sf.clear();
   }
 }

@@ -41,4 +41,25 @@ class BrandRepositoryImp implements BrandRepository {
       throw Exception(e.toString());
     }
   }
+  
+  @override
+  Future<BrandModel?> fecthBrandById({required String id}) async {
+    try {
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
+
+      http.Response response = await http.get(
+          Uri.parse('$endPoint/$id'),
+          headers: headers);
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        BrandModel brandModel = BrandModel.fromJson(result);
+        return brandModel;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

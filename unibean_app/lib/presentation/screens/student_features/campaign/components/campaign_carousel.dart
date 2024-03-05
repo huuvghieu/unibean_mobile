@@ -17,6 +17,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
   int activeIndex = 0;
   @override
   Widget build(BuildContext context) {
+  List<CampaignModel> camps = [widget.campaigns[0], widget.campaigns[1], widget.campaigns[2],];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -24,7 +25,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
           child: CarouselSlider(
               options: CarouselOptions(
                 autoPlay: true,
-                height: 220,
+                height: 230,
                 autoPlayInterval: Duration(seconds: 20),
                 onPageChanged: (index, reason) {
                   setState(() {
@@ -32,7 +33,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                   });
                 },
               ),
-              items: widget.campaigns.map((campaign) {
+              items: camps.map((campaign) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
@@ -45,16 +46,14 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                 color: Color(0x0c000000),
                                 offset: Offset(0, 5),
                                 blurRadius: 5)
-                          ]
-                          ),
+                          ]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10)
-                            ),
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10)),
                             child: Container(
                               width: 300,
                               height: 160,
@@ -70,11 +69,11 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                             ),
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: 180,
+                                margin: EdgeInsets.only(right: 5),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -82,6 +81,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                       padding: EdgeInsets.only(left: 5),
                                       child: Text(
                                         campaign.campaignName,
+                                        maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: true,
                                         style: GoogleFonts.nunito(
@@ -115,8 +115,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                     height: 35,
                                     decoration: BoxDecoration(
                                         color: kPrimaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(5)),
+                                        borderRadius: BorderRadius.circular(5)),
                                     child: Center(
                                       child: Text(
                                         'Chi tiết',
@@ -140,7 +139,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
         const SizedBox(
           height: 10,
         ),
-        buildIndicator(),
+        buildIndicator(camps.length),
         const SizedBox(
           height: 10,
         ),
@@ -163,9 +162,9 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
         ),
       );
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
+  Widget buildIndicator(int count) => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
-        count: widget.campaigns.length,
+        count: count,
         effect: SlideEffect(
             activeDotColor: kPrimaryColor,
             dotWidth: 20,

@@ -19,60 +19,6 @@ class Body extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     // double heightText = 1.3625 * ffem / fem;
-
-    // return CustomScrollView(
-    //   slivers: [
-    //     SliverList(
-    //       delegate: SliverChildListDelegate([
-    //         Column(
-    //           children: [
-    //             BlocBuilder<BrandBloc, BrandState>(
-    //               builder: (context, state) {
-    //                 if (state is BrandLoading) {
-    //                   return Center(
-    //                     child: Lottie.asset(
-    //                         'assets/animations/loading-screen.json'),
-    //                   );
-    //                 } else if (state is BrandsLoaded) {
-    //                   return GridView.builder(
-    //                     controller: context.read<BrandBloc>().scrollController,
-    //                     padding: EdgeInsets.symmetric(
-    //                         horizontal: 8.0 * fem, vertical: 16.0 * hem),
-    //                     gridDelegate:
-    //                         const SliverGridDelegateWithFixedCrossAxisCount(
-    //                             crossAxisCount: 2, childAspectRatio: 1.15),
-    //                     physics: NeverScrollableScrollPhysics(),
-    //                     shrinkWrap: true,
-    //                     itemCount: context.read<BrandBloc>().isLoadingMore
-    //                         ? state.brands.length + 1
-    //                         : state.brands.length,
-    //                     itemBuilder: (context, index) {
-    //                       if (index >= state.brands.length) {
-    //                         return Lottie.asset(
-    //                             'assets/animations/loading-screen.json',
-    //                             width: 50 * fem,
-    //                             height: 50 * hem);
-    //                       }
-    //                       return BrandCard(
-    //                           hem: hem,
-    //                           fem: fem,
-    //                           brandModel: state.brands[index],
-    //                           ffem: ffem);
-    //                     },
-    //                   );
-    //                 }
-    //                 return Center(
-    //                   child:
-    //                       Lottie.asset('assets/animations/loading-screen.json'),
-    //                 );
-    //               },
-    //             ),
-    //           ],
-    //         )
-    //       ]),
-    //     )
-    //   ],
-    // );
     return BlocBuilder<BrandBloc, BrandState>(
       builder: (context, state) {
         if (state is BrandLoading) {

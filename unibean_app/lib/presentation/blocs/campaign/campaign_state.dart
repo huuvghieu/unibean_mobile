@@ -1,30 +1,40 @@
 part of 'campaign_bloc.dart';
 
 sealed class CampaignState extends Equatable {
-  final campaigns;
+  const CampaignState();
+}
 
-  const CampaignState(this.campaigns);
+final class CampaignInitial extends CampaignState {
+  CampaignInitial();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class CampaignLoading extends CampaignState {
+  CampaignLoading();
+  @override
+  List<Object?> get props => [];
+}
+
+final class CampaignsLoaded extends CampaignState {
+  final List<CampaignModel> campaigns;
+
+  CampaignsLoaded({required this.campaigns});
+  
   @override
   List<Object?> get props => [campaigns];
 }
 
-final class CampaignInitial extends CampaignState {
-  CampaignInitial(super.campaigns);
-}
-
-final class CampaignLoading extends CampaignState {
-  CampaignLoading(super.campaigns);
-}
-
-final class CampaignsLoaded extends CampaignState {
-  CampaignsLoaded({required campaigns}) : super(campaigns);
-
+final class CampaignPaging extends CampaignState{
+  @override
+  List<Object?> get props => [];
 }
 
 final class CampaignsFailed extends CampaignState {
   final String error;
 
-  CampaignsFailed(super.campaigns, {required this.error});
-    @override
+  CampaignsFailed({required this.error});
+  @override
   List<Object?> get props => [error];
 }
