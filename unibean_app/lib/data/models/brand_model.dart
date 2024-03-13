@@ -25,6 +25,7 @@ class BrandModel extends Brand {
       required super.state,
       required super.status,
       required super.isFavor,
+      required super.numberOfFollowers,
       required super.greenWalletId,
       required super.greenWallet,
       required super.greenWalletName,
@@ -54,7 +55,8 @@ class BrandModel extends Brand {
       description: json['description'] ?? '',
       state: json['state'] ?? true,
       status: json['status'] ?? true,
-      isFavor: json['isFavor'] ?? true,
+      isFavor: json['isFavor'] ?? false,
+      numberOfFollowers: json['numberOfFollwers'] ?? 0,
       greenWalletId: json['greenWalletId'] ?? '',
       greenWallet: json['greenWallet'],
       greenWalletName: json['greenWalletName'],
@@ -87,6 +89,7 @@ class BrandModel extends Brand {
     data['state'] = this.state;
     data['status'] = this.status;
     data['isFavor'] = this.isFavor;
+    data['numberOfFollwers'] = this.numberOfFollowers;
     data['greenWalletId'] = this.greenWalletId;
     data['greenWallet'] = this.greenWallet;
     data['greenWalletName'] = this.greenWalletName;

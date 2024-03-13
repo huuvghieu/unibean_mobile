@@ -42,7 +42,7 @@ class CardForUnVerified extends StatelessWidget {
                 children: [
                   Text(
                     'Bắt đầu',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 13 * ffem,
@@ -50,7 +50,7 @@ class CardForUnVerified extends StatelessWidget {
                   ),
                   Text(
                     'Đăng nhập',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 13 * ffem,
@@ -58,7 +58,7 @@ class CardForUnVerified extends StatelessWidget {
                   ),
                   Text(
                     'Xác thực',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kLowTextColor,
                             fontSize: 13 * ffem,
@@ -129,7 +129,7 @@ class CardForUnVerified extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   '3',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
                                           color: kLowTextColor,
                                           fontSize: 16 * ffem,
@@ -153,7 +153,7 @@ class CardForUnVerified extends StatelessWidget {
                 child: Text(
                   'Xác thực tài khoản để có thể \nnhận Bean và tham gia các chiến dịch',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.w800,
@@ -174,7 +174,7 @@ class CardForUnVerified extends StatelessWidget {
                       child: Center(
                         child: Text(
                           'Xác thức',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w600,

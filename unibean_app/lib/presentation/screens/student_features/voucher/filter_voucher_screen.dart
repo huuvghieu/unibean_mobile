@@ -53,7 +53,7 @@ class FilterVoucherScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 10 * fem),
                   child: Text(
                     'Bộ lọc',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 20 * ffem,
                             fontWeight: FontWeight.w900,
@@ -69,7 +69,7 @@ class FilterVoucherScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 80 * hem, right: 25 * fem),
               child: Text(
                 'Đặt lại',
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 15 * ffem,
                         fontWeight: FontWeight.w600,

@@ -19,8 +19,8 @@ class FilterBySorting extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(
-              top: 10 * hem, left: 25 * fem, right: 25 * fem),
+          margin:
+              EdgeInsets.only(top: 10 * hem, left: 25 * fem, right: 25 * fem),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -28,7 +28,7 @@ class FilterBySorting extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10 * hem),
                 child: Text(
                   'Sắp xếp',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                     fontSize: 16 * ffem,
                     color: kLowTextColor,
                     fontWeight: FontWeight.w600,
@@ -40,7 +40,7 @@ class FilterBySorting extends StatelessWidget {
                 padding: EdgeInsets.only(top: 20 * hem),
                 child: Text(
                   'Xóa tất cả',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                     fontSize: 10 * ffem,
                     color: kLowTextColor,
                     fontWeight: FontWeight.w600,
@@ -53,16 +53,15 @@ class FilterBySorting extends StatelessWidget {
         ),
         Container(
           width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(
-              top: 20 * hem, left: 10 * fem, right: 10 * fem),
+          margin:
+              EdgeInsets.only(top: 20 * hem, left: 10 * fem, right: 10 * fem),
           child: Wrap(
             direction: Axis.horizontal,
             children: arrange.map((item) {
               return Container(
                 width: 160 * fem,
                 height: 40 * hem,
-                margin:
-                    EdgeInsets.only(left: 10 * fem, bottom: 8 * hem),
+                margin: EdgeInsets.only(left: 10 * fem, bottom: 8 * hem),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5 * fem),
                   color: kPrimaryColor,
@@ -70,7 +69,7 @@ class FilterBySorting extends StatelessWidget {
                 child: Center(
                   child: Text(
                     item,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                       fontSize: 14 * ffem,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

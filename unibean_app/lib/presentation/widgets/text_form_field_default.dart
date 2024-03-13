@@ -30,7 +30,7 @@ class TextFormFieldDefault extends StatelessWidget {
       child: TextFormField(
         validator: validator,
         controller: textController,
-        style: GoogleFonts.nunito(
+        style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: 17 * ffem,
@@ -39,13 +39,13 @@ class TextFormFieldDefault extends StatelessWidget {
           labelText: labelText,
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: GoogleFonts.nunito(
+          labelStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 15 * ffem,
                 fontWeight: FontWeight.w900),
           ),
-          hintStyle: GoogleFonts.nunito(
+          hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
                   fontSize: 17 * ffem,

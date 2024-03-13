@@ -27,7 +27,7 @@ class InformationCardProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 120 * hem,
+      top: 65 * hem,
       left: 25 * fem,
       child: Container(
         width: 324 * fem,
@@ -60,13 +60,16 @@ class InformationCardProfile extends StatelessWidget {
                   child: Container(
                     width: 80 * hem,
                     height: 80 * fem,
-                    child: FittedBox(
-                      child: Image(
-                          image: NetworkImage(
-                        '${studentModel.avatar}',
-                      )),
-                      fit: BoxFit.cover,
+                    child: Image(
+                        image: NetworkImage(
+                      '${studentModel.avatar}',
                     ),
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/images/ava_signup.png',
+                      width: 100*fem,
+                      height: 100*hem,);
+                    },),
                   ),
                 ),
 
@@ -87,14 +90,19 @@ class InformationCardProfile extends StatelessWidget {
                         name: studentModel.fullName,
                       ),
                       //email
-                      Text(
-                        '${studentModel.email}',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                fontSize: 13 * ffem,
-                                height: 1.3625 * ffem / fem,
-                                fontWeight: FontWeight.w600,
-                                color: kLowTextColor)),
+                      SizedBox(
+                        width: 150*fem,
+                        child: Text(
+                          '${studentModel.email}',
+                          maxLines: 1,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                                  fontSize: 12 * ffem,
+                                  fontWeight: FontWeight.normal,
+                                  color: kLowTextColor)),
+                        ),
                       ),
                       //student code
                       StudentCodeProfile(
@@ -137,7 +145,7 @@ class InformationCardProfile extends StatelessWidget {
                       hem: hem,
                       ffem: ffem,
                       title: '${studentModel.following.toString()} theo dõi',
-                      svgAssetName: 'assets/icons/friends-icon-profile.svg'),
+                      svgAssetName: 'assets/icons/following-icon.svg'),
                   Column(
                     children: [
                       InkWell(
@@ -164,8 +172,8 @@ class InformationCardProfile extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Show QR',
-                        style: GoogleFonts.nunito(
+                        'Mã QR',
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 11 * fem,
                                 fontWeight: FontWeight.w600,

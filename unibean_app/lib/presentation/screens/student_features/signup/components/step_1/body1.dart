@@ -80,7 +80,7 @@ class _BodyState extends State<Body1> {
                   //     padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
                   //     child: Text(
                   //       'Thêm hình cá nhân',
-                  //       style: GoogleFonts.nunito(
+                  //       style: GoogleFonts.openSans(
                   //           textStyle: TextStyle(
                   //               fontSize: 13 * ffem,
                   //               fontWeight: FontWeight.w900,
@@ -155,7 +155,7 @@ class _BodyState extends State<Body1> {
                       ),
                       Text(
                         'Chụp ảnh',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 20 * ffem,
                                 fontWeight: FontWeight.bold,
@@ -197,7 +197,7 @@ class _BodyState extends State<Body1> {
                       ),
                       Text(
                         'Chọn sẵn có',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 20 * ffem,
                                 fontWeight: FontWeight.bold,

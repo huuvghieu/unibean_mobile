@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
@@ -33,15 +33,16 @@ class Body extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, childAspectRatio: 1.15),
             shrinkWrap: true,
-            itemCount: context.read<BrandBloc>().isLoadingMore
-                ? state.brands.length + 1
-                : state.brands.length,
+            itemCount: state.hasReachedMax
+                ? state.brands.length
+                : state.brands.length + 1,
             itemBuilder: (context, index) {
-              if (index > state.brands.length) {
-                return Lottie.asset('assets/animations/loading-screen.json',
-                    width: 30 * fem, height: 30 * hem);
-              } else if (index == state.brands.length) {
-                return Container();
+              if (index >= state.brands.length) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                );
               }
               return BrandCard(
                   hem: hem,
@@ -89,7 +90,11 @@ class BrandCard extends StatelessWidget {
                   offset: Offset(0 * fem, 5 * fem),
                   blurRadius: 5 * fem)
             ]),
-        child: InkWell(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, BrandDetailScreen.routeName,
+                arguments: brandModel.id);
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -106,17 +111,8 @@ class BrandCard extends StatelessWidget {
                       brandModel.logo,
                       fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          // child: Image.asset(
-                          //   'assets/images/campaign-default.png',
-                          //   width: 50 * fem,
-                          //   height: 50 * hem,
-                          // ),
-                          child: Icon(
-                            Icons.error,
-                            size: 50 * fem,
-                            color: kPrimaryColor,
-                          ),
+                        return Image.asset(
+                          'assets/images/image-404.jpg',
                         );
                       },
                     ),
@@ -136,7 +132,7 @@ class BrandCard extends StatelessWidget {
                       maxLines: 2,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                         fontSize: 13 * ffem,
                         color: kDarkPrimaryColor,
@@ -146,83 +142,6 @@ class BrandCard extends StatelessWidget {
                   ),
                 ],
               ),
-              // Container(
-              //   padding: EdgeInsets.only(
-              //       left: 10 * fem, right: 10 * fem, top: 5 * hem),
-              //   child: Text(
-              //     campaignModel.campaignName,
-              //     overflow: TextOverflow.ellipsis,
-              //     maxLines: 2,
-              //     style: GoogleFonts.nunito(
-              //         textStyle: TextStyle(
-              //       fontSize: 14 * ffem,
-              //       color: Colors.black,
-              //       fontWeight: FontWeight.bold,
-              //     )),
-              //   ),
-              // ),
-              // Row(
-              //   children: [
-              //     Padding(
-              //       padding: EdgeInsets.only(left: 12 * fem),
-              //       child: Text(
-              //         'Nhận:',
-              //         style: GoogleFonts.nunito(
-              //             textStyle: TextStyle(
-              //           fontSize: 13 * ffem,
-              //           color: Colors.black,
-              //           fontWeight: FontWeight.normal,
-              //         )),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: EdgeInsets.only(left: 2 * fem),
-              //       child: Text(
-              //         '${formatter.format(campaignModel.totalIncome)}',
-              //         style: GoogleFonts.nunito(
-              //             textStyle: TextStyle(
-              //           fontSize: 12 * ffem,
-              //           color: Colors.red,
-              //           fontWeight: FontWeight.normal,
-              //         )),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: EdgeInsets.only(
-              //           left: 2 * fem,
-              //           top: 2 * hem,
-              //           bottom: 2 * hem),
-              //       child: SvgPicture.asset(
-              //         'assets/icons/red-bean-icon.svg',
-              //         width: 20 * fem,
-              //         height: 17 * fem,
-              //       ),
-              //     )
-              //   ],
-              // ),
-              // Align(
-              //   alignment: Alignment.center,
-              //   child: TextButton(
-              //     onPressed: () {},
-              //     child: Container(
-              //         width: 80 * fem,
-              //         height: 30 * hem,
-              //         decoration: BoxDecoration(
-              //             color: kPrimaryColor,
-              //             border: Border.all(color: kPrimaryColor),
-              //             borderRadius: BorderRadius.circular(5)),
-              //         child: Center(
-              //           child: Text(
-              //             'Chi tiết',
-              //             style: GoogleFonts.nunito(
-              //                 textStyle: TextStyle(
-              //                     fontSize: 13,
-              //                     fontWeight: FontWeight.w600,
-              //                     color: Colors.white)),
-              //           ),
-              //         )),
-              //   ),
-              // )
             ],
           ),
         ),

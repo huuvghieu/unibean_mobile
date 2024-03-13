@@ -39,7 +39,7 @@ class Body2 extends StatelessWidget {
             Text(
               'Trường bạn đang học',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,
                       fontWeight: FontWeight.w900,
@@ -52,7 +52,7 @@ class Body2 extends StatelessWidget {
             Text(
               'Để hiểu rõ và dễ dàng hơn khi hỗ trợ bạn,\n mong bạn hãy cung cấp thông tin chính xác.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,
                       fontWeight: FontWeight.w600,

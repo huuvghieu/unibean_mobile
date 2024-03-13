@@ -31,7 +31,7 @@ class CusNavBar extends StatelessWidget {
                   return Container(
                     width: 55 * fem,
                     margin: EdgeInsets.only(top: 1 * hem, right: 40 * fem),
-                    padding: EdgeInsets.only(top: 15 * hem),
+                    padding: EdgeInsets.only(top: 15.2 * hem),
                     decoration: BoxDecoration(
                         border: Border(
                             top: BorderSide(
@@ -58,7 +58,7 @@ class CusNavBar extends StatelessWidget {
                             padding: EdgeInsets.only(top: 2 * hem),
                             child: Text(
                               item.title,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 8.5 * ffem,
                                       fontWeight: FontWeight.w900,
@@ -75,8 +75,8 @@ class CusNavBar extends StatelessWidget {
                 } else if (index == 2) {
                   return Container(
                     width: 50 * fem,
-                    margin: EdgeInsets.only(top: 1.5 * hem, left: 70 * fem),
-                    padding: EdgeInsets.only(top: 15 * hem),
+                    margin: EdgeInsets.only(top: 1 * hem, left: 70 * fem),
+                    padding: EdgeInsets.only(top: 15.5 * hem),
                     decoration: BoxDecoration(
                         border: Border(
                             top: BorderSide(
@@ -100,10 +100,10 @@ class CusNavBar extends StatelessWidget {
                                 : item.icon2,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 2 * hem),
+                            padding: EdgeInsets.only(top: 1 * hem),
                             child: Text(
                               item.title,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 8.5 * ffem,
                                       fontWeight: FontWeight.w900,
@@ -148,7 +148,7 @@ class CusNavBar extends StatelessWidget {
                           padding: EdgeInsets.only(top: 2 * hem),
                           child: Text(
                             item.title,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
                                     fontSize: 8.5 * ffem,
                                     fontWeight: FontWeight.w900,

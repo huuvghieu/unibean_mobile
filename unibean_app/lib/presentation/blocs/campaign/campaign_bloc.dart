@@ -16,10 +16,14 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
     });
     on<LoadCampaigns>(_onLoadCampaigns);
     on<LoadMoreCampaigns>(_onLoadMoreCampaigns);
+    on<LoadCampaignById>(_onLoadCampaignById);
+    on<LoadCampaignStoreById>(_onLoadCampaignStoreById);
+    on<RedeemCampaignVoucher>(_onRedeemCampaignVoucher);
   }
 
   ScrollController scrollController = ScrollController();
   var isLoadingMore = false;
+
   int page = 1;
 
   //Function--------
@@ -27,6 +31,7 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
       LoadCampaigns event, Emitter<CampaignState> emit) async {
     emit(CampaignLoading());
     try {
+      this.page = 1;
       var apiResponse = await campaignRepository.fecthCampaigns(
           page: event.page, limit: event.limit);
       emit(CampaignsLoaded(campaigns: apiResponse!.result.toList()));
@@ -44,13 +49,68 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
         page++;
         var apiResponse = await campaignRepository.fecthCampaigns(
             page: page, limit: event.limit);
-        isLoadingMore = false;
-        emit(CampaignsLoaded(
-            campaigns: List.from((this.state as CampaignsLoaded).campaigns)
-              ..addAll(apiResponse!.result)));
+        if (apiResponse!.result.length == 0) {
+          emit(CampaignsLoaded(
+              campaigns: List.from((this.state as CampaignsLoaded).campaigns)
+                ..addAll(apiResponse.result),
+              hasReachMax: true));
+          print(state);
+        } else {
+          emit(CampaignsLoaded(
+              campaigns: List.from((this.state as CampaignsLoaded).campaigns)
+                ..addAll(apiResponse.result)));
+        }
       }
     } catch (e) {
       emit(CampaignsFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadCampaignById(
+      LoadCampaignById event, Emitter<CampaignState> emit) async {
+    emit(CampaignLoading());
+    try {
+      var campaignModel =
+          await campaignRepository.fecthCampaignById(id: event.id);
+      emit(CampaignByIdLoaded(campaignDetailModel: campaignModel!));
+    } catch (e) {
+      emit(CampaignsFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadCampaignStoreById(
+      LoadCampaignStoreById event, Emitter<CampaignState> emit) async {
+    emit(CampaignStoreLoading());
+    try {
+      var apiResponse = await campaignRepository.fecthCampaignStoreById(
+        event.page,
+        event.limit,
+        id: event.id,
+      );
+      emit(CampaignStoreByIdLoaded(campaignStores: apiResponse!.result));
+    } catch (e) {
+      emit(CampaignsFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onRedeemCampaignVoucher(
+      RedeemCampaignVoucher event, Emitter<CampaignState> emit) async {
+    emit(RedeemVoucherLoading());
+    try {
+      var result = await campaignRepository.redeemCampaignVoucher(
+        campaignId: event.campaignId,
+        campaignVoucherId: event.campaignDetailId,
+        studentId: event.studentId,
+        description: event.description,
+        quantity: event.quantity,
+      );
+      if (result != null) {
+        emit(RedeemVoucherFailed(error: result));
+      } else {
+        emit(RedeemVoucherSuccess(text: 'Thành công'));
+      }
+    } catch (e) {
+      emit(RedeemVoucherFailed(error: e.toString()));
     }
   }
 }

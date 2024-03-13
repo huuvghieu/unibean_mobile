@@ -79,7 +79,7 @@ class ButtonProfile extends StatelessWidget {
               width: 130 * fem,
               child: Text(
                 title,
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 14 * ffem,
                         height: 1.3625 * ffem / fem,

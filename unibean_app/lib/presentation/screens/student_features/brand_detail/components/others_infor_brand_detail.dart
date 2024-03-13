@@ -3,17 +3,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
+import '../../../../../data/models.dart';
+
 class OthersInforBrandDetail extends StatelessWidget {
   const OthersInforBrandDetail({
     super.key,
     required this.hem,
     required this.fem,
-    required this.ffem,
+    required this.ffem, required this.brandModel,
   });
 
   final double hem;
   final double fem;
   final double ffem;
+  final BrandModel brandModel;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,8 @@ class OthersInforBrandDetail extends StatelessWidget {
                 ),
               ),
               Text(
-                '1k Theo dõi',
-                style: GoogleFonts.nunito(
+                '${brandModel.numberOfFollowers} Theo dõi',
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 10 * fem,
                         fontWeight: FontWeight.w600,
@@ -68,17 +71,17 @@ class OthersInforBrandDetail extends StatelessWidget {
                   child: Center(
                     child: SvgPicture.asset(
                       'assets/icons/campaign-navbar-icon.svg',
-                      colorFilter: ColorFilter.mode(
-                          kPrimaryColor, BlendMode.srcIn),
-                          width: 18*fem,
-                          height: 18*hem,
+                      colorFilter:
+                          ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
+                      width: 18 * fem,
+                      height: 18 * hem,
                     ),
                   ),
                 ),
               ),
               Text(
                 '5 Chiến dịch',
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 10 * fem,
                         fontWeight: FontWeight.w600,

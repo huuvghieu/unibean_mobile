@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
@@ -22,23 +23,18 @@ class MemberShipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat('###,000');
     return Center(
       child: SizedBox(
-        width: 350 * fem,
-        height: 210 * hem,
+        width: 340 * fem,
+        height: 200 * hem,
         child: Stack(
           children: [
             Container(
-              width: 340 * fem,
-              height: 210 * hem,
+              width: 330 * fem,
+              height: 200 * hem,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20 * fem),
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color.fromARGB(255, 150, 150, 150),
-                        offset: Offset(0 * fem, 0 * fem),
-                        blurRadius: 5 * fem)
-                  ],
                   image: DecorationImage(
                       image: AssetImage('assets/images/bg-card-level.png'),
                       fit: BoxFit.cover)),
@@ -52,12 +48,12 @@ class MemberShipCard extends StatelessWidget {
                       width: 250 * fem,
                       child: Text(
                         'Xin Chào,\n   ${studentModel.fullName}',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                          fontSize: 20 * ffem,
+                          fontSize: 18 * ffem,
                           height: heightText,
                           color: kPrimaryColor,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.bold,
                         )),
                       ),
                     ),
@@ -70,12 +66,12 @@ class MemberShipCard extends StatelessWidget {
                         padding: EdgeInsets.only(top: 20 * hem, left: 50 * fem),
                         child: Text(
                           'Số dư:',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                            fontSize: 20 * ffem,
+                            fontSize: 18 * ffem,
                             height: heightText,
                             color: Colors.black,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.bold,
                           )),
                         ),
                       ),
@@ -88,19 +84,19 @@ class MemberShipCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '${studentModel.greenWalletBalance.toStringAsFixed(0)}',
-                                  style: GoogleFonts.nunito(
+                                  '${formatter.format(studentModel.greenWalletBalance)}',
+                                  style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
-                                    fontSize: 20 * ffem,
+                                    fontSize: 18 * ffem,
                                     height: heightText,
                                     color: kPrimaryColor,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.bold,
                                   )),
                                 ),
                                 SvgPicture.asset(
                                   'assets/icons/green-bean-icon.svg',
-                                  width: 30 * fem,
-                                  height: 35 * fem,
+                                  width: 25 * fem,
+                                  height: 30 * fem,
                                 )
                               ],
                             ),
@@ -111,21 +107,22 @@ class MemberShipCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '${studentModel.redWalletBalance.toStringAsFixed(0)}',
-                                  style: GoogleFonts.nunito(
+                                  '${formatter.format(studentModel.redWalletBalance)}',
+                                  style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
-                                    fontSize: 20 * ffem,
+                                    fontSize: 18 * ffem,
                                     height: heightText,
                                     color: Colors.red,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.bold,
                                   )),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 2*fem,bottom: 4 *hem),
+                                  padding: EdgeInsets.only(
+                                      left: 2 * fem, bottom: 4 * hem),
                                   child: SvgPicture.asset(
                                     'assets/icons/red-bean-icon.svg',
-                                    width: 30 * fem,
-                                    height: 27 * fem,
+                                    width: 25 * fem,
+                                    height: 22 * fem,
                                   ),
                                 )
                               ],
@@ -139,22 +136,23 @@ class MemberShipCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 160 * hem,
-              left: 250 * fem,
+              top: 150 * hem,
+              left: 240 * fem,
               child: Container(
                 width: 100 * fem,
-                height: 40 * hem,
+                height: 40 * fem,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5 * fem),
                     color: kDarkPrimaryColor),
                 child: Center(
                   child: Text(
-                    '${studentModel.code}',
-                    style: GoogleFonts.nunito(
+                    'MSSV: ${studentModel.code}',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
                       color: Colors.white,
                       height: heightText,
-                      fontSize: 14 * ffem,
-                      fontWeight: FontWeight.w900,
+                      fontSize: 13 * ffem,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -163,14 +161,18 @@ class MemberShipCard extends StatelessWidget {
             Positioned(
               top: 10 * hem,
               right: 25 * fem,
-              child: Container(
-                width: 90 * fem,
-                height: 90 * hem,
-                decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(100),
-                    image: DecorationImage(
-                        image: NetworkImage('${studentModel.avatar}'),
-                        fit: BoxFit.cover)),
+              child: ClipRRect(
+                child: Container(
+                  width: 90 * fem,
+                  height: 90 * hem,
+                  child: Image.network(
+                    '${studentModel.avatar}',
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/images/ava_signup.png');
+                    },
+                  ),
+                ),
               ),
             ),
           ],

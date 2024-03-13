@@ -43,6 +43,12 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
             student != null &&
             (state == 'Pending' || state == 'Rejected')) {
           emit(RoleAppStudentUnverified(authenModel: authenModel));
+        } else if (role == 'Student' &&
+            isVerify == true &&
+            student != null &&
+            (state == 'Pending' || state == 'Rejected')) {
+          emit(RoleAppStudentVerified(
+              authenModel: authenModel, studentModel: student));
         } else if (role == 'Store') {
           emit(RoleAppStore());
         } else {

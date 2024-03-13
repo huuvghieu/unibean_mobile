@@ -21,3 +21,41 @@ final class LoadMoreCampaigns extends CampaignEvent {
   @override
   List<Object?> get props => [page, limit];
 }
+
+final class LoadCampaignById extends CampaignEvent {
+  final String id;
+
+  LoadCampaignById({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}
+
+final class LoadCampaignStoreById extends CampaignEvent {
+  final String id;
+  final int page;
+  final int limit;
+
+  LoadCampaignStoreById({this.page = 1, this.limit = 100, required this.id});
+  @override
+  List<Object?> get props => [id, page, limit];
+}
+
+final class RedeemCampaignVoucher extends CampaignEvent {
+  final String campaignId;
+  final String campaignDetailId;
+  final String studentId;
+  final int quantity;
+  final String description;
+
+  RedeemCampaignVoucher(
+      {required this.campaignId,
+      required this.campaignDetailId,
+      required this.studentId,
+      required this.quantity,
+      required this.description});
+
+  @override
+  List<Object?> get props =>
+      [campaignId, campaignDetailId, studentId, quantity, description];
+}

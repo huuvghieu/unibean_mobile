@@ -35,7 +35,7 @@ class ButtonSignUp6 extends StatelessWidget {
             return Center(
               child: Text(
                 'Tiếp tục',
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 17 * widget.ffem,
                         fontWeight: FontWeight.w600,

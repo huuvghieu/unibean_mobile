@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/form_3.dart';
 
-
 class Body3 extends StatefulWidget {
   Body3({super.key});
 
@@ -44,7 +43,7 @@ class _Body3State extends State<Body3> {
             Text(
               'Các thông tin khác về bạn',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,
                       fontWeight: FontWeight.w900,
@@ -57,7 +56,7 @@ class _Body3State extends State<Body3> {
             Text(
               'Chúng mình mong muốn tìm hiểu thêm\n về bạn để cung cấp và giới thiệu cho bạn\n các hoạt động phù hợp.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,
                       fontWeight: FontWeight.w600,
@@ -67,14 +66,11 @@ class _Body3State extends State<Body3> {
             SizedBox(
               height: 18 * hem,
             ),
-            FormBody3(fem: fem, hem: hem, ffem: ffem, dobController: dobController),
+            FormBody3(
+                fem: fem, hem: hem, ffem: ffem, dobController: dobController),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-

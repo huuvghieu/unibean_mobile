@@ -29,7 +29,7 @@ class FilterButton extends StatelessWidget {
           child: Center(
             child: Text(
               'Lọc',
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 17 * ffem,
                       fontWeight: FontWeight.w600,

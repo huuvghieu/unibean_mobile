@@ -75,7 +75,7 @@ class _FormBody5State extends State<FormBody5> {
                           padding: EdgeInsets.only(left: 48 * widget.fem),
                           child: Text(
                             state.error.toString(),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
                                     color: kErrorTextColor,
                                     fontSize: 12 * widget.ffem,

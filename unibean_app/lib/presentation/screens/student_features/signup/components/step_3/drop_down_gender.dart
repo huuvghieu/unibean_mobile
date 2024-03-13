@@ -10,17 +10,16 @@ class DropDownGender extends StatefulWidget {
   final String labelText;
   final String hintText;
   final TextEditingController genderController;
-    final FormFieldValidator<String> validator;
-  const DropDownGender({
-    super.key,
-    required this.hem,
-    required this.fem,
-    required this.ffem,
-    required this.labelText,
-    required this.hintText,
-    required this.genderController,
-    required this.validator
-  });
+  final FormFieldValidator<String> validator;
+  const DropDownGender(
+      {super.key,
+      required this.hem,
+      required this.fem,
+      required this.ffem,
+      required this.labelText,
+      required this.hintText,
+      required this.genderController,
+      required this.validator});
 
   @override
   State<DropDownGender> createState() => _DropDownGenderState();
@@ -37,7 +36,7 @@ class _DropDownGenderState extends State<DropDownGender> {
     return Container(
         width: 272 * widget.fem,
         child: DropdownButtonFormField(
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 17 * widget.ffem,
@@ -46,13 +45,13 @@ class _DropDownGenderState extends State<DropDownGender> {
             labelText: widget.labelText,
             hintText: widget.hintText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            labelStyle: GoogleFonts.nunito(
+            labelStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 15 * widget.ffem,
                   fontWeight: FontWeight.w900),
             ),
-            hintStyle: GoogleFonts.nunito(
+            hintStyle: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: kLowTextColor,
                     fontSize: 17 * widget.ffem,

@@ -27,7 +27,7 @@ class TextFormFieldInviteCode extends StatelessWidget {
       // color: Colors.red,
       child: TextFormField(
         controller: textController,
-        style: GoogleFonts.nunito(
+        style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: 17 * ffem,
@@ -36,13 +36,13 @@ class TextFormFieldInviteCode extends StatelessWidget {
           labelText: labelText,
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: GoogleFonts.nunito(
+          labelStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 15 * ffem,
                 fontWeight: FontWeight.w900),
           ),
-          hintStyle: GoogleFonts.nunito(
+          hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
                   fontSize: 17 * ffem,

@@ -23,18 +23,16 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
                 image: AssetImage('assets/images/background_splash.png'),
                 fit: BoxFit.cover)),
       ),
-      toolbarHeight: 130 * hem,
-      title: Padding(
-        padding: EdgeInsets.only(left: 20 * fem),
-        child: Text(
-          'UNI Student Bean',
-          style: GoogleFonts.nunito(
-              textStyle: TextStyle(
-                  fontSize: 30 * ffem,
-                  fontWeight: FontWeight.w900,
-                  height: 1.3625 * ffem / fem,
-                  color: Colors.white)),
-        ),
+      toolbarHeight: 80 * hem,
+      centerTitle: true,
+      title: Text(
+        'UniBean',
+        style: GoogleFonts.openSans(
+            textStyle: TextStyle(
+                fontSize: 25 * ffem,
+                fontWeight: FontWeight.w900,
+                height: 1.3625 * ffem / fem,
+                color: Colors.white)),
       ),
       actions: [
         // SvgPicture.asset('assets/icons/notification-icon.svg')
@@ -54,5 +52,5 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(80);
 }

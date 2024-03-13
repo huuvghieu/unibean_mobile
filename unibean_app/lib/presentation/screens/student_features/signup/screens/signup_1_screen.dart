@@ -59,7 +59,7 @@ class _SignUp1ScreenState extends State<SignUp1Screen> {
               child: Icon(Icons.arrow_back)),
           title: Text(
             title,
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
                 textStyle: TextStyle(
               fontSize: 15 * ffem,
               fontWeight: FontWeight.w900,

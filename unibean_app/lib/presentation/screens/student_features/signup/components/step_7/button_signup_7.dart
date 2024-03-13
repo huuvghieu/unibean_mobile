@@ -6,11 +6,8 @@ import 'package:unibean_app/presentation/cubits/verification/verification_cubit.
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_7/otp_form.dart';
 
 class ButtonSignUp7 extends StatelessWidget {
-  const ButtonSignUp7({
-    super.key,
-    required this.widget,
-    required this.onPressed
-  });
+  const ButtonSignUp7(
+      {super.key, required this.widget, required this.onPressed});
 
   final OTPForm widget;
   final VoidCallback onPressed;
@@ -19,7 +16,7 @@ class ButtonSignUp7 extends StatelessWidget {
     return TextButton(
       // onPressed: () async {
       //   // Navigator.pushReplacementNamed(context, SignUp7Screen.routeName);
-    
+
       // },
       onPressed: onPressed,
       child: Container(
@@ -40,7 +37,7 @@ class ButtonSignUp7 extends StatelessWidget {
             return Center(
               child: Text(
                 'Tiếp tục',
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 17 * widget.ffem,
                         fontWeight: FontWeight.w600,

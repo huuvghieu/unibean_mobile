@@ -33,14 +33,14 @@ class ItemIconCardProfile extends StatelessWidget {
           child: Center(
             child: SvgPicture.asset(
               svgAssetName,
-              height: 20 * fem,
-              width: 20 * fem,
+              height: 25 * fem,
+              width: 25 * fem,
             ),
           ),
         ),
         Text(
           title,
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   fontSize: 10 * fem,
                   fontWeight: FontWeight.w600,

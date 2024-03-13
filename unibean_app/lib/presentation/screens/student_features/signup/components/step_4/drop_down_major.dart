@@ -50,12 +50,8 @@ class _DropDownMajorState extends State<DropDownMajor> {
         builder: (context, state) {
           if (state is MajorLoading) {
             return Center(
-              child: Lottie.asset(
-                'assets/animations/loading-screen.json',
-                width: 50*widget.fem,
-                height: 50*widget.hem
-
-              ),
+              child: Lottie.asset('assets/animations/loading-screen.json',
+                  width: 50 * widget.fem, height: 50 * widget.hem),
             );
           } else if (state is MajorLoaded) {
             majors = state.majors.toList();
@@ -70,7 +66,7 @@ class _DropDownMajorState extends State<DropDownMajor> {
   DropdownButtonFormField<String> _dropDownMajorLoaded() {
     return DropdownButtonFormField(
       validator: widget.validator,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: Colors.black,
               fontSize: 14 * widget.ffem,
@@ -79,13 +75,13 @@ class _DropDownMajorState extends State<DropDownMajor> {
         labelText: widget.labelText,
         hintText: widget.hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelStyle: GoogleFonts.nunito(
+        labelStyle: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: kPrimaryColor,
               fontSize: 15 * widget.ffem,
               fontWeight: FontWeight.w900),
         ),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kLowTextColor,
                 fontSize: 17 * widget.ffem,

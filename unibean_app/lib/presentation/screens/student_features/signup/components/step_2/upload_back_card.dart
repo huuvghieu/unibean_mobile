@@ -3,13 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 class UpLoadBackCard extends StatelessWidget {
-  const UpLoadBackCard({
-    super.key,
-    required this.fem,
-    required this.hem,
-    required this.ffem,
-    required this.onPressed
-  });
+  const UpLoadBackCard(
+      {super.key,
+      required this.fem,
+      required this.hem,
+      required this.ffem,
+      required this.onPressed});
 
   final double fem;
   final double hem;
@@ -32,7 +31,7 @@ class UpLoadBackCard extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             'Tải hình mặt sau',
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 10 * ffem,

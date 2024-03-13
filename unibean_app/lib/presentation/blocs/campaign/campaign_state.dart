@@ -17,16 +17,23 @@ final class CampaignLoading extends CampaignState {
   List<Object?> get props => [];
 }
 
-final class CampaignsLoaded extends CampaignState {
-  final List<CampaignModel> campaigns;
-
-  CampaignsLoaded({required this.campaigns});
-  
+final class CampaignStoreLoading extends CampaignState {
+  CampaignStoreLoading();
   @override
-  List<Object?> get props => [campaigns];
+  List<Object?> get props => [];
 }
 
-final class CampaignPaging extends CampaignState{
+final class CampaignsLoaded extends CampaignState {
+  final List<CampaignModel> campaigns;
+  final bool hasReachMax;
+
+  CampaignsLoaded({required this.campaigns, this.hasReachMax = false});
+
+  @override
+  List<Object?> get props => [campaigns, hasReachMax];
+}
+
+final class CampaignPaging extends CampaignState {
   @override
   List<Object?> get props => [];
 }
@@ -35,6 +42,47 @@ final class CampaignsFailed extends CampaignState {
   final String error;
 
   CampaignsFailed({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
+final class CampaignByIdLoaded extends CampaignState {
+  final CampaignDetailModel campaignDetailModel;
+
+  CampaignByIdLoaded({required this.campaignDetailModel});
+
+  @override
+  List<Object?> get props => [campaignDetailModel];
+}
+
+final class CampaignStoreByIdLoaded extends CampaignState {
+  final List<CampaignStoreModel> campaignStores;
+
+  CampaignStoreByIdLoaded({required this.campaignStores});
+
+  @override
+  List<Object?> get props => [campaignStores];
+}
+
+final class RedeemVoucherLoading extends CampaignState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class RedeemVoucherSuccess extends CampaignState {
+  final String text;
+
+  RedeemVoucherSuccess({required this.text});
+
+  @override
+  List<Object?> get props => throw [text];
+}
+
+final class RedeemVoucherFailed extends CampaignState {
+  final String error;
+
+  RedeemVoucherFailed({required this.error});
+
   @override
   List<Object?> get props => [error];
 }

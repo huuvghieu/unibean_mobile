@@ -13,16 +13,15 @@ class DropDownUniversity extends StatefulWidget {
   final double ffem;
   final String labelText;
   final String hintText;
-    final FormFieldValidator<String> validator;
-  const DropDownUniversity({
-    super.key,
-    required this.hem,
-    required this.fem,
-    required this.ffem,
-    required this.labelText,
-    required this.hintText,
-    required this.validator
-  });
+  final FormFieldValidator<String> validator;
+  const DropDownUniversity(
+      {super.key,
+      required this.hem,
+      required this.fem,
+      required this.ffem,
+      required this.labelText,
+      required this.hintText,
+      required this.validator});
 
   @override
   State<DropDownUniversity> createState() => _DropDownUniversityState();
@@ -49,9 +48,8 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
         builder: (context, state) {
           if (state is UniversityLoading) {
             return Center(
-              child: Lottie.asset('assets/animations/loading-screen.json',
-              width: 50*widget.fem, height: 50*widget.hem)
-            );
+                child: Lottie.asset('assets/animations/loading-screen.json',
+                    width: 50 * widget.fem, height: 50 * widget.hem));
           } else if (state is UniversityLoaded) {
             universities = state.universities.toList();
             return _dropDownUniversityLoaded();
@@ -69,22 +67,22 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
   DropdownButtonFormField<String> _dropDownUniversityLoaded() {
     return DropdownButtonFormField(
       validator: widget.validator,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: Colors.black,
-              fontSize: 17 * widget.ffem,
+              fontSize: 14 * widget.ffem,
               fontWeight: FontWeight.w700)),
       decoration: InputDecoration(
         labelText: widget.labelText,
         hintText: widget.hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelStyle: GoogleFonts.nunito(
+        labelStyle: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: kPrimaryColor,
               fontSize: 15 * widget.ffem,
               fontWeight: FontWeight.w900),
         ),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kLowTextColor,
                 fontSize: 17 * widget.ffem,
@@ -101,7 +99,7 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
             borderSide: BorderSide(
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
             gapPadding: 10),
-          errorBorder: OutlineInputBorder(
+        errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(28 * widget.fem),
             borderSide: BorderSide(
                 width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
@@ -113,7 +111,6 @@ class _DropDownUniversityState extends State<DropDownUniversity> {
           context
               .read<CampusBloc>()
               .add(LoadCampus(universityId: newValue.toString()));
-          
         });
       },
       items: universities.map((u) {

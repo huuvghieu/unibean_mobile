@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:unibean_app/presentation/screens/student_features/challenge/components/challenge_card.dart';
+import 'package:unibean_app/presentation/widgets/empty_widget.dart';
 
-import '../../../../blocs/blocs.dart';
+import '../../../../../blocs/blocs.dart';
+import '../challenge_card.dart';
 
-class IsCompletedChallenge extends StatelessWidget {
-  const IsCompletedChallenge({super.key});
+class InProcessChallenge extends StatelessWidget {
+  const InProcessChallenge({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,6 @@ class IsCompletedChallenge extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 15 * hem,
-                  ),
                   BlocBuilder<ChallengeBloc, ChallengeState>(
                     builder: (context, state) {
                       if (state is ChallengeLoading) {
@@ -35,25 +33,23 @@ class IsCompletedChallenge extends StatelessWidget {
                               'assets/animations/loading-screen.dart'),
                         );
                       } else if (state is ChallengesLoaded) {
-                        final challenges = state.challenge.where(
-                            (c) => (c.isCompleted && c.isClaimed == false)).toList();
-                        return Column(
-                          children: [
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: challenges.length,
-                              itemBuilder: (context, index) {
-                                return ChallengeCard(
-                                  fem: fem,
-                                  hem: hem,
-                                  ffem: ffem,
-                                  challengeModel: challenges[index],
-                                );
-                              },
-                            ),
-                          ],
-                        );
+                        if (state.challenge.isEmpty) {
+                          return EmptyWidget(text: 'Không có thử thách');
+                        } else {
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: state.challenge.length,
+                            itemBuilder: (context, index) {
+                              return ChallengeCard(
+                                fem: fem,
+                                hem: hem,
+                                ffem: ffem,
+                                challengeModel: state.challenge[index],
+                              );
+                            },
+                          );
+                        }
                       }
                       return Container();
                     },

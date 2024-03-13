@@ -34,40 +34,40 @@ class QRScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             toolbarHeight: 160 * hem,
-            leadingWidth: 500*fem,
+            leadingWidth: 500 * fem,
             leading: Container(
-            margin: EdgeInsets.only(left: 20 * fem),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 50 * hem,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                    size: 35 * fem,
+              margin: EdgeInsets.only(left: 20 * fem),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 50 * hem,
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10 * fem, left: 75*fem),
-                  child: Text(
-                    'MÃ QR CỦA BẠN',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 22 * ffem,
-                            fontWeight: FontWeight.w900,
-                            height: 1.3625 * ffem / fem,
-                            color: Colors.white)),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.white,
+                      size: 35 * fem,
+                    ),
                   ),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 10 * fem, left: 75 * fem),
+                    child: Text(
+                      'MÃ QR CỦA BẠN',
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              fontSize: 22 * ffem,
+                              fontWeight: FontWeight.w900,
+                              height: 1.3625 * ffem / fem,
+                              color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
           ),
           extendBodyBehindAppBar: true,
           extendBody: true,
@@ -131,7 +131,7 @@ class QRScreen extends StatelessWidget {
   //           padding: EdgeInsets.only(left: 20 * fem),
   //           child: Text(
   //             'UNI Student Bean',
-  //             style: GoogleFonts.nunito(
+  //             style: GoogleFonts.openSans(
   //                 textStyle: TextStyle(
   //                     fontSize: 30 * ffem,
   //                     fontWeight: FontWeight.w900,

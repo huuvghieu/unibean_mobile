@@ -41,7 +41,7 @@ class Body5 extends StatelessWidget {
                   Text(
                     'Mã giới thiệu bạn bè',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 20 * ffem,
                             fontWeight: FontWeight.w900,

@@ -29,7 +29,7 @@ class Body8 extends StatelessWidget {
             Text(
               'Bạn đã sẵn sàng bắt đầu!',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,
                       fontWeight: FontWeight.w900,
@@ -42,7 +42,7 @@ class Body8 extends StatelessWidget {
             Text(
               'Cảm ơn bạn đã đăng ký.\n Giờ đây, bạn có thể tham gia vào các sự kiện\n yêu thích, các kênh thông tin để tích lũy\n những ưu đãi hấp dẫn.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,
                       fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class Body8 extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'Bắt đầu',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 17 * ffem,
                             fontWeight: FontWeight.w600,

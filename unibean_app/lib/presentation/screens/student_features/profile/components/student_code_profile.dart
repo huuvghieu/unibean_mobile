@@ -34,7 +34,7 @@ class StudentCodeProfile extends StatelessWidget {
           ),
           Text(
             studentCode,
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     fontSize: 13 * ffem,
                     height: 1.3625 * ffem / fem,

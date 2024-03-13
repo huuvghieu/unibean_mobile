@@ -42,7 +42,7 @@ class CardForUnknow extends StatelessWidget {
                 children: [
                   Text(
                     'Bắt đầu',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 13 * ffem,
@@ -50,7 +50,7 @@ class CardForUnknow extends StatelessWidget {
                   ),
                   Text(
                     'Đăng nhập',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kLowTextColor,
                             fontSize: 13 * ffem,
@@ -58,7 +58,7 @@ class CardForUnknow extends StatelessWidget {
                   ),
                   Text(
                     'Xác thực',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kLowTextColor,
                             fontSize: 13 * ffem,
@@ -110,7 +110,7 @@ class CardForUnknow extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   '2',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 16 * ffem,
@@ -134,7 +134,7 @@ class CardForUnknow extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   '3',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
                                           color: kLowTextColor,
                                           fontSize: 16 * ffem,
@@ -158,7 +158,7 @@ class CardForUnknow extends StatelessWidget {
                 child: Text(
                   'Đăng nhập để được xem \nnhiều chiến dịch và ưu đãi hơn',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.w800,
@@ -167,7 +167,7 @@ class CardForUnknow extends StatelessWidget {
               ),
               TextButton(
                   onPressed: () {
-                     Navigator.pushNamed(context, LoginScreen.routeName);
+                    Navigator.pushNamed(context, LoginScreen.routeName);
                   },
                   child: Container(
                       width: 120 * fem,
@@ -178,7 +178,7 @@ class CardForUnknow extends StatelessWidget {
                       child: Center(
                         child: Text(
                           'Đăng nhập',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                   fontSize: 14 * ffem,
                                   fontWeight: FontWeight.w600,

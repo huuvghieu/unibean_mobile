@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/data/models.dart';
-// import 'package:unibean_app/presentation/blocs/blocs.dart';
 import '../screens/screens.dart';
 
 class AppRouter {
@@ -52,10 +51,11 @@ class AppRouter {
         return SignUp8Screen.route();
 
       case ProfileTransactionHistoryScreen.routeName:
-        return ProfileTransactionHistoryScreen.route();
+        return ProfileTransactionHistoryScreen.route(
+            studentId: settings.arguments as String);
 
       case ProfileVoucherScreen.routeName:
-        return ProfileVoucherScreen.route();
+        return ProfileVoucherScreen.route(id: settings.arguments as String);
 
       case ProductScreen.routeName:
         return ProductScreen.route();
@@ -67,11 +67,16 @@ class AppRouter {
         return CampaignListScreen.route();
 
       case CampaignDetailScreen.routeName:
-        return CampaignDetailScreen.route();
+        return CampaignDetailScreen.route(id: settings.arguments as String);
+
+      case CampaignVoucherScreen.routeName:
+        List<dynamic> args = settings.arguments as List<dynamic>;
+
+        return CampaignVoucherScreen.route(
+            campaignDetail: args[0], campaignVoucher: args[1]);
 
       case BrandDetailScreen.routeName:
-        return BrandDetailScreen.route(
-            brandModel: settings.arguments as BrandModel);
+        return BrandDetailScreen.route(id: settings.arguments as String);
 
       case BrandListScreen.routeName:
         return BrandListScreen.route();
@@ -79,14 +84,21 @@ class AppRouter {
       case VoucherScreen.routeName:
         return VoucherScreen.route();
 
+      case VoucherListScreen.routeName:
+        return VoucherListScreen.route(
+            voucherModels: settings.arguments as List<VoucherModel>);
+
       case QRScreen.routeName:
         return QRScreen.route(id: settings.arguments as String);
+
+      case QRVoucherScreen.routeName:
+        return QRVoucherScreen.route(id: settings.arguments as String);
 
       case FilterVoucherScreen.routeName:
         return FilterVoucherScreen.route();
 
       case VoucherDetailScreen.routeName:
-        return VoucherDetailScreen.route();
+        return VoucherDetailScreen.route(id: settings.arguments as String);
 
       case ChallengeScreen.routeName:
         return ChallengeScreen.route();

@@ -31,7 +31,7 @@ class UpLoadFrontCard extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             'Tải hình mặt trước',
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 10 * ffem,

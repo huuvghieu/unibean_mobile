@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_trans/components/activity_transaction.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
-
+  const Body({super.key, required this.studentId});
+  final String studentId;
   @override
   Widget build(BuildContext context) {
     double baseWidth = 375;
@@ -13,110 +13,130 @@ class Body extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
-    return TabBarView(
-      children: [
-        Container(
-          color: kbgWhiteColor,
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 25 * hem,
+    return NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            new SliverAppBar(
+              pinned: true,
+              floating: true,
+              elevation: 0,
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/background_splash.png'),
+                        fit: BoxFit.cover)),
               ),
-              Container(
-                  width: 340 * fem,
-                  height: 90 * hem,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 330 * fem,
-                        height: 90 * hem,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10 * fem),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0x0c000000),
-                                  offset: Offset(0 * fem, 10 * fem),
-                                  blurRadius: 5 * fem)
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 20 * fem),
-                              child: Text(
-                                'Hoàn thành thử thách no. #1234',
-                                style: GoogleFonts.nunito(
-                                    fontSize: 14 * ffem,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.3625 * ffem / fem,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 20 * fem),
-                              child: Text('của chiến dịch "ABC"',
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 14 * ffem,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.3625 * ffem / fem,
-                                      color: Colors.black)),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(left: 20 * fem, top: 5 * hem),
-                              child: Text('13:54 on 10/12/2022',
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 10 * ffem,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.3625 * ffem / fem,
-                                      color: kLowTextColor)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: 37 * hem,
-                        left: 252 * fem,
-                        child: Container(
-                          width: 85 * fem,
-                          height: 32 * hem,
-                          decoration: BoxDecoration(
-                              color: kPrimaryColor,
-                              borderRadius: BorderRadius.circular(8 * fem)),
-                          child: Padding(
-                            padding:
-                                EdgeInsets.only(top: 4 * hem, left: 4 * fem),
-                            child: Text(
-                              '+ 10 điểm',
-                              style: GoogleFonts.nunito(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16 * ffem,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
-            ],
-          ),
-        ),
-        Container(
-          child: Center(
-            child: Text('Đổi quà'),
-          ),
-        ),
-        Container(
-          child: Center(
-            child: Text('Nhận quà'),
-          ),
-        ),
-      ],
-    );
+              toolbarHeight: 60 * hem,
+              leading: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  color: Colors.white,
+                  size: 35 * fem,
+                ),
+              ),
+              centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.only(top: 10 * hem),
+                child: Text(
+                  'UniBean',
+                  style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                          fontSize: 25 * ffem,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white)),
+                ),
+              ),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                      size: 35 * fem,
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+              bottom: TabBar(
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                automaticIndicatorColorAdjustment: false,
+                indicatorColor: Colors.white,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorWeight: 3,
+                indicatorPadding: EdgeInsets.only(bottom: 1 * fem),
+                labelColor: Colors.white,
+                labelStyle: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                  fontSize: 13 * ffem,
+                  fontWeight: FontWeight.w700,
+                )),
+                unselectedLabelColor: Colors.white60,
+                unselectedLabelStyle: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                  fontSize: 13 * ffem,
+                  fontWeight: FontWeight.w700,
+                )),
+                tabs: [
+                  Container(
+                    child: Tab(
+                      text: 'Tất cả',
+                    ),
+                  ),
+                  Tab(
+                    text: 'Hoạt động',
+                  ),
+                  Tab(
+                    text: 'Đổi quà',
+                  ),
+                  Tab(
+                    text: 'Thử thách',
+                  ),
+                  Tab(
+                    text: 'Điểm thưởng',
+                  ),
+                ],
+              ),
+            )
+          ];
+        },
+        body: TabBarView(
+          children: [
+            ActivityTransaction(
+              hem: hem,
+              fem: fem,
+              ffem: ffem,
+              studentId: studentId,
+            ),
+            ActivityTransaction(
+              hem: hem,
+              fem: fem,
+              ffem: ffem,
+              studentId: studentId,
+            ),
+            ActivityTransaction(
+              hem: hem,
+              fem: fem,
+              ffem: ffem,
+              studentId: studentId,
+            ),
+            Container(
+              child: Center(
+                child: Text('Đổi quà'),
+              ),
+            ),
+            Container(
+              child: Center(
+                child: Text('Nhận quà'),
+              ),
+            ),
+          ],
+        ));
   }
 }

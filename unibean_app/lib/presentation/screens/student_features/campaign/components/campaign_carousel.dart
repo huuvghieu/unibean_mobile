@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:unibean_app/data/models.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+
+import '../../../screens.dart';
 
 class CampaignCarousel extends StatefulWidget {
   final List<CampaignModel> campaigns;
-  const CampaignCarousel({super.key, required this.campaigns});
+  final roleState;
+  const CampaignCarousel(
+      {super.key, required this.campaigns, required this.roleState});
 
   @override
   State<CampaignCarousel> createState() => _CampaignCarouselState();
@@ -17,7 +22,11 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
   int activeIndex = 0;
   @override
   Widget build(BuildContext context) {
-  List<CampaignModel> camps = [widget.campaigns[0], widget.campaigns[1], widget.campaigns[2],];
+    List<CampaignModel> camps = [
+      widget.campaigns[0],
+      widget.campaigns[1],
+      widget.campaigns[2],
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -25,7 +34,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
           child: CarouselSlider(
               options: CarouselOptions(
                 autoPlay: true,
-                height: 230,
+                height: 205,
                 autoPlayInterval: Duration(seconds: 20),
                 onPageChanged: (index, reason) {
                   setState(() {
@@ -62,70 +71,74 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                 fit: BoxFit.fill,
                                 errorBuilder: (context, error, stackTrace) {
                                   return Image.asset(
-                                    'assets/images/campaign-default.png',
+                                    'assets/images/image-404.jpg',
                                   );
                                 },
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                width: 180,
+                                width: 200,
                                 margin: EdgeInsets.only(right: 5),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 5),
-                                      child: Text(
-                                        campaign.campaignName,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: true,
-                                        style: GoogleFonts.nunito(
-                                            textStyle: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w900,
-                                        )),
-                                      ),
+                                    Text(
+                                      campaign.campaignName,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: true,
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      )),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 5),
-                                      child: Text(
-                                        campaign.description,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.nunito(
-                                            textStyle: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal,
-                                        )),
-                                      ),
+                                    Text(
+                                      campaign.description,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                      )),
                                     ),
                                   ],
                                 ),
                               ),
-                              TextButton(
-                                onPressed: () {},
-                                child: Container(
-                                    width: 80,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        color: kPrimaryColor,
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: Center(
-                                      child: Text(
-                                        'Chi tiết',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white)),
-                                      ),
-                                    )),
+                              Container(
+                                width: 70,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: TextButton(
+                                  onPressed: () {
+                                    if (widget.roleState is RoleAppUnknown) {
+                                      Navigator.pushNamed(
+                                          context, LoginScreen.routeName);
+                                    } else {
+                                      Navigator.pushNamed(context,
+                                          CampaignDetailScreen.routeName,
+                                          arguments: campaign.id);
+                                    }
+                                  },
+                                  child: Text(
+                                    'Xem ngay',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white)),
+                                  ),
+                                ),
                               )
                             ],
                           ),

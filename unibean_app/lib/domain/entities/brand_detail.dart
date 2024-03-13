@@ -1,0 +1,3 @@
+// class BrandDetail extends Brand {
+
+// }

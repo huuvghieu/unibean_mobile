@@ -119,7 +119,7 @@ class _FormBody3State extends State<FormBody3> {
               child: Center(
                 child: Text(
                   'Tiếp tục',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                           fontSize: 17 * widget.ffem,
                           fontWeight: FontWeight.w600,

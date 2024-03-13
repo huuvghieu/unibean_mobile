@@ -22,7 +22,7 @@ class PhoneNumberTextField extends StatelessWidget {
     return TextFormField(
       validator: validator,
       controller: textController,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: Colors.black,
               fontSize: 17 * ffem,
@@ -31,7 +31,7 @@ class PhoneNumberTextField extends StatelessWidget {
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: "Nhập số điện thoại",
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kLowTextColor,
                 fontSize: 17 * ffem,

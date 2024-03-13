@@ -6,13 +6,15 @@ import 'package:unibean_app/presentation/screens/student_features/voucher_detail
 class VoucherDetailScreen extends StatelessWidget {
   static const String routeName = '/voucher-detail-student';
 
-  static Route route() {
+  static Route route({required String id}) {
     return MaterialPageRoute(
-        builder: (_) => const VoucherDetailScreen(),
+        builder: (_) =>  VoucherDetailScreen(id: id,),
         settings: const RouteSettings(arguments: routeName));
   }
 
-  const VoucherDetailScreen({super.key});
+  const VoucherDetailScreen({super.key, required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +43,22 @@ class VoucherDetailScreen extends StatelessWidget {
         // ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
-          height: 100*hem,
+          height: 80 * hem,
           elevation: 5,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                 child: Container(
-                  width: 300 * fem,
+                  width: 320*fem,
                   height: 45 * hem,
                   decoration: BoxDecoration(
                       color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(23 * fem)),
+                      borderRadius: BorderRadius.circular(10 * fem)),
                   child: Center(
                     child: Text(
                       '120 điểm',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               fontSize: 17 * ffem,
                               fontWeight: FontWeight.w600,
@@ -70,7 +72,7 @@ class VoucherDetailScreen extends StatelessWidget {
           ),
         ),
         // extendBodyBehindAppBar: true,
-        body: Body(),
+        body: Body(id: id,),
       ),
     );
   }

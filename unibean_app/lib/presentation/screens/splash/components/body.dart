@@ -16,21 +16,21 @@ class _BodyState extends State<Body> {
   List<Map<String, String>> splashData = [
     {
       'image': 'assets/images/onboarding1.png',
-      'title': 'Xin chào!',
+      'title': 'Xin Chào!',
       'content':
           'Tìm kiếm những thông tin hữu ích,\n những hoạt động thú vị và những phần quà đặc biệt.',
       'button': 'Tiếp tục'
     },
     {
       'image': 'assets/images/onboarding2.png',
-      'title': 'Nhận Bean mọi nơi!',
+      'title': 'Nhận Bean Mọi Nơi!',
       'content':
           'Thu nhập các điểm thưởng\n và đổi lấy những phần quà hấp dẫn!.',
       'button': 'Tiếp tục'
     },
     {
       'image': 'assets/images/onboarding3.png',
-      'title': 'Ưu Đãi đọc quyền',
+      'title': 'Ưu Đãi Độc Quyền',
       'content':
           'Bạn sẽ tìm thấy những ưu đãi cũng như\n các phần quà đặc biệt chỉ có tại đây.',
       'button': 'Bắt đầu!'
@@ -81,7 +81,7 @@ class _BodyState extends State<Body> {
                 ),
                 Text(
                   splashData[index]['title']!,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                           fontSize: 20 * ffem,
                           fontWeight: FontWeight.w900,
@@ -96,7 +96,7 @@ class _BodyState extends State<Body> {
                   child: Text(
                     splashData[index]['content']!,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 15 * ffem,
                             fontWeight: FontWeight.w600,
@@ -123,7 +123,7 @@ class _BodyState extends State<Body> {
                     child: Center(
                       child: Text(
                         splashData[index]['button']!,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 17 * ffem,
                                 fontWeight: FontWeight.w600,
@@ -165,7 +165,7 @@ class _BodyState extends State<Body> {
                 ),
                 Text(
                   splashData[index]['title']!,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                           fontSize: 20 * ffem,
                           fontWeight: FontWeight.w900,
@@ -180,7 +180,7 @@ class _BodyState extends State<Body> {
                   child: Text(
                     splashData[index]['content']!,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 15 * ffem,
                             fontWeight: FontWeight.w600,
@@ -216,7 +216,7 @@ class _BodyState extends State<Body> {
                     child: Center(
                       child: Text(
                         splashData[index]['button']!,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 17 * ffem,
                                 fontWeight: FontWeight.w600,
@@ -237,7 +237,7 @@ class _BodyState extends State<Body> {
                     padding: EdgeInsets.only(bottom: 20 * hem),
                     child: Text(
                       'Bỏ qua',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               fontSize: 13 * ffem,
                               fontWeight: FontWeight.w900,

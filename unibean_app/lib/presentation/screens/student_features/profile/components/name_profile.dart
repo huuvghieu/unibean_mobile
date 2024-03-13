@@ -26,7 +26,7 @@ class NameProfile extends StatelessWidget {
               name,
               // softWrap: true,
               maxLines: 2,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 16 * ffem,
                       fontWeight: FontWeight.w800,
@@ -34,7 +34,6 @@ class NameProfile extends StatelessWidget {
                       color: Colors.black)),
             ),
           ),
-         
         ],
       ),
     );

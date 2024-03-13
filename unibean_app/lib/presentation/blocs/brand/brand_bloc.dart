@@ -18,6 +18,8 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
     on<LoadBrands>(_onLoadBrands);
     on<LoadMoreBrands>(_onLoadMoreBrands);
     on<LoadBrandById>(_onLoadBrandById);
+    on<LoadBrandVouchersById>(_onLoadBrandVouchersById);
+    on<LoadBrandCampaignsById>(_onLoadBrandCampaignsById);
   }
 
   int page = 1;
@@ -43,9 +45,16 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
         isLoadingMore = true;
         page++;
         var apiResponse = await brandRepository.fecthBrands(page: page);
-        emit(BrandsLoaded(
-            brands: List.from((this.state as BrandsLoaded).brands)
-              ..addAll(apiResponse!.result)));
+        if (apiResponse!.result.length == 0) {
+          emit(BrandsLoaded(
+              brands: List.from((this.state as BrandsLoaded).brands)
+                ..addAll(apiResponse.result),
+              hasReachedMax: true));
+        } else {
+          emit(BrandsLoaded(
+              brands: List.from((this.state as BrandsLoaded).brands)
+                ..addAll(apiResponse.result)));
+        }
       }
     } catch (e) {
       emit(BrandsFailed(error: e.toString()));
@@ -56,9 +65,32 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
       LoadBrandById event, Emitter<BrandState> emit) async {
     emit(BrandLoading());
     try {
-      final brandModel =
-          await brandRepository.fecthBrandById(id: event.brandModel.id);
+      final brandModel = await brandRepository.fecthBrandById(id: event.id);
       emit(BrandByIdLoaded(brand: brandModel!));
+    } catch (e) {
+      emit(BrandsFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadBrandCampaignsById(
+      LoadBrandCampaignsById event, Emitter<BrandState> emit) async {
+    emit(BrandLoading());
+    try {
+      final apiResponse = await brandRepository
+          .fecthCampaignssByBrandId(event.page, event.limit, id: event.id);
+      emit(BrandCampaignsByIdLoaded(campaignModels: apiResponse!.result));
+    } catch (e) {
+      emit(BrandsFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadBrandVouchersById(
+      LoadBrandVouchersById event, Emitter<BrandState> emit) async {
+    emit(BrandLoading());
+    try {
+      final apiResponse = await brandRepository
+          .fecthVouchersByBrandId(event.page, event.limit, id: event.id);
+      emit(BrandVouchersByIdLoaded(vouchers: apiResponse!.result));
     } catch (e) {
       emit(BrandsFailed(error: e.toString()));
     }

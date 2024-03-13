@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 // import 'package:hive/hive.dart';
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
 //colors
 const kPrimaryColor = Color(0xff2ecc71);
+const klightPrimaryColor = Color(0xff83f28f);
 const kDarkPrimaryColor = Color(0xff1d4d4f);
 const kLowTextColor = Color(0xff989da3);
 const kbgWhiteColor = Color.fromARGB(255, 246, 242, 250);
@@ -12,7 +14,7 @@ const klighGreyColor = Color(0xffececf1);
 const kErrorTextColor = Color(0xffba1c1c);
 
 //strings
-const String baseURL = 'https://unibean.azurewebsites.net/api/v1/';
+const String baseURL = 'https://unibean-api.azurewebsites.net/api/v1/';
 
 //RegExp
 final RegExp emailValidationRegExp =
@@ -33,3 +35,13 @@ final RegExp phoneNumberPattern = RegExp(r'^\d{9}$');
 
 //response failed from api
 final String invalidStudentCode = '["Student code is already in use"]';
+
+//function
+String changeFormateDate(String dateTime) {
+  DateTime formatDate = DateTime.parse(dateTime);
+  String formattedDate = DateFormat('dd/MM/yyyy').format(formatDate);
+  return formattedDate;
+}
+
+//format
+var formatter = NumberFormat.decimalPattern();

@@ -74,7 +74,7 @@ class _FormLoginState extends State<FormLogin> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 context.read<AuthenticationBloc>().add(LoginAccount(
-                    userName: userNameController.text,
+                    userName: userNameController.text.trim(),
                     password: passwordController.text.toString()));
               }
             },
@@ -221,7 +221,7 @@ Widget _buildAuthFailed(
           padding: EdgeInsets.only(top: 5 * hem),
           child: Text(
             error,
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
               color: Colors.red,
               fontSize: 12 * ffem,
             ),

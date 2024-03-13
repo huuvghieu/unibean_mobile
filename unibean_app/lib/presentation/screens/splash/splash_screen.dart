@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/splash';
@@ -22,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
   bool animate = false;
   var box = Hive.box('myBox');
   var launchApp = false;
-  
 
   @override
   void initState() {
@@ -44,8 +43,15 @@ class _SplashScreenState extends State<SplashScreen> {
             child: AnimatedOpacity(
           opacity: animate ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 1500),
-          child: const Image(
-            image: AssetImage('assets/images/logo_splash.png'),
+          child: Center(
+            child: Text(
+              'UNIBEAN',
+              style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white)),
+            ),
           ),
         )));
   }

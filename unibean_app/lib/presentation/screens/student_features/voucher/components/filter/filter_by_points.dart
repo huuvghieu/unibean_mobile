@@ -29,7 +29,7 @@ class FilterByPoints extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10 * hem),
                 child: Text(
                   'Giá trị đổi điểm',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                     fontSize: 16 * ffem,
                     color: kLowTextColor,
                     fontWeight: FontWeight.w600,
@@ -41,7 +41,7 @@ class FilterByPoints extends StatelessWidget {
                 padding: EdgeInsets.only(top: 20 * hem),
                 child: Text(
                   'Xóa tất cả',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                     fontSize: 10 * ffem,
                     color: kLowTextColor,
                     fontWeight: FontWeight.w600,

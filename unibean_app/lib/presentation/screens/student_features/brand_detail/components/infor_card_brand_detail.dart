@@ -21,10 +21,11 @@ class InformationCardBrandDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 120 * hem,
+      top: 90 * hem,
       left: 25 * fem,
+      right: 25*fem,
       child: Container(
-        width: 324 * fem,
+        width: double.infinity,
         height: 200 * hem,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15 * fem),
@@ -89,7 +90,7 @@ class InformationCardBrandDetail extends StatelessWidget {
                                 brandModel.brandName,
                                 // softWrap: true,
                                 maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         fontSize: 16 * ffem,
                                         fontWeight: FontWeight.w800,
@@ -100,17 +101,7 @@ class InformationCardBrandDetail extends StatelessWidget {
                           ],
                         ),
                       ),
-                      //email
-                      Text(
-                        'Bắt đầu ${brandModel.dateCreated}',
-                        style: GoogleFonts.nunito(
-                            textStyle: TextStyle(
-                                fontSize: 10 * ffem,
-                                height: 1.3625 * ffem / fem,
-                                fontWeight: FontWeight.w600,
-                                color: kLowTextColor)),
-                      ),
-
+                   
                       InkWell(
                         onTap: () {},
                         child: Container(
@@ -124,7 +115,7 @@ class InformationCardBrandDetail extends StatelessWidget {
                           child: Center(
                             child: Text(
                               'Theo dõi',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.openSans(
                                 fontSize: 14 * ffem,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -149,10 +140,17 @@ class InformationCardBrandDetail extends StatelessWidget {
                 color: const Color.fromARGB(255, 225, 223, 223),
               ),
             ),
-            OthersInforBrandDetail(hem: hem, fem: fem, ffem: ffem)
+            OthersInforBrandDetail(
+              hem: hem,
+              fem: fem,
+              ffem: ffem,
+              brandModel: brandModel,
+            )
           ],
         ),
       ),
     );
   }
+
+
 }

@@ -27,7 +27,7 @@ class Content6 extends StatelessWidget {
           labelText: 'SỐ ĐIỆN THOẠI *',
           // hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: GoogleFonts.nunito(
+          labelStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 15 * widget.ffem,
@@ -59,7 +59,7 @@ class Content6 extends StatelessWidget {
               child: TextField(
                 readOnly: true,
                 controller: countryController,
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 17 * widget.ffem,

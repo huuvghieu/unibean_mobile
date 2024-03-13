@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class IsClaimedChallenge extends StatelessWidget {
   const IsClaimedChallenge({super.key});
 
@@ -28,7 +27,7 @@ class IsClaimedChallenge extends StatelessWidget {
                   Center(
                     child: Text(
                       'Chưa có nhiệm vụ hoàn thành',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                         fontSize: 20 * ffem,
                         color: Colors.black,

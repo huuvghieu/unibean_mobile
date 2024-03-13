@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/button_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/information_card_profile.dart';
@@ -44,7 +45,7 @@ class Body extends StatelessWidget {
                         //background body
                         Positioned(
                           left: 0 * fem,
-                          top: 180 * hem,
+                          top: 78 * hem,
                           child: Align(
                             child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -63,7 +64,7 @@ class Body extends StatelessWidget {
 
                         Positioned(
                             left: 0 * fem,
-                            top: 350 * hem,
+                            top: 280 * hem,
                             child: Container(
                               // color: Colors.red,
                               height: MediaQuery.of(context).size.height,
@@ -98,7 +99,7 @@ class Body extends StatelessWidget {
                                       Navigator.pushNamed(
                                           context,
                                           ProfileTransactionHistoryScreen
-                                              .routeName);
+                                              .routeName, arguments: state.studentModel.id);
                                     },
                                     svgIcon:
                                         'assets/icons/transaction-icon.svg',
@@ -114,9 +115,12 @@ class Body extends StatelessWidget {
                                       svgIcon:
                                           'assets/icons/voucher-navbar-icon.svg',
                                       title: 'Ưu đãi của bạn',
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        var id = await AuthenLocalDataSource
+                                            .getStudentId();
                                         Navigator.pushNamed(context,
-                                            ProfileVoucherScreen.routeName);
+                                            ProfileVoucherScreen.routeName,
+                                            arguments: id);
                                       }),
                                   SizedBox(
                                     height: 10 * hem,
@@ -129,6 +133,20 @@ class Body extends StatelessWidget {
                                           'assets/icons/update-information-icon.svg',
                                       title: 'Cập nhật thông tin',
                                       onPressed: () {}),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon:
+                                          'assets/icons/order-history-icon.svg',
+                                      title: 'Đơn hàng của bạn',
+                                      onPressed: () {
+                                        Navigator.pushNamed(context,
+                                            ProfileVoucherScreen.routeName);
+                                      }),
                                   SizedBox(
                                     height: 10 * hem,
                                   ),
@@ -230,7 +248,7 @@ class Body extends StatelessWidget {
             title: Text(
               'Bạn có muốn đăng xuất không?',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 17,
                       color: kPrimaryColor,
@@ -244,7 +262,7 @@ class Body extends StatelessWidget {
                   },
                   child: Text(
                     'Không',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle:
                             TextStyle(color: Colors.black, fontSize: 15)),
                   )),
@@ -258,7 +276,7 @@ class Body extends StatelessWidget {
                   },
                   child: Text(
                     'Có',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle:
                             TextStyle(color: Colors.black, fontSize: 15)),
                   )),

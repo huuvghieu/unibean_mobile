@@ -32,7 +32,7 @@ class Body extends StatelessWidget {
           Text(
             'Tham gia cùng chúng tôi\n và nhận những phần quà hấp dẫn!',
             textAlign: TextAlign.center,
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     fontSize: 20 * ffem,
                     fontWeight: FontWeight.w900,
@@ -47,7 +47,7 @@ class Body extends StatelessWidget {
             child: Text(
               'Tham gia các hoạt động bạn yêu thích,\n tích bean và đổi những phần quà đặc biệt!',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,
                       fontWeight: FontWeight.w600,
@@ -72,7 +72,7 @@ class Body extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Bắt đầu',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                           fontSize: 17 * ffem,
                           fontWeight: FontWeight.w600,
@@ -89,7 +89,7 @@ class Body extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 20 * hem),
                 child: Text(
                   'Bạn đã có tài khoản?',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                           fontSize: 13 * ffem,
                           fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class Body extends StatelessWidget {
                   padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
                   child: Text(
                     'Đăng nhập',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 13 * ffem,
                             fontWeight: FontWeight.w900,

@@ -24,7 +24,7 @@ class AppBarSignUp extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         text,
-        style: GoogleFonts.nunito(
+        style: GoogleFonts.openSans(
             textStyle: TextStyle(
           fontSize: 15 * ffem,
           fontWeight: FontWeight.w900,

@@ -51,10 +51,9 @@ class _DropDownCampusState extends State<DropDownCampus> {
         },
         builder: (context, state) {
           if (state is CampusLoading) {
-             return Center(
-              child: Lottie.asset('assets/animations/loading-screen.json',
-              width: 50*widget.fem, height: 50*widget.hem)
-            );
+            return Center(
+                child: Lottie.asset('assets/animations/loading-screen.json',
+                    width: 50 * widget.fem, height: 50 * widget.hem));
           } else if (state is CampusLoaded) {
             campuses = state.campuses.toList();
             return _dropDownCampusLoaded();
@@ -68,22 +67,22 @@ class _DropDownCampusState extends State<DropDownCampus> {
   DropdownButtonFormField<String> _dropDownCampusLoaded() {
     return DropdownButtonFormField(
       validator: widget.validator,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: Colors.black,
-              fontSize: 17 * widget.ffem,
+              fontSize: 14 * widget.ffem,
               fontWeight: FontWeight.w700)),
       decoration: InputDecoration(
         labelText: widget.labelText,
         hintText: widget.hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelStyle: GoogleFonts.nunito(
+        labelStyle: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: kPrimaryColor,
               fontSize: 15 * widget.ffem,
               fontWeight: FontWeight.w900),
         ),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kLowTextColor,
                 fontSize: 17 * widget.ffem,

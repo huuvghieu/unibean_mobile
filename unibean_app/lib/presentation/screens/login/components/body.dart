@@ -38,7 +38,7 @@ class Body extends StatelessWidget {
             SizedBox(height: responsiveSize()),
             Text(
               'Chào mừng bạn đã quay trở lại!',
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,
                       fontWeight: FontWeight.w900,
@@ -51,7 +51,7 @@ class Body extends StatelessWidget {
             Text(
               'Đăng nhập và tận hưởng những ưu đãi\n yêu thích của bạn!',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                 fontSize: 15 * ffem,
                 fontWeight: FontWeight.w900,
@@ -73,7 +73,7 @@ class Body extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 20 * hem),
                   child: Text(
                     'Bạn chưa có tài khoản?',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 13 * ffem,
                             fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class Body extends StatelessWidget {
                     padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
                     child: Text(
                       'Đăng ký',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               fontSize: 13 * ffem,
                               fontWeight: FontWeight.w900,

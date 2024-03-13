@@ -81,7 +81,7 @@ class UnverifiedCard extends StatelessWidget {
                         hem: hem,
                         name: authenModel.userModel.email,
                       ),
-                   
+
                       //student code
                       Padding(
                         padding:
@@ -100,7 +100,7 @@ class UnverifiedCard extends StatelessWidget {
                             ),
                             Text(
                               '',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 13 * ffem,
                                       height: 1.3625 * ffem / fem,
@@ -125,7 +125,7 @@ class UnverifiedCard extends StatelessWidget {
                           ),
                           Text(
                             '',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
                                     fontSize: 13 * ffem,
                                     height: 1.3625 * ffem / fem,
@@ -180,7 +180,7 @@ class UnverifiedCard extends StatelessWidget {
                       ),
                       Text(
                         'Show QR',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 11 * fem,
                                 fontWeight: FontWeight.w600,

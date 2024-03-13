@@ -30,7 +30,7 @@ class Body6 extends StatelessWidget {
             Text(
               'Số điện thoại của bạn',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,
                       fontWeight: FontWeight.w900,
@@ -43,7 +43,7 @@ class Body6 extends StatelessWidget {
             Text(
               'Nhập số điện thoại của bạn,\n chúng tôi sẽ gửi đến bạn mã OTP để xác nhận',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,
                       fontWeight: FontWeight.w600,

@@ -3,13 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UniversityProfile extends StatelessWidget {
-  const UniversityProfile({
-    super.key,
-    required this.fem,
-    required this.hem,
-    required this.ffem,
-    required this.university
-  });
+  const UniversityProfile(
+      {super.key,
+      required this.fem,
+      required this.hem,
+      required this.ffem,
+      required this.university});
 
   final double fem;
   final double hem;
@@ -32,7 +31,7 @@ class UniversityProfile extends StatelessWidget {
         ),
         Text(
           university,
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   fontSize: 13 * ffem,
                   height: 1.3625 * ffem / fem,

@@ -9,3 +9,4 @@ export 'repositories/campaign_repository.dart';
 export 'repositories/brand_repository.dart';
 export 'repositories/voucher_repository.dart';
 export 'repositories/challenge_repository.dart';
+export 'repositories/product_repository.dart';

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 class Body extends StatelessWidget {
-  const Body({super.key});
+  const Body({super.key, required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,6 @@ class Body extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       height: 200 * hem,
-                      // height: MediaQuery.of(context).size.height,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.vertical(
                               bottom: Radius.elliptical(300, 100)),

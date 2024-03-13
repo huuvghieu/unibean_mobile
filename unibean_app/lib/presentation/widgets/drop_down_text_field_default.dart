@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
-
 class DropDownTextFieldDefault extends StatefulWidget {
   final double hem;
   final double fem;
@@ -38,7 +37,7 @@ class _DropDownTextFieldDefaultState extends State<DropDownTextFieldDefault> {
         height: 43 * widget.hem,
         width: 272 * widget.fem,
         child: DropdownButtonFormField(
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 17 * widget.ffem,
@@ -47,13 +46,13 @@ class _DropDownTextFieldDefaultState extends State<DropDownTextFieldDefault> {
             labelText: widget.labelText,
             hintText: widget.hintText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            labelStyle: GoogleFonts.nunito(
+            labelStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 15 * widget.ffem,
                   fontWeight: FontWeight.w900),
             ),
-            hintStyle: GoogleFonts.nunito(
+            hintStyle: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 17 * widget.ffem,

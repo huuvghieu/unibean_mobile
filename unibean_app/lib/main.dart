@@ -1,23 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
-import 'package:unibean_app/presentation/blocs/challenge/challenge_bloc.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
-import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';
 
 import 'presentation/blocs/blocs.dart';
+import 'presentation/cubits/validation/validation_cubit.dart';
 import 'presentation/screens/screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Future.delayed(const Duration(seconds: 2));
   //init Hive
   await Hive.initFlutter();
@@ -59,6 +60,8 @@ class MyApp extends StatelessWidget {
             create: (_) => VoucherRepositoryImp()),
         RepositoryProvider<ChallengeRepository>(
             create: (_) => ChallengeRepositoryImp()),
+        RepositoryProvider<ProductRepository>(
+            create: (_) => ProductRepositoryImp()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -109,6 +112,11 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 ChallengeBloc(challengeRepository: ChallengeRepositoryImp())
                   ..add(LoadChallenge()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                ProductBloc(productRepository: ProductRepositoryImp())
+                  ..add(LoadProducts()),
           ),
         ],
         child: MaterialApp(

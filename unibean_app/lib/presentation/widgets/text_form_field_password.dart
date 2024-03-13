@@ -3,17 +3,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 class TextFormFieldPassword extends StatefulWidget {
-  const TextFormFieldPassword(
-      {super.key,
-      required this.hem,
-      required this.fem,
-      required this.ffem,
-      required this.labelText,
-      required this.hintText,
-      required this.isPassword,
-      required this.validator,
-      required this.textController,
-      });
+  const TextFormFieldPassword({
+    super.key,
+    required this.hem,
+    required this.fem,
+    required this.ffem,
+    required this.labelText,
+    required this.hintText,
+    required this.isPassword,
+    required this.validator,
+    required this.textController,
+  });
 
   final double hem;
   final double fem;
@@ -45,7 +45,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
         obscureText: _isObscure,
         validator: widget.validator,
         controller: widget.textController,
-        style: GoogleFonts.nunito(
+        style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: 17 * widget.ffem,
@@ -66,13 +66,13 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
           labelText: widget.labelText,
           hintText: widget.hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: GoogleFonts.nunito(
+          labelStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 15 * widget.ffem,
                 fontWeight: FontWeight.w900),
           ),
-          hintStyle: GoogleFonts.nunito(
+          hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
                   fontSize: 17 * widget.ffem,
@@ -89,7 +89,6 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
               borderSide: BorderSide(
                   width: 2, color: const Color.fromARGB(255, 220, 220, 220)),
               gapPadding: 10),
-
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28 * widget.fem),
               borderSide: BorderSide(

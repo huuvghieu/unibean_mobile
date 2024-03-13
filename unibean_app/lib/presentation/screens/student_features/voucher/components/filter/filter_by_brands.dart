@@ -30,7 +30,7 @@ class FilterByBrands extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10 * hem),
                 child: Text(
                   'Thương hiệu',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                     fontSize: 16 * ffem,
                     color: kLowTextColor,
                     fontWeight: FontWeight.w600,
@@ -42,7 +42,7 @@ class FilterByBrands extends StatelessWidget {
                 padding: EdgeInsets.only(top: 20 * hem),
                 child: Text(
                   'Xóa tất cả',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                     fontSize: 10 * ffem,
                     color: kLowTextColor,
                     fontWeight: FontWeight.w600,
@@ -71,7 +71,7 @@ class FilterByBrands extends StatelessWidget {
                 child: Center(
                   child: Text(
                     item,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                       fontSize: 14 * ffem,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

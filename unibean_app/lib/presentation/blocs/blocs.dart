@@ -9,3 +9,5 @@ export 'brand/brand_bloc.dart';
 export 'voucher/voucher_bloc.dart';
 export 'challenge/challenge_bloc.dart';
 export 'student/student_bloc.dart';
+export 'campaign_voucher/campaign_voucher_bloc.dart';
+export 'product/product_bloc.dart';

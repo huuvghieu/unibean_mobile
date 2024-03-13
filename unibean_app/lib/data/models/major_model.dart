@@ -16,11 +16,11 @@ class MajorModel extends Major{
     return MajorModel(
       id: json['id'],
       majorName: json['majorName'],
-      image: json['image'],
-      fileName: json['fileName'],
+      image: json['image']?? '',
+      fileName: json['fileName']?? '',
       dateCreated: json['dateCreated'],
       dateUpdated: json['dateUpdated'],
-      description: json['description'],
+      description: json['description'] ?? '',
       state: json['state'],
       status: json['status'],
     );

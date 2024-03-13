@@ -46,7 +46,7 @@ class _FormBody1State extends State<FormBody1> {
           Text(
             'Chúng tôi sẽ kết nối với\n Gmail của bạn!',
             textAlign: TextAlign.center,
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     fontSize: 20 * widget.ffem,
                     fontWeight: FontWeight.w900,
@@ -58,7 +58,7 @@ class _FormBody1State extends State<FormBody1> {
           ),
           Text(
             'Hãy kiểm tra thông tin thật cẩn thận',
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     fontSize: 15 * widget.ffem,
                     fontWeight: FontWeight.w600,
@@ -113,7 +113,7 @@ class _FormBody1State extends State<FormBody1> {
                           padding: EdgeInsets.only(left: 48 * widget.fem),
                           child: Text(
                             state.error.toString(),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
                                     color: kErrorTextColor,
                                     fontSize: 12 * widget.ffem,

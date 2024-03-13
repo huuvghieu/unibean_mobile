@@ -122,7 +122,7 @@ class _FormBody2State extends State<FormBody2> {
                           child: Text(
                             'THẺ SINH VIÊN *',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: 11.5 * widget.ffem,
@@ -198,7 +198,7 @@ class _FormBody2State extends State<FormBody2> {
                           width: 270 * widget.fem,
                           child: Text(
                             errorCard.toString(),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 fontSize: 12 * widget.ffem,
                                 fontWeight: FontWeight.normal,
                                 height: 1.3625 * widget.ffem / widget.fem,
@@ -215,7 +215,7 @@ class _FormBody2State extends State<FormBody2> {
                     width: 270 * widget.fem,
                     child: Text(
                       'Hãy tải lên cả mặt trước và mặt sau của thẻ sinh viên, và đảm bảo rằng thông tin trên thẻ đầy đủ và rõ ràng.',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.openSans(
                         fontSize: 9 * widget.ffem,
                         fontWeight: FontWeight.w800,
                         height: 1.3625 * widget.ffem / widget.fem,
@@ -340,7 +340,7 @@ class _FormBody2State extends State<FormBody2> {
                       ),
                       Text(
                         'Chụp ảnh',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 20 * ffem,
                                 fontWeight: FontWeight.bold,
@@ -382,7 +382,7 @@ class _FormBody2State extends State<FormBody2> {
                       ),
                       Text(
                         'Chọn sẵn có',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 fontSize: 20 * ffem,
                                 fontWeight: FontWeight.bold,

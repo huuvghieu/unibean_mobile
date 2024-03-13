@@ -80,7 +80,7 @@ class _FormBody6State extends State<FormBody6> {
                                 // hintText: hintText,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
-                                labelStyle: GoogleFonts.nunito(
+                                labelStyle: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       color: kPrimaryColor,
                                       fontSize: 15 * widget.ffem,
@@ -122,7 +122,7 @@ class _FormBody6State extends State<FormBody6> {
                                     child: TextField(
                                       readOnly: true,
                                       controller: countryController,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.openSans(
                                           textStyle: TextStyle(
                                               color: Colors.black,
                                               fontSize: 17 * widget.ffem,
@@ -170,7 +170,7 @@ class _FormBody6State extends State<FormBody6> {
                               padding: EdgeInsets.only(left: 48 * widget.fem),
                               child: Text(
                                 state.error.toString(),
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         color: kErrorTextColor,
                                         fontSize: 12 * widget.ffem,
@@ -197,7 +197,7 @@ class _FormBody6State extends State<FormBody6> {
                           width: 270 * widget.fem,
                           child: Text(
                             errorString.toString(),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 fontSize: 12 * widget.ffem,
                                 fontWeight: FontWeight.normal,
                                 height: 1.3625 * widget.ffem / widget.fem,

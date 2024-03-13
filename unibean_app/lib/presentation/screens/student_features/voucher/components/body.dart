@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 // import 'package:unibean_app/presentation/screens/student_features/campaign/components/brand_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/voucher/components/voucher_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/voucher/components/voucher_list_card.dart';
+import 'package:unibean_app/presentation/widgets/voucher_list_card.dart';
 import 'package:unibean_app/presentation/screens/student_features/voucher/search_bar_custom.dart';
 
 import '../../../../config/constants.dart';
@@ -77,7 +77,7 @@ class Body extends StatelessWidget {
                           child: Text(
                             'Xin chào, ${studentName}!',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
                                     color: Colors.black,
                                     fontSize: 21 * ffem,
@@ -88,7 +88,7 @@ class Body extends StatelessWidget {
                       Center(
                         child: Text(
                           'Tham gia các hoạt động để tích lũy ưu đãi',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12 * ffem,
@@ -109,7 +109,7 @@ class Body extends StatelessWidget {
                   height: 5 * hem,
                 ),
 
-              //Các thwung hiệu
+                //Các thwung hiệu
                 Container(
                   color: kbgWhiteColor,
                   padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
@@ -124,27 +124,27 @@ class Body extends StatelessWidget {
                               padding: EdgeInsets.only(top: 5 * hem),
                               child: Text(
                                 'THƯƠNG HIỆU',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
-                                  fontSize: 18 * ffem,
+                                  fontSize: 15 * ffem,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w800,
                                 )),
                               ),
                             ),
                             InkWell(
-                              onTap: () {
-                              },
+                              onTap: () {},
                               child: Container(
-                                height: 22 * hem,
-                                width: 22 * fem,
-                                margin: EdgeInsets.only(left: 8 * fem),
+                                height: 20 * hem,
+                                width: 20 * fem,
+                                margin: EdgeInsets.only(
+                                    left: 8 * fem, top: 2 * hem),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(80)),
                                 child: Icon(
                                   Icons.arrow_forward_rounded,
-                                  size: 18 * fem,
+                                  size: 16 * fem,
                                   color: kDarkPrimaryColor,
                                 ),
                               ),
@@ -190,38 +190,37 @@ class Body extends StatelessWidget {
                 //GỢi ý cho bạn
                 Container(
                   color: kbgWhiteColor,
-                  padding: EdgeInsets.only(top: 20*hem, bottom: 20*fem),
+                  padding: EdgeInsets.only(top: 20 * hem, bottom: 20 * fem),
                   child: Column(
                     children: [
-
                       Container(
                         margin: EdgeInsets.only(left: 10 * fem),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               'GỢI Ý CHO BẠN',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
-                                fontSize: 18 * ffem,
+                                fontSize: 15 * ffem,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
                             InkWell(
-                              onTap: () {
-                              
-                              },
+                              onTap: () {},
                               child: Container(
-                                height: 22 * hem,
-                                width: 22 * fem,
-                                margin: EdgeInsets.only(left: 8 * fem),
+                                height: 20 * hem,
+                                width: 20 * fem,
+                                margin: EdgeInsets.only(
+                                    left: 8 * fem, top: 2 * hem),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(80)),
                                 child: Icon(
                                   Icons.arrow_forward_rounded,
-                                  size: 18 * fem,
+                                  size: 16 * fem,
                                   color: kDarkPrimaryColor,
                                 ),
                               ),
@@ -236,7 +235,7 @@ class Body extends StatelessWidget {
                         builder: (context, state) {
                           if (state is VouchersLoaded) {
                             return SizedBox(
-                                height: 275 * hem,
+                                height: 255 * hem,
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
@@ -271,7 +270,7 @@ class Body extends StatelessWidget {
 
                 //Ưu đãi tốt
                 Container(
-                  padding: EdgeInsets.only(top: 15*hem, bottom: 15*hem),
+                  padding: EdgeInsets.only(top: 15 * hem, bottom: 15 * hem),
                   color: kbgWhiteColor,
                   child: Column(
                     children: [
@@ -282,14 +281,13 @@ class Body extends StatelessWidget {
                           children: [
                             Text(
                               'ƯU ĐÃI TỐT',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
-                                fontSize: 18 * ffem,
+                                fontSize: 15 * ffem,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w800,
                               )),
                             ),
-                            
                           ],
                         ),
                       ),

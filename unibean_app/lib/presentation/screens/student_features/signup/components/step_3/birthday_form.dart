@@ -36,7 +36,7 @@ class _BirthdayFormState extends State<BirthdayForm> {
       width: 272 * widget.fem,
       child: TextFormField(
         validator: widget.validator,
-        style: GoogleFonts.nunito(
+        style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: 17 * widget.ffem,
@@ -47,13 +47,13 @@ class _BirthdayFormState extends State<BirthdayForm> {
           labelText: 'NGÀY SINH *',
           hintText: 'Chọn ngày sinh...',
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: GoogleFonts.nunito(
+          labelStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 15 * widget.ffem,
                 fontWeight: FontWeight.w900),
           ),
-          hintStyle: GoogleFonts.nunito(
+          hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
                   fontSize: 17 * widget.ffem,

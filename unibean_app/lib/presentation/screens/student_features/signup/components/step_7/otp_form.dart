@@ -84,7 +84,7 @@ class _OTPFormState extends State<OTPForm> {
                           width: 270 * widget.fem,
                           child: Text(
                             errorString.toString(),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.openSans(
                                 fontSize: 12 * widget.ffem,
                                 fontWeight: FontWeight.normal,
                                 height: 1.3625 * widget.ffem / widget.fem,
@@ -143,10 +143,10 @@ class _OTPFormState extends State<OTPForm> {
                           context.read<AuthenticationBloc>().add(
                               RegisterAccount(
                                   createAuthenModel: createAuthenModel!));
-                          // Navigator.pushNamedAndRemoveUntil(
-                          //     context,
-                          //     SignUp8Screen.routeName,
-                          //     (Route<dynamic> route) => false);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              SignUp8Screen.routeName,
+                              (Route<dynamic> route) => false);
                         } else {}
                       });
                     }
@@ -162,7 +162,7 @@ class _OTPFormState extends State<OTPForm> {
                 padding: EdgeInsets.only(bottom: 20 * widget.hem),
                 child: Text(
                   'Bạn không nhận được mã xác nhận?',
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                           fontSize: 13 * widget.ffem,
                           fontWeight: FontWeight.bold,
@@ -200,7 +200,7 @@ class _OTPFormState extends State<OTPForm> {
                       left: 2 * widget.fem, bottom: 20 * widget.hem),
                   child: Text(
                     'Gửi lại mã',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 13 * widget.ffem,
                             fontWeight: FontWeight.w900,

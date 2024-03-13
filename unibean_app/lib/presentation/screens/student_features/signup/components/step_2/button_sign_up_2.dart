@@ -3,13 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 class ButtonSignUp2 extends StatelessWidget {
-  const ButtonSignUp2({
-    super.key,
-    required this.fem,
-    required this.hem,
-    required this.ffem,
-    required this.onPressed
-  });
+  const ButtonSignUp2(
+      {super.key,
+      required this.fem,
+      required this.hem,
+      required this.ffem,
+      required this.onPressed});
 
   final double fem;
   final double hem;
@@ -32,7 +31,7 @@ class ButtonSignUp2 extends StatelessWidget {
         child: Center(
           child: Text(
             'Tiếp tục',
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     fontSize: 17 * ffem,
                     fontWeight: FontWeight.w600,

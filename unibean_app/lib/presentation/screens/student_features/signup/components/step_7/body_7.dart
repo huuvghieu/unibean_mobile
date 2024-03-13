@@ -21,7 +21,7 @@ class Body7 extends StatelessWidget {
     final defaultPinTheme = PinTheme(
         width: 50 * fem,
         height: 60 * hem,
-        textStyle: GoogleFonts.nunito(
+        textStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 fontSize: 22 * ffem,
                 fontWeight: FontWeight.w900,
@@ -47,7 +47,7 @@ class Body7 extends StatelessWidget {
             Text(
               'Nhập mã xác nhận',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,
                       fontWeight: FontWeight.w900,
@@ -60,7 +60,7 @@ class Body7 extends StatelessWidget {
             Text(
               'Nhập mã số xác nhận đã được gửi đến\n số điện thoại +84$phoneNumber',
               textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
+              style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,
                       fontWeight: FontWeight.w600,

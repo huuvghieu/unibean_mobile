@@ -42,41 +42,33 @@ class BrandListScreen extends StatelessWidget {
                     image: AssetImage('assets/images/background_splash.png'),
                     fit: BoxFit.cover)),
           ),
-          toolbarHeight: 130 * hem,
-          leading: Container(
-            margin: EdgeInsets.only(left: 20 * fem),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 50 * hem,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                    size: 35 * fem,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10 * fem),
-                  child: Text(
-                    'THƯƠNG HIỆU',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            fontSize: 20 * ffem,
-                            fontWeight: FontWeight.w900,
-                            height: 1.3625 * ffem / fem,
-                            color: Colors.white)),
-                  ),
-                ),
-              ],
+          centerTitle: true,
+          title: Container(
+            child: Text(
+              'Thương hiệu',
+              style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: 20 * ffem,
+                      fontWeight: FontWeight.w900,
+                      height: 1.3625 * ffem / fem,
+                      color: Colors.white)),
             ),
           ),
-          leadingWidth: 230 * fem,
+          toolbarHeight: 80 * hem,
+          leading: Container(
+            margin: EdgeInsets.only(left: 20 * fem),
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+                size: 35 * fem,
+              ),
+            ),
+          ),
+          leadingWidth: 60 * fem,
           actions: [
             InkWell(
               onTap: () {

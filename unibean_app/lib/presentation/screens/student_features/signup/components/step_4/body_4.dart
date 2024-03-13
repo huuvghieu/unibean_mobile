@@ -45,7 +45,7 @@ class Body4 extends StatelessWidget {
                   Text(
                     'Các thông tin ở trường của bạn',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 20 * ffem,
                             fontWeight: FontWeight.w900,
@@ -58,7 +58,7 @@ class Body4 extends StatelessWidget {
                   Text(
                     'Để giúp việc xác thực thành công,\n mong bạn hãy cung cấp thông tin chính xác.',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             fontSize: 15 * ffem,
                             fontWeight: FontWeight.w600,
@@ -78,4 +78,3 @@ class Body4 extends StatelessWidget {
     );
   }
 }
-
