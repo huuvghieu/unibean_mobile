@@ -24,25 +24,25 @@ class ChallengeModel extends Challenge {
 
   factory ChallengeModel.fromJson(Map<String, dynamic> json) {
     return ChallengeModel(
-       id : json['id'],
-    challengeId : json['challengeId'],
-    challengeTypeId : json['challengeTypeId'],
-    challengeType : json['challengeType'],
-    challengeTypeName : json['challengeTypeName'],
-    challengeName : json['challengeName'],
-    challengeImage : json['challengeImage'],
-    studentId : json['studentId'],
-    studentName : json['studentName'],
-    amount : json['amount'],
-    current : json['current'],
-    condition : json['condition'],
-    isCompleted : json['isCompleted'],
-    isClaimed : json['isClaimed'],
-    dateCreated : json['dateCreated'],
-    dateUpdated : json['dateUpdated'],
-    description : json['description'],
-    state : json['state'],
-    status : json['status'],
+      id: json['id'],
+      challengeId: json['challengeId'],
+      challengeTypeId: json['challengeTypeId'],
+      challengeType: json['challengeType'],
+      challengeTypeName: json['challengeTypeName'],
+      challengeName: json['challengeName'],
+      challengeImage: json['challengeImage'],
+      studentId: json['studentId'],
+      studentName: json['studentName'],
+      amount: json['amount'],
+      current: json['current'],
+      condition: json['condition'],
+      isCompleted: json['isCompleted'],
+      isClaimed: json['isClaimed'],
+      dateCreated: json['dateCreated'],
+      dateUpdated: json['dateUpdated'],
+      description: json['description'],
+      state: json['state'],
+      status: json['status'],
     );
   }
 
@@ -68,5 +68,48 @@ class ChallengeModel extends Challenge {
     data['state'] = this.state;
     data['status'] = this.status;
     return data;
+  }
+
+  ChallengeModel copyWith({
+    String? id,
+    String? challengeId,
+    String? challengeTypeId,
+    String? challengeType,
+    String? challengeTypeName,
+    String? challengeName,
+    String? challengeImage,
+    String? studentId,
+    String? studentName,
+    double? amount,
+    double? current,
+    double? condition,
+    bool? isCompleted,
+    bool? isClaimed,
+    String? dateCreated,
+    String? dateUpdated,
+    String? description,
+    bool? state,
+    bool? status,
+  }) {
+    return ChallengeModel(
+        id: id ?? this.id,
+        challengeId: challengeId ?? this.challengeId,
+        challengeTypeId: challengeTypeId ?? this.challengeTypeId,
+        challengeType: challengeType ?? this.challengeType,
+        challengeTypeName: challengeTypeName ?? this.challengeTypeName,
+        challengeName: challengeName ?? this.challengeName,
+        challengeImage: challengeImage ?? this.challengeImage,
+        studentId: studentId ?? this.studentId,
+        studentName: studentName ?? this.studentName,
+        amount: amount ?? this.amount,
+        current: current ?? this.current,
+        condition: condition ?? this.condition,
+        isCompleted: isCompleted ?? this.isCompleted,
+        isClaimed: isClaimed ?? this.isClaimed,
+        dateCreated: dateCreated ?? this.dateCreated,
+        dateUpdated: dateUpdated ?? this.dateUpdated,
+        description: description ?? this.description,
+        state: state ?? this.state,
+        status: status ?? this.status);
   }
 }

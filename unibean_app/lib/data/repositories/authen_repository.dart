@@ -8,6 +8,8 @@ import '../../presentation/config/constants.dart';
 import '../datasource/authen_local_datasource.dart';
 import 'package:http/http.dart' as http;
 
+import '../models.dart';
+
 class AuthenticationRepositoryImp implements AuthenticationRepository {
   String endPoint = '${baseURL}auths/mobile';
   late AuthenModel authenModel;
@@ -41,23 +43,49 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
   @override
   Future<AuthenModel?> loginWithGmail(String idToken) async {
     try {
-      final Map<String, String> headers = {'Content-Type': 'application/json'};
+      // final Map<String, String> headers = {
+      //   'Content-Type': 'application/json',
+      //   'Location': '${endPoint}/register/google'
+      // };
+      // http.Response response = await http.post(
+      //   Uri.parse('$endPoint/login/google'),
+      //   headers: headers,
+      //   body: jsonEncode(body),
+      // )..f;
 
       Map<String, String> body = {'idToken': idToken};
+      http.Request req =
+          http.Request('Post', Uri.parse('$endPoint/login/google'))
+            ..followRedirects = false;
+      req.headers['Content-Type'] = 'application/json';
+      req.body = jsonEncode(body);
+      final streamedResponse = await http.Client().send(req);
+      final response = await http.Response.fromStream(streamedResponse);
 
-      http.Response response = await http.post(
-          Uri.parse('$endPoint/login/google'),
-          headers: headers,
-          body: jsonEncode(body));
-
-      if (response.statusCode == 200 || response.statusCode == 303) {
+      if (response.statusCode == 303) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
-        this.authenModel = AuthenModel.fromJson(result);
-        String authenString = jsonEncode(AuthenModel.fromJson(result));
+        UserModel userModel = UserModel.fromJson(result);
+        this.authenModel =
+            AuthenModel(jwt: '', userModel: userModel, role: 'Student');
+        String authenString = jsonEncode(this.authenModel);
         AuthenLocalDataSource.saveAuthen(authenString);
-        AuthenLocalDataSource.saveToken(authenModel.jwt);
         return this.authenModel;
       }
+
+      // if (response.statusCode == 200) {
+      //   final result = jsonDecode(utf8.decode(response.bodyBytes));
+      //   this.authenModel = AuthenModel.fromJson(result);
+      //   String authenString = jsonEncode(AuthenModel.fromJson(result));
+      //   AuthenLocalDataSource.saveAuthen(authenString);
+      //   AuthenLocalDataSource.saveToken(authenModel.jwt);
+      //   return this.authenModel;
+      // } else if (response.statusCode == 303) {
+      // final result = jsonDecode(utf8.decode(response.bodyBytes));
+      // this.authenModel = AuthenModel.fromJson(result);
+      // String authenString = jsonEncode(AuthenModel.fromJson(result));
+      // AuthenLocalDataSource.saveAuthen(authenString);
+      // return this.authenModel;
+      // }
       return null;
     } catch (e) {
       print(e);

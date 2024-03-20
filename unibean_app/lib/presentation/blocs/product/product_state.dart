@@ -31,3 +31,17 @@ final class ProductFailed extends ProductState {
   @override
   List<Object?> get props => [error];
 }
+
+final class ProductByIdLoading extends ProductState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductByIdLoaded extends ProductState {
+  final ProductDetailModel productDetail;
+
+  ProductByIdLoaded({required this.productDetail});
+
+  @override
+  List<Object?> get props => [productDetail];
+}

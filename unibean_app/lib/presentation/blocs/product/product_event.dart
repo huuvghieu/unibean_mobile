@@ -13,3 +13,12 @@ final class LoadProducts extends ProductEvent {
   @override
   List<Object?> get props => [page, limit];
 }
+
+final class LoadProductById extends ProductEvent {
+  final String productId;
+
+  LoadProductById({required this.productId});
+
+  @override
+  List<Object?> get props => [productId];
+}

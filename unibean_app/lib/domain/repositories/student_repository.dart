@@ -11,4 +11,13 @@ abstract class StudentRepository {
   Future<ApiResponse<List<TransactionModel>>?> fetchTransactionsStudentId(
       int? page, int? limit,
       {required String id});
+
+  Future<ApiResponse<List<OrderModel>>?> fetchOrdersStudentId(
+      int? page, int? limit,
+      {required String id});
+
+  Future<bool?> postChallengeStudentId({
+    required String studentId,
+    required String challengeId,
+  });
 }

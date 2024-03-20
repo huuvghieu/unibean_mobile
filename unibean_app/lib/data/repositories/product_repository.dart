@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models/api_response.dart';
+import 'package:unibean_app/data/models/product_detail_model.dart';
 import 'package:unibean_app/data/models/product_model.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:http/http.dart' as http;
@@ -31,8 +32,7 @@ class ProductRepositoryImp extends ProductRepository {
       }
 
       http.Response response = await http.get(
-          Uri.parse(
-              '$endPoint?sort=$sort&page=$page&limit=$limit'),
+          Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {
@@ -42,6 +42,30 @@ class ProductRepositoryImp extends ProductRepository {
                 (data) => data.map((e) => ProductModel.fromJson(e)).toList());
         print(apiResponse.result);
         return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<ProductDetailModel?> fecthProductById(
+      {required String productId}) async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response =
+          await http.get(Uri.parse('$endPoint/$productId'), headers: headers);
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        final productDetail = ProductDetailModel.fromJson(result);
+        return productDetail;
       } else {
         return null;
       }

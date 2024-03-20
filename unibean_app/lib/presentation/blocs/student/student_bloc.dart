@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/domain/repositories.dart';
-
 part 'student_event.dart';
 part 'student_state.dart';
 
@@ -11,6 +10,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
   StudentBloc({required this.studentRepository}) : super(StudentInitial()) {
     on<LoadStudentVouchers>(_onLoadStudentVoucher);
     on<LoadStudentTransactions>(_onLoadStudentTransaction);
+    on<LoadStudentOrders>(_onLoadStudentOrder);
   }
 
   Future<void> _onLoadStudentVoucher(
@@ -36,4 +36,18 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       emit(StudentFaled(error: e.toString()));
     }
   }
+
+  Future<void> _onLoadStudentOrder(
+      LoadStudentOrders event, Emitter<StudentState> emit) async {
+    emit(StudentOrderLoading());
+    try {
+      var apiResponse = await studentRepository
+          .fetchOrdersStudentId(event.page, event.limit, id: event.id);
+      emit(StudentOrdersLoaded(orderModels: apiResponse!.result));
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+
 }

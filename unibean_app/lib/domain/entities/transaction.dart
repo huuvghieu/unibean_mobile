@@ -5,7 +5,7 @@ class Transaction extends Equatable {
   final String name;
   final String requestId;
   final String walletId;
-  final String walletTypeId;
+  final int walletTypeId;
   final String walletType;
   final String walletTypeName;
   final String typeName;

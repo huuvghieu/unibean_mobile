@@ -119,7 +119,10 @@ class Body extends StatelessWidget {
                           color: Colors.white,
                           width: double.infinity,
                           padding: EdgeInsets.only(
-                              left: 15 * fem, top: 15 * hem, bottom: 15 * hem),
+                              left: 15 * fem,
+                              top: 15 * hem,
+                              bottom: 15 * hem,
+                              right: 15 * fem),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -134,7 +137,7 @@ class Body extends StatelessWidget {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: 2 * hem, left: 5 * fem),
+                                    top: 2 * hem),
                                 child: Text(
                                   'Ưu đãi: ${state.campaignVoucherDetail.voucherName}',
                                   textAlign: TextAlign.justify,
@@ -150,7 +153,7 @@ class Body extends StatelessWidget {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: 0 * hem, left: 5 * fem),
+                                    top: 0 * hem),
                                 child: Text(
                                   'Đã bán: ${state.campaignVoucherDetail.quantityInBought}',
                                   textAlign: TextAlign.justify,
@@ -166,9 +169,9 @@ class Body extends StatelessWidget {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: 0 * hem, left: 5 * fem),
+                                    top: 0 * hem),
                                 child: Text(
-                                  'Còn: ${state.campaignVoucherDetail.quantityInStock}',
+                                  'Còn lại: ${state.campaignVoucherDetail.quantityInStock}',
                                   textAlign: TextAlign.justify,
                                   softWrap: true,
                                   style: GoogleFonts.openSans(
@@ -194,7 +197,7 @@ class Body extends StatelessWidget {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: 2 * hem, left: 5 * fem),
+                                    top: 2 * hem),
                                 child: Text(
                                   campaignVoucherDetail.voucherCondition,
                                   softWrap: true,
@@ -221,7 +224,7 @@ class Body extends StatelessWidget {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: 5 * hem, left: 5 * fem),
+                                    top: 5 * hem),
                                 child: Text(
                                   campaignVoucherDetail.description,
                                   textAlign: TextAlign.justify,

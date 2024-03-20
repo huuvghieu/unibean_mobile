@@ -216,7 +216,7 @@ Widget _buildAmount(
 }
 
 String _formatDatetime(String date) {
-  DateTime dateTime = DateTime.parse(date);
+  DateTime dateTime = DateTime.parse(date).add(Duration(hours: 7));
 
   String formattedDatetime = DateFormat("HH:mm - dd/MM/yyyy").format(dateTime);
   return formattedDatetime;

@@ -45,104 +45,116 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
               items: camps.map((campaign) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return Container(
-                      width: 300,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0, 5),
-                                blurRadius: 5)
-                          ]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                            child: Container(
-                              width: 300,
-                              height: 160,
-                              child: Image.network(
-                                campaign.image,
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    'assets/images/image-404.jpg',
-                                  );
-                                },
+                    return GestureDetector(
+                      onTap: () {
+                        if (widget.roleState is Unknown) {
+                          Navigator.pushNamed(context, LoginScreen.routeName);
+                        } else {
+                          Navigator.pushNamed(
+                              context, CampaignDetailScreen.routeName,
+                              arguments: campaign.id);
+                        }
+                      },
+                      child: Container(
+                        width: 300,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0x0c000000),
+                                  offset: Offset(0, 5),
+                                  blurRadius: 5)
+                            ]),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                              child: Container(
+                                width: 300,
+                                height: 160,
+                                child: Image.network(
+                                  campaign.image,
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/image-404.jpg',
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: 200,
-                                margin: EdgeInsets.only(right: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      campaign.campaignName,
-                                      overflow: TextOverflow.ellipsis,
-                                      softWrap: true,
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                    ),
-                                    Text(
-                                      campaign.description,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.normal,
-                                      )),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 70,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: kPrimaryColor,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: TextButton(
-                                  onPressed: () {
-                                    if (widget.roleState is RoleAppUnknown) {
-                                      Navigator.pushNamed(
-                                          context, LoginScreen.routeName);
-                                    } else {
-                                      Navigator.pushNamed(context,
-                                          CampaignDetailScreen.routeName,
-                                          arguments: campaign.id);
-                                    }
-                                  },
-                                  child: Text(
-                                    'Xem ngay',
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white)),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: 200,
+                                  margin: EdgeInsets.only(right: 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        campaign.campaignName,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                      ),
+                                      Text(
+                                        campaign.description,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        )),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ],
+                                Container(
+                                  width: 70,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                      color: kPrimaryColor,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (widget.roleState is Unknown) {
+                                        Navigator.pushNamed(
+                                            context, LoginScreen.routeName);
+                                      } else {
+                                        Navigator.pushNamed(context,
+                                            CampaignDetailScreen.routeName,
+                                            arguments: campaign.id);
+                                      }
+                                    },
+                                    child: Text(
+                                      'Xem ngay',
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white)),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

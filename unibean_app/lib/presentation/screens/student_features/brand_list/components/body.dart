@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
+import '../../../../widgets/shimmer_widget.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -19,43 +21,46 @@ class Body extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     // double heightText = 1.3625 * ffem / fem;
-    return BlocBuilder<BrandBloc, BrandState>(
-      builder: (context, state) {
-        if (state is BrandLoading) {
+    return BlocProvider(
+      create: (context) =>
+          BrandBloc(brandRepository: context.read<BrandRepository>())
+            ..add(LoadBrands()),
+      child: BlocBuilder<BrandBloc, BrandState>(
+        builder: (context, state) {
+          if (state is BrandLoading) {
+            return buildBrandListShimmer(hem, fem, context);
+          } else if (state is BrandsLoaded) {
+            return GridView.builder(
+              controller: context.read<BrandBloc>().scrollController,
+              padding: EdgeInsets.symmetric(
+                  horizontal: 8.0 * fem, vertical: 16.0 * hem),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 1.15),
+              shrinkWrap: true,
+              itemCount: state.hasReachedMax
+                  ? state.brands.length
+                  : state.brands.length + 1,
+              itemBuilder: (context, index) {
+                if (index >= state.brands.length) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ),
+                  );
+                }
+                return BrandCard(
+                    hem: hem,
+                    fem: fem,
+                    brandModel: state.brands[index],
+                    ffem: ffem);
+              },
+            );
+          }
           return Center(
             child: Lottie.asset('assets/animations/loading-screen.json'),
           );
-        } else if (state is BrandsLoaded) {
-          return GridView.builder(
-            controller: context.read<BrandBloc>().scrollController,
-            padding: EdgeInsets.symmetric(
-                horizontal: 8.0 * fem, vertical: 16.0 * hem),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 1.15),
-            shrinkWrap: true,
-            itemCount: state.hasReachedMax
-                ? state.brands.length
-                : state.brands.length + 1,
-            itemBuilder: (context, index) {
-              if (index >= state.brands.length) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: kPrimaryColor,
-                  ),
-                );
-              }
-              return BrandCard(
-                  hem: hem,
-                  fem: fem,
-                  brandModel: state.brands[index],
-                  ffem: ffem);
-            },
-          );
-        }
-        return Center(
-          child: Lottie.asset('assets/animations/loading-screen.json'),
-        );
-      },
+        },
+      ),
     );
   }
 }
@@ -148,4 +153,49 @@ class BrandCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildBrandListShimmer(double fem, double hem, context) {
+  return SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 20 * hem,
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 20,
+          child: ListView.builder(
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 10 * fem, bottom: 10 * hem),
+                child: Row(
+                  children: [
+                    Container(
+                      child: ShimmerWidget.rectangular(
+                        height: 150 * hem,
+                        width: 170 * fem,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10 * fem,
+                    ),
+                    Container(
+                      child: ShimmerWidget.rectangular(
+                        height: 150 * hem,
+                        width: 170 * fem,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        )
+      ],
+    ),
+  );
 }

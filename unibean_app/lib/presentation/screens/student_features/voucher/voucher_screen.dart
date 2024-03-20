@@ -33,9 +33,9 @@ class VoucherScreen extends StatelessWidget {
   }
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
-    if (roleState is RoleAppUnknown) {
+    if (roleState is Unknown) {
       return _buildUnKnown(fem, hem, ffem);
-    } else if (roleState is RoleAppStudentVerified) {
+    } else if (roleState is Verified) {
       return _buildVerifiedStudent(fem, hem, ffem);
     }
     return _buildVerifiedStudent(fem, hem, ffem);

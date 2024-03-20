@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
@@ -73,7 +74,7 @@ class VoucherListScreen extends StatelessWidget {
           ),
           leadingWidth: 60 * fem,
           actions: [
-            InkWell(
+            GestureDetector(
               onTap: () {
                 // _filterModalBottomSheet(context);
               },

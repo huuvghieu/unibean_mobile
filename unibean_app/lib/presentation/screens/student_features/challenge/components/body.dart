@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/screens/student_features/challenge/components/is_claimed/is_claimed_challenge.dart';
-
 import 'in_process/in_process_challenge.dart';
+import 'is_claimed/is_claimed_challenge.dart';
 import 'is_completed/is_completed_challenge.dart';
 
 class Body extends StatelessWidget {
@@ -25,7 +25,8 @@ class Body extends StatelessWidget {
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/images/background_splash.png'),
+                      image:
+                          AssetImage('assets/images/background_splash.png'),
                       fit: BoxFit.cover)),
             ),
             toolbarHeight: 70 * hem,
@@ -56,7 +57,7 @@ class Body extends StatelessWidget {
             ],
             bottom: TabBar(
               // controller: tabController,
-
+    
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 3,
@@ -89,10 +90,10 @@ class Body extends StatelessWidget {
         children: [
           //In process Challenge
           InProcessChallenge(),
-
+    
           //complete Challenge
           IsCompletedChallenge(),
-
+    
           //completed Challenge
           IsClaimedChallenge()
         ],

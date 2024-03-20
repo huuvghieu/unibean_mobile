@@ -17,13 +17,9 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
   void initState() {
     super.initState();
     _suggestions = [
-      'Acer',
-      'Android',
-      'Apple',
-      'Bàn phím',
-      'Logitech',
-      'Razer',
-      'SmartTech'
+      'HighLands Coffee',
+      'Passio',
+      'Koi Thé',
     ];
   }
 

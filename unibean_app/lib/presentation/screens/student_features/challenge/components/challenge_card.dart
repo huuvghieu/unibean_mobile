@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 
 import '../../../../../data/models.dart';
+import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import 'in_process/in_process_button.dart';
 import 'is_claimed/is_claimed_button.dart';
@@ -173,8 +176,7 @@ class ChallengeCard extends StatelessWidget {
                   SizedBox(
                     width: 190 * fem,
                   ),
-                  _checkCondition(challengeModel.isCompleted,
-                      challengeModel.isClaimed, fem, hem)
+                  _checkCondition(challengeModel, fem, hem, context)
                 ],
               )
             ],
@@ -185,11 +187,20 @@ class ChallengeCard extends StatelessWidget {
   }
 }
 
-Widget _checkCondition(bool isComplete, bool isClaim, fem, hem) {
-  if (isComplete && isClaim) {
+Widget _checkCondition(
+    ChallengeModel challenge, fem, hem, BuildContext context) {
+  if (challenge.isCompleted && challenge.isClaimed) {
     return IsClaimedButton(fem: fem, hem: hem);
-  } else if (isComplete && isClaim == false) {
-    return IsCompletedButton(fem: fem, hem: hem);
+  } else if (challenge.isCompleted && challenge.isClaimed == false) {
+    return IsCompletedButton(
+      fem: fem,
+      hem: hem,
+      onPressed: () async {
+        final studentId = await AuthenLocalDataSource.getStudentId();
+        context.read<ChallengeBloc>().add(ClaimChallengeStudentId(
+            studentId: studentId!, challengeId: challenge.challengeId));
+      },
+    );
   }
   return InProcessButton(fem: fem, hem: hem);
 }

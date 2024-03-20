@@ -3,17 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:unibean_app/presentation/blocs/blocs.dart';
-import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_carousel.dart';
-import 'package:unibean_app/presentation/widgets/brand_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign/components/campaign_list_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign/components/membership_card.dart';
-import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
-import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
+import 'package:unibean_app/domain/repositories.dart';
 
+import '../../../../blocs/blocs.dart';
+import '../../../../config/constants.dart';
+import '../../../../widgets/brand_card.dart';
+import '../../../../widgets/card_for_unknow.dart';
+import '../../../../widgets/card_for_unverified.dart';
 import '../../../screens.dart';
+import 'campaign_card.dart';
+import 'campaign_carousel.dart';
+import 'campaign_list_card.dart';
+import 'membership_card.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -27,13 +28,19 @@ class Body extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
     double heightText = 1.3625 * ffem / fem;
 
-    final roleState = context.read<RoleAppBloc>().state;
+    final roleState = context.watch<RoleAppBloc>().state;
 
     var roleWidget = (switch (roleState) {
-      RoleAppUnknown() => CardForUnknow(fem: fem, hem: hem, ffem: ffem),
-      RoleAppStudentUnverified() =>
+      Unknown() => CardForUnknow(fem: fem, hem: hem, ffem: ffem),
+
+      Unverified() =>
         CardForUnVerified(fem: fem, hem: hem, ffem: ffem),
-      RoleAppStudentVerified(
+      
+      Pending(authenModel: final authenModel, studentModel: final studentModel) => Container(),
+
+      Rejected() => Container(),
+
+      Verified(
         // ignore: unused_local_variable
         authenModel: final authenModel,
         studentModel: final studentModel
@@ -44,7 +51,7 @@ class Body extends StatelessWidget {
             ffem: ffem,
             heightText: heightText,
             studentModel: studentModel),
-      RoleAppStore() => Container(),
+      StoreRole() => Container(),
       RoleAppLoading() => Container(
           child: Center(
               child: Lottie.asset('assets/animations/loading-screen.json',
@@ -145,7 +152,7 @@ class Body extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  if (roleState is RoleAppUnknown) {
+                                  if (roleState is Unknown) {
                                     Navigator.pushNamed(
                                         context, LoginScreen.routeName);
                                   } else {
@@ -189,7 +196,7 @@ class Body extends StatelessWidget {
                                         ffem: ffem,
                                         campaignModel: state.campaigns[index],
                                         onTap: () {
-                                          if (roleState is RoleAppUnknown) {
+                                          if (roleState is Unknown) {
                                             Navigator.pushNamed(
                                                 context, LoginScreen.routeName);
                                           } else {
@@ -246,7 +253,7 @@ class Body extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  if (roleState is RoleAppUnknown) {
+                                  if (roleState is Unknown) {
                                     Navigator.pushNamed(
                                         context, LoginScreen.routeName);
                                   } else {
@@ -274,31 +281,96 @@ class Body extends StatelessWidget {
                         SizedBox(
                           height: 12 * hem,
                         ),
-                        BlocBuilder<BrandBloc, BrandState>(
-                            builder: (context, state) {
-                          if (state is BrandsLoaded) {
-                            return SizedBox(
-                                height: 120 * hem,
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return BrandCard(
-                                        fem: fem,
-                                        hem: hem,
-                                        ffem: ffem,
-                                        brandModel: state.brands[index]);
-                                  },
-                                ));
-                          }
-                          return Container(
-                              child: Center(
-                                  child: Lottie.asset(
-                                      'assets/animations/loading-screen.json',
-                                      width: 50 * fem,
-                                      height: 50 * hem)));
-                        }),
+                        BlocProvider(
+                          create: (context) => BrandBloc(
+                              brandRepository: context.read<BrandRepository>())
+                            ..add(LoadBrands(limit: 5)),
+                          child: BlocBuilder<BrandBloc, BrandState>(
+                              builder: (context, state) {
+                            if (state is BrandsLoaded) {
+                              return SizedBox(
+                                  height: 120 * hem,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.brands.length + 1,
+                                    itemBuilder: (context, index) {
+                                      if (index == state.brands.length) {
+                                        return InkWell(
+                                          onTap: () {
+                                            if (roleState is Unknown) {
+                                              Navigator.pushNamed(context,
+                                                  LoginScreen.routeName);
+                                            } else {
+                                              Navigator.pushNamed(context,
+                                                  BrandListScreen.routeName);
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 80 * fem,
+                                            margin: EdgeInsets.only(
+                                                left: 5 * fem, right: 5 * fem),
+                                            child: Column(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          80 * fem),
+                                                  child: Container(
+                                                    width: 80 * fem,
+                                                    height: 80 * hem,
+                                                    color: Colors.white,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.arrow_forward,
+                                                          size: 30,
+                                                        ),
+                                                        Text(
+                                                          'Xem thêm',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          maxLines: 2,
+                                                          style: GoogleFonts
+                                                              .openSans(
+                                                                  textStyle:
+                                                                      TextStyle(
+                                                            fontSize: 10 * ffem,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                          )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return BrandCard(
+                                            fem: fem,
+                                            hem: hem,
+                                            ffem: ffem,
+                                            brandModel: state.brands[index]);
+                                      }
+                                    },
+                                  ));
+                            }
+                            return Container(
+                                child: Center(
+                                    child: Lottie.asset(
+                                        'assets/animations/loading-screen.json',
+                                        width: 50 * fem,
+                                        height: 50 * hem)));
+                          }),
+                        ),
                       ],
                     ),
                   ),
@@ -343,7 +415,7 @@ class Body extends StatelessWidget {
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: state.hasReachMax
-                                    ? state.campaigns.length 
+                                    ? state.campaigns.length
                                     : state.campaigns.length + 1,
                                 itemBuilder: (context, index) {
                                   if (index >= state.campaigns.length) {
@@ -353,13 +425,9 @@ class Body extends StatelessWidget {
                                       ),
                                     );
                                   } else {
-                                    return CampaignListCard(
-                                      fem: fem,
-                                      hem: hem,
-                                      ffem: ffem,
-                                      campaignModel: state.campaigns[index],
+                                    return GestureDetector(
                                       onTap: () {
-                                        if (roleState is RoleAppUnknown) {
+                                        if (roleState is Unknown) {
                                           Navigator.pushNamed(
                                               context, LoginScreen.routeName);
                                         } else {
@@ -369,6 +437,23 @@ class Body extends StatelessWidget {
                                                   state.campaigns[index].id);
                                         }
                                       },
+                                      child: CampaignListCard(
+                                        fem: fem,
+                                        hem: hem,
+                                        ffem: ffem,
+                                        campaignModel: state.campaigns[index],
+                                        onTap: () {
+                                          if (roleState is Unknown) {
+                                            Navigator.pushNamed(
+                                                context, LoginScreen.routeName);
+                                          } else {
+                                            Navigator.pushNamed(context,
+                                                CampaignDetailScreen.routeName,
+                                                arguments:
+                                                    state.campaigns[index].id);
+                                          }
+                                        },
+                                      ),
                                     );
                                   }
                                 },

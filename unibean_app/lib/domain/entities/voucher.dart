@@ -43,7 +43,7 @@ class Voucher extends Equatable {
       required this.numberOfItems});
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         this.id,
         this.brandId,
         this.brandName,

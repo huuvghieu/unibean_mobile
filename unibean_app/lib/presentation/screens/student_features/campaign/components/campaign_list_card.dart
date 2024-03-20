@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:unibean_app/data/models.dart';
 
 import '../../../../config/constants.dart';
@@ -147,10 +145,4 @@ class CampaignListCard extends StatelessWidget {
       ],
     );
   }
-}
-
-String changeFormateDate(String dateTime) {
-  DateTime formatDate = DateTime.parse(dateTime);
-  String formattedDate = DateFormat('dd/MM/yyyy').format(formatDate);
-  return formattedDate;
 }

@@ -57,7 +57,7 @@ class CardForUnVerified extends StatelessWidget {
                             fontWeight: FontWeight.bold)),
                   ),
                   Text(
-                    'Xác thực',
+                    'Xác minh',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kLowTextColor,
@@ -151,7 +151,7 @@ class CardForUnVerified extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 10 * hem),
                 child: Text(
-                  'Xác thực tài khoản để có thể \nnhận Bean và tham gia các chiến dịch',
+                  'Xác minh tài khoản để có thể \nnhận Bean và tham gia các chiến dịch',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
@@ -173,7 +173,7 @@ class CardForUnVerified extends StatelessWidget {
                           borderRadius: BorderRadius.circular(23 * fem)),
                       child: Center(
                         child: Text(
-                          'Xác thức',
+                          'Xác minh',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                   fontSize: 14 * ffem,

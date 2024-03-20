@@ -11,15 +11,18 @@ class ProductCard extends StatelessWidget {
       required this.fem,
       required this.hem,
       required this.ffem,
-      required this.product});
+      required this.product,
+      required this.onTap});
 
   final double fem;
   final double hem;
   final double ffem;
   final ProductModel product;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Stack(
         children: [
           Container(

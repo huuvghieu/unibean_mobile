@@ -4,31 +4,51 @@ sealed class RoleAppState extends Equatable {
   const RoleAppState();
 }
 
-final class RoleAppUnknown extends RoleAppState {
+final class Unknown extends RoleAppState {
   @override
   List<Object?> get props => [];
 }
 
-final class RoleAppStudentVerified extends RoleAppState {
+final class Verified extends RoleAppState {
   final AuthenModel authenModel;
   final StudentModel studentModel;
 
-  RoleAppStudentVerified(
+  Verified(
       {required this.authenModel, required this.studentModel});
   @override
   List<Object?> get props => [authenModel, studentModel];
 }
 
-final class RoleAppStudentUnverified extends RoleAppState {
+final class Pending extends RoleAppState {
+  final AuthenModel authenModel;
+  final StudentModel studentModel;
+
+  Pending(
+      {required this.authenModel, required this.studentModel});
+  @override
+  List<Object?> get props => [authenModel, studentModel];
+}
+
+final class Rejected extends RoleAppState {
+  final AuthenModel authenModel;
+  final StudentModel studentModel;
+
+  Rejected(
+      {required this.authenModel, required this.studentModel});
+  @override
+  List<Object?> get props => [authenModel, studentModel];
+}
+
+final class Unverified extends RoleAppState {
   final AuthenModel authenModel;
 
-  RoleAppStudentUnverified(
+  Unverified(
       {required this.authenModel});
   @override
   List<Object?> get props => [authenModel];
 }
 
-final class RoleAppStore extends RoleAppState {
+final class StoreRole extends RoleAppState {
   @override
   List<Object?> get props => [];
 }

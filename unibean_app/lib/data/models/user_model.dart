@@ -27,7 +27,7 @@ class UserModel extends User {
         id: json['id'],
         userId: json['userId'] ?? '',
         name: json['name'] ?? '',
-        roleId: json['roleId'],
+        roleId: json['roleId'] ,
         role: json['role'],
         roleName: json['roleName'],
         userName: json['userName'] ?? '',

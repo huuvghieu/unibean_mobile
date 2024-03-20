@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 import '../../../../../blocs/blocs.dart';
 import '../../../../../config/constants.dart';
 import 'product_card.dart';
@@ -31,7 +32,7 @@ class TabProduct extends StatelessWidget {
                 children: [
                   BlocBuilder<RoleAppBloc, RoleAppState>(
                     builder: (context, state) {
-                      if (state is RoleAppStudentVerified) {
+                      if (state is Verified) {
                         return Container(
                           color: kbgWhiteColor,
                           child: Column(
@@ -127,10 +128,17 @@ class TabProduct extends StatelessWidget {
                                   itemCount: state.products.length,
                                   itemBuilder: (context, index) {
                                     return ProductCard(
-                                        fem: fem,
-                                        hem: hem,
-                                        ffem: ffem,
-                                        product: state.products[index]);
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      product: state.products[index],
+                                      onTap: () {
+                                        Navigator.pushNamed(context,
+                                            ProductDetailScreen.routeName,
+                                            arguments:
+                                                state.products[index].id);
+                                      },
+                                    );
                                   },
                                 ),
                               );

@@ -57,6 +57,40 @@ class AuthenLocalDataSource {
     }
   }
 
+    static Future<void> saveStudent(String studentString) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('studentString', studentString);
+  }
+
+  static Future<StudentModel?> getStudent() async {
+    final sf = await SharedPreferences.getInstance();
+    String? studentString = sf.getString('studentString');
+    if (studentString == null) {
+      return null;
+    } else {
+      Map<String, dynamic> json = jsonDecode(studentString);
+      StudentModel? studentModel = StudentModel.fromJson(json);
+      return studentModel;
+    }
+  }
+
+  static Future<void> saveUser(String userString) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('userString', userString);
+  }
+
+  static Future<UserModel?> getUser() async {
+    final sf = await SharedPreferences.getInstance();
+    String? userString = sf.getString('userString');
+    if (userString == null) {
+      return null;
+    } else {
+      Map<String, dynamic> json = jsonDecode(userString);
+      UserModel? userModel = UserModel.fromJson(json);
+      return userModel;
+    }
+  }
+
   static Future<void> saveCreateAuthen(String authenString) async {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('createAuthenString', authenString);

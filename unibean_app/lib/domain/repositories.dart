@@ -11,3 +11,4 @@ export 'repositories/voucher_repository.dart';
 export 'repositories/challenge_repository.dart';
 export 'repositories/product_repository.dart';
 export 'repositories/wishlist_repository.dart';
+export 'repositories/station_repository.dart';

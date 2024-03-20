@@ -75,7 +75,7 @@ final class RedeemVoucherSuccess extends CampaignState {
   RedeemVoucherSuccess({required this.text});
 
   @override
-  List<Object?> get props => throw [text];
+  List<Object?> get props => [text];
 }
 
 final class RedeemVoucherFailed extends CampaignState {

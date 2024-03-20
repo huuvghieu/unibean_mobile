@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
-// import 'package:unibean_app/presentation/screens/student_features/campaign/components/brand_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/voucher/components/voucher_card.dart';
-import 'package:unibean_app/presentation/widgets/voucher_list_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/voucher/search_bar_custom.dart';
-
+import 'package:unibean_app/presentation/blocs/role/role_app_bloc.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 import '../../../../config/constants.dart';
 import 'package:unibean_app/data/models.dart';
 
 import '../../../../widgets/card_for_unknow.dart';
 import '../../../../widgets/brand_card.dart';
+import '../../../../widgets/voucher_list_card.dart';
+import '../search_bar_custom.dart';
+import 'voucher_card.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -28,19 +28,23 @@ class Body extends StatelessWidget {
     final roleState = context.read<RoleAppBloc>().state;
 
     var roleWidget = (switch (roleState) {
-      RoleAppUnknown() =>
+      Unknown() =>
         Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem)),
-      RoleAppStudentUnverified(
+
+      Pending() => Container(),
+
+      Rejected() => Container(),
+      Unverified(
         // ignore: unused_local_variable
         authenModel: final authenModel,
       ) =>
-        _buildVerified(fem, hem, ffem, null, authenModel),
-      RoleAppStudentVerified(
+        _buildVerified(fem, hem, ffem, null, authenModel, context),
+      Verified(
         authenModel: final authenModel,
         studentModel: final studentModel
       ) =>
-        _buildVerified(fem, hem, ffem, studentModel, authenModel),
-      RoleAppStore() => Container(),
+        _buildVerified(fem, hem, ffem, studentModel, authenModel, context),
+      StoreRole() => Container(),
       RoleAppLoading() => Container(
           child: Center(
               child: Lottie.asset('assets/animations/loading-screen.json',
@@ -52,7 +56,7 @@ class Body extends StatelessWidget {
   }
 
   Widget _buildVerified(double fem, double hem, double ffem,
-      StudentModel? student, AuthenModel? authen) {
+      StudentModel? student, AuthenModel? authen, BuildContext context) {
     String studentName = '';
     if (student != null) {
       studentName = student.fullName;
@@ -60,6 +64,7 @@ class Body extends StatelessWidget {
       studentName = authen.userModel.email;
     }
     return CustomScrollView(
+      controller: context.read<VoucherBloc>().scrollController,
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate([
@@ -120,31 +125,30 @@ class Body extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 5 * hem),
-                              child: Text(
-                                'THƯƠNG HIỆU',
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w800,
-                                )),
-                              ),
+                            Text(
+                              'THƯƠNG HIỆU',
+                              style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                fontSize: 15 * ffem,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w800,
+                              )),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, BrandListScreen.routeName);
+                              },
                               child: Container(
-                                height: 20 * hem,
-                                width: 20 * fem,
-                                margin: EdgeInsets.only(
-                                    left: 8 * fem, top: 2 * hem),
+                                height: 22 * hem,
+                                width: 22 * fem,
+                                margin: EdgeInsets.only(left: 8 * fem),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(80)),
                                 child: Icon(
                                   Icons.arrow_forward_rounded,
-                                  size: 16 * fem,
+                                  size: 18 * fem,
                                   color: kDarkPrimaryColor,
                                 ),
                               ),
@@ -163,13 +167,67 @@ class Body extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: 5,
+                                itemCount: state.brands.length + 1,
                                 itemBuilder: (context, index) {
-                                  return BrandCard(
-                                      fem: fem,
-                                      hem: hem,
-                                      ffem: ffem,
-                                      brandModel: state.brands[index]);
+                                  if (index == state.brands.length) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(context,
+                                            BrandListScreen.routeName);
+                                      },
+                                      child: Container(
+                                        width: 80 * fem,
+                                        margin: EdgeInsets.only(
+                                            left: 5 * fem, right: 5 * fem),
+                                        child: Column(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      80 * fem),
+                                              child: Container(
+                                                width: 80 * fem,
+                                                height: 80 * hem,
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.arrow_forward,
+                                                      size: 30,
+                                                    ),
+                                                    Text(
+                                                      'Xem thêm',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      maxLines: 2,
+                                                      style: GoogleFonts
+                                                          .openSans(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                        fontSize: 10 * ffem,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return BrandCard(
+                                        fem: fem,
+                                        hem: hem,
+                                        ffem: ffem,
+                                        brandModel: state.brands[index]);
+                                  }
                                 },
                               ));
                         }
@@ -299,15 +357,30 @@ class Body extends StatelessWidget {
                                 ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: state.vouchers.length,
+                                  itemCount: state.hasReachedMax
+                                      ? state.vouchers.length
+                                      : state.vouchers.length + 1,
                                   itemBuilder: (context, index) {
-                                    return VoucherListCard(
-                                      fem: fem,
-                                      hem: hem,
-                                      ffem: ffem,
-                                      voucherModel: state.vouchers[index],
-                                      onPressed: () {},
-                                    );
+                                    if (index >= state.vouchers.length) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: kPrimaryColor,
+                                        ),
+                                      );
+                                    } else {
+                                      return VoucherListCard(
+                                        fem: fem,
+                                        hem: hem,
+                                        ffem: ffem,
+                                        voucherModel: state.vouchers[index],
+                                        onPressed: () {
+                                          Navigator.pushNamed(context,
+                                              VoucherDetailScreen.routeName,
+                                              arguments:
+                                                  state.vouchers[index].id);
+                                        },
+                                      );
+                                    }
                                   },
                                 ),
                               ],

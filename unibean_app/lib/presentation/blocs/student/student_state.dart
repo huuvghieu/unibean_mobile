@@ -45,3 +45,17 @@ final class StudentTransactionsLoaded extends StudentState {
   @override
   List<Object?> get props => [transactions];
 }
+
+final class StudentOrderLoading extends StudentState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StudentOrdersLoaded extends StudentState {
+  final List<OrderModel> orderModels;
+
+  StudentOrdersLoaded({required this.orderModels});
+
+  @override
+  List<Object?> get props => [orderModels];
+}

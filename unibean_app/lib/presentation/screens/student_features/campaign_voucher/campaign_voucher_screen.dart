@@ -1,19 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/counter/counter_cubit.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 
+import '../../../../data/datasource/authen_local_datasource.dart';
 import '../../../blocs/blocs.dart';
 import 'components/body.dart';
 
 class CampaignVoucherScreen extends StatelessWidget {
-  static const String routeName = '/voucher-detail-student';
+  static const String routeName = '/campaign-voucher-detail-student';
 
   static Route route(
       {required CampaignVoucherModel campaignVoucher,
@@ -98,7 +99,7 @@ class CampaignVoucherScreen extends StatelessWidget {
             ),
             BlocProvider(
               create: (_) => CampaignBloc(
-                  campaignRepository: context.read<CampaignRepository>()),
+                  campaignRepository: _.read<CampaignRepository>()),
             ),
           ],
           child: BottomAppBar(
@@ -151,13 +152,14 @@ class CampaignVoucherScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width: 25 * fem,
                               height: 25 * fem,
                               child: FloatingActionButton(
+                                  heroTag: 'remove',
                                   elevation: 0,
                                   backgroundColor: klightPrimaryColor,
                                   child: const Icon(
@@ -195,6 +197,7 @@ class CampaignVoucherScreen extends StatelessWidget {
                               width: 25 * fem,
                               height: 25 * fem,
                               child: FloatingActionButton(
+                                  heroTag: 'Add',
                                   elevation: 0,
                                   backgroundColor: klightPrimaryColor,
                                   child: const Icon(
@@ -211,75 +214,7 @@ class CampaignVoucherScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        InkWell(
-                          onTap: () async {
-                            final studentId =
-                                await AuthenLocalDataSource.getStudentId();
-                            context.read<CampaignBloc>().add(
-                                RedeemCampaignVoucher(
-                                    campaignId: campaignDetailModel.id,
-                                    campaignDetailId: campaignVoucherModel.id,
-                                    studentId: studentId!,
-                                    quantity: state.counterValue,
-                                    description: 'string'));
-                          },
-                          child: BlocConsumer<CampaignBloc, CampaignState>(
-                            listener: (_, state) {
-                              if (state is RedeemVoucherFailed) {
-                                ScaffoldMessenger.of(_)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(SnackBar(
-                                    elevation: 0,
-                                    duration:
-                                        const Duration(milliseconds: 2000),
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Mua thất bại!',
-                                      message: '${state.error}',
-                                      contentType: ContentType.failure,
-                                    ),
-                                  ));
-                              }
-                            },
-                            builder: (_, state) {
-                              if (state is RedeemVoucherLoading) {
-                                return Container(
-                                  width: 200 * fem,
-                                  height: 35 * hem,
-                                  decoration: BoxDecoration(
-                                      color: kPrimaryColor,
-                                      borderRadius:
-                                          BorderRadius.circular(10 * fem)),
-                                  child: Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    
-                                  )),
-                                );
-                              } else {
-                                return Container(
-                                  width: 200 * fem,
-                                  height: 35 * hem,
-                                  decoration: BoxDecoration(
-                                      color: kPrimaryColor,
-                                      borderRadius:
-                                          BorderRadius.circular(10 * fem)),
-                                  child: Center(
-                                    child: Text(
-                                      'Mua ngay',
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                              fontSize: 15 * ffem,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white)),
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ),
+                        buildButtonBuy(context, state, fem, hem, ffem),
                       ],
                     ),
                   ],
@@ -294,5 +229,84 @@ class CampaignVoucherScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildButtonBuy(BuildContext context, CounterState state, double fem,
+      double hem, double ffem) {
+    if (campaignVoucherModel.quantityInStock == 0 ||
+        (campaignDetailModel.startOn.compareTo(DateTime.now().toString()) >
+            0)) {
+      return Container(
+        width: 200 * fem,
+        height: 35 * hem,
+        decoration: BoxDecoration(
+            color: kLowTextColor,
+            borderRadius: BorderRadius.circular(10 * fem)),
+        child: Center(
+          child: Text(
+            'Mua ngay',
+            style: GoogleFonts.openSans(
+                textStyle: TextStyle(
+                    fontSize: 15 * ffem,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
+          ),
+        ),
+      );
+    } else {
+      return InkWell(
+          onTap: () async {
+            final student = await AuthenLocalDataSource.getStudent();
+            if (student!.greenWalletBalance <
+                (campaignVoucherModel.price * state.counterValue)) {
+                    ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(SnackBar(
+                                  elevation: 0,
+                                  duration: const Duration(milliseconds: 2000),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: Colors.transparent,
+                                  content: AwesomeSnackbarContent(
+                                    title: 'Mua thất bại',
+                                    message:
+                                        'Số đậu xanh của bạn không đủ!',
+                                    contentType: ContentType.failure,
+                                  ),
+                                ));
+            } else {
+              final studentId = await AuthenLocalDataSource.getStudentId();
+
+              Navigator.pushNamed(context, RedeemVoucherScreen.routeName,
+                  arguments: <dynamic>[
+                    campaignDetailModel.id,
+                    campaignVoucherModel.id,
+                    studentId!,
+                    state.counterValue,
+                    'string',
+                    campaignDetailModel.campaignName,
+                    (campaignVoucherModel.price * state.counterValue),
+                    campaignVoucherModel.voucherName,
+                    campaignVoucherModel.price
+                  ]);
+            }
+          },
+          child: Container(
+            width: 200 * fem,
+            height: 35 * hem,
+            decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.circular(10 * fem)),
+            child: Center(
+              child: Text(
+                'Mua ngay',
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: 15 * ffem,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+              ),
+            ),
+          ));
+    }
   }
 }

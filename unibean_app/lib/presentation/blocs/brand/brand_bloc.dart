@@ -30,7 +30,7 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   Future<void> _onLoadBrands(LoadBrands event, Emitter<BrandState> emit) async {
     emit(BrandLoading());
     try {
-      var apiResponse = await brandRepository.fecthBrands();
+      var apiResponse = await brandRepository.fecthBrands(page: event.page, limit: event.limit);
       emit(BrandsLoaded(brands: apiResponse!.result.toList()));
     } catch (e) {
       emit(BrandsFailed(error: e.toString()));

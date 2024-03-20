@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models/api_response.dart';
+import 'package:unibean_app/data/models/order_model.dart';
 import 'package:unibean_app/data/models/student_model.dart';
 import 'package:unibean_app/data/models/transaction_model.dart';
 import 'package:unibean_app/data/models/voucher_student_model.dart';
@@ -31,6 +32,8 @@ class StudentRepositoryImp implements StudentRepository {
       if (response.statusCode == 200) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         StudentModel studentModel = StudentModel.fromJson(result);
+            String studentString = jsonEncode(StudentModel.fromJson(result));
+        AuthenLocalDataSource.saveStudent(studentString);
         return studentModel;
       } else {
         return null;
@@ -98,6 +101,61 @@ class StudentRepositoryImp implements StudentRepository {
         return apiResponse;
       } else {
         return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<ApiResponse<List<OrderModel>>?> fetchOrdersStudentId(
+      int? page, int? limit,
+      {required String id}) async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      studentId = await AuthenLocalDataSource.getStudentId();
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http.get(
+          Uri.parse('$endPoint/$id/orders?sort=$sort&page=$page&limit=$limit'),
+          headers: headers);
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        ApiResponse<List<OrderModel>> apiResponse =
+            ApiResponse<List<OrderModel>>.fromJson(result,
+                (data) => data.map((e) => OrderModel.fromJson(e)).toList());
+        return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool?> postChallengeStudentId(
+      {required String studentId, required String challengeId}) async {
+   try {
+      token = await AuthenLocalDataSource.getToken();
+      studentId = (await AuthenLocalDataSource.getStudentId())!;
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+
+      http.Response response = await http.post(
+          Uri.parse('$endPoint/$studentId/challenges/$challengeId'),
+          headers: headers);
+
+      if (response.statusCode == 201) {
+        
+        return true;
+      } else {
+        return false;
       }
     } catch (e) {
       throw Exception(e.toString());

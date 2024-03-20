@@ -22,10 +22,7 @@ class VoucherListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // Navigator.pushNamed(
-        //     context, CampaignDetailScreen.routeName);
-      },
+      onTap: onPressed,
       child: Stack(
         children: [
           Container(
@@ -60,7 +57,6 @@ class VoucherListCard extends StatelessWidget {
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
                           'assets/images/image-404.jpg',
-                          color: kPrimaryColor,
                         );
                       },
                     ),

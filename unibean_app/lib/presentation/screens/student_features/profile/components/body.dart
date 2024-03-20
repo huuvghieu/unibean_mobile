@@ -3,12 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/button_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/information_card_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/unverified_card.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile_products/product_screen.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile_trans/profile_trans_screen.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile_voucher/profile_voucher_screen.dart';
 import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../../blocs/blocs.dart';
@@ -28,7 +26,7 @@ class Body extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       child: BlocBuilder<RoleAppBloc, RoleAppState>(
         builder: (context, state) {
-          if (state is RoleAppStudentVerified) {
+          if (state is Verified) {
             return Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
@@ -143,9 +141,10 @@ class Body extends StatelessWidget {
                                       svgIcon:
                                           'assets/icons/order-history-icon.svg',
                                       title: 'Đơn hàng của bạn',
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        var id = await AuthenLocalDataSource.getStudentId();
                                         Navigator.pushNamed(context,
-                                            ProfileVoucherScreen.routeName);
+                                            ProfileOrderScreen.routeName, arguments: id );
                                       }),
                                   SizedBox(
                                     height: 10 * hem,
@@ -167,7 +166,7 @@ class Body extends StatelessWidget {
                 ],
               ),
             );
-          } else if (state is RoleAppStudentUnverified) {
+          } else if (state is Unverified) {
             return Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,

@@ -11,3 +11,5 @@ export 'challenge/challenge_bloc.dart';
 export 'student/student_bloc.dart';
 export 'campaign_voucher/campaign_voucher_bloc.dart';
 export 'product/product_bloc.dart';
+export 'station/station_bloc.dart';
+export 'cart/cart_bloc.dart';

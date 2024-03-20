@@ -26,7 +26,7 @@ class BrandCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        if (roleState is RoleAppUnknown) {
+        if (roleState is Unknown) {
           Navigator.pushNamed(context, LoginScreen.routeName);
         } else {
           Navigator.pushNamed(context, BrandDetailScreen.routeName,

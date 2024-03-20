@@ -5,8 +5,13 @@ sealed class BrandEvent extends Equatable {
 }
 
 final class LoadBrands extends BrandEvent {
+  final int page;
+  final int limit;
+
+  LoadBrands({ this.page = 1,  this.limit = 10});
+  
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [page, limit];
 }
 
 final class LoadMoreBrands extends BrandEvent {

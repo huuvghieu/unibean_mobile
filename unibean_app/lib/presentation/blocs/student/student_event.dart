@@ -23,3 +23,14 @@ final class LoadStudentTransactions extends StudentEvent {
   @override
   List<Object?> get props => [page, limit, id];
 }
+
+final class LoadStudentOrders extends StudentEvent {
+  final int page;
+  final int limit;
+  final String id;
+  LoadStudentOrders({this.page = 1, this.limit = 10, required this.id});
+
+  @override
+  List<Object?> get props => [page, limit, id];
+}
+

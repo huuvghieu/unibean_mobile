@@ -16,10 +16,11 @@ final class ChallengeLoading extends ChallengeState {
 
 final class ChallengesLoaded extends ChallengeState {
   final List<ChallengeModel> challenge;
+  final bool isClaimed;
 
-  ChallengesLoaded({required this.challenge});
+  ChallengesLoaded({required this.challenge, this.isClaimed = false});
   @override
-  List<Object> get props => [challenge];
+  List<Object> get props => [challenge, isClaimed];
 }
 
 final class ChallengeFailed extends ChallengeState {
@@ -29,4 +30,9 @@ final class ChallengeFailed extends ChallengeState {
 
   @override
   List<Object> get props => [error];
+}
+
+final class ClaimLoading extends ChallengeState {
+  @override
+  List<Object> get props => [];
 }

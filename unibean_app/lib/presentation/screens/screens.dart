@@ -29,3 +29,7 @@ export 'student_features/qr/qr_screen.dart';
 export 'student_features/qr/qr_voucher_screen.dart';
 export 'student_features/voucher_list/voucher_list_screen.dart';
 export 'student_features/campaign_voucher/campaign_voucher_screen.dart';
+export 'student_features/redeem_voucher/redeem_voucher_screen.dart';
+export 'student_features/profile_order/profile_order_screen.dart';
+export 'student_features/success_redeem_voucher/success_redeem_voucher_screen.dart';
+export 'student_features/product_detail/product_detail_screen.dart';
