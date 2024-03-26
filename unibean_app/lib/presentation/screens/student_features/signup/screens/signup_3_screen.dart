@@ -22,9 +22,9 @@ class _SignUp3ScreenState extends State<SignUp3Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 4/8';
+      title = 'Bước 4/9';
     } else {
-      title = 'Bước 3/7';
+      title = 'Bước 3/8';
     }
     super.initState();
   }

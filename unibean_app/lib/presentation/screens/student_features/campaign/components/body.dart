@@ -8,8 +8,8 @@ import 'package:unibean_app/domain/repositories.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import '../../../../widgets/brand_card.dart';
-import '../../../../widgets/card_for_unknow.dart';
 import '../../../../widgets/card_for_unverified.dart';
+import '../../../../widgets/unverified_screen.dart';
 import '../../../screens.dart';
 import 'campaign_card.dart';
 import 'campaign_carousel.dart';
@@ -31,15 +31,19 @@ class Body extends StatelessWidget {
     final roleState = context.watch<RoleAppBloc>().state;
 
     var roleWidget = (switch (roleState) {
-      Unknown() => CardForUnknow(fem: fem, hem: hem, ffem: ffem),
-
-      Unverified() =>
-        CardForUnVerified(fem: fem, hem: hem, ffem: ffem),
-      
-      Pending(authenModel: final authenModel, studentModel: final studentModel) => Container(),
-
+      Unverified() => CardForUnVerified(fem: fem, hem: hem, ffem: ffem),
+      Pending(
+        // ignore: unused_local_variable
+        authenModel: final authenModel,
+        studentModel: final studentModel
+      ) =>
+        MemberShipCard(
+            fem: fem,
+            hem: hem,
+            ffem: ffem,
+            heightText: heightText,
+            studentModel: studentModel),
       Rejected() => Container(),
-
       Verified(
         // ignore: unused_local_variable
         authenModel: final authenModel,
@@ -83,13 +87,13 @@ class Body extends StatelessWidget {
 
                   //Hôm nay có gì
                   Container(
-                    padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
+                    padding: EdgeInsets.only(top: 10 * fem, bottom: 10 * fem),
                     color: kbgWhiteColor,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 10 * fem),
+                          // margin: EdgeInsets.only(left: 10 * fem),
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 0 * hem),
                             child: Text(
@@ -152,9 +156,9 @@ class Body extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  if (roleState is Unknown) {
+                                  if (roleState is Unverified) {
                                     Navigator.pushNamed(
-                                        context, LoginScreen.routeName);
+                                        context, UnverifiedScreen.routeName);
                                   } else {
                                     Navigator.pushNamed(
                                         context, CampaignListScreen.routeName);
@@ -196,14 +200,14 @@ class Body extends StatelessWidget {
                                         ffem: ffem,
                                         campaignModel: state.campaigns[index],
                                         onTap: () {
-                                          if (roleState is Unknown) {
-                                            Navigator.pushNamed(
-                                                context, LoginScreen.routeName);
+                                          if (roleState is Unverified) {
+                                            Navigator.pushNamed(context,
+                                                UnverifiedScreen.routeName);
                                           } else {
                                             Navigator.pushNamed(context,
                                                 CampaignDetailScreen.routeName,
                                                 arguments:
-                                                    state.campaigns[index].id);
+                                                    state.campaigns[index]);
                                           }
                                         },
                                       );
@@ -253,9 +257,9 @@ class Body extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  if (roleState is Unknown) {
+                                  if (roleState is Unverified) {
                                     Navigator.pushNamed(
-                                        context, LoginScreen.routeName);
+                                        context, UnverifiedScreen.routeName);
                                   } else {
                                     Navigator.pushNamed(
                                         context, BrandListScreen.routeName);
@@ -298,9 +302,9 @@ class Body extends StatelessWidget {
                                       if (index == state.brands.length) {
                                         return InkWell(
                                           onTap: () {
-                                            if (roleState is Unknown) {
+                                            if (roleState is Unverified) {
                                               Navigator.pushNamed(context,
-                                                  LoginScreen.routeName);
+                                                  UnverifiedScreen.routeName);
                                             } else {
                                               Navigator.pushNamed(context,
                                                   BrandListScreen.routeName);
@@ -427,14 +431,14 @@ class Body extends StatelessWidget {
                                   } else {
                                     return GestureDetector(
                                       onTap: () {
-                                        if (roleState is Unknown) {
-                                          Navigator.pushNamed(
-                                              context, LoginScreen.routeName);
+                                        if (roleState is Unverified) {
+                                          Navigator.pushNamed(context,
+                                              UnverifiedScreen.routeName);
                                         } else {
                                           Navigator.pushNamed(context,
                                               CampaignDetailScreen.routeName,
                                               arguments:
-                                                  state.campaigns[index].id);
+                                                  state.campaigns);
                                         }
                                       },
                                       child: CampaignListCard(
@@ -443,14 +447,14 @@ class Body extends StatelessWidget {
                                         ffem: ffem,
                                         campaignModel: state.campaigns[index],
                                         onTap: () {
-                                          if (roleState is Unknown) {
-                                            Navigator.pushNamed(
-                                                context, LoginScreen.routeName);
+                                          if (roleState is Unverified) {
+                                            Navigator.pushNamed(context,
+                                                UnverifiedScreen.routeName);
                                           } else {
                                             Navigator.pushNamed(context,
                                                 CampaignDetailScreen.routeName,
                                                 arguments:
-                                                    state.campaigns[index].id);
+                                                    state.campaigns[index]);
                                           }
                                         },
                                       ),

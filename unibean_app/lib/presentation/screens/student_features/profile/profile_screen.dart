@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/body.dart';
-import 'package:unibean_app/presentation/widgets/card_for_unknow.dart';
+import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../config/constants.dart';
 import '../../../widgets/app_bar_campaign.dart';
@@ -25,8 +25,8 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
-    if (roleState is Unknown) {
-      return _buildUnknown(fem, hem, ffem);
+    if (roleState is Unverified) {
+      return _buildVerifiedStudent(fem, hem, ffem);
     } else if (roleState is Verified) {
       return _buildVerifiedStudent(fem, hem, ffem);
     } else if (roleState is RoleAppLoading) {
@@ -43,13 +43,13 @@ class ProfileScreen extends StatelessWidget {
     return _buildVerifiedStudent(fem, hem, ffem);
   }
 
-  Widget _buildUnknown(double fem, double hem, double ffem) {
+  Widget _buildUnverified(double fem, double hem, double ffem) {
     return Scaffold(
         appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
         body: Container(
             color: klighGreyColor,
-            child:
-                Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem))));
+            child: Center(
+                child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
@@ -64,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
             'UniBean',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-                    fontSize: 25 * ffem,
+                    fontSize: 22 * ffem,
                     fontWeight: FontWeight.w900,
                     height: 1.3625 * ffem / fem,
                     color: Colors.white)),
@@ -77,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                 icon: Icon(
                   Icons.notifications,
                   color: Colors.white,
-                  size: 35 * fem,
+                  size: 30 * fem,
                 ),
                 onPressed: () {},
               ),

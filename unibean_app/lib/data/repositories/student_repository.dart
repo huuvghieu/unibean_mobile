@@ -5,6 +5,7 @@ import 'package:unibean_app/data/models/api_response.dart';
 import 'package:unibean_app/data/models/order_model.dart';
 import 'package:unibean_app/data/models/student_model.dart';
 import 'package:unibean_app/data/models/transaction_model.dart';
+import 'package:unibean_app/data/models/voucher_student_item_model.dart';
 import 'package:unibean_app/data/models/voucher_student_model.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
@@ -32,7 +33,7 @@ class StudentRepositoryImp implements StudentRepository {
       if (response.statusCode == 200) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         StudentModel studentModel = StudentModel.fromJson(result);
-            String studentString = jsonEncode(StudentModel.fromJson(result));
+        String studentString = jsonEncode(StudentModel.fromJson(result));
         AuthenLocalDataSource.saveStudent(studentString);
         return studentModel;
       } else {
@@ -77,7 +78,7 @@ class StudentRepositoryImp implements StudentRepository {
 
   @override
   Future<ApiResponse<List<TransactionModel>>?> fetchTransactionsStudentId(
-      int? page, int? limit,
+      int? page, int? limit, int? typeIds,
       {required String id}) async {
     try {
       token = await AuthenLocalDataSource.getToken();
@@ -86,21 +87,38 @@ class StudentRepositoryImp implements StudentRepository {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       };
-      http.Response response = await http.get(
-          Uri.parse(
-              '$endPoint/$id/histories?sort=$sort&page=$page&limit=$limit'),
-          headers: headers);
-
-      if (response.statusCode == 200) {
-        final result = jsonDecode(utf8.decode(response.bodyBytes));
-        ApiResponse<List<TransactionModel>> apiResponse =
-            ApiResponse<List<TransactionModel>>.fromJson(
-                result,
-                (data) =>
-                    data.map((e) => TransactionModel.fromJson(e)).toList());
-        return apiResponse;
+      if (typeIds == 0) {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$id/histories?sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<TransactionModel>> apiResponse =
+              ApiResponse<List<TransactionModel>>.fromJson(
+                  result,
+                  (data) =>
+                      data.map((e) => TransactionModel.fromJson(e)).toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
       } else {
-        return null;
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$id/histories?typeIds=$typeIds&sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<TransactionModel>> apiResponse =
+              ApiResponse<List<TransactionModel>>.fromJson(
+                  result,
+                  (data) =>
+                      data.map((e) => TransactionModel.fromJson(e)).toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -139,7 +157,7 @@ class StudentRepositoryImp implements StudentRepository {
   @override
   Future<bool?> postChallengeStudentId(
       {required String studentId, required String challengeId}) async {
-   try {
+    try {
       token = await AuthenLocalDataSource.getToken();
       studentId = (await AuthenLocalDataSource.getStudentId())!;
       final Map<String, String> headers = {
@@ -152,10 +170,96 @@ class StudentRepositoryImp implements StudentRepository {
           headers: headers);
 
       if (response.statusCode == 201) {
-        
         return true;
       } else {
         return false;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<StudentModel?> putStudent(
+      {required String studentId,
+      required String fullName,
+      required String majorId,
+      required String campusId,
+      required int gender,
+      required String avatar,
+      required String address}) async {
+    try {
+      final authenModel = await AuthenLocalDataSource.getAuthen();
+      final accountId = authenModel!.userModel.id;
+      final token = await AuthenLocalDataSource.getToken();
+      final Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      var request =
+          http.MultipartRequest('PUT', Uri.parse('$endPoint/$studentId'));
+
+      //thêm file cho request
+      if (avatar != '') {
+        request.files.add(await http.MultipartFile.fromPath('Avatar', avatar));
+      }
+
+      //thêm headers
+      request.headers.addAll(headers);
+
+      //thêm field cho request
+      request.fields.addAll({
+        'MajorId': majorId,
+        'CampusId': campusId,
+        'FullName': fullName,
+        'Gender': gender.toString(),
+        'AccountId': accountId,
+        'Address': address,
+      });
+
+      //gửi request
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        print(response);
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        StudentModel studentModel = StudentModel.fromJson(result);
+
+        String studentString = jsonEncode(StudentModel.fromJson(result));
+        AuthenLocalDataSource.saveStudent(studentString);
+        return studentModel;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<VoucherStudentItemModel?> fetchVoucherItemByStudentId(
+      {required String studentId, required String voucherId}) async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      studentId = (await AuthenLocalDataSource.getStudentId())!;
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http.get(
+          Uri.parse('$endPoint/$studentId/vouchers/$voucherId'),
+          headers: headers);
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        VoucherStudentItemModel apiResponse =
+            VoucherStudentItemModel.fromJson(result);
+        return apiResponse;
+      } else {
+        return null;
       }
     } catch (e) {
       throw Exception(e.toString());

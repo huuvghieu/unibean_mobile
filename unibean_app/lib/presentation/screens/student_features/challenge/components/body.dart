@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'in_process/in_process_challenge.dart';
@@ -25,11 +24,10 @@ class Body extends StatelessWidget {
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/background_splash.png'),
+                      image: AssetImage('assets/images/background_splash.png'),
                       fit: BoxFit.cover)),
             ),
-            toolbarHeight: 70 * hem,
+            toolbarHeight: 40 * hem,
             centerTitle: true,
             title: Padding(
               padding: EdgeInsets.only(top: 10 * hem),
@@ -37,7 +35,7 @@ class Body extends StatelessWidget {
                 'UniBean',
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
-                        fontSize: 25 * ffem,
+                        fontSize: 22 * ffem,
                         fontWeight: FontWeight.w900,
                         color: Colors.white)),
               ),
@@ -49,7 +47,7 @@ class Body extends StatelessWidget {
                   icon: Icon(
                     Icons.notifications,
                     color: Colors.white,
-                    size: 35 * fem,
+                    size: 25 * fem,
                   ),
                   onPressed: () {},
                 ),
@@ -57,7 +55,7 @@ class Body extends StatelessWidget {
             ],
             bottom: TabBar(
               // controller: tabController,
-    
+            
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 3,
@@ -90,10 +88,10 @@ class Body extends StatelessWidget {
         children: [
           //In process Challenge
           InProcessChallenge(),
-    
+
           //complete Challenge
           IsCompletedChallenge(),
-    
+
           //completed Challenge
           IsClaimedChallenge()
         ],

@@ -43,6 +43,8 @@ class _FormLoginState extends State<FormLogin> {
           widget.ffem),
       AuthenticationSuccess() => _buildAuthIntial(userNameController,
           passwordController, widget.fem, widget.hem, widget.ffem),
+      AuthenticationStoreSuccess() => _buildAuthIntial(userNameController,
+          passwordController, widget.fem, widget.hem, widget.ffem),
       AuthenticationInProcess() => _buildAuthIntial(userNameController,
           passwordController, widget.fem, widget.hem, widget.ffem),
       AuthenticationInProcessByGmail() => _buildAuthIntial(userNameController,
@@ -53,8 +55,13 @@ class _FormLoginState extends State<FormLogin> {
       listener: (context, state) {
         if (state is AuthenticationSuccess) {
           context.read<RoleAppBloc>().add(RoleAppStart());
+          context.read<ChallengeBloc>().add(LoadChallenge());
           Navigator.pushNamedAndRemoveUntil(
               context, '/landing-screen', (Route<dynamic> route) => false);
+        } else if (state is AuthenticationStoreSuccess) {
+          context.read<RoleAppBloc>().add(RoleAppStart());
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/landing-screen-store', (Route<dynamic> route) => false);
         }
       },
       child: loginWidget,

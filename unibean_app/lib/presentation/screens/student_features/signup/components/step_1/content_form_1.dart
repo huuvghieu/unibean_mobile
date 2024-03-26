@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_1/form_1.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
 
-class ContentFrom1 extends StatelessWidget {
+import '../../../../../../data/datasource/authen_local_datasource.dart';
+
+class ContentFrom1 extends StatefulWidget {
   const ContentFrom1({
     super.key,
     required this.widget,
@@ -16,36 +19,94 @@ class ContentFrom1 extends StatelessWidget {
   final TextEditingController nameController;
 
   @override
+  State<ContentFrom1> createState() => _ContentFrom1State();
+}
+
+class _ContentFrom1State extends State<ContentFrom1> {
+  bool readOnly = false;
+  @override
+  void initState() {
+    super.initState();
+    _getAuthen();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    
     return Column(
       children: [
         SizedBox(
-          height: 40 * widget.hem,
+          height: 40 * widget.widget.hem,
         ),
-        TextFormFieldDefault(
-          hem: widget.hem,
-          fem: widget.fem,
-          ffem: widget.ffem,
-          labelText: 'GMAIL *',
-          hintText: 'Nhập gmail...',
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Email không được bỏ trống';
-            } else if (!emailValidationRegExp.hasMatch(value)) {
-              return 'Email không hợp lệ';
-            }
-            return null;
-          },
-          textController: emailController,
+        Container(
+          width: 272 * widget.widget.fem,
+          // color: Colors.red,
+          child: TextFormField(
+            readOnly: readOnly,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Gmail không được bỏ trống';
+              } else if (!emailValidationRegExp.hasMatch(value)) {
+                return 'Gmail không hợp lệ';
+              }
+              return null;
+            },
+            controller: widget.emailController,
+            style: GoogleFonts.openSans(
+                textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15 * widget.widget.ffem,
+                    fontWeight: FontWeight.bold)),
+            decoration: InputDecoration(
+              labelText: 'GMAIL *',
+              hintText: 'Nhập gmail...',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              labelStyle: GoogleFonts.openSans(
+                textStyle: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15 * widget.widget.ffem,
+                    fontWeight: FontWeight.w900),
+              ),
+              hintStyle: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      color: kLowTextColor,
+                      fontSize: 15 * widget.widget.ffem,
+                      fontWeight: FontWeight.w700)),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 26 * widget.widget.fem,
+                vertical: 10 * widget.widget.fem,
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    28 * widget.widget.fem,
+                  ),
+                  borderSide: BorderSide(
+                      width: 2,
+                      color: const Color.fromARGB(255, 220, 220, 220)),
+                  gapPadding: 10),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    28 * widget.widget.fem,
+                  ),
+                  borderSide: BorderSide(
+                      width: 2,
+                      color: const Color.fromARGB(255, 220, 220, 220)),
+                  gapPadding: 10),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(28 * widget.widget.fem),
+                  borderSide: BorderSide(
+                      width: 2,
+                      color: const Color.fromARGB(255, 220, 220, 220)),
+                  gapPadding: 10),
+            ),
+          ),
         ),
         SizedBox(
-          height: 25 * widget.hem,
+          height: 25 * widget.widget.hem,
         ),
         TextFormFieldDefault(
-          hem: widget.hem,
-          fem: widget.fem,
-          ffem: widget.ffem,
+          hem: widget.widget.hem,
+          fem: widget.widget.fem,
+          ffem: widget.widget.ffem,
           labelText: 'HỌ VÀ TÊN *',
           hintText: 'Nhập họ và tên...',
           validator: (value) {
@@ -56,12 +117,24 @@ class ContentFrom1 extends StatelessWidget {
             }
             return null;
           },
-          textController: nameController,
+          textController: widget.nameController,
         ),
         SizedBox(
-          height: 40 * widget.hem,
+          height: 40 * widget.widget.hem,
         ),
       ],
     );
+  }
+
+  Future<String> _getAuthen() async {
+    final authen = await AuthenLocalDataSource.getAuthen();
+
+    if (authen == null) return "";
+
+    setState(() {
+      widget.emailController.text = authen.userModel.email;
+      readOnly = true;
+    });
+    return authen.userModel.email;
   }
 }

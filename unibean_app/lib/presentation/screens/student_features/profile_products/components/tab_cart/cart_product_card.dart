@@ -31,10 +31,11 @@ class CartProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // BlocProvider.of<CartBloc>(context).add(LoadCartEvent());
     return Container(
-      constraints: BoxConstraints(maxHeight: 100 * hem, minWidth: 340 * fem),
-      margin: EdgeInsets.only(bottom: 5*hem),
+      constraints: BoxConstraints(maxHeight: 120 * hem),
+      margin: EdgeInsets.only(bottom: 5 * hem, left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
           color: Colors.white,
+          borderRadius: BorderRadius.circular(10 * fem),
           border: Border.all(color: klighGreyColor),
           boxShadow: [
             BoxShadow(
@@ -46,165 +47,188 @@ class CartProductCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10 * fem),
-                bottomLeft: Radius.circular(10 * fem)),
+          Expanded(
+            flex: 2,
             child: Container(
-              width: 100 * fem,
-              height: 100 * hem,
-              child: Image.network(
-                product.productImages[0],
-                fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    'assets/images/image-404.jpg',
-                  );
-                },
+              padding: EdgeInsets.all(5 * fem),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  product.productImages[0],
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/images/image-404.jpg',
+                    );
+                  },
+                ),
               ),
             ),
           ),
           SizedBox(
             width: 8 * fem,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 5 * hem, bottom: 5 * hem),
-                child: Text(product.productName,
-                    softWrap: true,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                      fontSize: 14 * ffem,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ))),
-              ),
-              Container(
-                width: 150 * fem,
-                child: Text(product.categoryName,
-                    softWrap: true,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                      fontSize: 12 * ffem,
-                      color: kDarkPrimaryColor,
-                      fontWeight: FontWeight.normal,
-                    ))),
-              ),
-             
-              Row(
-                children: [
-                  Text(
-                    '${formatter.format(product.price).toString()}',
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                      fontSize: 15 * ffem,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    )),
-                  ),
-                  SizedBox(
-                    width: 5 * fem,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 4 * hem, bottom: 2 * hem),
-                    child: SvgPicture.asset(
-                      'assets/icons/red-bean-icon.svg',
-                      width: 20 * fem,
-                      height: 18 * fem,
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-          BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              return Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 5 * hem),
+                  child: Text(product.productName,
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                        fontSize: 14 * ffem,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ))),
+                ),
+                Container(
+                  child: Text(product.categoryName,
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                        fontSize: 13 * ffem,
+                        color: klowTextGrey,
+                        fontWeight: FontWeight.normal,
+                      ))),
+                ),
+                Row(
                   children: [
-                     Container(
-                      padding: EdgeInsets.only(right: 15*fem,top: 5*hem),
-                       child: InkWell(
-                        onTap: () {
-                          // context.read<CartBloc>().add(RemoveAllProduct(product));
-                          // Navigator.pushReplacement(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const Home(index: 1)));
-                        },
-                        child: Text(
-                          'x',
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 18 * ffem,
-                              fontWeight: FontWeight.normal),
-                        ),
-                                           ),
-                     ),
-                    Container(
-                      // width: 100,
+                    Text(
+                      '${formatter.format(product.price).toString()}',
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                        fontSize: 15 * ffem,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      )),
+                    ),
+                    SizedBox(
+                      width: 5 * fem,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 4 * hem, bottom: 2 * hem),
+                      child: SvgPicture.asset(
+                        'assets/icons/red-bean-icon.svg',
+                        width: 18 * fem,
+                        height: 16 * fem,
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10 * hem,
+                ),
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return Container(
+                      width: 100,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              context
-                                  .read<CartBloc>()
-                                  .add(RemoveProduct(product: product));
-                              // Navigator.pushReplacement(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             const Home(index: 1)));
-                            },
-                            icon: const Icon(
-                              Icons.remove_circle_outline,
-                              color: kPrimaryColor,
-                            ),
+                          Container(
+                            width: 20 * fem,
+                            height: 20 * fem,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(color: kPrimaryColor)),
+                            child: FloatingActionButton(
+                                heroTag: 'remove',
+                                elevation: 0,
+                                backgroundColor: Colors.white,
+                                foregroundColor: kPrimaryColor,
+                                child: const Icon(
+                                  Icons.remove,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<CartBloc>()
+                                      .add(RemoveProduct(product: product));
+                                }),
+                          ),
+                          SizedBox(
+                            width: 5 * fem,
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 15 * fem),
-                            child: Text(
-                              '${quantity}',
-                              style: TextStyle(
-                                fontFamily: 'Solway',
-                                fontSize: 13 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.2 * ffem / fem,
-                                color: Colors.black,
+                            width: 20 * fem,
+                            child: Center(
+                              child: Text(
+                                '${quantity}',
+                                style: TextStyle(
+                                  fontFamily: 'Solway',
+                                  fontSize: 13 * ffem,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.2 * ffem / fem,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              context
-                                  .read<CartBloc>()
-                                  .add(AddProduct(product: product));
-                              // Navigator.pushReplacement(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             const Home(index: 1)));
-                            },
-                            icon: const Icon(
-                              Icons.add_circle,
-                              color: kPrimaryColor,
-                            ),
+                          SizedBox(
+                            width: 5 * fem,
+                          ),
+                          Container(
+                            width: 20 * fem,
+                            height: 20 * fem,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(color: kPrimaryColor)),
+                            child: FloatingActionButton(
+                                heroTag: 'add',
+                                elevation: 0,
+                                foregroundColor: Colors.white,
+                                backgroundColor: kPrimaryColor,
+                                child: const Icon(
+                                  Icons.add,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<CartBloc>()
+                                      .add(AddProduct(product: product));
+                                }),
                           ),
                         ],
                       ),
-                    ),
-                  ]);
-            },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 2*hem,
+                ),
+                Container(
+                  width: 25,
+                  height: 25,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      ),
+                  child: FloatingActionButton(
+                    onPressed: (){},
+                      heroTag: 'add',
+                      elevation: 0,
+                      backgroundColor: Colors.white,
+                      foregroundColor: kPrimaryColor,
+                      child: Center(child: Text('x',style: TextStyle(fontSize: 15),))
+                      ),
+                ),
+              ],
+            ),
           )
         ],
       ),

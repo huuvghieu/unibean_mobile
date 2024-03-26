@@ -29,7 +29,7 @@ class NavItem {
           'assets/icons/voucher-navbar-icon.svg',
           colorFilter: ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
         ),
-        "Ưu Đãi"),
+        "Kho Ưu Đãi"),
     NavItem(
         SvgPicture.asset(
           'assets/icons/reward-navbar-icon.svg',
@@ -41,6 +41,57 @@ class NavItem {
         ),
         "Thành Tựu"),
     NavItem(
+        SvgPicture.asset(
+          'assets/icons/profile-navbar-icon.svg',
+          colorFilter: ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
+        ),
+        SvgPicture.asset(
+          'assets/icons/profile-navbar-icon.svg',
+          colorFilter: ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
+        ),
+        "Cá nhân"),
+  ];
+}
+
+class NavItemStore {
+  Widget icon;
+  Widget icon2;
+  String title;
+
+  NavItemStore(this.icon, this.icon2, this.title);
+
+  static List<NavItemStore> navItems = [
+    NavItemStore(
+        SvgPicture.asset(
+          'assets/icons/voucher-navbar-icon.svg',
+          colorFilter: ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
+        ),
+        SvgPicture.asset(
+          'assets/icons/voucher-navbar-icon.svg',
+          colorFilter: ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
+        ),
+        "Ưu đãi"),
+    NavItemStore(
+        SvgPicture.asset(
+          'assets/icons/dashboard-icon.svg',
+          colorFilter: ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
+        ),
+        SvgPicture.asset(
+          'assets/icons/dashboard-icon.svg',
+          colorFilter: ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
+        ),
+        "Thống kê"),
+    NavItemStore(
+        SvgPicture.asset(
+          'assets/icons/transaction-icon.svg',
+          colorFilter: ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
+        ),
+        SvgPicture.asset(
+          'assets/icons/transaction-icon.svg',
+          colorFilter: ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
+        ),
+        "Giao dịch"),
+    NavItemStore(
         SvgPicture.asset(
           'assets/icons/profile-navbar-icon.svg',
           colorFilter: ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),

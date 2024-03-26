@@ -31,16 +31,6 @@ final class LoadCampaignById extends CampaignEvent {
   List<Object?> get props => [id];
 }
 
-final class LoadCampaignStoreById extends CampaignEvent {
-  final String id;
-  final int page;
-  final int limit;
-
-  LoadCampaignStoreById({this.page = 1, this.limit = 100, required this.id});
-  @override
-  List<Object?> get props => [id, page, limit];
-}
-
 final class RedeemCampaignVoucher extends CampaignEvent {
   final String campaignId;
   final String campaignDetailId;

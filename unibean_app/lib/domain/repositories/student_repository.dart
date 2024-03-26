@@ -9,7 +9,7 @@ abstract class StudentRepository {
       {required String id});
 
   Future<ApiResponse<List<TransactionModel>>?> fetchTransactionsStudentId(
-      int? page, int? limit,
+      int? page, int? limit, int? typeIds,
       {required String id});
 
   Future<ApiResponse<List<OrderModel>>?> fetchOrdersStudentId(
@@ -20,4 +20,16 @@ abstract class StudentRepository {
     required String studentId,
     required String challengeId,
   });
+
+  Future<StudentModel?> putStudent(
+      {required String studentId,
+      required String fullName,
+      required String majorId,
+      required String campusId,
+      required int gender,
+      required String avatar,
+      required String address});
+      
+  Future<VoucherStudentItemModel?> fetchVoucherItemByStudentId(
+      {required String studentId, required String voucherId});
 }

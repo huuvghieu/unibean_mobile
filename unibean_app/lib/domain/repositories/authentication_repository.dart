@@ -8,4 +8,6 @@ abstract class AuthenticationRepository {
   Future<AuthenModel?> loginWithGmail(String idToken);
 
   Future<bool> registerAccount(CreateAuthenModel createAuthenModel);
+  
+  Future<bool> verifyAccount(VerifyAuthenModel verifyAuthenModel);
 }

@@ -1,19 +1,15 @@
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-// import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/screens.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/content_6.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/phone_number_text_field.dart';
-
-import '../../../../../cubits/validation/validation_cubit.dart';
-import 'button_sign_up_6.dart';
+import '../../../../../../data/datasource/authen_local_datasource.dart';
+import '../../../../screens.dart';
+import 'button_signup6.dart';
+import 'upload_back_card.dart';
+import 'upload_front_card.dart';
 
 class FormBody6 extends StatefulWidget {
   const FormBody6({
@@ -33,16 +29,10 @@ class FormBody6 extends StatefulWidget {
 
 class _FormBody6State extends State<FormBody6> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController countryController = TextEditingController();
-  String? errorString;
-
-  @override
-  void initState() {
-    countryController.text = "+84";
-    super.initState();
-  }
-
+  TextEditingController campusController = TextEditingController();
+  File? _selectedFrontCard;
+  File? _selectedBackCard;
+  String? errorCard;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -51,6 +41,7 @@ class _FormBody6State extends State<FormBody6> {
         children: [
           Container(
             width: 318 * widget.fem,
+            height: 400 * widget.hem,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15 * widget.fem),
@@ -62,300 +53,302 @@ class _FormBody6State extends State<FormBody6> {
                   )
                 ]),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 25 * widget.hem,
-                ),
-                BlocBuilder<ValidationCubit, ValidationState>(
-                  builder: (context, state) {
-                    if (state is CheckPhoneFailed) {
-                      return Column(
+                _selectedFrontCard != null
+                    ? InkWell(
+                        onTap: () {
+                          _imageModelBottomSheet(context, _selectedFrontCard);
+                        },
+                        child: Container(
+                          width: 150 * widget.fem,
+                          height: 150 * widget.hem,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(_selectedFrontCard!))),
+                        ),
+                      )
+                    : Column(
                         children: [
-                          Container(
-                            width: 272 * widget.fem,
-                            height: 80 * widget.hem,
-                            child: InputDecorator(
-                              decoration: InputDecoration(
-                                labelText: 'SỐ ĐIỆN THOẠI *',
-                                // hintText: hintText,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                labelStyle: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15 * widget.ffem,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 26 * widget.fem,
-                                    vertical: 10 * widget.hem),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(28 * widget.fem),
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: const Color.fromARGB(
-                                            255, 220, 220, 220)),
-                                    gapPadding: 10),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(28 * widget.fem),
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: const Color.fromARGB(
-                                            255, 220, 220, 220)),
-                                    gapPadding: 10),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(28 * widget.fem),
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color: const Color.fromARGB(
-                                            255, 220, 220, 220)),
-                                    gapPadding: 10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 40,
-                                    child: TextField(
-                                      readOnly: true,
-                                      controller: countryController,
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 17 * widget.ffem,
-                                              fontWeight: FontWeight.w700)),
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "|",
-                                    style: TextStyle(
-                                        fontSize: 33, color: Colors.black),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                      child: PhoneNumberTextField(
-                                    fem: widget.fem,
-                                    ffem: widget.ffem,
-                                    hem: widget.hem,
-                                    textController: phoneNumberController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Số điện thoại không được bỏ trống';
-                                      } else if (!phoneNumberPattern
-                                          .hasMatch(value)) {
-                                        return 'Số điện thoại không hợp lệ';
-                                      }
-                                      return null;
-                                    },
-                                  ))
-                                ],
-                              ),
+                          Text(
+                            'Tải hình mặt trước của thẻ',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14 * widget.ffem,
+                                  fontWeight: FontWeight.w700),
                             ),
                           ),
                           SizedBox(
-                            height: 3 * widget.hem,
+                            height: 10 * widget.hem,
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 48 * widget.fem),
-                              child: Text(
-                                state.error.toString(),
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        color: kErrorTextColor,
-                                        fontSize: 12 * widget.ffem,
-                                        fontWeight: FontWeight.normal)),
-                              ),
-                            ),
+                          UpLoadFrontCard(
+                            fem: widget.fem,
+                            hem: widget.hem,
+                            ffem: widget.ffem,
+                            onPressed: () {
+                              _imageModelBottomSheet(
+                                  context, _selectedFrontCard);
+                            },
                           ),
                         ],
-                      );
-                    }
-                    return Content6(
-                        widget: widget,
-                        countryController: countryController,
-                        phoneNumberController: phoneNumberController);
-                  },
-                ),
-                errorString != null
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          top: 2 * widget.hem,
-                          left: 45 * widget.fem,
-                        ),
-                        child: SizedBox(
-                          width: 270 * widget.fem,
-                          child: Text(
-                            errorString.toString(),
-                            style: GoogleFonts.openSans(
-                                fontSize: 12 * widget.ffem,
-                                fontWeight: FontWeight.normal,
-                                height: 1.3625 * widget.ffem / widget.fem,
-                                color: kErrorTextColor),
-                          ),
-                        ),
-                      )
-                    : SizedBox(
-                        height: 5 * widget.hem,
                       ),
                 SizedBox(
-                  height: 20 * widget.hem,
+                  width: 280 * widget.fem,
+                  child: Divider(
+                    thickness: 1 * widget.fem,
+                    color: const Color.fromARGB(255, 225, 223, 223),
+                  ),
                 ),
+                _selectedBackCard != null
+                    ? InkWell(
+                        onTap: () {
+                          _imageModelBottomSheet(context, _selectedBackCard);
+                        },
+                        child: Container(
+                          width: 150 * widget.fem,
+                          height: 150 * widget.hem,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(_selectedBackCard!))),
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          Text(
+                            'Tải hình mặt sau của thẻ',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14 * widget.ffem,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10 * widget.hem,
+                          ),
+                          UpLoadBackCard(
+                            fem: widget.fem,
+                            hem: widget.hem,
+                            ffem: widget.ffem,
+                            onPressed: () {
+                              _imageModelBottomSheet(
+                                  context, _selectedBackCard);
+                            },
+                          ),
+                        ],
+                      ),
               ],
             ),
           ),
+          errorCard != null
+              ? Padding(
+                  padding: EdgeInsets.only(
+                    top: 5 * widget.hem,
+                  ),
+                  child: SizedBox(
+                    width: 270 * widget.fem,
+                    child: Text(
+                      errorCard.toString(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 13 * widget.ffem,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xffba1c1c)),
+                    ),
+                  ),
+                )
+              : SizedBox(
+                  height: 5 * widget.hem,
+                ),
           SizedBox(
-            height: 30 * widget.hem,
+            height: 15 * widget.hem,
           ),
-          BlocBuilder<ValidationCubit, ValidationState>(
-            builder: (context, state) {
-              return ButtonSignUp6(
-                  widget: widget,
-                  onPressed: () {
-                    if (state is CheckPhoneFailed) {
-                      if (_formKey.currentState!.validate()) {
-                        context
-                            .read<ValidationCubit>()
-                            .validatePhoneNumber(
-                                '${countryController.text + phoneNumberController.text}')
-                            .then((value) async {
-                          if (value == '') {
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber:
-                                  '${countryController.text + phoneNumberController.text}',
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Navigator.pushNamed(
-                                      context, SignUp7Screen.routeName,
-                                      arguments: phoneNumberController.text);
-                                });
-                              },
-                              verificationFailed: (FirebaseAuthException e) {
-                                if (e.code == 'invalid-phone-number') {
-                                  setState(() {
-                                    errorString = 'Số điện thoại không hợp lệ';
-                                  });
-                                }
-                              },
-                              codeSent: (String verificationId,
-                                  int? resendToken) async {
-                                AuthenLocalDataSource.saveVerificationId(
-                                    verificationId);
-                              },
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {
-                                AuthenLocalDataSource.saveVerificationId(
-                                    verificationId);
-                              },
-                            );
-                            //save phonenumber
-                            final createAuthenModel =
-                                await AuthenLocalDataSource.getCreateAuthen();
-                            createAuthenModel!.phoneNumber =
-                                '${countryController.text + phoneNumberController.text}';
-                            String createAuthenString =
-                                jsonEncode(createAuthenModel);
-                            AuthenLocalDataSource.saveCreateAuthen(
-                                createAuthenString);
-                            Future.delayed(const Duration(seconds: 2), () {
-                              Navigator.pushNamed(
-                                  context, SignUp7Screen.routeName,
-                                  arguments: phoneNumberController.text);
-                            });
-                          } else {
-                            setState(() {
-                              if (state.error ==
-                                  '["Số điện thoại không hợp lệ"]') {
-                                errorString = 'Số điện thoại không hợp lệ';
-                              }
-                            });
-                          }
-                        });
-                        Future.delayed(const Duration(seconds: 2), () {
-                          Navigator.pushNamed(context, SignUp7Screen.routeName,
-                              arguments: phoneNumberController.text);
-                        });
-                      }
-                    } else {
-                      if (_formKey.currentState!.validate()) {
-                        context
-                            .read<ValidationCubit>()
-                            .validatePhoneNumber(
-                                '${countryController.text + phoneNumberController.text}')
-                            .then((value) async {
-                          if (value == '') {
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber:
-                                  '${countryController.text + phoneNumberController.text}',
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Navigator.pushNamed(
-                                      context, SignUp7Screen.routeName,
-                                      arguments: phoneNumberController.text);
-                                });
-                              },
-                              verificationFailed: (FirebaseAuthException e) {
-                                if (e.code == 'invalid-phone-number') {
-                                  setState(() {
-                                    errorString = 'Số điện thoại không hợp lệ';
-                                  });
-                                }
-                              },
-                              codeSent: (String verificationId,
-                                  int? resendToken) async {
-                                AuthenLocalDataSource.saveVerificationId(
-                                    verificationId);
-                              },
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {
-                                AuthenLocalDataSource.saveVerificationId(
-                                    verificationId);
-                              },
-                            );
-
-                            //save phonenumber
-                            final createAuthenModel =
-                                await AuthenLocalDataSource.getCreateAuthen();
-                            createAuthenModel!.phoneNumber =
-                                '${countryController.text + phoneNumberController.text}';
-                            String createAuthenString =
-                                jsonEncode(createAuthenModel);
-                            print(createAuthenString);
-                            AuthenLocalDataSource.saveCreateAuthen(
-                                createAuthenString);
-                            //go to next screen
-                            Future.delayed(const Duration(seconds: 2), () {
-                              Navigator.pushNamed(
-                                  context, SignUp7Screen.routeName,
-                                  arguments: phoneNumberController.text);
-                            });
-                          } else {
-                            if (value == '["Số điện thoại không hợp lệ"]') {
-                              setState(() {
-                                errorString = 'Số điện thoại không hợp lệ';
-                              });
-                            }
-                          }
-                        });
-                      }
-                    }
-                  });
+          ButtonSignUp6(
+            fem: widget.fem,
+            hem: widget.hem,
+            ffem: widget.ffem,
+            onPressed: () async {
+              _submitForm(context, _selectedFrontCard, _selectedBackCard);
             },
           ),
         ],
       ),
     );
+  }
+
+  void _submitForm(
+      BuildContext context, _selectedFrontCard, _selectedBackCard) async {
+    final authenModel = await AuthenLocalDataSource.getAuthen();
+    if (authenModel == null) {
+      if (_selectedBackCard == null || _selectedFrontCard == null) {
+        setState(() {
+          errorCard = 'Thẻ sinh viên không được bỏ trống';
+        });
+      } else if (_formKey.currentState!.validate()) {
+        final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
+        createAuthenModel!.studentFrontCard = _selectedFrontCard!.path;
+        createAuthenModel.studentBackCard = _selectedBackCard!.path;
+        String createAuthenString = jsonEncode(createAuthenModel);
+        AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
+        Navigator.pushNamed(context, SignUp7Screen.routeName);
+      }
+    } else {
+      if (_selectedBackCard == null || _selectedFrontCard == null) {
+        setState(() {
+          errorCard = 'Thẻ sinh viên không được bỏ trống';
+        });
+      } else if (_formKey.currentState!.validate()) {
+        final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
+        verifyAuthenModel!.studentFrontCard = _selectedFrontCard!.path;
+        verifyAuthenModel.studentBackCard = _selectedBackCard!.path;
+        String verifyAuthenString = jsonEncode(verifyAuthenModel);
+        AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
+        Navigator.pushNamed(context, SignUp7Screen.routeName);
+      }
+    }
+  }
+
+  Future _pickerImageFromGallery(File? selectedImage, context) async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+
+    if (selectedImage.hashCode == _selectedFrontCard.hashCode) {
+      selectedImage = File(returnedImage.path);
+
+      setState(() {
+        _selectedFrontCard = selectedImage;
+      });
+      Navigator.pop(context);
+    } else {
+      selectedImage = File(returnedImage.path);
+
+      setState(() {
+        _selectedBackCard = selectedImage;
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  Future _pickerImageFromCamera(File? selectedImage, context) async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (returnedImage == null) return;
+
+    if (selectedImage.hashCode == _selectedFrontCard.hashCode) {
+      selectedImage = File(returnedImage.path);
+
+      setState(() {
+        _selectedFrontCard = selectedImage;
+      });
+      Navigator.pop(context);
+    } else {
+      selectedImage = File(returnedImage.path);
+
+      setState(() {
+        _selectedBackCard = selectedImage;
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  void _imageModelBottomSheet(context, File? selectedImage) {
+    double baseWidth = 375;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    double baseHeight = 812;
+    double hem = MediaQuery.of(context).size.height / baseHeight;
+
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _pickerImageFromCamera(selectedImage, context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        color: kPrimaryColor,
+                        size: 30 * fem,
+                      ),
+                      SizedBox(
+                        width: 5 * fem,
+                      ),
+                      Text(
+                        'Chụp ảnh',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 20 * ffem,
+                                fontWeight: FontWeight.bold,
+                                height: 1.3625 * ffem / fem,
+                                color: Colors.black)),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 18 * hem,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Divider(
+                    color: kLowTextColor,
+                    thickness: 2 * fem,
+                    // height: 300*fem,
+                  ),
+                ),
+                SizedBox(
+                  height: 18 * hem,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _pickerImageFromGallery(selectedImage, context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.photo_size_select_actual_rounded,
+                        color: kPrimaryColor,
+                        size: 30 * fem,
+                      ),
+                      SizedBox(
+                        width: 5 * fem,
+                      ),
+                      Text(
+                        'Chọn sẵn có',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 20 * ffem,
+                                fontWeight: FontWeight.bold,
+                                height: 1.3625 * ffem / fem,
+                                color: Colors.black)),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

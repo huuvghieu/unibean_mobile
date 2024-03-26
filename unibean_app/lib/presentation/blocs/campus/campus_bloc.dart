@@ -9,7 +9,7 @@ part 'campus_state.dart';
 class CampusBloc extends Bloc<CampusEvent, CampusState> {
   final CampusRepository campusRepository;
 
-  CampusBloc(this.campusRepository) : super(CampusInitial()) {
+  CampusBloc(this.campusRepository) : super(CampusLoading()) {
     on<LoadCampus>(_onLoadCampusByUniversityId);
   }
 

@@ -23,7 +23,7 @@ class ButtonSignUp2 extends StatelessWidget {
       // },
       onPressed: onPressed,
       child: Container(
-        width: 300 * fem,
+        width: 220 * fem,
         height: 45 * hem,
         decoration: BoxDecoration(
             color: kPrimaryColor,

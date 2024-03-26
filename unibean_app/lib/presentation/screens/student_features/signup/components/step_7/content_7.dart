@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/phone_number_text_field.dart';
 
-import 'form_6.dart';
+import 'form_7.dart';
+import 'phone_number_text_field.dart';
 
-class Content6 extends StatelessWidget {
-  const Content6({
+class Content7 extends StatelessWidget {
+  const Content7({
     super.key,
     required this.widget,
     required this.countryController,
     required this.phoneNumberController,
   });
 
-  final FormBody6 widget;
+  final FormBody7 widget;
   final TextEditingController countryController;
   final TextEditingController phoneNumberController;
 

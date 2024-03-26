@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_1/body1.dart';
+
 // import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
 class SignUp1Screen extends StatefulWidget {
@@ -28,10 +29,10 @@ class _SignUp1ScreenState extends State<SignUp1Screen> {
   @override
   void initState() {
     if (widget.register == true) {
-      title = 'Bước 2/8';
+      title = 'Bước 2/9';
       SignUp1Screen.defaultRegister = true;
     } else {
-      title = 'Bước 1/7';
+      title = 'Bước 1/8';
       SignUp1Screen.defaultRegister = false;
     }
     super.initState();

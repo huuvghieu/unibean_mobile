@@ -17,7 +17,6 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
     on<LoadCampaigns>(_onLoadCampaigns);
     on<LoadMoreCampaigns>(_onLoadMoreCampaigns);
     on<LoadCampaignById>(_onLoadCampaignById);
-    on<LoadCampaignStoreById>(_onLoadCampaignStoreById);
     on<RedeemCampaignVoucher>(_onRedeemCampaignVoucher);
   }
 
@@ -78,20 +77,6 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
     }
   }
 
-  Future<void> _onLoadCampaignStoreById(
-      LoadCampaignStoreById event, Emitter<CampaignState> emit) async {
-    emit(CampaignStoreLoading());
-    try {
-      var apiResponse = await campaignRepository.fecthCampaignStoreById(
-        event.page,
-        event.limit,
-        id: event.id,
-      );
-      emit(CampaignStoreByIdLoaded(campaignStores: apiResponse!.result));
-    } catch (e) {
-      emit(CampaignsFailed(error: e.toString()));
-    }
-  }
 
   Future<void> _onRedeemCampaignVoucher(
       RedeemCampaignVoucher event, Emitter<CampaignState> emit) async {

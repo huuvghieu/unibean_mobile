@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models.dart';
 
 import '../../../../config/constants.dart';
+import '../../../../widgets/shimmer_widget.dart';
 
 class CampaignListCard extends StatelessWidget {
   const CampaignListCard(
@@ -47,8 +48,14 @@ class CampaignListCard extends StatelessWidget {
                     child: Image.network(
                       campaignModel.image,
                       fit: BoxFit.fill,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return ShimmerWidget.rectangular(height: 160 * hem);
+                      },
                       errorBuilder: (context, error, stackTrace) {
-                       return Image.asset(
+                        return Image.asset(
                           'assets/images/image-404.jpg',
                         );
                       },

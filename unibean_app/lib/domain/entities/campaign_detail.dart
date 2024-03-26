@@ -2,14 +2,14 @@ import 'package:unibean_app/domain/entities.dart';
 
 class CampaignDetail extends Campaign {
   final String brandLogo;
-  final int numberOfParticipants;
+  final int numberOfItemsUsed;
   final double usageCost;
   final double totalCost;
   final String typeImage;
 
   CampaignDetail(
       {required this.brandLogo,
-      required this.numberOfParticipants,
+      required this.numberOfItemsUsed,
       required this.totalCost,
       required this.usageCost,
       required this.typeImage,
@@ -42,5 +42,5 @@ class CampaignDetail extends Campaign {
   @override
   List<Object> get props => super.props
     ..addAll(
-        [brandLogo, numberOfParticipants, usageCost, totalCost, typeImage]);
+        [brandLogo, numberOfItemsUsed, usageCost, totalCost, typeImage]);
 }

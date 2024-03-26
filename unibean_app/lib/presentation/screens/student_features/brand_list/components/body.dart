@@ -115,6 +115,12 @@ class BrandCard extends StatelessWidget {
                     child: Image.network(
                       brandModel.logo,
                       fit: BoxFit.fill,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return ShimmerWidget.rectangular(height: 100 * hem);
+                      },
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
                           'assets/images/image-404.jpg',

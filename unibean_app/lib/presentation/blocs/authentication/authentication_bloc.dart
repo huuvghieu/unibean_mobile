@@ -5,6 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/domain/repositories.dart';
 
+import '../../config/constants.dart';
+
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
@@ -17,6 +19,7 @@ class AuthenticationBloc
     on<LoginAccount>(_onLoginAccount);
     on<LoginGmail>(_onLoginGmail);
     on<RegisterAccount>(_onRegisterAccount);
+    on<VerifyAccount>(_onVerifyAccount);
   }
   Future<void> _onStartAuthen(
       StartAuthen event, Emitter<AuthenticationState> emit) async {
@@ -30,7 +33,11 @@ class AuthenticationBloc
       var authenModel = await authenticationRepository.loginWithAccount(
           event.userName, event.password);
       if (authenModel != null) {
-        emit(AuthenticationSuccess());
+        if (authenModel.role == 'Student') {
+          emit(AuthenticationSuccess());
+        } else {
+          emit(AuthenticationStoreSuccess());
+        }
       } else {
         emit(
             AuthenticationFailed(error: 'Tài khoản hoặc mật khẩu không đúng!'));
@@ -44,7 +51,6 @@ class AuthenticationBloc
       LoginGmail event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationInProcessByGmail());
 
-    final GoogleSignIn googleSignIn = GoogleSignIn();
     // final auth = await FirebaseAuth.instance;
     try {
       //select google account
@@ -82,14 +88,28 @@ class AuthenticationBloc
       RegisterAccount event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationInProcess());
     try {
-      var registerCheck = await authenticationRepository.registerAccount(
-        event.createAuthenModel
-      );
+      var registerCheck = await authenticationRepository
+          .registerAccount(event.createAuthenModel);
       if (registerCheck) {
         emit(AuthenticationSuccess());
       } else {
-        emit(
-            AuthenticationFailed(error: 'Đăng ký thất bại!'));
+        emit(AuthenticationFailed(error: 'Đăng ký thất bại!'));
+      }
+    } catch (e) {
+      emit(AuthenticationFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onVerifyAccount(
+      VerifyAccount event, Emitter<AuthenticationState> emit) async {
+    emit(AuthenticationInProcess());
+    try {
+      var verifyCheck =
+          await authenticationRepository.verifyAccount(event.verifyAuthenModel);
+      if (verifyCheck) {
+        emit(AuthenticationSuccess());
+      } else {
+        emit(AuthenticationFailed(error: 'Đăng ký thất bại!'));
       }
     } catch (e) {
       emit(AuthenticationFailed(error: e.toString()));

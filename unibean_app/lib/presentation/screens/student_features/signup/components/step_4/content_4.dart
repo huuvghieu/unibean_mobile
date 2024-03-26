@@ -37,7 +37,7 @@ class Content4 extends StatelessWidget {
             fem: widget.fem,
             ffem: widget.ffem,
             labelText: 'MÃ SỐ SINH VIÊN *',
-            hintText: 'UNIBEAN123123',
+            hintText: 'Nhập mã số sinh viên',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'MSSV không được bỏ trống';

@@ -83,16 +83,27 @@ class MemberShipCard extends StatelessWidget {
                                 EdgeInsets.only(left: 20 * fem, top: 0 * hem),
                             child: Row(
                               children: [
-                                Text(
-                                  '${formatter.format(studentModel.greenWalletBalance)}',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 18 * ffem,
-                                    height: heightText,
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                                ),
+                                studentModel.greenWalletBalance == 0
+                                    ? Text(
+                                        '${studentModel.greenWalletBalance.toStringAsFixed(0)}',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 18 * ffem,
+                                          height: heightText,
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                      )
+                                    : Text(
+                                        '${formatter.format(studentModel.greenWalletBalance)}',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 18 * ffem,
+                                          height: heightText,
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                      ),
                                 SvgPicture.asset(
                                   'assets/icons/green-bean-icon.svg',
                                   width: 25 * fem,
@@ -106,16 +117,27 @@ class MemberShipCard extends StatelessWidget {
                                 EdgeInsets.only(right: 20 * fem, top: 0 * hem),
                             child: Row(
                               children: [
-                                Text(
-                                  '${formatter.format(studentModel.redWalletBalance)}',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 18 * ffem,
-                                    height: heightText,
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                                ),
+                                studentModel.redWalletBalance == 0
+                                    ? Text(
+                                        '${studentModel.redWalletBalance.toStringAsFixed(0)}',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 18 * ffem,
+                                          height: heightText,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                      )
+                                    : Text(
+                                        '${formatter.format(studentModel.redWalletBalance)}',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 18 * ffem,
+                                          height: heightText,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                      ),
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 2 * fem, bottom: 4 * hem),

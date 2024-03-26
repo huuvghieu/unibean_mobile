@@ -24,6 +24,10 @@ class WelcomeScreen extends StatelessWidget {
               Navigator.pushNamedAndRemoveUntil(
                   context, '/landing-screen',(Route<dynamic> route) => false);
             }
+        else if(state is StoreRole){
+             Navigator.pushNamedAndRemoveUntil(
+                  context, '/landing-screen-store',(Route<dynamic> route) => false);
+        }
       },
       child: Scaffold(
         backgroundColor: Colors.transparent,

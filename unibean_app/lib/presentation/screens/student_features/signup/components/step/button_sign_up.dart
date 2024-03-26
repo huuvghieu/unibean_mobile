@@ -21,7 +21,7 @@ class ButtonSignUp extends StatelessWidget {
     return TextButton(
       onPressed: onPress,
       child: Container(
-        width: 300 * widget.fem,
+        width: 220 * widget.fem,
         height: 45 * widget.hem,
         decoration: BoxDecoration(
             color: kPrimaryColor,

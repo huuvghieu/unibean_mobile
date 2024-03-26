@@ -23,9 +23,9 @@ class _SignUp5ScreenState extends State<SignUp5Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 6/8';
+      title = 'Bước 6/9';
     } else {
-      title = 'Bước 5/7';
+      title = 'Bước 5/8';
     }
     super.initState();
   }

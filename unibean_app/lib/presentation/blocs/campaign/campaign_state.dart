@@ -17,12 +17,6 @@ final class CampaignLoading extends CampaignState {
   List<Object?> get props => [];
 }
 
-final class CampaignStoreLoading extends CampaignState {
-  CampaignStoreLoading();
-  @override
-  List<Object?> get props => [];
-}
-
 final class CampaignsLoaded extends CampaignState {
   final List<CampaignModel> campaigns;
   final bool hasReachMax;
@@ -55,14 +49,6 @@ final class CampaignByIdLoaded extends CampaignState {
   List<Object?> get props => [campaignDetailModel];
 }
 
-final class CampaignStoreByIdLoaded extends CampaignState {
-  final List<CampaignStoreModel> campaignStores;
-
-  CampaignStoreByIdLoaded({required this.campaignStores});
-
-  @override
-  List<Object?> get props => [campaignStores];
-}
 
 final class RedeemVoucherLoading extends CampaignState {
   @override

@@ -23,13 +23,13 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
                 image: AssetImage('assets/images/background_splash.png'),
                 fit: BoxFit.cover)),
       ),
-      toolbarHeight: 80 * hem,
+      toolbarHeight: 50 * hem,
       centerTitle: true,
       title: Text(
         'UniBean',
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
-                fontSize: 25 * ffem,
+                fontSize: 22 * ffem,
                 fontWeight: FontWeight.w900,
                 height: 1.3625 * ffem / fem,
                 color: Colors.white)),
@@ -42,7 +42,7 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
             icon: Icon(
               Icons.notifications,
               color: Colors.white,
-              size: 35 * fem,
+              size: 25 * fem,
             ),
             onPressed: () {},
           ),
@@ -52,5 +52,5 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize => const Size.fromHeight(50);
 }

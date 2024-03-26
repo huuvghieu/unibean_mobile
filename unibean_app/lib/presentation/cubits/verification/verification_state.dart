@@ -9,7 +9,7 @@ final class VerificationInitial extends VerificationState {
   List<Object> get props => [];
 }
 
-final class VerificationInProcess extends VerificationState {
+final class VerificationLoading extends VerificationState {
   @override
   List<Object> get props => [];
 }

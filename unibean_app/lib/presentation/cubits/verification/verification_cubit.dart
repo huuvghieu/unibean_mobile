@@ -14,19 +14,22 @@ class VerificationCubit extends Cubit<VerificationState> {
     emit(VerificationInitial());
   }
 
-  Future<bool?> verifyOTP( String smsOTP) async {
-    emit(VerificationInProcess());
+  Future<bool?> verifyOTP(String smsOTP) async {
+    emit(VerificationLoading());
     try {
       final verificationId = await AuthenLocalDataSource.getVerificationId();
-      final check =
-          await verificationRepository.verifyOTP(verificationId!, smsOTP);
-      print(check);
-      if (check) {
-        emit(OTPVerificationSuccess());
-        return check;
-      } else {
+      if (verificationId == null) {
         emit(OTPVerificationFailed(error: 'Mã không hợp lệ'));
-        return false;
+      } else {
+        final check =
+            await verificationRepository.verifyOTP(verificationId, smsOTP);
+        if (check) {
+          emit(OTPVerificationSuccess());
+          return check;
+        } else {
+          emit(OTPVerificationFailed(error: 'Mã không hợp lệ'));
+          return false;
+        }
       }
     } catch (e) {}
     return null;

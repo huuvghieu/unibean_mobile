@@ -8,6 +8,7 @@ export 'entities/challenge.dart';
 export 'entities/voucher.dart';
 export 'entities/brand.dart';
 export 'entities/voucher_student.dart';
+export 'entities/voucher_student_item.dart';
 export 'entities/campaign_detail.dart';
 export 'entities/campaign_store.dart';
 export 'entities/campaign_voucher.dart';

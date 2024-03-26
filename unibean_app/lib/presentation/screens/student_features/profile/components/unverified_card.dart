@@ -22,11 +22,11 @@ class UnverifiedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 120 * hem,
+      top: 80 * hem,
       left: 25 * fem,
       child: Container(
         width: 324 * fem,
-        height: 200 * hem,
+        height: 180 * hem,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15 * fem),
             color: Colors.white,
@@ -42,36 +42,38 @@ class UnverifiedCard extends StatelessWidget {
             SizedBox(
               height: 10 * hem,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 25 * fem,
-                ),
-
-                //avatar
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100 * fem),
-                  child: Container(
-                    width: 80 * hem,
-                    height: 80 * fem,
-                    child: FittedBox(
+            Container(
+              padding: EdgeInsets.only(left: 15 * fem, right: 15 * fem),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //avatar
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100 * fem),
+                    child: Container(
+                      width: 80 * hem,
+                      height: 80 * fem,
                       child: Image(
-                          image: AssetImage(
-                        'assets/images/ava_signup.png',
-                      )),
-                      fit: BoxFit.cover,
+                        image: NetworkImage(
+                          '${authenModel.userModel.avatar}',
+                        ),
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/images/ava_signup.png',
+                            width: 100 * fem,
+                            height: 100 * hem,
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
 
-                SizedBox(
-                  width: 20 * fem,
-                ),
+                  SizedBox(
+                    width: 20 * fem,
+                  ),
 
-                SizedBox(
-                  // color: Colors.red,
-                  child: Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Name
@@ -86,61 +88,31 @@ class UnverifiedCard extends StatelessWidget {
                       Padding(
                         padding:
                             EdgeInsets.only(top: 10 * hem, bottom: 5 * hem),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                                width: 15 * fem,
-                                height: 15 * hem,
-                                child: SvgPicture.asset(
-                                  'assets/icons/id-card-icon.svg',
-                                )),
-                            SizedBox(
-                              width: 5 * fem,
-                            ),
-                            Text(
-                              '',
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(right: 5 * fem, left: 5 * fem),
+                          height: 30 * hem,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(color: Color(0xfffffe58f)),
+                              color: kbgYellow),
+                          child: Center(
+                            child: Text(
+                              'Chưa xác minh',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 13 * ffem,
                                       height: 1.3625 * ffem / fem,
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.black)),
+                                      color: kYellow)),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                      //university name
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                              width: 15 * fem,
-                              height: 15 * hem,
-                              child: SvgPicture.asset(
-                                'assets/icons/university-icon.svg',
-                              )),
-                          SizedBox(
-                            width: 5 * fem,
-                          ),
-                          Text(
-                            '',
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    fontSize: 13 * ffem,
-                                    height: 1.3625 * ffem / fem,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black)),
-                          ),
-                        ],
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10 * fem,
+                ],
+              ),
             ),
             SizedBox(
               width: 280 * fem,
@@ -156,18 +128,21 @@ class UnverifiedCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 40 * fem,
-                          height: 40 * hem,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[100],
-                          ),
-                          child: Center(
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
+                      width: 120 * fem,
+                      height: 40 * hem,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.grey[100],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
                             child: SvgPicture.asset(
                               'assets/icons/qr-unbean-icon.svg',
                               colorFilter: ColorFilter.mode(
@@ -176,18 +151,60 @@ class UnverifiedCard extends StatelessWidget {
                               width: 18 * fem,
                             ),
                           ),
-                        ),
+                          SizedBox(
+                            width: 5 * fem,
+                          ),
+                          Text(
+                            'Trang cá nhân',
+                            style: GoogleFonts.openSans(
+                                textStyle: TextStyle(
+                                    fontSize: 11 * fem,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.3625 * ffem / fem,
+                                    color: kPrimaryColor)),
+                          )
+                        ],
                       ),
-                      Text(
-                        'Show QR',
-                        style: GoogleFonts.openSans(
-                            textStyle: TextStyle(
-                                fontSize: 11 * fem,
-                                fontWeight: FontWeight.w600,
-                                height: 1.3625 * ffem / fem,
-                                color: kLowTextColor)),
-                      )
-                    ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
+                      width: 140 * fem,
+                      height: 40 * hem,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.grey[100],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: SvgPicture.asset(
+                              'assets/icons/verifi-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  kPrimaryColor, BlendMode.srcIn),
+                              height: 25 * fem,
+                              width: 25 * fem,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5 * fem,
+                          ),
+                          Text(
+                            'Xác minh',
+                            style: GoogleFonts.openSans(
+                                textStyle: TextStyle(
+                                    fontSize: 12 * fem,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.3625 * ffem / fem,
+                                    color: kPrimaryColor)),
+                          )
+                        ],
+                      ),
+                    ),
                   )
                 ],
               ),

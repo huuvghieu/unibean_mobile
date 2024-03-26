@@ -39,7 +39,7 @@ class _BirthdayFormState extends State<BirthdayForm> {
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
-                fontSize: 17 * widget.ffem,
+                fontSize: 14 * widget.ffem,
                 fontWeight: FontWeight.w700)),
         keyboardType: TextInputType.number,
         controller: widget.controller,
@@ -56,7 +56,7 @@ class _BirthdayFormState extends State<BirthdayForm> {
           hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
-                  fontSize: 17 * widget.ffem,
+                  fontSize: 15 * widget.ffem,
                   fontWeight: FontWeight.w700)),
           contentPadding: EdgeInsets.symmetric(
               horizontal: 26 * widget.fem, vertical: 10 * widget.hem),

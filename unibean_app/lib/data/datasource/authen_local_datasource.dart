@@ -108,6 +108,23 @@ class AuthenLocalDataSource {
     }
   }
 
+  static Future<void> saveVerifyAuthen(String verifyAuthenString) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('verifyAuthenString', verifyAuthenString);
+  }
+
+  static Future<VerifyAuthenModel?> getVerifyAuthen() async {
+    final sf = await SharedPreferences.getInstance();
+    String? verifyAuthenString = sf.getString('verifyAuthenString');
+    if (verifyAuthenString == null) {
+      return null;
+    } else {
+      Map<String, dynamic> json = jsonDecode(verifyAuthenString);
+      VerifyAuthenModel? verifyAuthenModel = VerifyAuthenModel.fromJson(json);
+      return verifyAuthenModel;
+    }
+  }
+
   static Future<void> removeAuthen() async {
     final sf = await SharedPreferences.getInstance();
     sf.remove('authenString');

@@ -25,7 +25,7 @@ class PhoneNumberTextField extends StatelessWidget {
       style: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: Colors.black,
-              fontSize: 17 * ffem,
+              fontSize: 15 * ffem,
               fontWeight: FontWeight.w700)),
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
@@ -34,7 +34,7 @@ class PhoneNumberTextField extends StatelessWidget {
         hintStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kLowTextColor,
-                fontSize: 17 * ffem,
+                fontSize: 15 * ffem,
                 fontWeight: FontWeight.w700)),
       ),
     );

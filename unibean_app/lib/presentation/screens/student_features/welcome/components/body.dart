@@ -60,8 +60,7 @@ class Body extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/landing-screen', (Route<dynamic> route) => false);
+              Navigator.pushNamed(context, LoginScreen.routeName);
             },
             child: Container(
               width: 270 * fem,
@@ -82,41 +81,7 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 20 * hem),
-                child: Text(
-                  'Bạn đã có tài khoản?',
-                  style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
-                          fontSize: 13 * ffem,
-                          fontWeight: FontWeight.bold,
-                          height: 1.3625 * ffem / fem,
-                          color: kLowTextColor)),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, LoginScreen.routeName);
-                 
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
-                  child: Text(
-                    'Đăng nhập',
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize: 13 * ffem,
-                            fontWeight: FontWeight.w900,
-                            height: 1.3625 * ffem / fem,
-                            color: kPrimaryColor)),
-                  ),
-                ),
-              )
-            ],
-          )
+       
         ],
       ),
     );

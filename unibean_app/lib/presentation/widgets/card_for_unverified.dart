@@ -46,7 +46,7 @@ class CardForUnVerified extends StatelessWidget {
                         textStyle: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 13 * ffem,
-                            fontWeight: FontWeight.bold)),
+                            fontWeight: FontWeight.w600)),
                   ),
                   Text(
                     'Đăng nhập',
@@ -54,7 +54,7 @@ class CardForUnVerified extends StatelessWidget {
                         textStyle: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 13 * ffem,
-                            fontWeight: FontWeight.bold)),
+                            fontWeight: FontWeight.w600)),
                   ),
                   Text(
                     'Xác minh',
@@ -62,7 +62,7 @@ class CardForUnVerified extends StatelessWidget {
                         textStyle: TextStyle(
                             color: kLowTextColor,
                             fontSize: 13 * ffem,
-                            fontWeight: FontWeight.bold)),
+                            fontWeight: FontWeight.w600)),
                   ),
                 ],
               ),
@@ -149,21 +149,24 @@ class CardForUnVerified extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10 * hem),
+                padding: EdgeInsets.only(top: 5 * hem),
                 child: Text(
-                  'Xác minh tài khoản để có thể \nnhận Bean và tham gia các chiến dịch',
+                  'Xác minh tài khoản \nđể có thể nhận nhiều ưu đãi',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                     color: kPrimaryColor,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.bold,
                   )),
                 ),
               ),
               TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, SignUp1Screen.routeName,
-                        arguments: false);
+                  onPressed: () async {
+                    Navigator.pushNamed(
+                      context,
+                      SignUp1Screen.routeName,
+                      arguments: false
+                    );
                   },
                   child: Container(
                       width: 120 * fem,

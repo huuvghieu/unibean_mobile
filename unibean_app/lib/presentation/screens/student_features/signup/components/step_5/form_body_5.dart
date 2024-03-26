@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/button_sign_up_5.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/content_5.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/textformfield_invited_code.dart';
 
 import '../../../../../../data/datasource/authen_local_datasource.dart';
 import '../../../../../config/constants.dart';
 import '../../../../screens.dart';
+import 'button_sign_up_5.dart';
+import 'content_5.dart';
+import 'textformfield_invited_code.dart';
 
 class FormBody5 extends StatefulWidget {
   const FormBody5({
@@ -99,43 +99,9 @@ class _FormBody5State extends State<FormBody5> {
                   widget: widget,
                   onPressed: () {
                     if (state is CheckInvitedCodeFailed) {
-                      context
-                          .read<ValidationCubit>()
-                          .validateInviteCode(codeController.text)
-                          .then((value) async {
-                        if (value == '') {
-                          final createAuthenModel =
-                              await AuthenLocalDataSource.getCreateAuthen();
-                          createAuthenModel!.inviteCode = codeController.text;
-                          String createAuthenString =
-                              jsonEncode(createAuthenModel);
-                          AuthenLocalDataSource.saveCreateAuthen(
-                              createAuthenString);
-                          Navigator.pushNamed(context, SignUp6Screen.routeName,
-                              arguments: SignUp1Screen.defaultRegister);
-                        } else {
-                          return null;
-                        }
-                      });
+                      _submitForm(context, codeController);
                     } else {
-                      context
-                          .read<ValidationCubit>()
-                          .validateInviteCode(codeController.text)
-                          .then((value) async {
-                        if (value == '') {
-                          final createAuthenModel =
-                              await AuthenLocalDataSource.getCreateAuthen();
-                          createAuthenModel!.inviteCode = codeController.text;
-                          String createAuthenString =
-                              jsonEncode(createAuthenModel);
-                          AuthenLocalDataSource.saveCreateAuthen(
-                              createAuthenString);
-                          Navigator.pushNamed(context, SignUp6Screen.routeName,
-                              arguments: SignUp1Screen.defaultRegister);
-                        } else {
-                          return null;
-                        }
-                      });
+                      _submitForm(context, codeController);
                     }
                   });
             },
@@ -143,5 +109,42 @@ class _FormBody5State extends State<FormBody5> {
         ],
       ),
     );
+  }
+}
+
+void _submitForm(BuildContext context, codeController) async {
+  final authenModel = await AuthenLocalDataSource.getAuthen();
+  if (authenModel == null) {
+    context
+        .read<ValidationCubit>()
+        .validateInviteCode(codeController.text)
+        .then((value) async {
+      if (value == '') {
+        final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
+        createAuthenModel!.inviteCode = codeController.text;
+        String createAuthenString = jsonEncode(createAuthenModel);
+        AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
+        Navigator.pushNamed(context, SignUp6Screen.routeName,
+            arguments: SignUp1Screen.defaultRegister);
+      } else {
+        return null;
+      }
+    });
+  } else {
+    context
+        .read<ValidationCubit>()
+        .validateInviteCode(codeController.text)
+        .then((value) async {
+      if (value == '') {
+        final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
+        verifyAuthenModel!.inviteCode = codeController.text;
+        String verifyAuthenString = jsonEncode(verifyAuthenModel);
+        AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
+        Navigator.pushNamed(context, SignUp6Screen.routeName,
+            arguments: SignUp1Screen.defaultRegister);
+      } else {
+        return null;
+      }
+    });
   }
 }

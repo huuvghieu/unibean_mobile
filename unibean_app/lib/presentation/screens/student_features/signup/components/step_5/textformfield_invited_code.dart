@@ -30,7 +30,7 @@ class TextFormFieldInviteCode extends StatelessWidget {
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
-                fontSize: 17 * ffem,
+                fontSize: 15 * ffem,
                 fontWeight: FontWeight.w700)),
         decoration: InputDecoration(
           labelText: labelText,
@@ -45,7 +45,7 @@ class TextFormFieldInviteCode extends StatelessWidget {
           hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
-                  fontSize: 17 * ffem,
+                  fontSize: 15 * ffem,
                   fontWeight: FontWeight.w700)),
           contentPadding:
               EdgeInsets.symmetric(horizontal: 26 * fem, vertical: 10 * hem),

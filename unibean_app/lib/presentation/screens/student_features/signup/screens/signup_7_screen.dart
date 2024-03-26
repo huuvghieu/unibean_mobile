@@ -5,15 +5,13 @@ import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
 class SignUp7Screen extends StatefulWidget {
   static const String routeName = '/signup_7';
-
-  final String phoneNumber;
-  static Route route({required String phoneNumber}) {
+  static Route route() {
     return MaterialPageRoute(
-        builder: (_) => SignUp7Screen(phoneNumber: phoneNumber),
+        builder: (_) => SignUp7Screen(),
         settings: const RouteSettings(name: routeName));
   }
 
-  const SignUp7Screen({super.key, required this.phoneNumber});
+  const SignUp7Screen({super.key});
 
   @override
   State<SignUp7Screen> createState() => _SignUp7ScreenState();
@@ -25,9 +23,9 @@ class _SignUp7ScreenState extends State<SignUp7Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 7/8';
+      title = 'Bước 7/9';
     } else {
-      title = 'Bước 7/7';
+      title = 'Bước 7/8';
     }
     super.initState();
   }
@@ -45,7 +43,7 @@ class _SignUp7ScreenState extends State<SignUp7Screen> {
         appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        body: Body7(phoneNumber: widget.phoneNumber),
+        body: Body7(),
       ),
     );
   }

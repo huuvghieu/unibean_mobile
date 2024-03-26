@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:unibean_app/data/models/authen_model.dart';
-import 'package:unibean_app/data/models/create_authen_model.dart';
 import 'package:unibean_app/domain/repositories.dart';
 
 import '../../presentation/config/constants.dart';
@@ -43,16 +40,6 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
   @override
   Future<AuthenModel?> loginWithGmail(String idToken) async {
     try {
-      // final Map<String, String> headers = {
-      //   'Content-Type': 'application/json',
-      //   'Location': '${endPoint}/register/google'
-      // };
-      // http.Response response = await http.post(
-      //   Uri.parse('$endPoint/login/google'),
-      //   headers: headers,
-      //   body: jsonEncode(body),
-      // )..f;
-
       Map<String, String> body = {'idToken': idToken};
       http.Request req =
           http.Request('Post', Uri.parse('$endPoint/login/google'))
@@ -70,22 +57,15 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
         String authenString = jsonEncode(this.authenModel);
         AuthenLocalDataSource.saveAuthen(authenString);
         return this.authenModel;
+      } else if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        this.authenModel = AuthenModel.fromJson(result);
+        String authenString = jsonEncode(AuthenModel.fromJson(result));
+        AuthenLocalDataSource.saveAuthen(authenString);
+        AuthenLocalDataSource.saveToken(authenModel.jwt);
+        AuthenLocalDataSource.saveStudentId(authenModel.userModel.userId);
+        return this.authenModel;
       }
-
-      // if (response.statusCode == 200) {
-      //   final result = jsonDecode(utf8.decode(response.bodyBytes));
-      //   this.authenModel = AuthenModel.fromJson(result);
-      //   String authenString = jsonEncode(AuthenModel.fromJson(result));
-      //   AuthenLocalDataSource.saveAuthen(authenString);
-      //   AuthenLocalDataSource.saveToken(authenModel.jwt);
-      //   return this.authenModel;
-      // } else if (response.statusCode == 303) {
-      // final result = jsonDecode(utf8.decode(response.bodyBytes));
-      // this.authenModel = AuthenModel.fromJson(result);
-      // String authenString = jsonEncode(AuthenModel.fromJson(result));
-      // AuthenLocalDataSource.saveAuthen(authenString);
-      // return this.authenModel;
-      // }
       return null;
     } catch (e) {
       print(e);
@@ -136,6 +116,64 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
 
       if (response.statusCode == 201) {
         print(response);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> verifyAccount(VerifyAuthenModel verifyAuthenModel) async {
+    try {
+      final authenModel = await AuthenLocalDataSource.getAuthen();
+      final accountId = authenModel!.userModel.id;
+      final Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json'
+      };
+      var request =
+          http.MultipartRequest('POST', Uri.parse('$endPoint/register/google'));
+
+      //thêm file cho request
+      request.files.add(await http.MultipartFile.fromPath(
+          'StudentCardFront', verifyAuthenModel.studentFrontCard!));
+      request.files.add(await http.MultipartFile.fromPath(
+          'StudentCardBack', verifyAuthenModel.studentBackCard!));
+
+      //thêm headers
+      request.headers.addAll(headers);
+
+      //thêm field cho request
+      request.fields.addAll({
+        'MajorId': verifyAuthenModel.majorId!,
+        'CampusId': verifyAuthenModel.campusId!,
+        'FullName': verifyAuthenModel.fullName!,
+        'Code': verifyAuthenModel.code!,
+        'Gender': verifyAuthenModel.gender.toString(),
+        'InviteCode': verifyAuthenModel.inviteCode!,
+        'Email': verifyAuthenModel.email!,
+        'DateOfBirth': verifyAuthenModel.dateofBirth!,
+        'Phone': verifyAuthenModel.phoneNumber!,
+        'AccountId': accountId,
+        'Address': '',
+      });
+
+      //gửi request
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        print(response);
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        this.authenModel = AuthenModel.fromJson(result);
+        String authenString = jsonEncode(AuthenModel.fromJson(result));
+        AuthenLocalDataSource.saveAuthen(authenString);
+        AuthenLocalDataSource.saveToken(authenModel.jwt);
+        AuthenLocalDataSource.saveStudentId(authenModel.userModel.userId);
         return true;
       } else {
         return false;

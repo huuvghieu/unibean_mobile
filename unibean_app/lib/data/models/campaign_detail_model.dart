@@ -3,7 +3,7 @@ import 'package:unibean_app/domain/entities.dart';
 class CampaignDetailModel extends CampaignDetail {
   CampaignDetailModel(
       {required super.brandLogo,
-      required super.numberOfParticipants,
+      required super.numberOfItemsUsed,
       required super.totalCost,
       required super.usageCost,
       required super.id,
@@ -62,7 +62,7 @@ class CampaignDetailModel extends CampaignDetail {
       currentState: json['currentState'],
       currentStateName: json['currentStateName'],
       status: json['status'],
-      numberOfParticipants: json['numberOfParticipants'],
+      numberOfItemsUsed: json['numberOfItemsUsed'],
       usageCost: json['usageCost'],
       totalCost: json['totalCost'],
     );
@@ -97,7 +97,7 @@ class CampaignDetailModel extends CampaignDetail {
     data['currentState'] = this.currentState;
     data['currentStateName'] = this.currentStateName;
     data['status'] = this.status;
-    data['numberOfParticipants'] = this.numberOfParticipants;
+    data['numberOfItemsUsed'] = this.numberOfItemsUsed;
     data['usageCost'] = this.usageCost;
     data['totalCost'] = this.totalCost;
     return data;

@@ -22,7 +22,7 @@ class SignUpScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: 'Bước 1/7'),
+        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: 'Bước 1/9'),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
         body: const Body(),

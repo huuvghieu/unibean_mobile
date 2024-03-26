@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/models.dart';
-import 'package:unibean_app/presentation/screens/student_features/brand_detail/brand_detail_screen.dart';
-
+import 'package:unibean_app/presentation/widgets/shimmer_widget.dart';
 import '../blocs/blocs.dart';
 import '../screens/screens.dart';
 
@@ -26,7 +25,7 @@ class BrandCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        if (roleState is Unknown) {
+        if (roleState is Unverified) {
           Navigator.pushNamed(context, LoginScreen.routeName);
         } else {
           Navigator.pushNamed(context, BrandDetailScreen.routeName,
@@ -46,6 +45,12 @@ class BrandCard extends StatelessWidget {
                 child: Image.network(
                   brandModel.logo,
                   fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return ShimmerWidget.rectangular(height: 80 * hem);
+                  },
                   errorBuilder: (context, error, stackTrace) {
                     return Image.asset(
                       'assets/images/image-404.jpg',

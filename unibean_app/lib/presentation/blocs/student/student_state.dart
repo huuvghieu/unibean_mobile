@@ -39,11 +39,13 @@ final class StudentTransactionLoading extends StudentState {
 
 final class StudentTransactionsLoaded extends StudentState {
   final List<TransactionModel> transactions;
+  final bool hasReachedMax;
 
-  StudentTransactionsLoaded({required this.transactions});
+  StudentTransactionsLoaded(
+      {required this.transactions, this.hasReachedMax = false});
 
   @override
-  List<Object?> get props => [transactions];
+  List<Object?> get props => [transactions, hasReachedMax];
 }
 
 final class StudentOrderLoading extends StudentState {
@@ -58,4 +60,32 @@ final class StudentOrdersLoaded extends StudentState {
 
   @override
   List<Object?> get props => [orderModels];
+}
+
+final class StudentUpding extends StudentState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StudentUpdateSuccess extends StudentState {
+  final StudentModel studentModel;
+
+  StudentUpdateSuccess({required this.studentModel});
+
+  @override
+  List<Object?> get props => [studentModel];
+}
+
+final class StudentVoucherItemLoading extends StudentState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StudentVoucherItemLoaded extends StudentState {
+  final VoucherStudentItemModel voucherStudentItemModel;
+
+  StudentVoucherItemLoaded({required this.voucherStudentItemModel});
+
+  @override
+  List<Object?> get props => [voucherStudentItemModel];
 }

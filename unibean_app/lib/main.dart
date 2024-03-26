@@ -6,8 +6,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
-import 'package:unibean_app/presentation/blocs/cart/cart_bloc.dart';
-import 'package:unibean_app/presentation/blocs/station/station_bloc.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';

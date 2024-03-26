@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/data/models.dart';
+import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
 import '../screens/screens.dart';
+import '../screens/store_features/landing_screen/landing_store_screen.dart';
 
 class AppRouter {
   // static final LandingScreenBloc landingScreenBloc = LandingScreenBloc();
@@ -11,6 +13,10 @@ class AppRouter {
           builder: (_) => const LandingScreen(),
         );
 
+      case '/landing-screen-store':
+        return MaterialPageRoute(
+          builder: (_) => const LandingStoreScreen(),
+        );
       case SplashScreen.routeName:
         return SplashScreen.route();
 
@@ -45,10 +51,16 @@ class AppRouter {
         return SignUp6Screen.route();
 
       case SignUp7Screen.routeName:
-        return SignUp7Screen.route(phoneNumber: settings.arguments as String);
+        return SignUp7Screen.route();
 
       case SignUp8Screen.routeName:
-        return SignUp8Screen.route();
+        return SignUp8Screen.route(phoneNumber: settings.arguments as String);
+
+      case SignUp9Screen.routeName:
+        return SignUp9Screen.route();
+
+      case UnverifiedScreen.routeName:
+        return UnverifiedScreen.route();
 
       case ProfileTransactionHistoryScreen.routeName:
         return ProfileTransactionHistoryScreen.route(
@@ -66,6 +78,22 @@ class AppRouter {
       case ProfileOrderScreen.routeName:
         return ProfileOrderScreen.route(id: settings.arguments as String);
 
+      case ProfileDetailScreen.routeName:
+        return ProfileDetailScreen.route(
+            studentModel: settings.arguments as StudentModel);
+
+      case ProfileUpdateDetailScreen.routeName:
+        return ProfileUpdateDetailScreen.route(
+            studentModel: settings.arguments as StudentModel);
+
+      case ProfileVerificationScreen.routeName:
+        return ProfileVerificationScreen.route(
+            studentModel: settings.arguments as StudentModel);
+
+      case UpdateVerificationScreen.routeName:
+        return UpdateVerificationScreen.route(
+            studentModel: settings.arguments as StudentModel);
+
       case CampaignScreen.routeName:
         return CampaignScreen.route();
 
@@ -73,7 +101,8 @@ class AppRouter {
         return CampaignListScreen.route();
 
       case CampaignDetailScreen.routeName:
-        return CampaignDetailScreen.route(id: settings.arguments as String);
+        return CampaignDetailScreen.route(
+            campaignModel: settings.arguments as CampaignModel);
 
       case CampaignVoucherScreen.routeName:
         List<dynamic> args = settings.arguments as List<dynamic>;
@@ -93,6 +122,10 @@ class AppRouter {
       case VoucherListScreen.routeName:
         return VoucherListScreen.route(
             voucherModels: settings.arguments as List<VoucherModel>);
+
+      case VoucherItemDetailScreen.routeName:
+        return VoucherItemDetailScreen.route(
+            voucherStudent: settings.arguments as VoucherStudentModel);
 
       case RedeemVoucherScreen.routeName:
         List<dynamic> args = settings.arguments as List<dynamic>;

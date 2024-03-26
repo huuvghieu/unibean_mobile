@@ -45,30 +45,30 @@ class TransactionCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 20 * fem),
+                    padding: EdgeInsets.only(left: 10 * fem),
                     child: Text(
                       '${transaction.typeName}',
                       style: GoogleFonts.openSans(
-                          fontSize: 14 * ffem,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 15 * ffem,
+                          fontWeight: FontWeight.bold,
                           height: 1.3625 * ffem / fem,
-                          color: Colors.black),
+                          color: kPrimaryColor),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 20 * fem),
-                    child: Text('- ${transaction.name}',
+                    padding: EdgeInsets.only(left: 10 * fem),
+                    child: Text('${transaction.name}',
                         style: GoogleFonts.openSans(
                             fontSize: 14 * ffem,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                             height: 1.3625 * ffem / fem,
                             color: Colors.black)),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 20 * fem, top: 5 * hem),
+                    padding: EdgeInsets.only(left: 10 * fem, top: 5 * hem),
                     child: Text(_formatDatetime(transaction.dateCreated),
                         style: GoogleFonts.openSans(
-                            fontSize: 10 * ffem,
+                            fontSize: 12 * ffem,
                             fontWeight: FontWeight.w600,
                             height: 1.3625 * ffem / fem,
                             color: kLowTextColor)),
@@ -77,7 +77,7 @@ class TransactionCard extends StatelessWidget {
               ),
             ),
             Positioned(
-                right: 5 * fem,
+                right: 20 * fem,
                 top: 10 * hem,
                 child: _buildAmount(fem, hem, ffem, transaction))
           ],
@@ -88,18 +88,19 @@ class TransactionCard extends StatelessWidget {
 Widget _buildAmount(
     double fem, double hem, double ffem, TransactionModel transaction) {
   print(transaction.amount < 0);
-  if (transaction.walletTypeId == '1' && transaction.amount > 0) {
+  if (transaction.walletTypeId == 1 && transaction.amount > 0) {
     return Container(
-      width: 100 * fem,
       height: 32 * hem,
+      padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
           color: kPrimaryColor, borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             '${formatter.format(transaction.amount)}',
+            textAlign: TextAlign.center,
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
               fontSize: 14 * ffem,
@@ -119,10 +120,10 @@ Widget _buildAmount(
         ],
       ),
     );
-  } else if (transaction.walletTypeId == '2' && transaction.amount > 0) {
+  } else if (transaction.walletTypeId == 2 && transaction.amount > 0) {
     return Container(
-      width: 100 * fem,
       height: 32 * hem,
+      padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
           color: kPrimaryColor, borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
@@ -140,20 +141,20 @@ Widget _buildAmount(
           ),
           Padding(
             padding:
-                EdgeInsets.only(left: 2 * fem, top: 4 * hem, bottom: 2 * hem),
+                EdgeInsets.only(left: 5 * fem, top: 4 * hem, bottom: 2 * hem),
             child: SvgPicture.asset(
               'assets/icons/red-bean-icon.svg',
-              width: 24 * fem,
-              height: 22 * fem,
+              width: 22 * fem,
+              height: 20 * fem,
             ),
           )
         ],
       ),
     );
-  } else if (transaction.walletTypeId == '1' && transaction.amount < 0) {
+  } else if (transaction.walletTypeId == 1 && transaction.amount < 0) {
     return Container(
-      width: 100 * fem,
       height: 32 * hem,
+      padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
           color: Colors.red, borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
@@ -183,8 +184,8 @@ Widget _buildAmount(
     );
   } else {
     return Container(
-      width: 100 * fem,
       height: 32 * hem,
+      padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
           color: Colors.red, borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
@@ -202,11 +203,11 @@ Widget _buildAmount(
           ),
           Padding(
             padding:
-                EdgeInsets.only(left: 2 * fem, top: 4 * hem, bottom: 2 * hem),
+                EdgeInsets.only(left: 5 * fem, top: 4 * hem, bottom: 2 * hem),
             child: SvgPicture.asset(
               'assets/icons/red-bean-icon.svg',
-              width: 24 * fem,
-              height: 22 * fem,
+              width: 22 * fem,
+              height: 20 * fem,
             ),
           )
         ],

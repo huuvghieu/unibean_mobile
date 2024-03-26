@@ -48,7 +48,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
-                fontSize: 17 * widget.ffem,
+                fontSize: 15 * widget.ffem,
                 fontWeight: FontWeight.w700)),
         decoration: InputDecoration(
           suffixIcon: IconButton(
@@ -75,7 +75,7 @@ class _TextFormFieldPasswordState extends State<TextFormFieldPassword> {
           hintStyle: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kLowTextColor,
-                  fontSize: 17 * widget.ffem,
+                  fontSize: 15 * widget.ffem,
                   fontWeight: FontWeight.w700)),
           contentPadding: EdgeInsets.symmetric(
               horizontal: 26 * widget.fem, vertical: 10 * widget.hem),

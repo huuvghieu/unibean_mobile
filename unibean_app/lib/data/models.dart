@@ -25,3 +25,5 @@ export 'models/order_model.dart';
 export 'models/cart_model.dart';
 export 'models/product_detail_model.dart';
 export 'models/station_model.dart';
+export 'models/verify_authen_model.dart';
+export 'models/voucher_student_item_model.dart';

@@ -4,10 +4,6 @@ sealed class CampusState extends Equatable {
   const CampusState();
 }
 
-final class CampusInitial extends CampusState {
-  @override
-  List<Object?> get props => [];
-}
 
 final class CampusLoading extends CampusState {
   @override

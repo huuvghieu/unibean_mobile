@@ -47,8 +47,8 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                   child: SearchBar(
                     backgroundColor: MaterialStateProperty.all(Colors.white),
                     controller: controller,
-                    padding: const MaterialStatePropertyAll<EdgeInsets>(
-                        EdgeInsets.symmetric(horizontal: 16.0)),
+                    // padding: const MaterialStatePropertyAll<EdgeInsets>(
+                    //     EdgeInsets.symmetric(horizontal: 16.0)),
                     onTap: () {
                       controller.openView();
                     },

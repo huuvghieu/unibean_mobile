@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
-class UpLoadFrontCard extends StatelessWidget {
-  const UpLoadFrontCard(
+class UpLoadBackCard extends StatelessWidget {
+  const UpLoadBackCard(
       {super.key,
       required this.fem,
       required this.hem,
@@ -17,25 +17,24 @@ class UpLoadFrontCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: 10 * fem,
-      bottom: 18 * fem,
+    return InkWell(
+      onTap: onPressed,
       child: Container(
-        width: 120 * fem,
-        height: 30 * hem,
+        width: 100 * fem,
+        height: 35 * hem,
         decoration: BoxDecoration(
-          border: Border.all(color: kPrimaryColor, width: 2),
-          borderRadius: BorderRadius.circular(5 * fem),
+          border: Border.all(color: kPrimaryColor, width: 1),
+          borderRadius: BorderRadius.circular(10 * fem),
         ),
-        child: TextButton(
-          onPressed: onPressed,
+        child: Center(
           child: Text(
-            'Tải hình mặt trước',
+            'Thêm ảnh',
+            textAlign: TextAlign.center,
             style: GoogleFonts.openSans(
               textStyle: TextStyle(
                   color: kPrimaryColor,
-                  fontSize: 10 * ffem,
-                  fontWeight: FontWeight.w700),
+                  fontSize: 14 * ffem,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         ),

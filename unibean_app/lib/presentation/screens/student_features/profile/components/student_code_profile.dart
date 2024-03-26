@@ -37,8 +37,7 @@ class StudentCodeProfile extends StatelessWidget {
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     fontSize: 13 * ffem,
-                    height: 1.3625 * ffem / fem,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.normal,
                     color: Colors.black)),
           ),
         ],

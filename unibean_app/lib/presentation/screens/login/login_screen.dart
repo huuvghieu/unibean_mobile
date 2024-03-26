@@ -3,13 +3,6 @@ import 'package:unibean_app/presentation/screens/login/components/body.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login';
-
-  // static Route route() {
-  //   return MaterialPageRoute(
-  //     builder: (_) => const LoginScreen(),
-  //     settings: const RouteSettings(name: routeName),
-  //   );
-  // }
   static Route route() {
     return PageRouteBuilder(
         pageBuilder: (_, __, ___) => LoginScreen(),

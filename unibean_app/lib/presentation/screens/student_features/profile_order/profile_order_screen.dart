@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'components/body.dart';
 
 class ProfileOrderScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class ProfileOrderScreen extends StatelessWidget {
                       image: AssetImage('assets/images/background_splash.png'),
                       fit: BoxFit.cover)),
             ),
-            toolbarHeight: 80 * hem,
+            toolbarHeight: 50 * hem,
             title: Container(
               child: Text(
                 'Đơn hàng của bạn',
@@ -54,29 +55,14 @@ class ProfileOrderScreen extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_back_rounded,
                   color: Colors.white,
-                  size: 35 * fem,
+                  size: 25 * fem,
                 ),
               ),
             ),
             leadingWidth: 50 * fem,
-            actions: [
-              InkWell(
-                onTap: () {
-                  // _filterModalBottomSheet(context);
-                },
-                child: Container(
-                  margin: EdgeInsets.only(right: 20 * fem),
-                  width: 25 * fem,
-                  height: 25 * fem,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/filter-icon.png'),
-                    fit: BoxFit.cover,
-                  )),
-                ),
-              )
-            ],
+           
           ),
+          backgroundColor: klighGreyColor,
           body: Body(id: studentId)),
     );
   }

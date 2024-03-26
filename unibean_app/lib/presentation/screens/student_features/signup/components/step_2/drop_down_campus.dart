@@ -70,7 +70,7 @@ class _DropDownCampusState extends State<DropDownCampus> {
       style: GoogleFonts.openSans(
           textStyle: TextStyle(
               color: Colors.black,
-              fontSize: 14 * widget.ffem,
+              fontSize: 15 * widget.ffem,
               fontWeight: FontWeight.w700)),
       decoration: InputDecoration(
         labelText: widget.labelText,
@@ -85,7 +85,7 @@ class _DropDownCampusState extends State<DropDownCampus> {
         hintStyle: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: kLowTextColor,
-                fontSize: 17 * widget.ffem,
+                fontSize: 15 * widget.ffem,
                 fontWeight: FontWeight.w700)),
         contentPadding: EdgeInsets.symmetric(
             horizontal: 26 * widget.fem, vertical: 10 * widget.hem),

@@ -101,17 +101,11 @@ class _FormBody3State extends State<FormBody3> {
           TextButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                final createAuthenModel =
-                    await AuthenLocalDataSource.getCreateAuthen();
-                createAuthenModel!.gender = int.parse(genderController.text);
-                createAuthenModel.dateofBirth = widget.dobController.text;
-                String createAuthenString = jsonEncode(createAuthenModel);
-                AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
-                Navigator.pushNamed(context, SignUp4Screen.routeName);
+                _submitForm(context, genderController);
               }
             },
             child: Container(
-              width: 300 * widget.fem,
+              width: 220 * widget.fem,
               height: 45 * widget.hem,
               decoration: BoxDecoration(
                   color: kPrimaryColor,
@@ -132,5 +126,24 @@ class _FormBody3State extends State<FormBody3> {
         ],
       ),
     );
+  }
+
+  void _submitForm(BuildContext context, genderController) async {
+    final authenModel = await AuthenLocalDataSource.getAuthen();
+    if (authenModel == null) {
+      final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
+      createAuthenModel!.gender = int.parse(genderController.text);
+      createAuthenModel.dateofBirth = widget.dobController.text;
+      String createAuthenString = jsonEncode(createAuthenModel);
+      AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
+      Navigator.pushNamed(context, SignUp4Screen.routeName);
+    } else {
+      final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
+      verifyAuthenModel!.gender = int.parse(genderController.text);
+      verifyAuthenModel.dateofBirth = widget.dobController.text;
+      String verifyAuthenString = jsonEncode(verifyAuthenModel);
+      AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
+      Navigator.pushNamed(context, SignUp4Screen.routeName);
+    }
   }
 }

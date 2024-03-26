@@ -29,8 +29,8 @@ class CusNavBar extends StatelessWidget {
                 var index = NavItem.navItems.indexOf(item);
                 if (index == 1) {
                   return Container(
-                    width: 55 * fem,
-                    margin: EdgeInsets.only(top: 1 * hem, right: 40 * fem),
+                    width: 51 * fem,
+                    margin: EdgeInsets.only(top: 0 * hem, right: 40 * fem),
                     padding: EdgeInsets.only(top: 15.2 * hem),
                     decoration: BoxDecoration(
                         border: Border(
@@ -75,7 +75,7 @@ class CusNavBar extends StatelessWidget {
                 } else if (index == 2) {
                   return Container(
                     width: 50 * fem,
-                    margin: EdgeInsets.only(top: 1 * hem, left: 70 * fem),
+                    margin: EdgeInsets.only(top: 0 * hem, left: 70 * fem),
                     padding: EdgeInsets.only(top: 15.5 * hem),
                     decoration: BoxDecoration(
                         border: Border(
@@ -93,14 +93,14 @@ class CusNavBar extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: 20 * fem,
-                            height: 20 * fem,
+                            width: 22 * fem,
+                            height: 22 * fem,
                             child: state.tabIndex == index
                                 ? item.icon
                                 : item.icon2,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 1 * hem),
+                            padding: EdgeInsets.only(top: 0 * hem),
                             child: Text(
                               item.title,
                               style: GoogleFonts.openSans(
@@ -121,7 +121,7 @@ class CusNavBar extends StatelessWidget {
                 return Container(
                   width: 50 * fem,
                   margin: EdgeInsets.only(
-                      top: 1 * hem, left: 5 * fem, right: 5 * fem),
+                      top: 0 * hem, left: 5 * fem, right: 5 * fem),
                   padding: EdgeInsets.only(top: 15 * hem),
                   decoration: BoxDecoration(
                       border: Border(

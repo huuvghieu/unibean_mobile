@@ -6,10 +6,11 @@ import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign_detail/components/campaign_voucher_list.dart';
 
 import '../../../../widgets/shimmer_widget.dart';
 import 'campaign_detail_showdal.dart';
+import 'campaign_store_card.dart';
+import 'campaign_voucher_list.dart';
 import 'detail_showdal_bottom.dart';
 
 class Body extends StatelessWidget {
@@ -25,211 +26,282 @@ class Body extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
-    return BlocProvider(
-      create: (context) =>
-          CampaignBloc(campaignRepository: context.read<CampaignRepository>())
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CampaignBloc(
+              campaignRepository: context.read<CampaignRepository>())
             ..add(LoadCampaignById(id: id)),
+        ),
+        BlocProvider(
+          create: (context) => CampaignStoreBloc(
+              campaignRepository: context.read<CampaignRepository>())
+            ..add(LoadCampaignStoreById(id: id)),
+        ),
+      ],
       child: BlocBuilder<CampaignBloc, CampaignState>(
         builder: (context, state) {
           if (state is CampaignLoading) {
             return buildCampaignDetailShimmer(fem, hem);
           } else if (state is CampaignByIdLoaded) {
-            return Stack(
-              children: [
-                Positioned(
-                  top: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: Container(
-                    height: 200 * hem,
-                    child: Image.network(
-                      state.campaignDetailModel.image,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/images/background_splash.png',
-                          fit: BoxFit.cover,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: AppBar(
-                    forceMaterialTransparency: true,
-                    elevation: 0,
-                    toolbarHeight: 80 * hem,
-                    leading: Container(
-                      margin: EdgeInsets.only(left: 20 * fem),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+            var campaignDetailModel = state.campaignDetailModel;
+            return CustomScrollView(
+              slivers: [
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                  Stack(
+                    children: [
+                      Column(
                         children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.arrow_back_rounded,
-                              color: Colors.white,
-                              size: 35 * fem,
+                          Container(
+                            height: 200 * hem,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(
+                              state.campaignDetailModel.image,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return ShimmerWidget.rectangular(
+                                    height: 200 * hem);
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/background_splash.png',
+                                  fit: BoxFit.cover,
+                                );
+                              },
                             ),
                           ),
+                          SizedBox(
+                            height: 100 * hem,
+                          )
                         ],
                       ),
-                    ),
-                    leadingWidth: double.infinity,
-                  ),
-                ),
-                Positioned(
-                  top: 160 * hem,
-                  left: 0 * fem,
-                  right: 0 * fem,
-                  child: Container(
-                    height: 150 * hem,
-                    margin: EdgeInsets.only(right: 15 * fem, left: 15 * fem),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: kPrimaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color(0x0c000000),
-                              offset: Offset(0 * fem, 10 * fem),
-                              blurRadius: 5 * fem)
-                        ]),
-                    width: MediaQuery.of(context).size.width,
-                    constraints: BoxConstraints(maxHeight: double.infinity),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 300 * fem,
-                          child: Text(
-                            '${state.campaignDetailModel.campaignName}',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                              fontSize: 18 * ffem,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700,
-                            )),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10 * hem,
-                        ),
-                        SizedBox(
-                          width: 240 * fem,
-                          child: Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10 * hem,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10 * fem),
-                              child: Container(
-                                height: 35 * hem,
-                                width: 35 * fem,
-                                child: Image.network(
-                                  state.campaignDetailModel.brandLogo,
-                                  fit: BoxFit.fill,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      'assets/images/image-404.jpg',
-                                    );
-                                  },
+                      Positioned(
+                        top: 140 * hem,
+                        left: 0 * fem,
+                        right: 0 * fem,
+                        child: Container(
+                          height: 140 * hem,
+                          margin:
+                              EdgeInsets.only(right: 15 * fem, left: 15 * fem),
+                          padding:
+                              EdgeInsets.only(top: 5 * hem, bottom: 5 * hem),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: kPrimaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0x0c000000),
+                                    offset: Offset(0 * fem, 10 * fem),
+                                    blurRadius: 5 * fem)
+                              ]),
+                          width: MediaQuery.of(context).size.width,
+                          constraints:
+                              BoxConstraints(maxHeight: double.infinity),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 300 * fem,
+                                child: Text(
+                                  '${state.campaignDetailModel.campaignName}',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.openSans(
+                                      textStyle: TextStyle(
+                                    fontSize: 18 * ffem,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                  )),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5 * fem,
-                            ),
-                            Text(
-                              '${state.campaignDetailModel.brandName}',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
-                                fontSize: 16 * ffem,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                              )),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 240 * fem,
+                                child: Divider(
+                                  color: Colors.grey,
+                                  thickness: 1,
+                                ),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(10 * fem),
+                                    child: Container(
+                                      height: 35 * hem,
+                                      width: 35 * fem,
+                                      child: Image.network(
+                                        state.campaignDetailModel.brandLogo,
+                                        fit: BoxFit.fill,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/image-404.jpg',
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5 * fem,
+                                  ),
+                                  Text(
+                                    '${state.campaignDetailModel.brandName}',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                      fontSize: 16 * ffem,
+                                      color: klowTextGrey,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-                Positioned(
-                  top: 320 * hem,
-                  left: 0,
-                  right: 0,
-                  child: CampaignDetailShowdal(
+                  CampaignDetailShowdal(
                     fem: fem,
                     hem: hem,
                     ffem: ffem,
+                    campaignDetailModel: state.campaignDetailModel,
                     onTap: () {
                       _detailModelBottomSheet(
                           context, state.campaignDetailModel);
                     },
                   ),
-                ),
-                Positioned(
-                  top: 440 * hem,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 16 * fem),
+                  SizedBox(
+                    height: 10 * hem,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 15 * fem, left: 15 * fem),
+                    padding: EdgeInsets.only(
+                        right: 10 * fem,
+                        left: 10 * fem,
+                        top: 10 * hem,
+                        bottom: 10 * hem),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: BlocBuilder<CampaignStoreBloc, CampaignStoreState>(
+                      builder: (context, state) {
+                        if (state is CampaignStoreLoading) {
+                          return ShimmerWidget.rectangular(
+                            height: 120 * hem,
+                          );
+                        } else if (state is CampaignStoreByIdLoaded) {
+                          var numberOfStores = state.campaignStores.length;
+                         
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  numberOfStores == 1
+                                      ? Text(
+                                          'Cửa hàng áp dụng',
+                                          style: GoogleFonts.openSans(
+                                              textStyle: TextStyle(
+                                            fontSize: 16.5 * ffem,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                          )),
+                                        )
+                                      : Text(
+                                          'Cửa hàng áp dụng (${numberOfStores})',
+                                          style: GoogleFonts.openSans(
+                                              textStyle: TextStyle(
+                                            fontSize: 16.5 * ffem,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                          )),
+                                        ),
+                                  numberOfStores == 1
+                                      ? Container()
+                                      : GestureDetector(
+                                          onTap: () {},
+                                          child: Text(
+                                            'Xem tất cả',
+                                            style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                              fontSize: 14 * ffem,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                            )),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10 * hem,
+                              ),
+                              Container(
+                                height: 90 * hem,
+                                child: ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: 1,
+                                  itemBuilder: (context, index) {
+                                    var storeModel =
+                                        state.campaignStores[index];
+                                    return CampaignStoreCard(
+                                        fem: fem,
+                                        hem: hem,
+                                        campaignDetailModel:
+                                            campaignDetailModel,
+                                        storeModel: storeModel,
+                                        ffem: ffem);
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20 * hem,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: 15 * fem, left: 25 * fem, bottom: 10 * hem),
                     child: Text(
-                      'ƯU ĐÃI TRONG CHIẾN DỊCH',
+                      'Ưu đãi trong chiến dịch',
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                        fontSize: 16 * ffem,
+                        fontSize: 16.5 * ffem,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                       )),
                     ),
                   ),
-                ),
-                Positioned(
-                    top: 470 * hem,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width,
-                        maxHeight: MediaQuery.of(context).size.height,
-                      ),
-                      child: CustomScrollView(
-                        slivers: [
-                          SliverList(
-                            delegate: SliverChildListDelegate([
-                              CampaignVoucherList(
-                                  fem: fem,
-                                  hem: hem,
-                                  ffem: ffem,
-                                  campaignDetallModeil:
-                                      state.campaignDetailModel)
-                            ]),
-                          )
-                        ],
-                      ),
-                    ))
+                  CampaignVoucherList(
+                      fem: fem,
+                      hem: hem,
+                      ffem: ffem,
+                      campaignDetallModeil: state.campaignDetailModel),
+                  SizedBox(
+                    height: 20 * hem,
+                  )
+                ]))
               ],
             );
           }
@@ -260,7 +332,7 @@ void _detailModelBottomSheet(context, campaignModel) {
           height: 500 * hem,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15 * fem),
-              color: Colors.white),
+              color: klighGreyColor),
           child: DetailShowdalBottom(
             hem: hem,
             fem: fem,
@@ -328,4 +400,15 @@ String changeFormateDate(String dateTime) {
   DateTime formatDate = DateTime.parse(dateTime);
   String formattedDate = DateFormat('dd/MM/yyyy').format(formatDate);
   return formattedDate;
+}
+
+String formatTime(String inputTimeString) {
+  // Parse the input time string
+  DateTime parsedTime = DateTime.parse("2022-01-01 $inputTimeString");
+
+  // Format the DateTime object to a string with "h:mm" format
+  String formattedTime =
+      "${parsedTime.hour.toString().padLeft(2, '0')}:${parsedTime.minute.toString().padLeft(2, '0')}";
+
+  return formattedTime;
 }

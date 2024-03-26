@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+import 'package:unibean_app/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_7/button_signup_7.dart';
 
 import '../../../../../../data/datasource/authen_local_datasource.dart';
 
@@ -38,6 +38,28 @@ class _OTPFormState extends State<OTPForm> {
   String? errorString;
   @override
   Widget build(BuildContext context) {
+    final authState = context.watch<AuthenticationBloc>().state;
+    var buttonWidget = (switch (authState) {
+      AuthenticationInitial() => _buildButton(),
+      // ignore: unused_local_variable
+      AuthenticationFailed(error: final error) => _buildButton(),
+      AuthenticationSuccess() => _buildButton(),
+      AuthenticationStoreSuccess() => _buildButton(),
+      AuthenticationInProcess() => _buildButtonLoading(),
+      AuthenticationInProcessByGmail() => _buildButton(),
+    });
+
+    buttonWidget = BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationSuccess) {
+          // context.read<RoleAppBloc>().add(RoleAppStart());
+          Navigator.pushNamedAndRemoveUntil(context, SignUp9Screen.routeName,
+              (Route<dynamic> route) => false);
+        }
+      },
+      child: buttonWidget,
+    );
+
     return Form(
       key: _formKey,
       child: Column(
@@ -104,57 +126,7 @@ class _OTPFormState extends State<OTPForm> {
           SizedBox(
             height: 30 * widget.hem,
           ),
-          BlocBuilder<VerificationCubit, VerificationState>(
-            builder: (context, state) {
-              return ButtonSignUp7(
-                widget: widget,
-                onPressed: () {
-                  if (state is OTPVerificationFailed) {
-                    setState(() {
-                      errorString = state.error;
-                    });
-                    if (_formKey.currentState!.validate()) {
-                      context
-                          .read<VerificationCubit>()
-                          .verifyOTP(pinController.text)
-                          .then((value) async {
-                        if (value!) {
-                          final createAuthenModel =
-                              await AuthenLocalDataSource.getCreateAuthen();
-                          context.read<AuthenticationBloc>().add(
-                              RegisterAccount(
-                                  createAuthenModel: createAuthenModel!));
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              SignUp8Screen.routeName,
-                              (Route<dynamic> route) => false);
-                        } else {}
-                      });
-                    }
-                  } else {
-                    if (_formKey.currentState!.validate()) {
-                      context
-                          .read<VerificationCubit>()
-                          .verifyOTP(pinController.text)
-                          .then((value) async {
-                        if (value!) {
-                          final createAuthenModel =
-                              await AuthenLocalDataSource.getCreateAuthen();
-                          context.read<AuthenticationBloc>().add(
-                              RegisterAccount(
-                                  createAuthenModel: createAuthenModel!));
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              SignUp8Screen.routeName,
-                              (Route<dynamic> route) => false);
-                        } else {}
-                      });
-                    }
-                  }
-                },
-              );
-            },
-          ),
+          buttonWidget,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -176,7 +148,7 @@ class _OTPFormState extends State<OTPForm> {
                     phoneNumber: widget.phoneNumber,
                     verificationCompleted: (PhoneAuthCredential credential) {
                       Future.delayed(const Duration(seconds: 2), () {
-                        Navigator.pushNamed(context, SignUp7Screen.routeName,
+                        Navigator.pushNamed(context, SignUp8Screen.routeName,
                             arguments: widget.phoneNumber);
                       });
                     },
@@ -214,5 +186,132 @@ class _OTPFormState extends State<OTPForm> {
         ],
       ),
     );
+  }
+
+  Widget _buildButton() {
+    return BlocBuilder<VerificationCubit, VerificationState>(
+      builder: (context, state) {
+        return TextButton(
+          onPressed: () {
+            if (state is OTPVerificationFailed) {
+              setState(() {
+                errorString = state.error;
+              });
+              if (_formKey.currentState!.validate()) {
+                _submitForm(context, pinController);
+              }
+            } else {
+              if (_formKey.currentState!.validate()) {
+                _submitForm(context, pinController);
+              }
+            }
+          },
+          child: Container(
+            width: 300 * widget.fem,
+            height: 45 * widget.hem,
+            decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.circular(23 * widget.fem)),
+            child: BlocBuilder<VerificationCubit, VerificationState>(
+              builder: (context, state) {
+                if (state is VerificationLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
+                }
+                return Center(
+                  child: Text(
+                    'Tiếp tục',
+                    style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                            fontSize: 17 * widget.ffem,
+                            fontWeight: FontWeight.w600,
+                            height: 1.3625 * widget.ffem / widget.fem,
+                            color: Colors.white)),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildButtonLoading() {
+    return BlocBuilder<VerificationCubit, VerificationState>(
+      builder: (context, state) {
+        return TextButton(
+          onPressed: () {
+            if (state is OTPVerificationFailed) {
+              setState(() {
+                errorString = state.error;
+              });
+              if (_formKey.currentState!.validate()) {
+                _submitForm(context, pinController);
+              }
+            } else {
+              if (_formKey.currentState!.validate()) {
+                _submitForm(context, pinController);
+              }
+            }
+          },
+          child: Container(
+            width: 300 * widget.fem,
+            height: 45 * widget.hem,
+            decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.circular(23 * widget.fem)),
+            child: BlocBuilder<VerificationCubit, VerificationState>(
+              builder: (context, state) {
+                if (state is VerificationLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+void _submitForm(BuildContext context, pinController) async {
+  final authenModel = await AuthenLocalDataSource.getVerifyAuthen();
+  if (authenModel == null) {
+    context
+        .read<VerificationCubit>()
+        .verifyOTP(pinController.text)
+        .then((value) async {
+      if (value!) {
+        final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
+        context
+            .read<AuthenticationBloc>()
+            .add(RegisterAccount(createAuthenModel: createAuthenModel!));
+      } else {}
+    });
+  } else {
+    context
+        .read<VerificationCubit>()
+        .verifyOTP(pinController.text)
+        .then((value) async {
+      if (value!) {
+        final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
+        context
+            .read<AuthenticationBloc>()
+            .add(VerifyAccount(verifyAuthenModel: verifyAuthenModel!));
+      } else {}
+    });
   }
 }

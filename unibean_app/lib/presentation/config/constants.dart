@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 // import 'package:hive/hive.dart';
 
@@ -9,10 +10,12 @@ const kPrimaryColor = Color(0xff2ecc71);
 const klightPrimaryColor = Color(0xff83f28f);
 const kDarkPrimaryColor = Color(0xff1d4d4f);
 const kLowTextColor = Color(0xff989da3);
+const klowTextGrey = Color(0xfff4b5563);
 const kbgWhiteColor = Color.fromARGB(255, 246, 242, 250);
 const klighGreyColor = Color(0xffececf1);
 const kErrorTextColor = Color(0xffba1c1c);
-
+const kbgYellow = Color(0xfffffbe6);
+const kYellow = Color(0xfffaad14);
 //strings
 const String baseURL = 'https://unibean-api.azurewebsites.net/api/v1/';
 
@@ -45,3 +48,6 @@ String changeFormateDate(String dateTime) {
 
 //format
 var formatter = NumberFormat.decimalPattern();
+
+//others
+final GoogleSignIn googleSignIn = GoogleSignIn();

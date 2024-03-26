@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/form_6.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_8/otp_form.dart';
 
-import '../../../../../config/constants.dart';
-import '../../../../../cubits/validation/validation_cubit.dart';
-
-class ButtonSignUp6 extends StatelessWidget {
-  const ButtonSignUp6(
+class ButtonSignUp8 extends StatelessWidget {
+  const ButtonSignUp8(
       {super.key, required this.widget, required this.onPressed});
 
-  final FormBody6 widget;
+  final OTPForm widget;
   final VoidCallback onPressed;
-
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      // onPressed: () async {
+      //   // Navigator.pushReplacementNamed(context, SignUp7Screen.routeName);
+
+      // },
       onPressed: onPressed,
       child: Container(
         width: 300 * widget.fem,
@@ -23,12 +25,12 @@ class ButtonSignUp6 extends StatelessWidget {
         decoration: BoxDecoration(
             color: kPrimaryColor,
             borderRadius: BorderRadius.circular(23 * widget.fem)),
-        child: BlocBuilder<ValidationCubit, ValidationState>(
+        child: BlocBuilder<VerificationCubit, VerificationState>(
           builder: (context, state) {
-            if (state is ValidationInProcess) {
+            if (state is VerificationLoading) {
               return Center(
                 child: CircularProgressIndicator(
-                  color: kPrimaryColor,
+                  color: Colors.white,
                 ),
               );
             }

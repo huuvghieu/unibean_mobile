@@ -59,25 +59,6 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 150 * fem,
-                    padding: EdgeInsets.only(top: 5 * hem),
-                    child: Text(
-                      product.categoryName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                        fontSize: 13 * ffem,
-                        color: kLowTextColor,
-                        fontWeight: FontWeight.normal,
-                      )),
-                    ),
-                  ),
-                ),
                 Container(
                   padding: EdgeInsets.only(
                       left: 10 * fem, right: 10 * fem, top: 5 * hem),
@@ -87,9 +68,25 @@ class ProductCard extends StatelessWidget {
                     maxLines: 2,
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                      fontSize: 14 * ffem,
+                      fontSize: 15 * ffem,
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
+                    )),
+                  ),
+                ),
+                Container(
+                  width: 150 * fem,
+                 padding: EdgeInsets.only(
+                      left: 10 * fem, right: 10 * fem),
+                  child: Text(
+                    product.categoryName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                      fontSize: 13 * ffem,
+                      color: klowTextGrey,
+                      fontWeight: FontWeight.normal,
                     )),
                   ),
                 ),
@@ -108,7 +105,7 @@ class ProductCard extends StatelessWidget {
                       '${formatter.format(product.price).toString()}',
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                        fontSize: 16 * ffem,
+                        fontSize: 20 * ffem,
                         color: Colors.red,
                         fontWeight: FontWeight.bold,
                       )),

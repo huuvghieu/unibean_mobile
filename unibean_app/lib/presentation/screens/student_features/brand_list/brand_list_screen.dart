@@ -69,23 +69,7 @@ class BrandListScreen extends StatelessWidget {
             ),
           ),
           leadingWidth: 60 * fem,
-          actions: [
-            InkWell(
-              onTap: () {
-                // _filterModalBottomSheet(context);
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 20 * fem),
-                width: 25 * fem,
-                height: 25 * fem,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage('assets/images/filter-icon.png'),
-                  fit: BoxFit.cover,
-                )),
-              ),
-            )
-          ],
+         
         ),
         body: Body(),
       ),

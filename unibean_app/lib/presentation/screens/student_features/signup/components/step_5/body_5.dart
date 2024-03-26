@@ -12,55 +12,60 @@ class Body5 extends StatelessWidget {
     double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate([
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/images/bg_signup_1.png'),
-              )),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 130 * hem,
-                  ),
-                  Container(
-                    width: 190 * fem,
-                    height: 220 * fem,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(
-                                'assets/images/signup_invitecode.png'))),
-                  ),
-                  Text(
-                    'Mã giới thiệu bạn bè',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize: 20 * ffem,
-                            fontWeight: FontWeight.w900,
-                            height: 1.3625 * ffem / fem,
-                            color: Colors.black)),
-                  ),
-                  SizedBox(
-                    height: 20 * hem,
-                  ),
-                  SizedBox(
-                    height: 40 * hem,
-                  ),
-                  FormBody5(fem: fem, hem: hem, ffem: ffem)
-                ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/bg_signup_1.png'),
+                )),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 130 * hem,
+                    ),
+                    Container(
+                      width: 190 * fem,
+                      height: 220 * fem,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  'assets/images/signup_invitecode.png'))),
+                    ),
+                    Text(
+                      'Mã giới thiệu bạn bè',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              fontSize: 20 * ffem,
+                              fontWeight: FontWeight.w900,
+                              height: 1.3625 * ffem / fem,
+                              color: Colors.black)),
+                    ),
+                    SizedBox(
+                      height: 20 * hem,
+                    ),
+                    SizedBox(
+                      height: 40 * hem,
+                    ),
+                    FormBody5(fem: fem, hem: hem, ffem: ffem)
+                  ],
+                ),
               ),
-            ),
-          ]),
-        )
-      ],
+            ]),
+          )
+        ],
+      ),
     );
   }
 }

@@ -25,84 +25,89 @@ class Body extends StatelessWidget {
       return 330 * hem;
     }
 
-    return SingleChildScrollView(
-      child: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bg_login.png'),
-              fit: BoxFit.cover),
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: responsiveSize()),
-            Text(
-              'Chào mừng bạn đã quay trở lại!',
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      fontSize: 20 * ffem,
-                      fontWeight: FontWeight.w900,
-                      height: 1.3625 * ffem / fem,
-                      color: Colors.black)),
-            ),
-            SizedBox(
-              height: 20 * hem,
-            ),
-            Text(
-              'Đăng nhập và tận hưởng những ưu đãi\n yêu thích của bạn!',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                fontSize: 15 * ffem,
-                fontWeight: FontWeight.w900,
-                height: 1.3625 * ffem / fem,
-                color: kLowTextColor,
-              )),
-            ),
-            SizedBox(
-              height: 20 * hem,
-            ),
-            FormLogin(fem: fem, hem: hem, ffem: ffem),
-            SizedBox(
-              height: 10 * hem,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20 * hem),
-                  child: Text(
-                    'Bạn chưa có tài khoản?',
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize: 13 * ffem,
-                            fontWeight: FontWeight.bold,
-                            height: 1.3625 * ffem / fem,
-                            color: kLowTextColor)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, SignUpScreen.routeName);
-                      // Navigator.pushNamed(context, SignUp6Screen.routeName,
-                      //         arguments: true);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/bg_login.png'),
+                fit: BoxFit.cover),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: responsiveSize()),
+              Text(
+                'Chào mừng bạn đã quay trở lại!',
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: 20 * ffem,
+                        fontWeight: FontWeight.w900,
+                        height: 1.3625 * ffem / fem,
+                        color: Colors.black)),
+              ),
+              SizedBox(
+                height: 20 * hem,
+              ),
+              Text(
+                'Đăng nhập và tận hưởng những ưu đãi\n yêu thích của bạn!',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                  fontSize: 15 * ffem,
+                  fontWeight: FontWeight.w900,
+                  height: 1.3625 * ffem / fem,
+                  color: kLowTextColor,
+                )),
+              ),
+              SizedBox(
+                height: 20 * hem,
+              ),
+              FormLogin(fem: fem, hem: hem, ffem: ffem),
+              SizedBox(
+                height: 10 * hem,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20 * hem),
                     child: Text(
-                      'Đăng ký',
+                      'Bạn chưa có tài khoản?',
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               fontSize: 13 * ffem,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.bold,
                               height: 1.3625 * ffem / fem,
-                              color: kPrimaryColor)),
+                              color: kLowTextColor)),
                     ),
                   ),
-                )
-              ],
-            )
-          ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, SignUpScreen.routeName);
+                      // Navigator.pushNamed(context, SignUp6Screen.routeName,
+                      //         arguments: true);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
+                      child: Text(
+                        'Đăng ký',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 13 * ffem,
+                                fontWeight: FontWeight.w900,
+                                height: 1.3625 * ffem / fem,
+                                color: kPrimaryColor)),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

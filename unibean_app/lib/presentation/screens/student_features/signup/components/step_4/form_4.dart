@@ -66,7 +66,7 @@ class _FormBody4State extends State<FormBody4> {
                         fem: widget.fem,
                         ffem: widget.ffem,
                         labelText: 'MÃ SỐ SINH VIÊN *',
-                        hintText: 'UNIBEAN123123',
+                        hintText: 'Nhập mã số sinh viên',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'MSSV không được bỏ trống';
@@ -133,52 +133,13 @@ class _FormBody4State extends State<FormBody4> {
                   onPressed: () {
                     if (state is CheckStudentCodeFailed) {
                       if (_formKey.currentState!.validate()) {
-                        context
-                            .read<ValidationCubit>()
-                            .validateStudentCode(studentCodeController.text)
-                            .then((value) async {
-                          if (value == '') {
-                            final createAuthenModel =
-                                await AuthenLocalDataSource.getCreateAuthen();
-                            createAuthenModel!.code =
-                                studentCodeController.text;
-                            createAuthenModel.majorId = majorController.text;
-                            String createAuthenString =
-                                jsonEncode(createAuthenModel);
-                            AuthenLocalDataSource.saveCreateAuthen(
-                                createAuthenString);
-                            print(createAuthenString);
-                            Navigator.pushNamed(
-                                context, SignUp5Screen.routeName,
-                                arguments: SignUp1Screen.defaultRegister);
-                          } else {
-                            return null;
-                          }
-                        });
+                        _submitForm(
+                            context, studentCodeController, majorController);
                       }
                     } else {
                       if (_formKey.currentState!.validate()) {
-                        context
-                            .read<ValidationCubit>()
-                            .validateStudentCode(studentCodeController.text)
-                            .then((value) async {
-                          if (value == '') {
-                            final createAuthenModel =
-                                await AuthenLocalDataSource.getCreateAuthen();
-                            createAuthenModel!.code =
-                                studentCodeController.text;
-                            createAuthenModel.majorId = majorController.text;
-                            String createAuthenString =
-                                jsonEncode(createAuthenModel);
-                            AuthenLocalDataSource.saveCreateAuthen(
-                                createAuthenString);
-                            Navigator.pushNamed(
-                                context, SignUp5Screen.routeName,
-                                arguments: SignUp1Screen.defaultRegister);
-                          } else {
-                            return null;
-                          }
-                        });
+                        _submitForm(
+                            context, studentCodeController, majorController);
                       }
                     }
                   });
@@ -187,5 +148,45 @@ class _FormBody4State extends State<FormBody4> {
         ],
       ),
     );
+  }
+}
+
+void _submitForm(
+    BuildContext context, studentCodeController, majorController) async {
+  final authenModel = await AuthenLocalDataSource.getAuthen();
+  if (authenModel == null) {
+    context
+        .read<ValidationCubit>()
+        .validateStudentCode(studentCodeController.text)
+        .then((value) async {
+      if (value == '') {
+        final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
+        createAuthenModel!.code = studentCodeController.text;
+        createAuthenModel.majorId = majorController.text;
+        String createAuthenString = jsonEncode(createAuthenModel);
+        AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
+        Navigator.pushNamed(context, SignUp5Screen.routeName,
+            arguments: SignUp1Screen.defaultRegister);
+      } else {
+        return null;
+      }
+    });
+  } else {
+    context
+        .read<ValidationCubit>()
+        .validateStudentCode(studentCodeController.text)
+        .then((value) async {
+      if (value == '') {
+        final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
+        verifyAuthenModel!.code = studentCodeController.text;
+        verifyAuthenModel.majorId = majorController.text;
+        String verifyAuthenString = jsonEncode(verifyAuthenModel);
+        AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
+        Navigator.pushNamed(context, SignUp5Screen.routeName,
+            arguments: SignUp1Screen.defaultRegister);
+      } else {
+        return null;
+      }
+    });
   }
 }

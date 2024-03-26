@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../../../data/models.dart';
-import '../../../../config/constants.dart';
 
-class CampaignInformationCard extends StatelessWidget {
-  const CampaignInformationCard({
+class BrandInformationCard extends StatelessWidget {
+  const BrandInformationCard({
     super.key,
     required this.hem,
     required this.fem,
@@ -30,14 +30,17 @@ class CampaignInformationCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 15 * fem),
             child: Text(
-              'THÔNG TIN CHIẾN DỊCH CUNG CẤP',
+              'THƯƠNG HIỆU CUNG CẤP',
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                 fontSize: 15 * ffem,
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               )),
             ),
+          ),
+          SizedBox(
+            height: 10*hem,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,15 +48,18 @@ class CampaignInformationCard extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(
-                    top: 5 * hem, left: 5 * fem, bottom: 5 * hem),
-                padding: EdgeInsets.only(left: 15 * fem),
+                    top: 5 * hem, left: 15 * fem, bottom: 5 * hem),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey
+                  )
+                ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10 * fem),
                   child: Container(
-                    width: 80 * fem,
-                    height: 90 * hem,
+                    width: 50 * fem,
+                    height: 50 * hem,
                     child: Image.network(
-                      campaignDetil.image,
+                      campaignDetil.brandLogo,
                       fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
@@ -71,29 +77,29 @@ class CampaignInformationCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 5 * hem, bottom: 5 * hem),
-                    child: Text(campaignDetil.brandName,
+                    padding: EdgeInsets.only(top: 5 * hem),
+                    child: Text(campaignDetil.brandName.toUpperCase(),
                         softWrap: true,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                          fontSize: 13 * ffem,
-                          color: kLowTextColor,
-                          fontWeight: FontWeight.normal,
+                          fontSize: 16 * ffem,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ))),
                   ),
                   Container(
                     width: 200 * fem,
                     // height: 45*hem,
-                    child: Text(campaignDetil.campaignName,
+                    child: Text(campaignDetil.brandAcronym,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                           fontSize: 14 * ffem,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
+                          color: klowTextGrey,
+                          fontWeight: FontWeight.normal,
                         ))),
                   ),
                 ],

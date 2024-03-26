@@ -26,9 +26,9 @@ class Body extends StatelessWidget {
                     image: AssetImage('assets/images/background_splash.png'),
                     fit: BoxFit.cover)),
           ),
-          toolbarHeight: 60 * hem,
+          toolbarHeight: 40 * hem,
           leading: Container(
-            margin: EdgeInsets.only(left: 20 * fem),
+            margin: EdgeInsets.only(left: 20 * fem,top: 10*hem),
             child: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -36,7 +36,7 @@ class Body extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back_rounded,
                 color: Colors.white,
-                size: 35 * fem,
+                size: 30 * fem,
               ),
             ),
           ),
@@ -47,7 +47,7 @@ class Body extends StatelessWidget {
               'UniBean',
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
-                      fontSize: 25 * ffem,
+                      fontSize: 22 * ffem,
                       fontWeight: FontWeight.w900,
                       color: Colors.white)),
             ),
@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
                 icon: Icon(
                   Icons.notifications,
                   color: Colors.white,
-                  size: 35 * fem,
+                  size: 25 * fem,
                 ),
                 onPressed: () {},
               ),

@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
@@ -186,51 +183,13 @@ class _FormBodyState extends State<FormBody> {
                 onPress: () {
                   if (state is CheckUserNameFailed) {
                     if (_formKey.currentState!.validate()) {
-                      context
-                          .read<ValidationCubit>()
-                          .validateUserName(userNameController.text)
-                          .then((value) {
-                        if (value == '') {
-                          CreateAuthenModel createAuthenModel =
-                              CreateAuthenModel(
-                            userName: userNameController.text,
-                            password: passController.text,
-                            passwordConfirmed: confirmPassController.text,
-                          );
-                          String createAuthenString =
-                              jsonEncode(createAuthenModel);
-                          AuthenLocalDataSource.saveCreateAuthen(
-                              createAuthenString);
-                          Navigator.pushNamed(context, SignUp1Screen.routeName,
-                              arguments: true);
-                        } else {
-                          return null;
-                        }
-                      });
+                      _submitForm(context, userNameController, passController,
+                          confirmPassController);
                     }
                   } else {
                     if (_formKey.currentState!.validate()) {
-                      context
-                          .read<ValidationCubit>()
-                          .validateUserName(userNameController.text)
-                          .then((value) {
-                        if (value == '') {
-                          CreateAuthenModel createAuthenModel =
-                              CreateAuthenModel(
-                            userName: userNameController.text,
-                            password: passController.text,
-                            passwordConfirmed: confirmPassController.text,
-                          );
-                          String createAuthenString =
-                              jsonEncode(createAuthenModel);
-                          AuthenLocalDataSource.saveCreateAuthen(
-                              createAuthenString);
-                          Navigator.pushNamed(context, SignUp1Screen.routeName,
-                              arguments: true);
-                        } else {
-                          return null;
-                        }
-                      });
+                      _submitForm(context, userNameController, passController,
+                          confirmPassController);
                     }
                   }
                 },
@@ -241,4 +200,25 @@ class _FormBodyState extends State<FormBody> {
       ),
     );
   }
+}
+
+void _submitForm(
+    BuildContext context, userNameController, passController, confirmPassController) {
+  context
+      .read<ValidationCubit>()
+      .validateUserName(userNameController.text)
+      .then((value) {
+    if (value == '') {
+      CreateAuthenModel createAuthenModel = CreateAuthenModel(
+        userName: userNameController.text,
+        password: passController.text,
+        passwordConfirmed: confirmPassController.text,
+      );
+      String createAuthenString = jsonEncode(createAuthenModel);
+      AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
+      Navigator.pushNamed(context, SignUp1Screen.routeName, arguments: true);
+    } else {
+      return null;
+    }
+  });
 }

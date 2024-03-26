@@ -39,8 +39,8 @@ class CampaignVoucherList extends StatelessWidget {
               return EmptyWidget(text: 'Không có ưu đãi');
             } else {
               return Container(
-                  height: 240 * hem,
-                  margin: EdgeInsets.only(left: 15*fem),
+                  height: 250 * hem,
+                  margin: EdgeInsets.only(left: 15 * fem),
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -50,13 +50,16 @@ class CampaignVoucherList extends StatelessWidget {
                         onTap: () {
                           Navigator.pushNamed(
                               context, CampaignVoucherScreen.routeName,
-                              arguments: <dynamic>[campaignDetallModeil, state.campaignVouchers[index]]);
+                              arguments: <dynamic>[
+                                campaignDetallModeil,
+                                state.campaignVouchers[index]
+                              ]);
                         },
                         child: Stack(
                           children: [
                             Container(
                               width: 170 * fem,
-                              margin: EdgeInsets.only(right:10  * fem),
+                              margin: EdgeInsets.only(right: 10 * fem),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15 * fem),
                                 color: Colors.white,
@@ -85,8 +88,7 @@ class CampaignVoucherList extends StatelessWidget {
                                               (context, error, stackTrace) {
                                             return Container(
                                               child: Image.asset(
-                                                'assets/images/image-404.jpg'
-                                              ),
+                                                  'assets/images/image-404.jpg'),
                                             );
                                           },
                                         ),
@@ -104,7 +106,7 @@ class CampaignVoucherList extends StatelessWidget {
                                       maxLines: 2,
                                       style: GoogleFonts.openSans(
                                           textStyle: TextStyle(
-                                        fontSize: 13 * ffem,
+                                        fontSize: 14 * ffem,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       )),
@@ -114,11 +116,19 @@ class CampaignVoucherList extends StatelessWidget {
                               ),
                             ),
                             Positioned(
-                              bottom: 5 * fem,
+                              bottom: 10 * fem,
                               child: Container(
-                                width: 172 * fem,
                                 padding: EdgeInsets.only(
                                     left: 10 * fem, right: 10 * fem),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Color(0x0c000000),
+                                          offset: Offset(2 * fem, 5 * fem),
+                                          blurRadius: 5 * fem)
+                                    ]),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -130,7 +140,7 @@ class CampaignVoucherList extends StatelessWidget {
                                           '${formatter.format(state.campaignVouchers[index].price)}',
                                           style: GoogleFonts.openSans(
                                               textStyle: TextStyle(
-                                            fontSize: 14 * ffem,
+                                            fontSize: 20 * ffem,
                                             color: kPrimaryColor,
                                             fontWeight: FontWeight.bold,
                                           )),
@@ -142,35 +152,10 @@ class CampaignVoucherList extends StatelessWidget {
                                               bottom: 0 * hem),
                                           child: SvgPicture.asset(
                                             'assets/icons/green-bean-icon.svg',
-                                            width: 22 * fem,
-                                            height: 20 * fem,
+                                            width: 25 * fem,
+                                            height: 22 * fem,
                                           ),
                                         )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '${state.campaignVouchers[index].quantityInStock}',
-                                          style: GoogleFonts.openSans(
-                                              textStyle: TextStyle(
-                                            fontSize: 14 * ffem,
-                                            color: kPrimaryColor,
-                                            fontWeight: FontWeight.normal,
-                                          )),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 5*fem),
-                                          child: Text(
-                                            '/${state.campaignVouchers[index].quantity}',
-                                            style: GoogleFonts.openSans(
-                                                textStyle: TextStyle(
-                                              fontSize: 14 * ffem,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.normal,
-                                            )),
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ],

@@ -18,7 +18,7 @@ class NameProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160 * fem,
+      width: 190 * fem,
       child: Row(
         children: [
           Flexible(
@@ -26,11 +26,11 @@ class NameProfile extends StatelessWidget {
               name,
               // softWrap: true,
               maxLines: 2,
+              textAlign: TextAlign.start,
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
-                      fontSize: 16 * ffem,
-                      fontWeight: FontWeight.w800,
-                      height: 1.3625 * ffem / fem,
+                      fontSize: 17 * ffem,
+                      fontWeight: FontWeight.bold,
                       color: Colors.black)),
             ),
           ),

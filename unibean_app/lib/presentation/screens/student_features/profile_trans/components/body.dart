@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_trans/components/activity_transaction.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_trans/components/order_transaction.dart';
+
+import 'all_transaction.dart';
+import 'bonus_transaction.dart';
+import 'challenge_transaction.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key, required this.studentId});
@@ -84,10 +89,8 @@ class Body extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 )),
                 tabs: [
-                  Container(
-                    child: Tab(
-                      text: 'Tất cả',
-                    ),
+                  Tab(
+                    text: 'Tất cả',
                   ),
                   Tab(
                     text: 'Hoạt động',
@@ -108,7 +111,7 @@ class Body extends StatelessWidget {
         },
         body: TabBarView(
           children: [
-            ActivityTransaction(
+            AllTransaction(
               hem: hem,
               fem: fem,
               ffem: ffem,
@@ -120,21 +123,23 @@ class Body extends StatelessWidget {
               ffem: ffem,
               studentId: studentId,
             ),
-            ActivityTransaction(
+            OrderTransaction(
               hem: hem,
               fem: fem,
               ffem: ffem,
               studentId: studentId,
             ),
-            Container(
-              child: Center(
-                child: Text('Đổi quà'),
-              ),
+            ChallengeTransaction(
+              hem: hem,
+              fem: fem,
+              ffem: ffem,
+              studentId: studentId,
             ),
-            Container(
-              child: Center(
-                child: Text('Nhận quà'),
-              ),
+            BonusTransaction(
+              hem: hem,
+              fem: fem,
+              ffem: ffem,
+              studentId: studentId,
             ),
           ],
         ));

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
+import '../../../../widgets/shimmer_widget.dart';
 
 class CampaignCard extends StatelessWidget {
   const CampaignCard({
@@ -52,6 +52,14 @@ class CampaignCard extends StatelessWidget {
                       child: Image.network(
                         campaignModel.image,
                         fit: BoxFit.fill,
+                         loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return ShimmerWidget.rectangular(
+                                    height: 150 * hem);
+                              },
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
                             width: 170 * fem,
@@ -81,7 +89,7 @@ class CampaignCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                          fontSize: 13 * ffem,
+                          fontSize: 14 * ffem,
                           color: kLowTextColor,
                           fontWeight: FontWeight.normal,
                         )),
@@ -99,7 +107,7 @@ class CampaignCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                      fontSize: 13 * ffem,
+                      fontSize: 15 * ffem,
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                     )),
@@ -110,47 +118,7 @@ class CampaignCard extends StatelessWidget {
               ],
             ),
           ),
-           Positioned(
-            bottom: 3*hem,
-            left: 10*fem,
-             child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 10*fem),
-                      child: Text(
-                        'Nhận:',
-                        style: GoogleFonts.openSans(
-                            textStyle: TextStyle(
-                          fontSize: 12 * ffem,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal,
-                        )),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 5 * fem),
-                      child: Text(
-                        '${formatter.format(campaignModel.totalIncome)}',
-                        style: GoogleFonts.openSans(
-                            textStyle: TextStyle(
-                          fontSize: 14 * ffem,
-                          color: Colors.red,
-                          fontWeight: FontWeight.normal,
-                        )),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 2 * fem, top: 2 * hem, bottom: 2 * hem),
-                      child: SvgPicture.asset(
-                        'assets/icons/red-bean-icon.svg',
-                        width: 20 * fem,
-                        height: 18 * fem,
-                      ),
-                    )
-                  ],
-                ),
-           ),
+          
         ],
       ),
     );

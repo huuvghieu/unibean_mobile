@@ -4,12 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile/components/button_profile.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile/components/information_card_profile.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile/components/unverified_card.dart';
-import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
-
+import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
 import '../../../../blocs/blocs.dart';
+import 'button_profile.dart';
+import 'pending_card.dart';
+import 'unverified_card.dart';
+import 'verified_card.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -43,7 +43,7 @@ class Body extends StatelessWidget {
                         //background body
                         Positioned(
                           left: 0 * fem,
-                          top: 78 * hem,
+                          top: 120 * hem,
                           child: Align(
                             child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -53,16 +53,15 @@ class Body extends StatelessWidget {
                         ),
 
                         //widget information of profile
-                        InformationCardProfile(
-                          hem: hem,
-                          fem: fem,
-                          ffem: ffem,
-                          studentModel: state.studentModel,
-                        ),
+                        VerifiedCard(
+                            hem: hem,
+                            fem: fem,
+                            ffem: ffem,
+                            studentModel: state.studentModel),
 
                         Positioned(
                             left: 0 * fem,
-                            top: 280 * hem,
+                            top: 300 * hem,
                             child: Container(
                               // color: Colors.red,
                               height: MediaQuery.of(context).size.height,
@@ -82,7 +81,7 @@ class Body extends StatelessWidget {
                                     },
                                     svgIcon:
                                         'assets/icons/change-bean-icon.svg',
-                                    title: 'Đổi bean lấy quà',
+                                    title: 'Đổi đậu lấy quà',
                                   ),
                                   SizedBox(
                                     height: 10 * hem,
@@ -97,7 +96,8 @@ class Body extends StatelessWidget {
                                       Navigator.pushNamed(
                                           context,
                                           ProfileTransactionHistoryScreen
-                                              .routeName, arguments: state.studentModel.id);
+                                              .routeName,
+                                          arguments: state.studentModel.id);
                                     },
                                     svgIcon:
                                         'assets/icons/transaction-icon.svg',
@@ -111,40 +111,14 @@ class Body extends StatelessWidget {
                                       hem: hem,
                                       ffem: ffem,
                                       svgIcon:
-                                          'assets/icons/voucher-navbar-icon.svg',
-                                      title: 'Ưu đãi của bạn',
+                                          'assets/icons/order-history-icon.svg',
+                                      title: 'Đơn hàng của bạn',
                                       onPressed: () async {
                                         var id = await AuthenLocalDataSource
                                             .getStudentId();
                                         Navigator.pushNamed(context,
-                                            ProfileVoucherScreen.routeName,
+                                            ProfileOrderScreen.routeName,
                                             arguments: id);
-                                      }),
-                                  SizedBox(
-                                    height: 10 * hem,
-                                  ),
-                                  ButtonProfile(
-                                      fem: fem,
-                                      hem: hem,
-                                      ffem: ffem,
-                                      svgIcon:
-                                          'assets/icons/update-information-icon.svg',
-                                      title: 'Cập nhật thông tin',
-                                      onPressed: () {}),
-                                  SizedBox(
-                                    height: 10 * hem,
-                                  ),
-                                  ButtonProfile(
-                                      fem: fem,
-                                      hem: hem,
-                                      ffem: ffem,
-                                      svgIcon:
-                                          'assets/icons/order-history-icon.svg',
-                                      title: 'Đơn hàng của bạn',
-                                      onPressed: () async {
-                                        var id = await AuthenLocalDataSource.getStudentId();
-                                        Navigator.pushNamed(context,
-                                            ProfileOrderScreen.routeName, arguments: id );
                                       }),
                                   SizedBox(
                                     height: 10 * hem,
@@ -183,7 +157,7 @@ class Body extends StatelessWidget {
                         //background body
                         Positioned(
                           left: 0 * fem,
-                          top: 180 * hem,
+                          top: 120 * hem,
                           child: Align(
                             child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -201,7 +175,7 @@ class Body extends StatelessWidget {
 
                         Positioned(
                             left: 0 * fem,
-                            top: 350 * hem,
+                            top: 300 * hem,
                             child: Container(
                               // color: Colors.red,
                               height: MediaQuery.of(context).size.height,
@@ -209,11 +183,285 @@ class Body extends StatelessWidget {
 
                               child: Column(
                                 children: [
-                                  CardForUnVerified(
-                                      fem: fem, hem: hem, ffem: ffem),
-
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 16,
+                                    heightIcon: 16,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, UnverifiedScreen.routeName);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/change-bean-icon.svg',
+                                    title: 'Đổi đậu lấy quà',
+                                  ),
                                   SizedBox(
-                                    height: 20 * hem,
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 20,
+                                    heightIcon: 20,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, UnverifiedScreen.routeName);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/transaction-icon.svg',
+                                    title: 'Lịch sử giao dịch',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon:
+                                          'assets/icons/order-history-icon.svg',
+                                      title: 'Đơn hàng của bạn',
+                                      onPressed: () async {
+                                        Navigator.pushNamed(context,
+                                            UnverifiedScreen.routeName);
+                                      }),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  //button logout
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon: 'assets/icons/logout-icon.svg',
+                                      title: 'Đăng xuất',
+                                      onPressed: () => _dialogLogout(context)),
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else if (state is Pending) {
+            return Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background_splash.png'),
+                      fit: BoxFit.cover)),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: [
+                        //background body
+                        Positioned(
+                          left: 0 * fem,
+                          top: 120 * hem,
+                          child: Align(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                color: klighGreyColor),
+                          ),
+                        ),
+
+                        //widget information of profile
+                        PendingCard(
+                          hem: hem,
+                          fem: fem,
+                          ffem: ffem,
+                          studentModel: state.studentModel,
+                        ),
+
+                        Positioned(
+                            left: 0 * fem,
+                            top: 300 * hem,
+                            child: Container(
+                              // color: Colors.red,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+
+                              child: Column(
+                                children: [
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 16,
+                                    heightIcon: 16,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, ProductScreen.routeName);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/change-bean-icon.svg',
+                                    title: 'Đổi đậu lấy quà',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 20,
+                                    heightIcon: 20,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context,
+                                          ProfileTransactionHistoryScreen
+                                              .routeName,
+                                          arguments: state.studentModel.id);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/transaction-icon.svg',
+                                    title: 'Lịch sử giao dịch',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon:
+                                          'assets/icons/order-history-icon.svg',
+                                      title: 'Đơn hàng của bạn',
+                                      onPressed: () async {
+                                        var id = await AuthenLocalDataSource
+                                            .getStudentId();
+                                        Navigator.pushNamed(context,
+                                            ProfileOrderScreen.routeName,
+                                            arguments: id);
+                                      }),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  //button logout
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon: 'assets/icons/logout-icon.svg',
+                                      title: 'Đăng xuất',
+                                      onPressed: () => _dialogLogout(context)),
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else if (state is Rejected) {
+            return Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background_splash.png'),
+                      fit: BoxFit.cover)),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: [
+                        //background body
+                        Positioned(
+                          left: 0 * fem,
+                          top: 120 * hem,
+                          child: Align(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                color: klighGreyColor),
+                          ),
+                        ),
+
+                        //widget information of profile
+                        PendingCard(
+                          hem: hem,
+                          fem: fem,
+                          ffem: ffem,
+                          studentModel: state.studentModel,
+                        ),
+
+                        Positioned(
+                            left: 0 * fem,
+                            top: 300 * hem,
+                            child: Container(
+                              // color: Colors.red,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+
+                              child: Column(
+                                children: [
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 16,
+                                    heightIcon: 16,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, ProductScreen.routeName);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/change-bean-icon.svg',
+                                    title: 'Đổi đậu lấy quà',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+                                  ButtonProfile(
+                                    fem: fem,
+                                    hem: hem,
+                                    ffem: ffem,
+                                    widthIcon: 20,
+                                    heightIcon: 20,
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context,
+                                          ProfileTransactionHistoryScreen
+                                              .routeName,
+                                          arguments: state.studentModel.id);
+                                    },
+                                    svgIcon:
+                                        'assets/icons/transaction-icon.svg',
+                                    title: 'Lịch sử giao dịch',
+                                  ),
+                                  SizedBox(
+                                    height: 10 * hem,
+                                  ),
+
+                                  ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      svgIcon:
+                                          'assets/icons/order-history-icon.svg',
+                                      title: 'Đơn hàng của bạn',
+                                      onPressed: () async {
+                                        var id = await AuthenLocalDataSource
+                                            .getStudentId();
+                                        Navigator.pushNamed(context,
+                                            ProfileOrderScreen.routeName,
+                                            arguments: id);
+                                      }),
+                                  SizedBox(
+                                    height: 10 * hem,
                                   ),
                                   //button logout
                                   ButtonProfile(
@@ -249,7 +497,7 @@ class Body extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
-                      fontSize: 17,
+                      fontSize: 16,
                       color: kPrimaryColor,
                       fontWeight: FontWeight.w700)),
             ),
@@ -272,6 +520,9 @@ class Body extends StatelessWidget {
                     context
                         .read<LandingScreenBloc>()
                         .add(TabChange(tabIndex: 0));
+
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        LoginScreen.routeName, (Route<dynamic> route) => false);
                   },
                   child: Text(
                     'Có',

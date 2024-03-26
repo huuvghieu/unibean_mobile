@@ -4,9 +4,9 @@ import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/challenge/components/body.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
+import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../config/constants.dart';
-import '../../../widgets/card_for_unknow.dart';
 
 class ChallengeScreen extends StatelessWidget {
   static const String routeName = '/challenge-student';
@@ -31,21 +31,21 @@ class ChallengeScreen extends StatelessWidget {
   }
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
-    if (roleState is Unknown) {
-      return _buildUnknown(fem, hem, ffem);
+    if (roleState is Unverified) {
+      return _buildUnverified(fem, hem, ffem);
     } else if (roleState is Verified) {
       return _buildVerifiedStudent(fem, hem, ffem);
     }
     return _buildVerifiedStudent(fem, hem, ffem);
   }
 
-  Widget _buildUnknown(double fem, double hem, double ffem) {
+  Widget _buildUnverified(double fem, double hem, double ffem) {
     return Scaffold(
         appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
         body: Container(
             color: klighGreyColor,
-            child:
-                Center(child: CardForUnknow(fem: fem, hem: hem, ffem: ffem))));
+            child: Center(
+                child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
   }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
@@ -54,6 +54,7 @@ class ChallengeScreen extends StatelessWidget {
         if (state is ChallengeLoading) {
           return SafeArea(
             child: Scaffold(
+              backgroundColor: klighGreyColor,
               appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
               body: Center(
                 child: Lottie.asset('assets/animations/loading-screen.json'),
@@ -61,16 +62,7 @@ class ChallengeScreen extends StatelessWidget {
             ),
           );
         } else if (state is ChallengesLoaded) {
-          return SafeArea(
-            child: DefaultTabController(
-              length: 3,
-              child: Scaffold(
-                backgroundColor: klighGreyColor,
-                extendBody: true,
-                body: Body(),
-              ),
-            ),
-          );
+          return Body();
         }
         return Container();
       },

@@ -103,17 +103,12 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
         Expanded(
           flex: 1,
           child: Container(
+            height: 45,
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.rectangle,
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12.withOpacity(0.05),
-                  blurRadius: 5.0, // soften the shadow
-                  spreadRadius: 5.0, //extend the shadow
-                )
-              ],
+          
             ),
             child: IconButton(
               onPressed: () {
@@ -121,7 +116,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
               },
               icon: const Icon(Icons.filter_list_rounded),
               color: kPrimaryColor,
-              iconSize: 32.0,
+              iconSize: 30,
             ),
           ),
         ),

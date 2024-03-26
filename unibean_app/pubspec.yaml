@@ -94,6 +94,9 @@ dependencies:
 
   #another_carousel_pro
   another_carousel_pro: ^1.0.2
+  
+  #flutter_widget_from_html
+  flutter_widget_from_html: ^0.14.11
 
 # Run commands to generate splash screen
 # 1) flutter clean

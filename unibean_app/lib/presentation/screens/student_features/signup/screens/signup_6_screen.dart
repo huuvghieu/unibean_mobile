@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/body_6.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/screens/signup_1_screen.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
+
+import '../../../screens.dart';
+import '../components/step_6/body6.dart';
 
 class SignUp6Screen extends StatefulWidget {
   static const String routeName = '/signup_6';
@@ -23,9 +24,9 @@ class _SignUp6ScreenState extends State<SignUp6Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 7/8';
+      title = 'Bước 7/9';
     } else {
-      title = 'Bước 6/7';
+      title = 'Bước 6/8';
     }
     super.initState();
   }
@@ -43,7 +44,7 @@ class _SignUp6ScreenState extends State<SignUp6Screen> {
         appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        body: Body6(),
+        body: const Body6(),
       ),
     );
   }

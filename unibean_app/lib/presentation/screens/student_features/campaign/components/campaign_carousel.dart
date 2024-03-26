@@ -5,7 +5,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
 
+import '../../../../widgets/shimmer_widget.dart';
 import '../../../screens.dart';
 
 class CampaignCarousel extends StatefulWidget {
@@ -47,12 +49,13 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                   builder: (BuildContext context) {
                     return GestureDetector(
                       onTap: () {
-                        if (widget.roleState is Unknown) {
-                          Navigator.pushNamed(context, LoginScreen.routeName);
+                        if (widget.roleState is Unverified) {
+                          Navigator.pushNamed(
+                              context, UnverifiedScreen.routeName);
                         } else {
                           Navigator.pushNamed(
                               context, CampaignDetailScreen.routeName,
-                              arguments: campaign.id);
+                              arguments: campaign);
                         }
                       },
                       child: Container(
@@ -60,12 +63,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0x0c000000),
-                                  offset: Offset(0, 5),
-                                  blurRadius: 5)
-                            ]),
+                          ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -79,6 +77,14 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                 child: Image.network(
                                   campaign.image,
                                   fit: BoxFit.fill,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    }
+                                    return ShimmerWidget.rectangular(
+                                        height: 160);
+                                  },
                                   errorBuilder: (context, error, stackTrace) {
                                     return Image.asset(
                                       'assets/images/image-404.jpg',
@@ -102,23 +108,14 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                     children: [
                                       Text(
                                         campaign.campaignName,
+                                        maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: true,
                                         style: GoogleFonts.openSans(
                                             textStyle: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                        )),
-                                      ),
-                                      Text(
-                                        campaign.description,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.openSans(
-                                            textStyle: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal,
                                         )),
                                       ),
                                     ],
@@ -132,13 +129,13 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                       borderRadius: BorderRadius.circular(5)),
                                   child: TextButton(
                                     onPressed: () {
-                                      if (widget.roleState is Unknown) {
-                                        Navigator.pushNamed(
-                                            context, LoginScreen.routeName);
+                                      if (widget.roleState is Unverified) {
+                                        Navigator.pushNamed(context,
+                                            UnverifiedScreen.routeName);
                                       } else {
                                         Navigator.pushNamed(context,
                                             CampaignDetailScreen.routeName,
-                                            arguments: campaign.id);
+                                            arguments: campaign);
                                       }
                                     },
                                     child: Text(

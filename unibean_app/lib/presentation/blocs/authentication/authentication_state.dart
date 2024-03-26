@@ -16,6 +16,13 @@ final class AuthenticationSuccess extends AuthenticationState {
   List<Object?> get props => [];
 }
 
+final class AuthenticationStoreSuccess extends AuthenticationState {
+  AuthenticationStoreSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+
 final class AuthenticationInProcess extends AuthenticationState {
   @override
   List<Object?> get props => [];

@@ -42,6 +42,7 @@ class CampaignVoucherScreen extends StatelessWidget {
     double baseHeight = 812;
     double ffem = fem * 0.97;
     double hem = MediaQuery.of(context).size.height / baseHeight;
+    final roleState = context.read<RoleAppBloc>().state;
     return SafeArea(
       child: Scaffold(
         backgroundColor: klighGreyColor,
@@ -60,16 +61,16 @@ class CampaignVoucherScreen extends StatelessWidget {
             child: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
-              size: 35 * fem,
+              size: 25 * fem,
             ),
           ),
-          toolbarHeight: 80 * hem,
+          toolbarHeight: 50 * hem,
           centerTitle: true,
           title: Text(
             'Chi tiết ưu đãi',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-                    fontSize: 20 * ffem,
+                    fontSize: 18 * ffem,
                     fontWeight: FontWeight.w900,
                     height: 1.3625 * ffem / fem,
                     color: Colors.white)),
@@ -82,7 +83,7 @@ class CampaignVoucherScreen extends StatelessWidget {
                 icon: Icon(
                   Icons.home,
                   color: Colors.white,
-                  size: 35 * fem,
+                  size: 25 * fem,
                 ),
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(context, '/landing-screen',
@@ -119,7 +120,7 @@ class CampaignVoucherScreen extends StatelessWidget {
                           'Tổng đậu xanh',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black)),
                         ),
@@ -129,7 +130,7 @@ class CampaignVoucherScreen extends StatelessWidget {
                               '${formatter.format((campaignVoucherModel.price) * state.counterValue)}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
-                                fontSize: 20 * ffem,
+                                fontSize: 25 * ffem,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold,
                               )),
@@ -139,8 +140,8 @@ class CampaignVoucherScreen extends StatelessWidget {
                                   left: 2 * fem, top: 4 * hem, bottom: 0 * hem),
                               child: SvgPicture.asset(
                                 'assets/icons/green-bean-icon.svg',
-                                width: 26 * fem,
-                                height: 26 * fem,
+                                width: 30 * fem,
+                                height: 30 * fem,
                               ),
                             )
                           ],
@@ -214,7 +215,8 @@ class CampaignVoucherScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        buildButtonBuy(context, state, fem, hem, ffem),
+                        buildButtonBuy(
+                            context, state, fem, hem, ffem, roleState),
                       ],
                     ),
                   ],
@@ -232,10 +234,8 @@ class CampaignVoucherScreen extends StatelessWidget {
   }
 
   Widget buildButtonBuy(BuildContext context, CounterState state, double fem,
-      double hem, double ffem) {
-    if (campaignVoucherModel.quantityInStock == 0 ||
-        (campaignDetailModel.startOn.compareTo(DateTime.now().toString()) >
-            0)) {
+      double hem, double ffem, roleState) {
+    if (roleState is Pending || roleState is Rejected) {
       return Container(
         width: 200 * fem,
         height: 35 * hem,
@@ -254,59 +254,80 @@ class CampaignVoucherScreen extends StatelessWidget {
         ),
       );
     } else {
-      return InkWell(
-          onTap: () async {
-            final student = await AuthenLocalDataSource.getStudent();
-            if (student!.greenWalletBalance <
-                (campaignVoucherModel.price * state.counterValue)) {
-                    ScaffoldMessenger.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(SnackBar(
-                                  elevation: 0,
-                                  duration: const Duration(milliseconds: 2000),
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Colors.transparent,
-                                  content: AwesomeSnackbarContent(
-                                    title: 'Mua thất bại',
-                                    message:
-                                        'Số đậu xanh của bạn không đủ!',
-                                    contentType: ContentType.failure,
-                                  ),
-                                ));
-            } else {
-              final studentId = await AuthenLocalDataSource.getStudentId();
-
-              Navigator.pushNamed(context, RedeemVoucherScreen.routeName,
-                  arguments: <dynamic>[
-                    campaignDetailModel.id,
-                    campaignVoucherModel.id,
-                    studentId!,
-                    state.counterValue,
-                    'string',
-                    campaignDetailModel.campaignName,
-                    (campaignVoucherModel.price * state.counterValue),
-                    campaignVoucherModel.voucherName,
-                    campaignVoucherModel.price
-                  ]);
-            }
-          },
-          child: Container(
-            width: 200 * fem,
-            height: 35 * hem,
-            decoration: BoxDecoration(
-                color: kPrimaryColor,
-                borderRadius: BorderRadius.circular(10 * fem)),
-            child: Center(
-              child: Text(
-                'Mua ngay',
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                        fontSize: 15 * ffem,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
-              ),
+      if (campaignVoucherModel.quantityInStock == 0 ||
+          (campaignDetailModel.startOn.compareTo(DateTime.now().toString()) >
+              0)) {
+        return Container(
+          width: 200 * fem,
+          height: 35 * hem,
+          decoration: BoxDecoration(
+              color: kLowTextColor,
+              borderRadius: BorderRadius.circular(10 * fem)),
+          child: Center(
+            child: Text(
+              'Mua ngay',
+              style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: 15 * ffem,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
             ),
-          ));
+          ),
+        );
+      } else {
+        return InkWell(
+            onTap: () async {
+              final student = await AuthenLocalDataSource.getStudent();
+              if (student!.greenWalletBalance <
+                  (campaignVoucherModel.price * state.counterValue)) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(
+                    elevation: 0,
+                    duration: const Duration(milliseconds: 2000),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Mua thất bại',
+                      message: 'Số đậu xanh của bạn không đủ!',
+                      contentType: ContentType.failure,
+                    ),
+                  ));
+              } else {
+                final studentId = await AuthenLocalDataSource.getStudentId();
+
+                Navigator.pushNamed(context, RedeemVoucherScreen.routeName,
+                    arguments: <dynamic>[
+                      campaignDetailModel.id,
+                      campaignVoucherModel.id,
+                      studentId!,
+                      state.counterValue,
+                      'string',
+                      campaignDetailModel.campaignName,
+                      (campaignVoucherModel.price * state.counterValue),
+                      campaignVoucherModel.voucherName,
+                      campaignVoucherModel.price
+                    ]);
+              }
+            },
+            child: Container(
+              width: 200 * fem,
+              height: 35 * hem,
+              decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(10 * fem)),
+              child: Center(
+                child: Text(
+                  'Mua ngay',
+                  style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                          fontSize: 15 * ffem,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                ),
+              ),
+            ));
+      }
     }
   }
 }
