@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/body.dart';
-import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../config/constants.dart';
 import '../../../widgets/app_bar_campaign.dart';
@@ -43,14 +42,14 @@ class ProfileScreen extends StatelessWidget {
     return _buildVerifiedStudent(fem, hem, ffem);
   }
 
-  Widget _buildUnverified(double fem, double hem, double ffem) {
-    return Scaffold(
-        appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
-        body: Container(
-            color: klighGreyColor,
-            child: Center(
-                child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
-  }
+  // Widget _buildUnverified(double fem, double hem, double ffem) {
+  //   return Scaffold(
+  //       appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+  //       body: Container(
+  //           color: klighGreyColor,
+  //           child: Center(
+  //               child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
+  // }
 
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
     return SafeArea(

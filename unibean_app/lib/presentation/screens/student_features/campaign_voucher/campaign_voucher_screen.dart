@@ -99,8 +99,8 @@ class CampaignVoucherScreen extends StatelessWidget {
               create: (context) => CounterCubit(),
             ),
             BlocProvider(
-              create: (_) => CampaignBloc(
-                  campaignRepository: _.read<CampaignRepository>()),
+              create: (context) => CampaignBloc(
+                  campaignRepository: context.read<CampaignRepository>()),
             ),
           ],
           child: BottomAppBar(

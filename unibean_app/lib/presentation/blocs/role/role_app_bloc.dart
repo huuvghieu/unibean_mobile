@@ -12,7 +12,8 @@ part 'role_app_state.dart';
 
 class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
   final StudentRepository studentRepository;
-  RoleAppBloc(this.studentRepository) : super(RoleAppLoading()) {
+  final StoreRepository storeRepository;
+  RoleAppBloc(this.studentRepository, this.storeRepository) : super(RoleAppLoading()) {
     on<RoleAppStart>(_onStartRoleApp);
     on<RoleAppEnd>(_onEndRoleApp);
   }
@@ -27,7 +28,6 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
       String role = authenModel.role;
       String state = authenModel.userModel.state;
       String userId = authenModel.userModel.userId;
-
       if (userId != '') {
         final student = await studentRepository.fetchStudentById(
             id: authenModel.userModel.userId);
@@ -44,7 +44,9 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
             emit(Unverified(authenModel: authenModel));
           }
         } else {
-          emit(StoreRole());
+          final store = await storeRepository.fetchStoreById(
+              storeId: authenModel.userModel.userId);
+          emit(StoreRole(authenModel: authenModel,storeModel: store!));
         }
       } else {
         emit(Unverified(authenModel: authenModel));

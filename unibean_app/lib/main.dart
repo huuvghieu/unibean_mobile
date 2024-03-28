@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
+import 'package:unibean_app/presentation/blocs/campaign_ranking/campaign_ranking_bloc.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';
@@ -52,6 +53,8 @@ class MyApp extends StatelessWidget {
             create: (_) => MajorRepositoryImp()),
         RepositoryProvider<StudentRepository>(
             create: (_) => StudentRepositoryImp()),
+        RepositoryProvider<StoreRepository>(
+            create: (_) => StoreRepositoryImp()),
         RepositoryProvider<CampaignRepository>(
             create: (_) => CampaignRepositoryImp()),
         RepositoryProvider<BrandRepository>(
@@ -70,7 +73,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => LandingScreenBloc()),
           BlocProvider(
               create: (context) =>
-                  RoleAppBloc(StudentRepositoryImp())..add(RoleAppStart())),
+                  RoleAppBloc(StudentRepositoryImp(), StoreRepositoryImp())
+                    ..add(RoleAppStart())),
           BlocProvider(
             create: (context) => AuthenticationBloc(
                 authenticationRepository: AuthenticationRepositoryImp())
@@ -94,6 +98,16 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 MajorBloc(majorRepository: MajorRepositoryImp())
                   ..add(LoadMajor()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                StoreBloc(storeRepository: StoreRepositoryImp())
+                  ..add(LoadStoreCampaignVouchers()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                CampaignRankingBloc(storeRepository: StoreRepositoryImp())
+                  ..add(LoadCampaignRanking()),
           ),
           BlocProvider(
             create: (context) =>
@@ -132,7 +146,6 @@ class MyApp extends StatelessWidget {
                 StationBloc(stationRepository: StationRepositoryImp())
                   ..add(LoadStations(limit: 100)),
           ),
-          
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -36,6 +36,17 @@ export 'student_features/success_redeem_voucher/success_redeem_voucher_screen.da
 export 'student_features/product_detail/product_detail_screen.dart';
 export 'student_features/profile_detail/profile_detail_screen.dart';
 export 'student_features/profile_update_detail/profile_update_detail_screen.dart';
-export 'student_features/profile_verification/profile_verification_screen.dart'; 
-export 'student_features/profile_verification/update_verification_screen.dart'; 
+export 'student_features/profile_verification/profile_verification_screen.dart';
+export 'student_features/profile_verification/update_verification_screen.dart';
 export 'student_features/voucher_item_detail/voucher_item_detail_screen.dart';
+
+//store
+export 'store_features/transaction/transaction_store_screen.dart';
+export 'store_features/campaign/campaign_store_screen.dart';
+export 'store_features/qr_view/qr_view_screen.dart';
+export 'store_features/success_scan_voucher/success_scan_voucher_screen.dart';
+export 'store_features/failed_scan_voucher/failed_scan_voucher_screen.dart';
+export 'store_features/failed_scan_student/failed_scan_student_screen.dart';
+export 'store_features/transact/transact_screen.dart';
+export 'store_features/dashboard/dashboard_screen.dart';
+export 'store_features/transact/success_transact_screen.dart';

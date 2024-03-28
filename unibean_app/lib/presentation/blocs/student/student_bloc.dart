@@ -20,6 +20,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     on<LoadMoreTransactions>(_onLoadMoreTransactions);
     on<LoadVoucherItem>(_onLoadvoucherItem);
     on<UpdateStudent>(_onUpdateStudent);
+    on<LoadStudentById>(_onLoadStudentById);
   }
 
   ScrollController scrollTransactionController = ScrollController();
@@ -125,6 +126,18 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       emit(StudentVoucherItemLoaded(voucherStudentItemModel: apiResponse!));
     } catch (e) {
       emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+    Future<void> _onLoadStudentById(
+      LoadStudentById event, Emitter<StudentState> emit) async {
+    emit(StudentByIdLoading());
+    try {
+      var apiResponse = await studentRepository.fetchStudentById(
+          id: event.studentId);
+      emit(StudentByIdSuccess(studentMode: apiResponse!));
+    } catch (e) {
+      emit(StudentByIdFailed(error: e.toString()));
     }
   }
 }

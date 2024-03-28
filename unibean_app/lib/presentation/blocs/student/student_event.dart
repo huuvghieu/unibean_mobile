@@ -78,3 +78,13 @@ final class LoadVoucherItem extends StudentEvent {
   @override
   List<Object?> get props => [studentId, voucherId];
 }
+
+final class LoadStudentById extends StudentEvent {
+  final String studentId;
+
+  LoadStudentById({required this.studentId});
+  
+  @override
+  List<Object?> get props => [studentId];
+  
+}

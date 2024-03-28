@@ -29,6 +29,18 @@ class AuthenLocalDataSource {
     return token;
   }
 
+    static Future<void> saveStoreId(String storeId) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('storeId', storeId);
+  }
+
+  static Future<String?> getStoreId() async {
+    final sf = await SharedPreferences.getInstance();
+    String? storeId = sf.getString('storeId');
+    return storeId;
+  }
+
+
   static Future<void> saveVerificationId(String verificationId) async {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('verificationId', verificationId);
@@ -57,7 +69,7 @@ class AuthenLocalDataSource {
     }
   }
 
-    static Future<void> saveStudent(String studentString) async {
+  static Future<void> saveStudent(String studentString) async {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('studentString', studentString);
   }
@@ -71,6 +83,23 @@ class AuthenLocalDataSource {
       Map<String, dynamic> json = jsonDecode(studentString);
       StudentModel? studentModel = StudentModel.fromJson(json);
       return studentModel;
+    }
+  }
+
+  static Future<void> saveStore(String storeString) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('storeString', storeString);
+  }
+
+  static Future<StoreModel?> getStore() async {
+    final sf = await SharedPreferences.getInstance();
+    String? storeString = sf.getString('storeString');
+    if (storeString == null) {
+      return null;
+    } else {
+      Map<String, dynamic> json = jsonDecode(storeString);
+      StoreModel? storeModel = StoreModel.fromJson(json);
+      return storeModel;
     }
   }
 

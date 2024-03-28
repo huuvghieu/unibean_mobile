@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:unibean_app/data/models/university_model.dart';
+import 'package:unibean_app/data/models/student_features/university_model.dart';
 import 'package:unibean_app/domain/repositories.dart';
 
 part 'university_event.dart';

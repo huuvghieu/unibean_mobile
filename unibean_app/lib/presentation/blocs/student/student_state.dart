@@ -89,3 +89,31 @@ final class StudentVoucherItemLoaded extends StudentState {
   @override
   List<Object?> get props => [voucherStudentItemModel];
 }
+
+final class StudentByIdSuccess extends StudentState {
+  final StudentModel studentMode;
+
+  StudentByIdSuccess({required this.studentMode});
+
+  @override
+  List<Object?> get props => [studentMode];
+}
+
+
+final class StudentByIdFailed extends StudentState {
+  final String error;
+
+  StudentByIdFailed({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+
+final class StudentByIdLoading extends StudentState {
+  StudentByIdLoading();
+  @override
+  List<Object?> get props => [];
+}
+
+

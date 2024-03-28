@@ -40,8 +40,14 @@ final class Unverified extends RoleAppState {
 }
 
 final class StoreRole extends RoleAppState {
+  final AuthenModel authenModel;
+  final StoreModel storeModel;
+
+  StoreRole({required this.authenModel, required this.storeModel});
+
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [authenModel, storeModel];
 }
 
 final class RoleAppLoading extends RoleAppState {

@@ -24,11 +24,19 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
       if (response.statusCode == 200) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         this.authenModel = AuthenModel.fromJson(result);
-        String authenString = jsonEncode(AuthenModel.fromJson(result));
-        AuthenLocalDataSource.saveAuthen(authenString);
-        AuthenLocalDataSource.saveToken(authenModel.jwt);
-        AuthenLocalDataSource.saveStudentId(authenModel.userModel.userId);
-        return this.authenModel;
+        if (this.authenModel.role == 'Student') {
+          String authenString = jsonEncode(AuthenModel.fromJson(result));
+          AuthenLocalDataSource.saveAuthen(authenString);
+          AuthenLocalDataSource.saveToken(authenModel.jwt);
+          AuthenLocalDataSource.saveStudentId(authenModel.userModel.userId);
+          return this.authenModel;
+        } else {
+          String authenString = jsonEncode(AuthenModel.fromJson(result));
+          AuthenLocalDataSource.saveAuthen(authenString);
+          AuthenLocalDataSource.saveToken(authenModel.jwt);
+          AuthenLocalDataSource.saveStoreId(authenModel.userModel.userId);
+          return this.authenModel;
+        }
       }
       return null;
     } catch (e) {

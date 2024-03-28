@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/domain/repositories/product_repository.dart';
+import 'package:unibean_app/domain/repositories/student_features/product_repository.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/widgets/shimmer_widget.dart';

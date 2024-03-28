@@ -14,3 +14,5 @@ export 'station/station_bloc.dart';
 export 'student/student_bloc.dart';
 export 'university/university_bloc.dart';
 export 'voucher/voucher_bloc.dart';
+export 'store/store_bloc.dart';
+export 'campaign_ranking/campaign_ranking_bloc.dart';

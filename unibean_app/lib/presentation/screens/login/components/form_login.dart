@@ -60,6 +60,7 @@ class _FormLoginState extends State<FormLogin> {
               context, '/landing-screen', (Route<dynamic> route) => false);
         } else if (state is AuthenticationStoreSuccess) {
           context.read<RoleAppBloc>().add(RoleAppStart());
+          
           Navigator.pushNamedAndRemoveUntil(
               context, '/landing-screen-store', (Route<dynamic> route) => false);
         }

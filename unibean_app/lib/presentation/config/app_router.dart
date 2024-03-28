@@ -143,15 +143,33 @@ class AppRouter {
 
       case SuccessRedeemVoucherScreen.routeName:
         List<dynamic> args = settings.arguments as List<dynamic>;
-
         return SuccessRedeemVoucherScreen.route(
             voucherName: args[0], total: args[1]);
+
+      case SuccessScanVoucherScreen.routeName:
+        return SuccessScanVoucherScreen.route(
+            success: settings.arguments as String);
+
+      case SuccessTransactScreen.routeName:
+        return SuccessTransactScreen.route(
+            transactResultModel: settings.arguments as TransactResultModel);
+
+      case FailedScanVoucherScreen.routeName:
+        return FailedScanVoucherScreen.route(
+            failed: settings.arguments as String);
+
+      case FailedScanStudentScreen.routeName:
+        return FailedScanStudentScreen.route(
+            failed: settings.arguments as String);
 
       case QRScreen.routeName:
         return QRScreen.route(id: settings.arguments as String);
 
       case QRVoucherScreen.routeName:
         return QRVoucherScreen.route(id: settings.arguments as String);
+
+      case QrViewScreen.routeName:
+        return QrViewScreen.route(storeId: settings.arguments as String);
 
       case FilterVoucherScreen.routeName:
         return FilterVoucherScreen.route();
@@ -161,6 +179,14 @@ class AppRouter {
 
       case ChallengeScreen.routeName:
         return ChallengeScreen.route();
+
+      //Store
+      case TransactionStoreScreen.routeName:
+        return TransactionStoreScreen.route();
+
+      case TransactScreen.routeName:
+        return TransactScreen.route(
+            studentModel: settings.arguments as StudentModel);
 
       default:
         return _errorRoute();

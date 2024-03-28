@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unibean_app/domain/repositories/student_repository.dart';
+import 'package:unibean_app/domain/repositories/student_features/student_repository.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import '../../../../widgets/shimmer_widget.dart';

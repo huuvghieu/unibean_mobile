@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
-import 'package:unibean_app/presentation/blocs/landing_screen/landing_screen_bloc.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
+import 'package:unibean_app/presentation/screens/store_features/profile/profile_store_screen.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
 
-import '../../../widgets/unverified_screen.dart';
 import 'components/cus_nav_bar_strore.dart';
 
 class LandingStoreScreen extends StatelessWidget {
@@ -50,15 +50,9 @@ class LandingStoreScreen extends StatelessWidget {
                     elevation: 5 * fem,
                     shape: const CircleBorder(),
                     onPressed: () async {
-                      final studentId =
-                          await AuthenLocalDataSource.getStudentId();
-                      if (studentId != null) {
-                        Navigator.pushNamed(context, QRScreen.routeName,
-                            arguments: studentId);
-                      } else {
-                        Navigator.pushNamed(
-                            context, UnverifiedScreen.routeName);
-                      }
+                      final storeId = await AuthenLocalDataSource.getStoreId();
+                      Navigator.pushNamed(context, QrViewScreen.routeName,
+                          arguments: storeId);
                     },
                     child: Container(
                       width: 20 * fem,
@@ -76,7 +70,7 @@ class LandingStoreScreen extends StatelessWidget {
               bottomNavigationBar: CusNavStoreBar(),
             ),
           );
-        }else if(state.tabIndex == 2){
+        } else if (state.tabIndex == 2) {
           return DefaultTabController(
             length: 3,
             child: SafeArea(
@@ -106,15 +100,10 @@ class LandingStoreScreen extends StatelessWidget {
                       elevation: 5 * fem,
                       shape: const CircleBorder(),
                       onPressed: () async {
-                        final studentId =
-                            await AuthenLocalDataSource.getStudentId();
-                        if (studentId != null) {
-                          Navigator.pushNamed(context, QRScreen.routeName,
-                              arguments: studentId);
-                        } else {
-                          Navigator.pushNamed(
-                              context, UnverifiedScreen.routeName);
-                        }
+                        final storeId =
+                            await AuthenLocalDataSource.getStoreId();
+                        Navigator.pushNamed(context, QrViewScreen.routeName,
+                            arguments: storeId);
                       },
                       child: Container(
                         width: 20 * fem,
@@ -133,8 +122,7 @@ class LandingStoreScreen extends StatelessWidget {
               ),
             ),
           );
-        } 
-       else{
+        } else {
           return SafeArea(
             child: Scaffold(
               floatingActionButtonLocation:
@@ -161,15 +149,9 @@ class LandingStoreScreen extends StatelessWidget {
                     elevation: 5 * fem,
                     shape: const CircleBorder(),
                     onPressed: () async {
-                      final studentId =
-                          await AuthenLocalDataSource.getStudentId();
-                      if (studentId != null) {
-                        Navigator.pushNamed(context, QRScreen.routeName,
-                            arguments: studentId);
-                      } else {
-                        Navigator.pushNamed(
-                            context, UnverifiedScreen.routeName);
-                      }
+                      final storeId = await AuthenLocalDataSource.getStoreId();
+                      Navigator.pushNamed(context, QrViewScreen.routeName,
+                          arguments: storeId);
                     },
                     child: Container(
                       width: 20 * fem,
@@ -193,19 +175,11 @@ class LandingStoreScreen extends StatelessWidget {
   }
 }
 
- List<Widget> bottomNavScreen = [
-  Container(
-    child: Text('Ưu đãi'),
-  ),
-  Container(
-    child: Text('Thống kê'),
-  ),
-  Container(
-    child: Text('Giao dịch'),
-  ),
-  Container(
-    child: Text('Cá nhân'),
-  ),
+List<Widget> bottomNavScreen = [
+  CampaignStoreScreen(),
+  DashboardScreen(),
+  TransactionStoreScreen(),
+  ProfileStoreScreen(),
 ];
 
 PreferredSizeWidget? _buildAppbar(
