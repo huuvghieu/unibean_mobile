@@ -28,11 +28,12 @@ export 'models/student_features/station_model.dart';
 export 'models/student_features/verify_authen_model.dart';
 export 'models/student_features/voucher_student_item_model.dart';
 
-
 //store
 export 'models/store_features/transaction_store_model.dart';
 export 'models/store_features/store_model.dart';
 export 'models/store_features/campaign_voucher_store_model.dart';
 export 'models/store_features/campaign_store_cart_model.dart';
 export 'models/store_features/campagin_ranking_model.dart';
+export 'models/store_features/student_ranking_model.dart';
 export 'models/store_features/transact_result_model.dart';
+export 'models/store_features/area_model.dart';

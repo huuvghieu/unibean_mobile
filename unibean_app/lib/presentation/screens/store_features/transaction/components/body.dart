@@ -10,9 +10,44 @@ import 'package:unibean_app/presentation/screens/store_features/transaction/comp
 import '../../../../config/constants.dart';
 import 'activity_transaction.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key, required this.storeId});
   final String storeId;
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
+  late TabController _controller;
+  int _selectedIndex = 0;
+
+  List<Widget> list = [
+    Tab(
+      text: 'Tất cả',
+    ),
+    Tab(
+      text: 'Hoạt động',
+    ),
+    Tab(
+      text: 'Tặng đậu',
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: list.length, vsync: this);
+
+    _controller.addListener(() {
+      setState(() {
+        _selectedIndex = _controller.index;
+        context.read<StoreBloc>().add(
+            LoadStoreTransactions(typeIds: _selectedIndex, id: widget.storeId));
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 375;
@@ -60,22 +95,22 @@ class Body extends StatelessWidget {
             ),
           ],
           bottom: TabBar(
+            controller: _controller,
             onTap: (value) {
               if (value == 1) {
                 context
                     .read<StoreBloc>()
-                    .add(LoadStoreTransactions(typeIds: 1, id: storeId));
+                    .add(LoadStoreTransactions(typeIds: 1, id: widget.storeId));
               } else if (value == 2) {
                 context
                     .read<StoreBloc>()
-                    .add(LoadStoreTransactions(typeIds: 2, id: storeId));
+                    .add(LoadStoreTransactions(typeIds: 2, id: widget.storeId));
               } else {
                 context
                     .read<StoreBloc>()
-                    .add(LoadStoreTransactions(typeIds: 0, id: storeId));
+                    .add(LoadStoreTransactions(typeIds: 0, id: widget.storeId));
               }
             },
-            
             automaticIndicatorColorAdjustment: false,
             indicatorColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.tab,
@@ -93,17 +128,7 @@ class Body extends StatelessWidget {
               fontSize: 13 * ffem,
               fontWeight: FontWeight.w700,
             )),
-            tabs: [
-              Tab(
-                text: 'Tất cả',
-              ),
-              Tab(
-                text: 'Hoạt động',
-              ),
-              Tab(
-                text: 'Tặng đậu',
-              ),
-            ],
+            tabs: list,
           ),
         )
       ];
@@ -117,20 +142,22 @@ class Body extends StatelessWidget {
                       Lottie.asset('assets/animations/loading-screen.json')));
         } else if (state is StoreTransactionsLoaded) {
           return TabBarView(
+            controller: _controller,
             children: [
               AllTransaction(
                 fem: fem,
                 hem: hem,
                 ffem: ffem,
-                storeId: storeId,
+                storeId: widget.storeId,
               ),
               ActivityTransaction(
                 fem: fem,
                 hem: hem,
                 ffem: ffem,
-                storeId: storeId,
+                storeId: widget.storeId,
               ),
-              BonusTransaction(hem: hem, fem: fem, ffem: ffem, storeId: storeId)
+              BonusTransaction(
+                  hem: hem, fem: fem, ffem: ffem, storeId: widget.storeId)
             ],
           );
         }

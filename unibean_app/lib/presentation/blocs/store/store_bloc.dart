@@ -16,6 +16,8 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     on<LoadMoreTransactionStore>(_onLoadMoreTransactions);
     on<ScanVoucherCode>(_onScanVoucherCode);
     on<CreateBonus>(_onCreateBonus);
+    on<LoadCampaignVoucherDetail>(_onLoadCampaignVoucherDetail);
+    on<UpdateStore>(_onUpdateStore);
   }
   var isLoadingMore = false;
   int pageTransaction = 1;
@@ -132,7 +134,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     emit(StoreCampaignVoucherLoading());
     try {
       var apiResponse = await storeRepository.fetchCampaignVoucherStoreId(
-          event.page, event.limit);
+          event.page, event.limit, event.search);
       // bool hasReachedMax = false;
 
       emit(StoreCampaignVoucherLoaded(
@@ -179,6 +181,45 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       emit(CreateBonusSucess(transactModel: apiResponse!));
     } catch (e) {
       emit(CreateBonusFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadCampaignVoucherDetail(
+      LoadCampaignVoucherDetail event, Emitter<StoreState> emit) async {
+    emit(StoreCampaignVoucherDetailLoading());
+    try {
+      var apiResponse = await storeRepository.fetchCampaignVoucherDetail(
+          storeId: event.storeId,
+          campaignVoucherDetailId: event.campaignVoucherId);
+
+      emit(StoreCampaignVoucherDetailLoaded(
+          campaignVoucherDetailModel: apiResponse!));
+    } catch (e) {
+      emit(StoreCampaignVoucherDetailFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateStore(
+      UpdateStore event, Emitter<StoreState> emit) async {
+    emit(StoreUpding());
+    try {
+      var apiResponse = await storeRepository.updateStore(
+          areaId: event.areaId,
+          storeName: event.storeName,
+          address: event.address,
+          avatar: event.avatar,
+          openHours: event.openHours,
+          closeHours: event.closeHours,
+          description: event.description,
+          storeId: event.storeId,
+          state: event.state);
+      if (apiResponse == null) {
+        emit(StoreUpdateFailed(error: 'Cập nhật thất bại'));
+      } else {
+        emit(StoreUpdateSuccess(storeModel: apiResponse));
+      }
+    } catch (e) {
+      emit(StoreUpdateFailed(error: e.toString()));
     }
   }
 }

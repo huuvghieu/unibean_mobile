@@ -104,6 +104,8 @@ dependencies:
   #syncfusion_flutter_charts
   syncfusion_flutter_charts: ^25.1.37
 
+  chartui: ^0.0.1
+
 
 
 # Run commands to generate splash screen

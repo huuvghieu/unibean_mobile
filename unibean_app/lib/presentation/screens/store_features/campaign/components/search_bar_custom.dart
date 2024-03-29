@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 // import 'package:unibean_app/presentation/screens/student_features/voucher/components/filter/filter_body.dart';
 
 class SearchBarCustom extends StatefulWidget {
@@ -16,13 +17,9 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
   void initState() {
     super.initState();
     _suggestions = [
-      'Acer',
-      'Android',
-      'Apple',
-      'Bàn phím',
-      'Logitech',
-      'Razer',
-      'SmartTech'
+      'Khuyến mãi',
+      'Thứ 2',
+      'Mua 1 tặng 1',
     ];
   }
 
@@ -36,8 +33,15 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
         Expanded(
           flex: 6,
           child: SearchAnchor(
-              viewBackgroundColor: kPrimaryColor,
               isFullScreen: false,
+              viewBackgroundColor: kPrimaryColor,
+              viewOnSubmitted: (value) {
+                FocusScope.of(context).unfocus(); 
+                Navigator.pushNamed(
+                    context, CampaignVoucherListScreen.routeName,
+                    arguments: value);
+                    
+              },
               viewConstraints: const BoxConstraints(
                 maxHeight: 400.0,
               ),
@@ -60,13 +64,9 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                       color: Colors.black54,
                     ),
                     onSubmitted: (value) {
-                      // String searchString = controller.text;
-                      // FocusScope.of(context).unfocus();
-                      // Navigator.pushNamed(context, '/product-list-search-screen',
-                      //     arguments: searchString);
-                      handleSearch(value, context);
+                     FocusScope.of(context).unfocus(); 
                     },
-                    hintText: 'Tìm kiếm theo tên ưu đãi hoặc thương hiệu',
+                    hintText: 'Tìm kiếm theo tên ưu đãi',
                     hintStyle: MaterialStateProperty.all(
                         const TextStyle(color: Colors.grey)),
                     overlayColor: MaterialStateProperty.all(kPrimaryColor),
@@ -93,7 +93,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                       setState(() {
                         controller.closeView(item);
                         Navigator.pushNamed(
-                            context, '/product-list-search-screen',
+                            context,  CampaignVoucherListScreen.routeName,
                             arguments: item);
                         FocusScope.of(context).unfocus();
                       });
@@ -102,27 +102,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                 }).toList();
               }),
         ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          flex: 1,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            
-            ),
-            child: IconButton(
-              onPressed: () {
-                // Navigator.of(context).push(_createRoute());
-              },
-              icon: const Icon(Icons.filter_list_rounded),
-              color: kPrimaryColor,
-              iconSize: 32.0,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10.0),
+        const SizedBox(width: 20.0),
       ],
     );
   }
@@ -149,7 +129,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
 
   void handleSearch(String value, BuildContext context) {
     FocusScope.of(context).unfocus();
-    Navigator.pushNamed(context, '/product-list-search-screen',
+    Navigator.pushNamed(context, CampaignVoucherListScreen.routeName,
         arguments: value);
   }
 }

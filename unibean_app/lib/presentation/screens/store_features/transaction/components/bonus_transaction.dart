@@ -32,7 +32,7 @@ class _BonusTransactionState extends State<BonusTransaction> {
   void initState() {
     scrollTransactionController.addListener(() {
       context.read<StoreBloc>().add(
-          LoadMoreTransactionStore(scrollTransactionController, typeIds: 1));
+          LoadMoreTransactionStore(scrollTransactionController, typeIds: 2));
     });
     super.initState();
   }

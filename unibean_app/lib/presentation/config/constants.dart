@@ -51,3 +51,18 @@ var formatter = NumberFormat.decimalPattern();
 
 //others
 final GoogleSignIn googleSignIn = GoogleSignIn();
+
+TimeOfDay parseTimeString(String timeString) {
+  // Splitting the time string by ":" and converting the parts to integers
+  List<String> parts = timeString.split(":");
+  int hour = int.parse(parts[0]);
+  int minute = int.parse(parts[1]);
+
+  // Creating a TimeOfDay instance
+  return TimeOfDay(hour: hour, minute: minute);
+}
+
+String timeOfDayToString(TimeOfDay timeOfDay) {
+  // Format the TimeOfDay object into a string
+  return '${timeOfDay.hour}:${timeOfDay.minute}';
+}

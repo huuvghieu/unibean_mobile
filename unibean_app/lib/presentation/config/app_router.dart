@@ -69,6 +69,9 @@ class AppRouter {
       case ProfileVoucherScreen.routeName:
         return ProfileVoucherScreen.route(id: settings.arguments as String);
 
+      case ProfileUpdateDetailStoreScreen.routeName:
+        return ProfileUpdateDetailStoreScreen.route(storeModel: settings.arguments as StoreModel);
+
       case ProductScreen.routeName:
         return ProductScreen.route();
 
@@ -109,6 +112,15 @@ class AppRouter {
 
         return CampaignVoucherScreen.route(
             campaignDetail: args[0], campaignVoucher: args[1]);
+
+      case CampaignVoucherDetailScreen.routeName:
+        List<dynamic> args = settings.arguments as List<dynamic>;
+        return CampaignVoucherDetailScreen.route(
+            storeId: args[0], campaignVoucherId: args[1]);
+
+      case CampaignVoucherListScreen.routeName:
+        return CampaignVoucherListScreen.route(
+            search: settings.arguments as String);
 
       case BrandDetailScreen.routeName:
         return BrandDetailScreen.route(id: settings.arguments as String);

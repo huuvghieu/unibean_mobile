@@ -6,7 +6,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
-import 'package:unibean_app/presentation/blocs/campaign_ranking/campaign_ranking_bloc.dart';
 import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';
@@ -67,6 +66,7 @@ class MyApp extends StatelessWidget {
             create: (_) => ProductRepositoryImp()),
         RepositoryProvider<StationRepository>(
             create: (_) => StationRepositoryImp()),
+        RepositoryProvider<AreaRepository>(create: (_) => AreaRepositoryImp())
       ],
       child: MultiBlocProvider(
         providers: [
@@ -95,18 +95,19 @@ class MyApp extends StatelessWidget {
             create: (context) => CampusBloc(CampusRepositoryImp()),
           ),
           BlocProvider(
+            create: (context) => AreaBloc(areaRepository: AreaRepositoryImp())..add(LoadAreas()),
+          ),
+          BlocProvider(
             create: (context) =>
                 MajorBloc(majorRepository: MajorRepositoryImp())
                   ..add(LoadMajor()),
           ),
           BlocProvider(
-            create: (context) =>
-                StoreBloc(storeRepository: StoreRepositoryImp())
-                  ..add(LoadStoreCampaignVouchers()),
-          ),
+              create: (context) =>
+                  StoreBloc(storeRepository: StoreRepositoryImp())..add(LoadStoreCampaignVouchers())),
           BlocProvider(
             create: (context) =>
-                CampaignRankingBloc(storeRepository: StoreRepositoryImp())
+                RankingBloc(storeRepository: StoreRepositoryImp())
                   ..add(LoadCampaignRanking()),
           ),
           BlocProvider(

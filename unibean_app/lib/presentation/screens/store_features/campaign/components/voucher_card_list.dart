@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
@@ -21,7 +23,11 @@ class VoucherCardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () async {
+        final storeId = await AuthenLocalDataSource.getStoreId();
+        Navigator.pushNamed(context, CampaignVoucherDetailScreen.routeName,
+            arguments: <dynamic>[storeId, voucher.id]);
+      },
       child: Stack(
         children: [
           Container(
@@ -70,7 +76,7 @@ class VoucherCardList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 5*hem,
+                      height: 5 * hem,
                     ),
                     Container(
                       width: 200 * fem,
@@ -108,8 +114,11 @@ class VoucherCardList extends StatelessWidget {
             bottom: 12 * hem,
             right: 20 * fem,
             child: InkWell(
-              onTap: (){
-
+              onTap: () async {
+                final storeId = await AuthenLocalDataSource.getStoreId();
+                Navigator.pushNamed(
+                    context, CampaignVoucherDetailScreen.routeName,
+                    arguments: <dynamic>[storeId, voucher.id]);
               },
               child: Container(
                 width: 85 * fem,
@@ -118,20 +127,19 @@ class VoucherCardList extends StatelessWidget {
                     color: Colors.white,
                     border: Border.all(color: kPrimaryColor),
                     borderRadius: BorderRadius.circular(5)),
-               
-                  child: Center(
-                    child: Text(
-                      'Xem ngay',
-                      style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                              color: kPrimaryColor)),
-                    ),
+                child: Center(
+                  child: Text(
+                    'Xem ngay',
+                    style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: kPrimaryColor)),
                   ),
                 ),
+              ),
             ),
-            ),
+          ),
         ],
       ),
     );

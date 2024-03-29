@@ -50,3 +50,6 @@ export 'store_features/failed_scan_student/failed_scan_student_screen.dart';
 export 'store_features/transact/transact_screen.dart';
 export 'store_features/dashboard/dashboard_screen.dart';
 export 'store_features/transact/success_transact_screen.dart';
+export 'store_features/campaign_voucher_detail/campaign_voucher_detail_screen.dart';
+export 'store_features/campaign_voucher_list/campaign_voucher_list_screen.dart';
+export 'store_features/profile_update_detail/profile_update_detail_screen.dart';

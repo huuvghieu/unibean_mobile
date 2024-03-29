@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import '../../../../blocs/blocs.dart';
@@ -188,9 +189,7 @@ class Body extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         InkWell(
-                                          onTap: ()  {
-                                          
-                                          },
+                                          onTap: () {},
                                           child: Container(
                                             padding: EdgeInsets.only(
                                                 left: 5 * fem, right: 5 * fem),
@@ -311,18 +310,23 @@ class Body extends StatelessWidget {
                                       ffem: ffem,
                                       widthIcon: 16,
                                       heightIcon: 16,
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        final storeModel =
+                                            await AuthenLocalDataSource
+                                                .getStore();
                                         Navigator.pushNamed(
-                                            context, ProductScreen.routeName);
+                                            context,
+                                            ProfileUpdateDetailStoreScreen
+                                                .routeName,
+                                            arguments: storeModel);
                                       },
-                                      svgIcon:
-                                          'assets/icons/pen-icon.svg',
-                                      title: 'Sửa thông tin',
+                                      svgIcon: 'assets/icons/pen-icon.svg',
+                                      title: 'Cập nhật thông tin',
                                     ),
                                     SizedBox(
                                       height: 10 * hem,
                                     ),
-                                 
+
                                     //button logout
                                     ButtonProfile(
                                         fem: fem,

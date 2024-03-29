@@ -4,9 +4,11 @@ import 'package:unibean_app/data/models/api_response.dart';
 import 'package:unibean_app/data/models/store_features/campagin_ranking_model.dart';
 import 'package:unibean_app/data/models/store_features/campaign_voucher_store_model.dart';
 import 'package:unibean_app/data/models/store_features/store_model.dart';
+import 'package:unibean_app/data/models/store_features/student_ranking_model.dart';
 import 'package:unibean_app/data/models/store_features/transact_result_model.dart';
 
 import 'package:unibean_app/data/models/store_features/transaction_store_model.dart';
+import 'package:unibean_app/data/models/student_features/campaign_voucher_detail_model.dart';
 
 import '../../../domain/repositories.dart';
 import '../../../presentation/config/constants.dart';
@@ -15,7 +17,6 @@ import 'package:http/http.dart' as http;
 
 class StoreRepositoryImp extends StoreRepository {
   String endPoint = '${baseURL}stores';
-
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
@@ -99,10 +100,7 @@ class StoreRepositoryImp extends StoreRepository {
 
   @override
   Future<ApiResponse<List<CampaignVoucherStoreModel>>?>
-      fetchCampaignVoucherStoreId(
-    int? page,
-    int? limit,
-  ) async {
+      fetchCampaignVoucherStoreId(int? page, int? limit, String? search) async {
     try {
       final token = await AuthenLocalDataSource.getToken();
       final storeId = await AuthenLocalDataSource.getStoreId();
@@ -110,25 +108,45 @@ class StoreRepositoryImp extends StoreRepository {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       };
-      http.Response response = await http.get(
-          Uri.parse(
-              '$endPoint/$storeId/campaign-details?sort=$sort&page=$page&limit=$limit'),
-          headers: headers);
-      if (response.statusCode == 200) {
-        final result = jsonDecode(utf8.decode(response.bodyBytes));
-        ApiResponse<List<CampaignVoucherStoreModel>> apiResponse =
-            ApiResponse<List<CampaignVoucherStoreModel>>.fromJson(
-                result,
-                (data) => data
-                    .map((e) => CampaignVoucherStoreModel.fromJson(e))
-                    .toList());
-        return apiResponse;
-      } else {
-        return null;
+      if (search != null) {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$storeId/campaign-details?sort=$sort&search=$search&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<CampaignVoucherStoreModel>> apiResponse =
+              ApiResponse<List<CampaignVoucherStoreModel>>.fromJson(
+                  result,
+                  (data) => data
+                      .map((e) => CampaignVoucherStoreModel.fromJson(e))
+                      .toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
+      } else if (search == null || search == '') {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$storeId/campaign-details?sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<CampaignVoucherStoreModel>> apiResponse =
+              ApiResponse<List<CampaignVoucherStoreModel>>.fromJson(
+                  result,
+                  (data) => data
+                      .map((e) => CampaignVoucherStoreModel.fromJson(e))
+                      .toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
       }
     } catch (e) {
       throw Exception(e.toString());
     }
+    return null;
   }
 
   @override
@@ -228,6 +246,122 @@ class StoreRepositoryImp extends StoreRepository {
       return null;
     } catch (e) {
       print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<CampaignVoucherDetailModel?> fetchCampaignVoucherDetail(
+      {required String storeId,
+      required String campaignVoucherDetailId}) async {
+    try {
+      final token = await AuthenLocalDataSource.getToken();
+
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http.get(
+          Uri.parse(
+              '$endPoint/$storeId/campaign-details/$campaignVoucherDetailId'),
+          headers: headers);
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        CampaignVoucherDetailModel campaignVoucherDetail =
+            CampaignVoucherDetailModel.fromJson(result);
+        return campaignVoucherDetail;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<StoreModel?> updateStore(
+      {required String areaId,
+      required String storeName,
+      required String address,
+      required String avatar,
+      required String openHours,
+      required String closeHours,
+      required String description,
+      required String storeId,
+      required bool state}) async {
+    try {
+      final token = await AuthenLocalDataSource.getToken();
+      final Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      var request =
+          http.MultipartRequest('PUT', Uri.parse('$endPoint/$storeId'));
+
+      //thêm file cho request
+      if (avatar != '') {
+        request.files.add(await http.MultipartFile.fromPath('Avatar', avatar));
+      }
+
+      //thêm headers
+      request.headers.addAll(headers);
+
+      //thêm field cho request
+      request.fields.addAll({
+        'AreaId': areaId,
+        'StoreName': storeName,
+        'Address': address,
+        'OpeningHours': openHours,
+        'ClosingHours': closeHours,
+        'Description': description,
+        'State': state.toString()
+      });
+
+      //gửi request
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        print(response);
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        StoreModel storeModel = StoreModel.fromJson(result);
+
+        String storeString = jsonEncode(StoreModel.fromJson(result));
+        AuthenLocalDataSource.saveStore(storeString);
+        return storeModel;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<List<StudentRankingModel>?> fecthStudentRanking() async {
+    try {
+      final token = await AuthenLocalDataSource.getToken();
+      final storeId = await AuthenLocalDataSource.getStoreId();
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http.get(
+          Uri.parse('$endPoint/$storeId/student-ranking'),
+          headers: headers);
+
+      if (response.statusCode == 200) {
+        final List result = jsonDecode(utf8.decode(response.bodyBytes));
+        List<StudentRankingModel> apiResponse =
+            result.map((e) => StudentRankingModel.fromJson(e)).toList();
+        return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
       throw Exception(e.toString());
     }
   }

@@ -14,3 +14,4 @@ export 'repositories/student_features/station_repository.dart';
 
 //store
 export 'repositories/store_features/store_repository.dart';
+export 'repositories/store_features/area_repository.dart';

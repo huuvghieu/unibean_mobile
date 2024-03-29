@@ -10,10 +10,7 @@ abstract class StoreRepository {
       {required String id});
 
   Future<ApiResponse<List<CampaignVoucherStoreModel>>?>
-      fetchCampaignVoucherStoreId(
-    int? page,
-    int? limit,
-  );
+      fetchCampaignVoucherStoreId(int? page, int? limit, String? search);
 
   Future<Map<bool, String>> postScanVoucherCode(
       {required String storeId,
@@ -22,6 +19,7 @@ abstract class StoreRepository {
       required bool state});
 
   Future<List<CampaignRankingModel>?> fecthCampaignRanking();
+  Future<List<StudentRankingModel>?> fecthStudentRanking();
 
   Future<TransactResultModel?> createBonus({
     required String storeId,
@@ -30,4 +28,18 @@ abstract class StoreRepository {
     required String description,
     required bool state,
   });
+
+  Future<CampaignVoucherDetailModel?> fetchCampaignVoucherDetail(
+      {required String storeId, required String campaignVoucherDetailId});
+
+  Future<StoreModel?> updateStore(
+      {required String areaId,
+      required String storeName,
+      required String address,
+      required String avatar,
+      required String openHours,
+      required String closeHours,
+      required String description,
+      required String storeId,
+      required bool state});
 }

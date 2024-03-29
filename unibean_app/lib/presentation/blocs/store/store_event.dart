@@ -31,11 +31,13 @@ final class LoadMoreTransactionStore extends StoreEvent {
 final class LoadStoreCampaignVouchers extends StoreEvent {
   final int page;
   final int limit;
+  final String search;
 
-  LoadStoreCampaignVouchers({this.page = 1, this.limit = 10});
+  LoadStoreCampaignVouchers(
+      {this.page = 1, this.limit = 100, this.search = ''});
 
   @override
-  List<Object?> get props => [page, limit];
+  List<Object?> get props => [page, limit, search];
 }
 
 final class ScanVoucherCode extends StoreEvent {
@@ -70,4 +72,51 @@ final class CreateBonus extends StoreEvent {
 
   @override
   List<Object?> get props => [storeId, studentId, amount, description, state];
+}
+
+final class LoadCampaignVoucherDetail extends StoreEvent {
+  final String storeId;
+  final String campaignVoucherId;
+
+  LoadCampaignVoucherDetail(
+      {required this.storeId, required this.campaignVoucherId});
+
+  @override
+  List<Object?> get props => [storeId, campaignVoucherId];
+}
+
+final class UpdateStore extends StoreEvent {
+  final String storeId;
+  final String areaId;
+  final String storeName;
+  final String address;
+  final String openHours;
+  final String closeHours;
+  final String description;
+  final String avatar;
+  final bool state;
+
+  UpdateStore(
+      {required this.areaId,
+      required this.storeId,
+      required this.storeName,
+      required this.address,
+      required this.openHours,
+      required this.closeHours,
+      required this.description,
+      this.avatar = '',
+      required this.state});
+
+  @override
+  List<Object?> get props => [
+        areaId,
+        storeName,
+        address,
+        openHours,
+        closeHours,
+        description,
+        avatar,
+        state,
+        address
+      ];
 }
