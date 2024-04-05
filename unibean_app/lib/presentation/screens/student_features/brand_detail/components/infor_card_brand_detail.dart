@@ -1,10 +1,15 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models.dart';
+import 'package:unibean_app/domain/repositories/student_features/brand_repository.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_detail/components/others_infor_brand_detail.dart';
 
-class InformationCardBrandDetail extends StatelessWidget {
+class InformationCardBrandDetail extends StatefulWidget {
   const InformationCardBrandDetail({
     super.key,
     required this.hem,
@@ -19,50 +24,102 @@ class InformationCardBrandDetail extends StatelessWidget {
   final BrandModel brandModel;
 
   @override
+  State<InformationCardBrandDetail> createState() =>
+      _InformationCardBrandDetailState();
+}
+
+class _InformationCardBrandDetailState
+    extends State<InformationCardBrandDetail> {
+  bool isFollowed = false;
+  @override
+  void initState() {
+    isFollowed = widget.brandModel.isFavor;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 90 * hem,
-      left: 25 * fem,
-      right: 25*fem,
+    return BlocListener<WishlistBloc, WishlistState>(
+      listener: (context, state) {
+        if (state is CreateWishListSuccess) {
+          if (state.wishlist.status) {
+            setState(() {
+              isFollowed = true;
+            });
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(
+                elevation: 0,
+                duration: const Duration(milliseconds: 2000),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                content: AwesomeSnackbarContent(
+                  title: 'Theo dõi thành công',
+                  message: 'Theo dõi ${state.wishlist.brandName} thành công!',
+                  contentType: ContentType.success,
+                ),
+              ));
+          } else {
+            setState(() {
+              isFollowed = false;
+            });
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(
+                elevation: 0,
+                duration: const Duration(milliseconds: 2000),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                content: AwesomeSnackbarContent(
+                  title: 'Hủy theo dõi thành công',
+                  message:
+                      'Hủy theo dõi ${state.wishlist.brandName} thành công!',
+                  contentType: ContentType.success,
+                ),
+              ));
+          }
+        }
+      },
       child: Container(
-        width: double.infinity,
-        height: 200 * hem,
+        height: 200 * widget.hem,
+        margin: EdgeInsets.only(right: 15 * widget.fem, left: 15 * widget.fem),
+        padding: EdgeInsets.only(top: 5 * widget.hem, bottom: 5 * widget.hem),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * fem),
+            borderRadius: BorderRadius.circular(15 * widget.fem),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
                   color: Color(0x0c000000),
-                  offset: Offset(0 * fem, 10 * fem),
-                  blurRadius: 5 * fem)
+                  offset: Offset(0 * widget.fem, 10 * widget.fem),
+                  blurRadius: 5 * widget.fem)
             ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 10 * hem,
+              height: 10 * widget.hem,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 25 * fem,
+                  width: 25 * widget.fem,
                 ),
 
                 //avatar
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10 * fem),
+                  borderRadius: BorderRadius.circular(10 * widget.fem),
                   child: Container(
-                    height: 80 * hem,
-                    width: 80 * fem,
+                    height: 80 * widget.hem,
+                    width: 80 * widget.fem,
                     child: Image.network(
-                      brandModel.logo,
+                      widget.brandModel.logo,
                       fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           child: Icon(
                             Icons.error,
-                            size: 50 * fem,
+                            size: 50 * widget.fem,
                             color: kPrimaryColor,
                           ),
                         );
@@ -72,7 +129,7 @@ class InformationCardBrandDetail extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  width: 20 * fem,
+                  width: 20 * widget.fem,
                 ),
 
                 SizedBox(
@@ -82,75 +139,129 @@ class InformationCardBrandDetail extends StatelessWidget {
                     children: [
                       //Name
                       SizedBox(
-                        width: 150 * fem,
+                        width: 150 * widget.fem,
                         child: Row(
                           children: [
                             Flexible(
                               child: Text(
-                                brandModel.brandName,
+                                widget.brandModel.brandName,
                                 // softWrap: true,
                                 maxLines: 2,
                                 style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
-                                        fontSize: 16 * ffem,
+                                        fontSize: 16 * widget.ffem,
                                         fontWeight: FontWeight.w800,
-                                        height: 1.3625 * ffem / fem,
+                                        height:
+                                            1.3625 * widget.ffem / widget.fem,
                                         color: Colors.black)),
                               ),
                             ),
                           ],
                         ),
                       ),
-                   
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 100 * fem,
-                          height: 30 * hem,
-                          margin: EdgeInsets.only(top: 10 * hem),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5 * fem),
-                            color: kPrimaryColor,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Theo dõi',
-                              style: GoogleFonts.openSans(
-                                fontSize: 14 * ffem,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                height: 1.3625 * ffem / fem,
+
+                      isFollowed
+                          ? InkWell(
+                              onTap: () async {
+                                final studentId =
+                                    await AuthenLocalDataSource.getStudentId();
+                                context.read<WishlistBloc>().add(CreateWishList(
+                                    studentId: studentId!,
+                                    brandId: widget.brandModel.id,
+                                    description: "",
+                                    state: true));
+                              },
+                              child: Container(
+                                width: 140 * widget.fem,
+                                height: 30 * widget.hem,
+                                margin: EdgeInsets.only(top: 10 * widget.hem),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: kPrimaryColor, width: 2),
+                                  borderRadius:
+                                      BorderRadius.circular(5 * widget.fem),
+                                  color: Colors.white,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.check,
+                                      color: kPrimaryColor,
+                                    ),
+                                    Text(
+                                      'Đang theo dõi',
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 14 * widget.ffem,
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
+                            )
+                          : InkWell(
+                              onTap: () async {
+                                final studentId =
+                                    await AuthenLocalDataSource.getStudentId();
+                                context.read<WishlistBloc>().add(CreateWishList(
+                                    studentId: studentId!,
+                                    brandId: widget.brandModel.id,
+                                    description: "",
+                                    state: true));
+                              },
+                              child: Container(
+                                width: 100 * widget.fem,
+                                height: 30 * widget.hem,
+                                margin: EdgeInsets.only(top: 10 * widget.hem),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(5 * widget.fem),
+                                  color: kPrimaryColor,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Theo dõi',
+                                    style: GoogleFonts.openSans(
+                                      fontSize: 14 * widget.ffem,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.3625 * widget.ffem / widget.fem,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
                     ],
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 10 * fem,
+              height: 10 * widget.fem,
             ),
             SizedBox(
-              width: 280 * fem,
+              width: 280 * widget.fem,
               child: Divider(
-                thickness: 1 * fem,
+                thickness: 1 * widget.fem,
                 color: const Color.fromARGB(255, 225, 223, 223),
               ),
             ),
-            OthersInforBrandDetail(
-              hem: hem,
-              fem: fem,
-              ffem: ffem,
-              brandModel: brandModel,
+            BlocProvider(
+              create: (context) =>
+                  BrandBloc(brandRepository: context.read<BrandRepository>())
+                    ..add(LoadBrandById(id: widget.brandModel.id)),
+              child: OthersInforBrandDetail(
+                hem: widget.hem,
+                fem: widget.fem,
+                ffem: widget.ffem,
+
+              ),
             )
           ],
         ),
       ),
     );
   }
-
-
 }

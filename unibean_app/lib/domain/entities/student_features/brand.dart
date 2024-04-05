@@ -25,6 +25,7 @@ class Brand extends Equatable {
   final bool status;
   final bool isFavor;
   final int numberOfFollowers;
+  final int numberOfCampaigns;
   final int greenWalletId;
   final String greenWallet;
   final String greenWalletName;
@@ -55,6 +56,7 @@ class Brand extends Equatable {
       required this.status,
       required this.isFavor,
       required this.numberOfFollowers,
+      required this.numberOfCampaigns,
       required this.greenWalletId,
       required this.greenWallet,
       required this.greenWalletName,
@@ -86,6 +88,7 @@ class Brand extends Equatable {
         this.status,
         this.isFavor,
         this.numberOfFollowers,
+        this.numberOfCampaigns,
         this.greenWalletId,
         this.greenWallet,
         this.greenWalletName,

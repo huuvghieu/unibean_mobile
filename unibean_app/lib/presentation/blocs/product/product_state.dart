@@ -16,11 +16,13 @@ final class ProductLoading extends ProductState {
 
 final class ProductsLoaded extends ProductState {
   final List<ProductModel> products;
+  final bool hasReachedMax;
 
-  ProductsLoaded({required this.products});
+
+  ProductsLoaded({required this.products, this.hasReachedMax = false});
 
   @override
-  List<Object?> get props => [products];
+  List<Object?> get props => [products, hasReachedMax];
 }
 
 final class ProductFailed extends ProductState {

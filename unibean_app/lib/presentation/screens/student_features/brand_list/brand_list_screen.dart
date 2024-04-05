@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_list/components/body.dart';
 
@@ -54,7 +55,7 @@ class BrandListScreen extends StatelessWidget {
                       color: Colors.white)),
             ),
           ),
-          toolbarHeight: 80 * hem,
+          toolbarHeight: 40 * hem,
           leading: Container(
             margin: EdgeInsets.only(left: 20 * fem),
             child: InkWell(
@@ -64,13 +65,14 @@ class BrandListScreen extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back_rounded,
                 color: Colors.white,
-                size: 35 * fem,
+                size: 30 * fem,
               ),
             ),
           ),
           leadingWidth: 60 * fem,
          
         ),
+        backgroundColor: klighGreyColor,
         body: Body(),
       ),
     );

@@ -26,7 +26,7 @@ class CampaignRepositoryImp implements CampaignRepository {
         limit = this.limit;
       }
       http.Response response = await http.get(
-          Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
+          Uri.parse('$endPoint?stateIds=3&sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {

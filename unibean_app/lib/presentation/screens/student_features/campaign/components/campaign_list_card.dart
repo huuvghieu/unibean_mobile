@@ -30,9 +30,19 @@ class CampaignListCard extends StatelessWidget {
           width: 350 * fem,
           height: 150 * hem,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * fem),
-            color: Colors.white,
-          ),
+              borderRadius: BorderRadius.circular(15 * fem),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0xFF757575).withOpacity(0.3),
+                  blurRadius: 10.0, // soften the shadow
+                  spreadRadius: 1.0, //extend the shadow
+                  offset: const Offset(
+                    5.0, // Move to right 5  horizontally
+                    5.0, // Move to bottom 5 Vertically
+                  ),
+                )
+              ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +143,7 @@ class CampaignListCard extends StatelessWidget {
             width: 80 * fem,
             height: 32 * hem,
             decoration: BoxDecoration(
-                color: kPrimaryColor,
+                color: Colors.white,
                 border: Border.all(color: kPrimaryColor),
                 borderRadius: BorderRadius.circular(5)),
             child: TextButton(
@@ -144,7 +154,7 @@ class CampaignListCard extends StatelessWidget {
                     textStyle: TextStyle(
                         fontSize: 11 * ffem,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white)),
+                        color: kPrimaryColor)),
               ),
             ),
           ),

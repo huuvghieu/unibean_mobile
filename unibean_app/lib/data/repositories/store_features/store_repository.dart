@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:unibean_app/data/models/api_response.dart';
 import 'package:unibean_app/data/models/store_features/campagin_ranking_model.dart';
+import 'package:unibean_app/data/models/store_features/campaign_voucher_information_model.dart';
 import 'package:unibean_app/data/models/store_features/campaign_voucher_store_model.dart';
 import 'package:unibean_app/data/models/store_features/store_model.dart';
 import 'package:unibean_app/data/models/store_features/student_ranking_model.dart';
@@ -360,6 +361,39 @@ class StoreRepositoryImp extends StoreRepository {
         return apiResponse;
       } else {
         return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Map<bool, dynamic>>
+      fecthCampaignVoucherInformation(
+          {required String storeId, required String voucherCode}) async {
+    try {
+      final token = await AuthenLocalDataSource.getToken();
+
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http.get(
+          Uri.parse(
+              '$endPoint/$storeId/campaign-details/$voucherCode/information'),
+          headers: headers);
+      Map<bool,  dynamic> mapResult = {};
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        CampaignVoucherInformationModel campaignVoucherDetail =
+            CampaignVoucherInformationModel.fromJson(result);
+
+        mapResult[true] = campaignVoucherDetail;
+        return mapResult;
+      } else {
+        final result = response.body;
+          mapResult[false] = result;
+        return mapResult;
       }
     } catch (e) {
       throw Exception(e.toString());

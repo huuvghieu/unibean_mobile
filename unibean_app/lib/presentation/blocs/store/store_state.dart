@@ -144,3 +144,41 @@ final class StoreUpdateFailed extends StoreState {
   @override
   List<Object?> get props => [error];
 }
+
+final class StoreCampaignVoucherInforLoading extends StoreState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StoreCampaigVoucherInforSuccess extends StoreState {
+  final CampaignVoucherInformationModel campaignVoucherInformationModel;
+
+  StoreCampaigVoucherInforSuccess(
+      {required this.campaignVoucherInformationModel});
+
+  @override
+  List<Object?> get props => [campaignVoucherInformationModel];
+}
+
+final class StoreCampaignVoucherInforFailed extends StoreState {
+  final String error;
+
+  StoreCampaignVoucherInforFailed({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+final class StoreByIdLoaed extends StoreState {
+  final StoreModel storeModel;
+
+  StoreByIdLoaed({required this.storeModel});
+
+  @override
+  List<Object?> get props => [storeModel];
+}
+
+final class StoreByIdLoading extends StoreState {
+  @override
+  List<Object?> get props => [];
+}

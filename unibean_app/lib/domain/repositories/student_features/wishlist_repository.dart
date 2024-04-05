@@ -6,5 +6,9 @@ abstract class WishListRepository {
   Future<ApiResponse<List<WishListModel>>?> fetchWishLists(
       {int? page, int? limit});
 
-  Future<String?> postWishList();
+  Future<WishListModel?> postWishList(
+      {required String studentId,
+      required String brandId,
+      required String description,
+      required bool state});
 }

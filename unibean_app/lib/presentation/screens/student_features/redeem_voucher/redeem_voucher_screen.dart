@@ -82,10 +82,10 @@ class RedeemVoucherScreen extends StatelessWidget {
             child: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
-              size: 35 * fem,
+              size: 30 * fem,
             ),
           ),
-          toolbarHeight: 80 * hem,
+          toolbarHeight: 50 * hem,
           centerTitle: true,
           title: Text(
             'Thanh toán an toàn',
@@ -105,6 +105,35 @@ class RedeemVoucherScreen extends StatelessWidget {
                   SuccessRedeemVoucherScreen.routeName,
                   (Route<dynamic> route) => false,
                   arguments: <dynamic>[voucherName, total]);
+            } else if (state is RedeemVoucherLoading) {
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    Future.delayed(Duration(seconds: 5), () {
+                      Navigator.of(context).pop();
+                    });
+                    return AlertDialog(
+                        content: Container(
+                            width: 250,
+                            height: 250,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Center(
+                                    child: CircularProgressIndicator(
+                                        color: kPrimaryColor)),
+                                Text(
+                                  'Đang thực hiện...',
+                                  style: GoogleFonts.openSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 15 * ffem,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black)),
+                                )
+                              ],
+                            )));
+                  });
             }
           },
           child: Body(
@@ -120,7 +149,7 @@ class RedeemVoucherScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-            color: klighGreyColor,
+            color: kPrimaryColor,
             height: 80 * hem,
             elevation: 5,
             child: GestureDetector(
@@ -143,7 +172,6 @@ class RedeemVoucherScreen extends StatelessWidget {
                             width: 320 * fem,
                             height: 45 * hem,
                             decoration: BoxDecoration(
-                                color: kPrimaryColor,
                                 borderRadius: BorderRadius.circular(10 * fem)),
                             child: Center(
                                 child: CircularProgressIndicator(
@@ -162,7 +190,7 @@ class RedeemVoucherScreen extends StatelessWidget {
                             width: 320 * fem,
                             height: 45 * hem,
                             decoration: BoxDecoration(
-                                color: kPrimaryColor,
+                                color: klightPrimaryColor,
                                 borderRadius: BorderRadius.circular(10 * fem)),
                             child: Center(
                               child: Text(

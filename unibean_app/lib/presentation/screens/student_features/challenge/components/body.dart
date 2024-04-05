@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'in_process/in_process_challenge.dart';
 import 'is_claimed/is_claimed_challenge.dart';
 import 'is_completed/is_completed_challenge.dart';
@@ -55,7 +58,7 @@ class Body extends StatelessWidget {
             ],
             bottom: TabBar(
               // controller: tabController,
-            
+
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 3,
@@ -77,7 +80,36 @@ class Body extends StatelessWidget {
                 Tab(
                   text: 'Đang thực hiện',
                 ),
-                Tab(text: 'Nhận thưởng'),
+                BlocBuilder<ChallengeBloc, ChallengeState>(
+                  builder: (context, state) {
+                    if (state is ChallengesLoaded) {
+                      final challenges = state.challenge
+                          .where((c) => (c.isCompleted && c.isClaimed))
+                          .toList();
+                      if (challenges.isEmpty) {
+                        return Stack(
+                          children: [
+                            Tab(text: 'Nhận thưởng'),
+                            Positioned(
+                              top: 10,
+                              right: 0,
+                              child: Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(50)),
+                              ),
+                            )
+                          ],
+                        );
+                      } else {
+                        return Tab(text: 'Nhận thưởng');
+                      }
+                    }
+                    return Tab(text: 'Nhận thưởng');
+                  },
+                ),
                 Tab(text: 'Đã hoàn thành'),
               ],
             ),

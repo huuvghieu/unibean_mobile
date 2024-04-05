@@ -39,13 +39,10 @@ class ProductScreen extends StatelessWidget {
           );
         } else if (state is ProductsLoaded) {
           return SafeArea(
-            child: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                backgroundColor: klighGreyColor,
-                extendBody: true,
-                body: Body(),
-              ),
+            child: Scaffold(
+              backgroundColor: klighGreyColor,
+              extendBody: true,
+              body: Body(),
             ),
           );
         }

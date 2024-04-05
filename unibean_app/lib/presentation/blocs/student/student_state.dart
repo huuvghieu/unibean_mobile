@@ -55,11 +55,12 @@ final class StudentOrderLoading extends StudentState {
 
 final class StudentOrdersLoaded extends StudentState {
   final List<OrderModel> orderModels;
+  final bool hasReachedMax;
 
-  StudentOrdersLoaded({required this.orderModels});
+  StudentOrdersLoaded({required this.orderModels, this.hasReachedMax = false});
 
   @override
-  List<Object?> get props => [orderModels];
+  List<Object?> get props => [orderModels, hasReachedMax];
 }
 
 final class StudentUpding extends StudentState {
@@ -99,7 +100,6 @@ final class StudentByIdSuccess extends StudentState {
   List<Object?> get props => [studentMode];
 }
 
-
 final class StudentByIdFailed extends StudentState {
   final String error;
 
@@ -109,11 +109,8 @@ final class StudentByIdFailed extends StudentState {
   List<Object?> get props => [error];
 }
 
-
 final class StudentByIdLoading extends StudentState {
   StudentByIdLoading();
   @override
   List<Object?> get props => [];
 }
-
-

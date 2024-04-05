@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
@@ -51,8 +52,7 @@ class SuccessRedeemVoucherScreen extends StatelessWidget {
                     image: AssetImage('assets/images/background_splash.png'),
                     fit: BoxFit.cover)),
           ),
-        
-          toolbarHeight: 80 * hem,
+          toolbarHeight: 50 * hem,
           centerTitle: true,
           title: Text(
             'Kết quả giao dịch',
@@ -60,7 +60,6 @@ class SuccessRedeemVoucherScreen extends StatelessWidget {
                 textStyle: TextStyle(
                     fontSize: 20 * ffem,
                     fontWeight: FontWeight.w900,
-                    height: 1.3625 * ffem / fem,
                     color: Colors.white)),
           ),
           actions: [
@@ -83,40 +82,61 @@ class SuccessRedeemVoucherScreen extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-            color: klighGreyColor,
+            color: kPrimaryColor,
             height: 80 * hem,
             elevation: 5,
-            child: GestureDetector(
-                onTap: () {
-                  context.read<CampaignBloc>().add(LoadCampaigns());
-                  Navigator.pushNamedAndRemoveUntil(context, '/landing-screen',
-                      (Route<dynamic> route) => false);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 320 * fem,
-                        height: 45 * hem,
-                        decoration: BoxDecoration(
-                            color: kPrimaryColor,
-                            borderRadius: BorderRadius.circular(10 * fem)),
-                        child: Center(
-                          child: Text(
-                            'Trang chủ',
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    fontSize: 17 * ffem,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.3625 * ffem / fem,
-                                    color: Colors.white)),
-                          ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Center(
+                  child: Container(
+                    width: 150 * fem,
+                    height: 45 * hem,
+                    decoration: BoxDecoration(
+                        color: klightPrimaryColor,
+                        borderRadius: BorderRadius.circular(10 * fem)),
+                    child: Center(
+                      child: Text(
+                        'Chi tiết ưu đãi',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 17 * ffem,
+                                fontWeight: FontWeight.w600,
+                                height: 1.3625 * ffem / fem,
+                                color: Colors.white)),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.read<CampaignBloc>().add(LoadCampaigns());
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        '/landing-screen', (Route<dynamic> route) => false);
+                  },
+                  child: Center(
+                    child: Container(
+                      width: 150 * fem,
+                      height: 45 * hem,
+                      decoration: BoxDecoration(
+                          color: klightPrimaryColor,
+                          borderRadius: BorderRadius.circular(10 * fem)),
+                      child: Center(
+                        child: Text(
+                          'Trang chủ',
+                          style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                                  fontSize: 17 * ffem,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.3625 * ffem / fem,
+                                  color: Colors.white)),
                         ),
                       ),
                     ),
-                  ],
-                ))),
+                  ),
+                ),
+              ],
+            )),
         body: Body(
           voucherName: voucherName,
           total: total,

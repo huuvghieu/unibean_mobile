@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unibean_app/presentation/blocs/student/student_bloc.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import '../../../../widgets/shimmer_widget.dart';
 import 'transaction_card.dart';
 
-class AllTransaction extends StatelessWidget {
+class AllTransaction extends StatefulWidget {
   const AllTransaction({
     super.key,
     required this.hem,
@@ -20,21 +21,36 @@ class AllTransaction extends StatelessWidget {
   final String studentId;
 
   @override
+  State<AllTransaction> createState() => _AllTransactionState();
+}
+
+class _AllTransactionState extends State<AllTransaction> {
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      context.read<StudentBloc>().add(LoadMoreTransactions(scrollController));
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      controller: context.read<StudentBloc>().scrollTransactionController,
+      controller: scrollController,
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate([
             Column(
               children: [
                 SizedBox(
-                  height: 25 * hem,
+                  height: 25 * widget.hem,
                 ),
                 BlocBuilder<StudentBloc, StudentState>(
                   builder: (context, state) {
                     if (state is StudentTransactionLoading) {
-                      return buildTransactionShimmer(5, fem, hem);
+                      return buildTransactionShimmer(5, widget.fem, widget.hem);
                     } else if (state is StudentTransactionsLoaded) {
                       return ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -51,9 +67,9 @@ class AllTransaction extends StatelessWidget {
                             );
                           } else {
                             return TransactionCard(
-                              fem: fem,
-                              hem: hem,
-                              ffem: ffem,
+                              fem: widget.fem,
+                              hem: widget.hem,
+                              ffem: widget.ffem,
                               transaction: state.transactions[index],
                             );
                           }
@@ -108,15 +124,15 @@ Widget buildTransactionShimmer(count, double fem, double hem) {
                   children: [
                     ShimmerWidget.rectangular(
                       height: 15 * hem,
-                      width: 300 * fem,
+                      width: 280 * fem,
                     ),
                     ShimmerWidget.rectangular(
                       height: 15 * hem,
-                      width: 300 * fem,
+                      width: 200 * fem,
                     ),
                     ShimmerWidget.rectangular(
                       height: 15 * hem,
-                      width: 300 * fem,
+                      width: 100 * fem,
                     ),
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
@@ -13,8 +14,7 @@ class Body extends StatelessWidget {
       required this.voucherName,
       required this.campaignName,
       required this.total,
-      required this.priceVoucher
-      });
+      required this.priceVoucher});
 
   final String campignId;
   final String campaignDetailId;
@@ -49,7 +49,7 @@ class Body extends StatelessWidget {
               'CHI TIẾT GIAO DỊCH',
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
-                      fontSize: 15 * ffem,
+                      fontSize: 18 * ffem,
                       fontWeight: FontWeight.bold,
                       height: 1.3625 * ffem / fem,
                       color: Colors.black)),
@@ -67,7 +67,18 @@ class Body extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: kPrimaryColor)),
+                  border: Border.all(color: kPrimaryColor),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF757575).withOpacity(0.3),
+                      blurRadius: 10.0, // soften the shadow
+                      spreadRadius: 1.0, //extend the shadow
+                      offset: const Offset(
+                        5.0, // Move to right 5  horizontally
+                        5.0, // Move to bottom 5 Vertically
+                      ),
+                    )
+                  ]),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +92,7 @@ class Body extends StatelessWidget {
                           'Nội dung',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -89,12 +100,12 @@ class Body extends StatelessWidget {
                           width: 120 * fem,
                           child: Text(
                             '$voucherName',
-                            textAlign: TextAlign.justify,
+                            textAlign: TextAlign.end,
                             maxLines: 2,
                             softWrap: true,
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
-                                    fontSize: 14 * ffem,
+                                    fontSize: 16 * ffem,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black)),
                           ),
@@ -111,7 +122,7 @@ class Body extends StatelessWidget {
                           'Chiến dịch',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -119,12 +130,12 @@ class Body extends StatelessWidget {
                           width: 120 * fem,
                           child: Text(
                             '$campaignName',
-                            textAlign: TextAlign.justify,
+                            textAlign: TextAlign.end,
                             maxLines: 2,
                             softWrap: true,
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
-                                    fontSize: 14 * ffem,
+                                    fontSize: 16 * ffem,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black)),
                           ),
@@ -141,7 +152,7 @@ class Body extends StatelessWidget {
                           'Số đậu xanh',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -149,7 +160,7 @@ class Body extends StatelessWidget {
                           '${formatter.format(priceVoucher)}',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
+                                  fontSize: 16 * ffem,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                         ),
@@ -165,7 +176,7 @@ class Body extends StatelessWidget {
                           'Số lượng',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -173,7 +184,7 @@ class Body extends StatelessWidget {
                           '$quantity',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
+                                  fontSize: 16 * ffem,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                         ),
@@ -193,17 +204,34 @@ class Body extends StatelessWidget {
                           'TỔNG ĐẬU XANH',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                         ),
-                        Text(
-                          '${formatter.format(total)}',
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  fontSize: 20 * ffem,
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 10 * fem),
+                              child: Text(
+                                '${formatter.format(total)}',
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                  fontSize: 25 * ffem,
+                                  color: kPrimaryColor,
                                   fontWeight: FontWeight.bold,
-                                  color: kPrimaryColor)),
+                                )),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 2 * fem, top: 4 * hem, bottom: 2 * hem),
+                              child: SvgPicture.asset(
+                                'assets/icons/green-bean-icon.svg',
+                                width: 28 * fem,
+                                height: 28 * fem,
+                              ),
+                            )
+                          ],
                         ),
                       ],
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 // import 'package:unibean_app/presentation/screens/student_features/voucher/components/filter/filter_body.dart';
 
 class SearchBarCustom extends StatefulWidget {
@@ -15,15 +16,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
   @override
   void initState() {
     super.initState();
-    _suggestions = [
-      'Acer',
-      'Android',
-      'Apple',
-      'Bàn phím',
-      'Logitech',
-      'Razer',
-      'SmartTech'
-    ];
+    _suggestions = ['Bình giữ nhiệt', 'Gấu bông'];
   }
 
   @override
@@ -41,6 +34,13 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
               viewConstraints: const BoxConstraints(
                 maxHeight: 400.0,
               ),
+               viewOnSubmitted: (value) {
+                FocusScope.of(context).unfocus(); 
+                Navigator.pushNamed(
+                    context, ProductListScreen.routeName,
+                    arguments: value);
+                    
+              },
               builder: (BuildContext context, SearchController controller) {
                 return Container(
                   height: 45,
@@ -60,13 +60,9 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                       color: Colors.black54,
                     ),
                     onSubmitted: (value) {
-                      // String searchString = controller.text;
-                      // FocusScope.of(context).unfocus();
-                      // Navigator.pushNamed(context, '/product-list-search-screen',
-                      //     arguments: searchString);
-                      handleSearch(value, context);
+                    FocusScope.of(context).unfocus(); 
                     },
-                    hintText: 'Tìm kiếm theo tên ưu đãi hoặc thương hiệu',
+                    hintText: 'Tìm kiếm theo tên sản phẩm',
                     hintStyle: MaterialStateProperty.all(
                         const TextStyle(color: Colors.grey)),
                     overlayColor: MaterialStateProperty.all(kPrimaryColor),
@@ -93,7 +89,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                       setState(() {
                         controller.closeView(item);
                         Navigator.pushNamed(
-                            context, '/product-list-search-screen',
+                            context, ProductListScreen.routeName,
                             arguments: item);
                         FocusScope.of(context).unfocus();
                       });
@@ -102,60 +98,14 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                 }).toList();
               }),
         ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          flex: 1,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12.withOpacity(0.05),
-                  blurRadius: 5.0, // soften the shadow
-                  spreadRadius: 5.0, //extend the shadow
-                )
-              ],
-            ),
-            child: IconButton(
-              onPressed: () {
-                // Navigator.of(context).push(_createRoute());
-              },
-              icon: const Icon(Icons.filter_list_rounded),
-              color: kPrimaryColor,
-              iconSize: 32.0,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10.0),
+        const SizedBox(width: 20.0),
       ],
     );
   }
 
-  // Route _createRoute() {
-  //   return PageRouteBuilder(
-  //     pageBuilder: (context, animation, secondaryAnimation) =>
-  //         const FilterBody(),
-  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //       const begin = Offset(1.0, 0.0);
-  //       const end = Offset.zero;
-  //       const curve = Curves.ease;
-
-  //       var tween =
-  //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-  //       return SlideTransition(
-  //         position: animation.drive(tween),
-  //         child: child,
-  //       );
-  //     },
-  //   );
-  // }
 
   void handleSearch(String value, BuildContext context) {
     FocusScope.of(context).unfocus();
-    Navigator.pushNamed(context, '/product-list-search-screen',
-        arguments: value);
+    Navigator.pushNamed(context, ProductListScreen.routeName, arguments: value);
   }
 }

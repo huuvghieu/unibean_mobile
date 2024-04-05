@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:unibean_app/presentation/blocs/authentication/authentication_bloc.dart';
@@ -55,6 +56,35 @@ class _OTPFormState extends State<OTPForm> {
           // context.read<RoleAppBloc>().add(RoleAppStart());
           Navigator.pushNamedAndRemoveUntil(context, SignUp9Screen.routeName,
               (Route<dynamic> route) => false);
+        } else if (state is AuthenticationInProcess) {
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) {
+                Future.delayed(Duration(seconds: 5), () {
+                  Navigator.of(context).pop();
+                });
+                return AlertDialog(
+                    content: Container(
+                        width: 250,
+                        height: 250,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor)),
+                            Text(
+                              'Đang thực hiện giao dịch...',
+                              style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black)),
+                            )
+                          ],
+                        )));
+              });
         }
       },
       child: buttonWidget,
@@ -79,7 +109,7 @@ class _OTPFormState extends State<OTPForm> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 25 * widget.hem,
+                  height: 22 * widget.hem,
                 ),
                 Container(
                   child: Pinput(
@@ -99,15 +129,15 @@ class _OTPFormState extends State<OTPForm> {
                 errorString != null
                     ? Padding(
                         padding: EdgeInsets.only(
-                          top: 2 * widget.hem,
-                          left: 45 * widget.fem,
+                          top: 5 * widget.hem,
+                          left: 5 * widget.fem,
                         ),
                         child: SizedBox(
                           width: 270 * widget.fem,
                           child: Text(
                             errorString.toString(),
                             style: GoogleFonts.openSans(
-                                fontSize: 12 * widget.ffem,
+                                fontSize: 13 * widget.ffem,
                                 fontWeight: FontWeight.normal,
                                 height: 1.3625 * widget.ffem / widget.fem,
                                 color: kErrorTextColor),
@@ -127,6 +157,33 @@ class _OTPFormState extends State<OTPForm> {
             height: 30 * widget.hem,
           ),
           buttonWidget,
+          SizedBox(
+            height: 10 * widget.hem,
+          ),
+          TimerCountdown(
+            spacerWidth: 5,
+            colonsTextStyle: GoogleFonts.openSans(
+                textStyle: TextStyle(
+              fontSize: 13 * widget.ffem,
+              color: Colors.green,
+              fontWeight: FontWeight.w800,
+            )),
+            timeTextStyle: GoogleFonts.openSans(
+                textStyle: TextStyle(
+              fontSize: 15 * widget.ffem,
+              color: Colors.green,
+              fontWeight: FontWeight.w800,
+            )),
+            format: CountDownTimerFormat.secondsOnly,
+            enableDescriptions: false,
+            endTime: DateTime.now().add(Duration(seconds: 60)),
+            onEnd: () {
+              Navigator.pop(context);
+            },
+          ),
+          SizedBox(
+            height: 10 * widget.hem,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -147,7 +204,7 @@ class _OTPFormState extends State<OTPForm> {
                   await FirebaseAuth.instance.verifyPhoneNumber(
                     phoneNumber: widget.phoneNumber,
                     verificationCompleted: (PhoneAuthCredential credential) {
-                      Future.delayed(const Duration(seconds: 2), () {
+                      Future.delayed(const Duration(seconds: 5), () {
                         Navigator.pushNamed(context, SignUp8Screen.routeName,
                             arguments: widget.phoneNumber);
                       });

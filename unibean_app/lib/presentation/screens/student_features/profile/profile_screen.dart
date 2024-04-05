@@ -42,15 +42,6 @@ class ProfileScreen extends StatelessWidget {
     return _buildVerifiedStudent(fem, hem, ffem);
   }
 
-  // Widget _buildUnverified(double fem, double hem, double ffem) {
-  //   return Scaffold(
-  //       appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
-  //       body: Container(
-  //           color: klighGreyColor,
-  //           child: Center(
-  //               child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
-  // }
-
   Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
     return SafeArea(
       child: Scaffold(

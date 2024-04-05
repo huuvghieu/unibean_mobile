@@ -66,6 +66,8 @@ class MyApp extends StatelessWidget {
             create: (_) => ProductRepositoryImp()),
         RepositoryProvider<StationRepository>(
             create: (_) => StationRepositoryImp()),
+        RepositoryProvider<WishListRepository>(
+            create: (_) => WishListRepositoryImp()),
         RepositoryProvider<AreaRepository>(create: (_) => AreaRepositoryImp())
       ],
       child: MultiBlocProvider(
@@ -95,7 +97,8 @@ class MyApp extends StatelessWidget {
             create: (context) => CampusBloc(CampusRepositoryImp()),
           ),
           BlocProvider(
-            create: (context) => AreaBloc(areaRepository: AreaRepositoryImp())..add(LoadAreas()),
+            create: (context) =>
+                AreaBloc(areaRepository: AreaRepositoryImp())..add(LoadAreas()),
           ),
           BlocProvider(
             create: (context) =>
@@ -104,7 +107,8 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
               create: (context) =>
-                  StoreBloc(storeRepository: StoreRepositoryImp())..add(LoadStoreCampaignVouchers())),
+                  StoreBloc(storeRepository: StoreRepositoryImp())
+                    ..add(LoadStoreCampaignVouchers())),
           BlocProvider(
             create: (context) =>
                 RankingBloc(storeRepository: StoreRepositoryImp())
@@ -115,6 +119,11 @@ class MyApp extends StatelessWidget {
                 CampaignBloc(campaignRepository: CampaignRepositoryImp())
                   ..add(LoadCampaigns()),
           ),
+          BlocProvider(
+              create: (context) => WishlistBloc(
+                  studentRepository: StudentRepositoryImp(),
+                  wishListRepository: WishListRepositoryImp())
+                ..add(LoadWishListByStudentId())),
           BlocProvider(
             create: (context) =>
                 BrandBloc(brandRepository: BrandRepositoryImp())

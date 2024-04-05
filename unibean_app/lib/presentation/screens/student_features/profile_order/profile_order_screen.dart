@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import '../../../../domain/repositories.dart';
+import '../../../blocs/blocs.dart';
 import 'components/body.dart';
 
 class ProfileOrderScreen extends StatelessWidget {
@@ -8,7 +11,9 @@ class ProfileOrderScreen extends StatelessWidget {
 
   static Route route({required String id}) {
     return MaterialPageRoute(
-        builder: (_) => ProfileOrderScreen(studentId: id,),
+        builder: (_) => ProfileOrderScreen(
+              studentId: id,
+            ),
         settings: const RouteSettings(name: routeName));
   }
 
@@ -60,10 +65,14 @@ class ProfileOrderScreen extends StatelessWidget {
               ),
             ),
             leadingWidth: 50 * fem,
-           
           ),
           backgroundColor: klighGreyColor,
-          body: Body(id: studentId)),
+          body: BlocProvider(
+               create: (context) =>
+          StudentBloc(studentRepository: context.read<StudentRepository>())
+            ..add(LoadStudentOrders(id: studentId)),
+            child: Body(id: studentId),
+          )),
     );
   }
 }

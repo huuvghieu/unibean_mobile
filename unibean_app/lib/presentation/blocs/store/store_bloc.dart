@@ -18,9 +18,13 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     on<CreateBonus>(_onCreateBonus);
     on<LoadCampaignVoucherDetail>(_onLoadCampaignVoucherDetail);
     on<UpdateStore>(_onUpdateStore);
+    on<LoadCampaignVoucherInformation>(_onLoadCampaignVoucherInformation);
+    on<LoadStoreById>(_onLoadStoreById);
   }
   var isLoadingMore = false;
   int pageTransaction = 1;
+  int pageActivityTransaction = 1;
+  int pageBonusTranastion = 1;
 
   Future<void> _onLoadStoreTransactions(
       LoadStoreTransactions event, Emitter<StoreState> emit) async {
@@ -64,63 +68,90 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       final storeId = await AuthenLocalDataSource.getStoreId();
       if (event.scrollController.position.pixels ==
           event.scrollController.position.maxScrollExtent) {
-        isLoadingMore = true;
-        pageTransaction++;
-        var apiResponse = await storeRepository.fetchTransactionsStoreId(
-            pageTransaction, event.limit, event.typeIds,
-            id: storeId!);
-        if (event.typeIds == 0) {
-          if (apiResponse!.result.length == 0) {
+        if ((this.state as StoreTransactionsLoaded).hasReachedMax) {
+          if (event.typeIds == 0) {
             emit(StoreTransactionsLoaded(
-                List.from((this.state as StoreTransactionsLoaded).transactions!)
-                  ..addAll(apiResponse.result),
-                null,
-                null,
-                hasReachedMax: true));
-            pageTransaction = 1;
+              (this.state as StoreTransactionsLoaded).transactions,
+              null,
+              null,
+              hasReachedMax: true,
+            ));
+          } else if (event.typeIds == 1) {
+            emit(StoreTransactionsLoaded(
+              null,
+              (this.state as StoreTransactionsLoaded).activityTransactions,
+              null,
+              hasReachedMax: true,
+            ));
           } else {
             emit(StoreTransactionsLoaded(
-                List.from((this.state as StoreTransactionsLoaded).transactions!)
-                  ..addAll(apiResponse.result),
-                null,
-                null));
+              null,
+              null,
+              (this.state as StoreTransactionsLoaded).bonusTransactions,
+              hasReachedMax: true,
+            ));
           }
-        } else if (event.typeIds == 1) {
-          if (apiResponse!.result.length == 0) {
-            emit(StoreTransactionsLoaded(
-                null,
-                List.from((this.state as StoreTransactionsLoaded)
-                    .activityTransactions!)
-                  ..addAll(apiResponse.result),
-                null,
-                hasReachedMax: true));
-            pageTransaction = 1;
-          } else {
-            emit(StoreTransactionsLoaded(
-                null,
-                List.from((this.state as StoreTransactionsLoaded)
-                    .activityTransactions!)
-                  ..addAll(apiResponse.result),
-                null));
-          }
-        } else if (event.typeIds == 2) {
-          if (apiResponse!.result.length == 0) {
-            emit(StoreTransactionsLoaded(
+        } else {
+          isLoadingMore = true;
+          pageTransaction++;
+          var apiResponse = await storeRepository.fetchTransactionsStoreId(
+              pageTransaction, event.limit, event.typeIds,
+              id: storeId!);
+          if (event.typeIds == 0) {
+            if (apiResponse!.result.length == 0) {
+              emit(StoreTransactionsLoaded(
+                  List.from(
+                      (this.state as StoreTransactionsLoaded).transactions!)
+                    ..addAll(apiResponse.result),
+                  null,
+                  null,
+                  hasReachedMax: true));
+              pageTransaction = 1;
+            } else {
+              emit(StoreTransactionsLoaded(
+                  List.from(
+                      (this.state as StoreTransactionsLoaded).transactions!)
+                    ..addAll(apiResponse.result),
+                  null,
+                  null));
+            }
+          } else if (event.typeIds == 1) {
+            if (apiResponse!.result.length == 0) {
+              emit(StoreTransactionsLoaded(
+                  null,
+                  List.from((this.state as StoreTransactionsLoaded)
+                      .activityTransactions!)
+                    ..addAll(apiResponse.result),
+                  null,
+                  hasReachedMax: true));
+              pageTransaction = 1;
+            } else {
+              emit(StoreTransactionsLoaded(
+                  null,
+                  List.from((this.state as StoreTransactionsLoaded)
+                      .activityTransactions!)
+                    ..addAll(apiResponse.result),
+                  null));
+            }
+          } else if (event.typeIds == 2) {
+            if (apiResponse!.result.length == 0) {
+              emit(StoreTransactionsLoaded(
+                  null,
+                  null,
+                  List.from((this.state as StoreTransactionsLoaded)
+                      .bonusTransactions!)
+                    ..addAll(apiResponse.result),
+                  hasReachedMax: true));
+              pageTransaction = 1;
+            } else {
+              emit(StoreTransactionsLoaded(
                 null,
                 null,
                 List.from(
                     (this.state as StoreTransactionsLoaded).bonusTransactions!)
                   ..addAll(apiResponse.result),
-                hasReachedMax: true));
-            pageTransaction = 1;
-          } else {
-            emit(StoreTransactionsLoaded(
-              null,
-              null,
-              List.from(
-                  (this.state as StoreTransactionsLoaded).bonusTransactions!)
-                ..addAll(apiResponse.result),
-            ));
+              ));
+            }
           }
         }
       }
@@ -220,6 +251,41 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       }
     } catch (e) {
       emit(StoreUpdateFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadCampaignVoucherInformation(
+      LoadCampaignVoucherInformation event, Emitter<StoreState> emit) async {
+    emit(StoreCampaignVoucherInforLoading());
+    try {
+      var apiResponse = await storeRepository.fecthCampaignVoucherInformation(
+          storeId: event.storeId, voucherCode: event.voucherCode);
+      var check = apiResponse.keys.first;
+      if (check) {
+        var result = apiResponse.values.first;
+        emit(StoreCampaigVoucherInforSuccess(
+            campaignVoucherInformationModel: result!));
+      } else {
+        var result = apiResponse.values.first;
+        emit(StoreCampaignVoucherInforFailed(error: result!));
+      }
+    } catch (e) {
+      emit(StoreCampaignVoucherInforFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadStoreById(
+      LoadStoreById event, Emitter<StoreState> emit) async {
+    emit(StoreByIdLoading());
+    try {
+      var apiResponse =
+          await storeRepository.fetchStoreById(storeId: event.storeId);
+      // bool hasReachedMax = false;
+
+      emit(StoreByIdLoaed(
+          storeModel: apiResponse!));
+    } catch (e) {
+      emit(StoreFailed(error: e.toString()));
     }
   }
 }

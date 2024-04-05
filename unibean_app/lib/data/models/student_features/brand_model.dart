@@ -26,6 +26,7 @@ class BrandModel extends Brand {
       required super.status,
       required super.isFavor,
       required super.numberOfFollowers,
+      required super.numberOfCampaigns,
       required super.greenWalletId,
       required super.greenWallet,
       required super.greenWalletName,
@@ -57,6 +58,7 @@ class BrandModel extends Brand {
       status: json['status'] ?? true,
       isFavor: json['isFavor'] ?? false,
       numberOfFollowers: json['numberOfFollwers'] ?? 0,
+      numberOfCampaigns: json['numberOfCampaigns'] ?? 0,
       greenWalletId: json['greenWalletId'] ?? '',
       greenWallet: json['greenWallet'],
       greenWalletName: json['greenWalletName'],
@@ -90,6 +92,7 @@ class BrandModel extends Brand {
     data['status'] = this.status;
     data['isFavor'] = this.isFavor;
     data['numberOfFollwers'] = this.numberOfFollowers;
+    data['numberOfCampaigns'] = this.numberOfCampaigns;
     data['greenWalletId'] = this.greenWalletId;
     data['greenWallet'] = this.greenWallet;
     data['greenWalletName'] = this.greenWalletName;
@@ -122,6 +125,7 @@ class BrandModel extends Brand {
     bool? status,
     bool? isFavor,
     int? numberOfFollowers,
+    int? numberOfCampaigns,
     int? greenWalletId,
     String? greenWallet,
     String? greenWalletName,
@@ -152,6 +156,7 @@ class BrandModel extends Brand {
         status: status ?? this.status,
         isFavor: isFavor ?? this.isFavor,
         numberOfFollowers: numberOfFollowers ?? this.numberOfFollowers,
+        numberOfCampaigns: numberOfCampaigns ?? this.numberOfCampaigns,
         greenWalletId: greenWalletId ?? this.greenWalletId,
         greenWallet: greenWallet ?? this.greenWallet,
         greenWalletName: greenWalletName ?? this.greenWalletName,

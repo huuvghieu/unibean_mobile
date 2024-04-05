@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_trans/components/activity_transaction.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_trans/components/order_transaction.dart';
 
+import '../../../../../domain/repositories.dart';
+import '../../../../blocs/blocs.dart';
 import 'all_transaction.dart';
 import 'bonus_transaction.dart';
 import 'challenge_transaction.dart';
@@ -32,7 +35,7 @@ class Body extends StatelessWidget {
                             AssetImage('assets/images/background_splash.png'),
                         fit: BoxFit.cover)),
               ),
-              toolbarHeight: 60 * hem,
+              toolbarHeight: 50 * hem,
               leading: InkWell(
                 onTap: () {
                   Navigator.pop(context);
@@ -40,7 +43,7 @@ class Body extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_back_rounded,
                   color: Colors.white,
-                  size: 35 * fem,
+                  size: 30 * fem,
                 ),
               ),
               centerTitle: true,
@@ -62,7 +65,7 @@ class Body extends StatelessWidget {
                     icon: Icon(
                       Icons.notifications,
                       color: Colors.white,
-                      size: 35 * fem,
+                      size: 25 * fem,
                     ),
                     onPressed: () {},
                   ),
@@ -117,29 +120,49 @@ class Body extends StatelessWidget {
               ffem: ffem,
               studentId: studentId,
             ),
-            ActivityTransaction(
-              hem: hem,
-              fem: fem,
-              ffem: ffem,
-              studentId: studentId,
+            BlocProvider(
+              create: (context) => StudentBloc(
+                  studentRepository: context.read<StudentRepository>())
+                ..add(LoadStudentTransactions(id: studentId, typeIds: 1)),
+              child: ActivityTransaction(
+                hem: hem,
+                fem: fem,
+                ffem: ffem,
+                studentId: studentId,
+              ),
             ),
-            OrderTransaction(
-              hem: hem,
-              fem: fem,
-              ffem: ffem,
-              studentId: studentId,
+            BlocProvider(
+              create: (context) => StudentBloc(
+                  studentRepository: context.read<StudentRepository>())
+                ..add(LoadStudentTransactions(id: studentId, typeIds: 2)),
+              child: OrderTransaction(
+                hem: hem,
+                fem: fem,
+                ffem: ffem,
+                studentId: studentId,
+              ),
             ),
-            ChallengeTransaction(
-              hem: hem,
-              fem: fem,
-              ffem: ffem,
-              studentId: studentId,
+            BlocProvider(
+              create: (context) => StudentBloc(
+                  studentRepository: context.read<StudentRepository>())
+                ..add(LoadStudentTransactions(id: studentId, typeIds: 3)),
+              child: ChallengeTransaction(
+                hem: hem,
+                fem: fem,
+                ffem: ffem,
+                studentId: studentId,
+              ),
             ),
-            BonusTransaction(
-              hem: hem,
-              fem: fem,
-              ffem: ffem,
-              studentId: studentId,
+            BlocProvider(
+              create: (context) => StudentBloc(
+                  studentRepository: context.read<StudentRepository>())
+                ..add(LoadStudentTransactions(id: studentId, typeIds: 4)),
+              child: BonusTransaction(
+                hem: hem,
+                fem: fem,
+                ffem: ffem,
+                studentId: studentId,
+              ),
             ),
           ],
         ));

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models/api_response.dart';
+import 'package:unibean_app/data/models/student_features/create_model/create_order_model.dart';
 import 'package:unibean_app/data/models/student_features/order_model.dart';
 import 'package:unibean_app/data/models/student_features/student_model.dart';
 import 'package:unibean_app/data/models/student_features/transaction_model.dart';
@@ -257,6 +258,70 @@ class StudentRepositoryImp implements StudentRepository {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         VoucherStudentItemModel apiResponse =
             VoucherStudentItemModel.fromJson(result);
+        return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<List<String>?> fetchWishListByStudentId() async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      studentId = (await AuthenLocalDataSource.getStudentId())!;
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http
+          .get(Uri.parse('$endPoint/$studentId/wishlists'), headers: headers);
+
+      if (response.statusCode == 200) {
+        List<dynamic> jsonReponse = jsonDecode(response.body);
+        List<String> result =
+            jsonReponse.map((item) => item.toString()).toList();
+        return result;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<OrderModel?> createOrder(CreateOrderModel createOrderModel) async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      studentId = (await AuthenLocalDataSource.getStudentId())!;
+      // final Map<String, String> headers = {
+      //   'Content-Type': 'application/json',
+      //   'Authorization': 'Bearer $token'
+      // };
+      Map body = {
+        'stationId': createOrderModel.stationId,
+        'amount': createOrderModel.amount,
+        'description': "Cảm ơn Unibean",
+        'state': createOrderModel.state,
+        'orderDetails': createOrderModel.orderDetails,
+      };
+
+      http.Request req = http.Request(
+        'Post',
+        Uri.parse('$endPoint/$studentId/orders'),
+      );
+      req.headers['Content-Type'] = 'application/json';
+      req.headers['Authorization'] = 'Bearer $token';
+      req.body = jsonEncode(body);
+      final streamedResponse = await http.Client().send(req);
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 201) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        OrderModel apiResponse = OrderModel.fromJson(result);
         return apiResponse;
       } else {
         return null;

@@ -34,7 +34,6 @@ class ValidationCubit extends Cubit<ValidationState> {
     try {
       final check =
           await validationRepository.validateUserName(userName: userName);
-      print(check);
       if (check == '') {
         emit(CheckUserNameSuccess());
         return check;

@@ -1,15 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models/student_features/student_model.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/name_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/student_code_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/unitiversity_name_profile.dart';
+import '../../../../blocs/blocs.dart';
 import '../../../screens.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
-class InformationCardProfile extends StatelessWidget {
+class InformationCardProfile extends StatefulWidget {
   const InformationCardProfile({
     super.key,
     required this.hem,
@@ -24,220 +30,550 @@ class InformationCardProfile extends StatelessWidget {
   final StudentModel studentModel;
 
   @override
+  State<InformationCardProfile> createState() => _InformationCardProfileState();
+}
+
+class _InformationCardProfileState extends State<InformationCardProfile> {
+  final _formKey = GlobalKey<FormState>();
+  File? _selectedAvatar;
+  StudentModel? student;
+  @override
+  void initState() {
+    getStudent();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 324 * fem,
-      height: 200 * hem,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15 * fem),
-        color: Colors.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10 * hem,
+    return BlocListener<StudentBloc, StudentState>(
+      listener: (context, state) {
+        if (state is StudentUpdateSuccess) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Cập nhật thành công',
+                message: 'Cập nhật ảnh đại diện thành công!',
+                contentType: ContentType.success,
+              ),
+            ));
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/landing-screen', (Route<dynamic> route) => false);
+        } else if (state is StudentFaled) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Cập nhật thất bại',
+                message: 'Cập nhật ảnh đại diện thất bại!',
+                contentType: ContentType.failure,
+              ),
+            ));
+          Navigator.pop(context);
+        } else if (state is StudentUpding) {
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) {
+                Future.delayed(Duration(seconds: 10), () {
+                  Navigator.of(context).pop();
+                });
+                return AlertDialog(
+                    content: Container(
+                        width: 250,
+                        height: 250,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                                color: kPrimaryColor))));
+              });
+        }
+      },
+      child: Form(
+        key: _formKey,
+        child: Container(
+          width: 324 * widget.fem,
+          height: 200 * widget.hem,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15 * widget.fem),
+            color: Colors.white,
           ),
-          Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: 25 * fem,
+                height: 10 * widget.hem,
               ),
-
-              //avatar
-              Stack(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      '${studentModel.avatar}',
-                      // 'assets/images/ava_signup.png',
-                      width: 80 * fem,
-                      height: 80 * hem,
-                      fit: BoxFit.fill,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/images/ava_signup.png',
-                          width: 80 * fem,
-                          height: 80 * hem,
+                  SizedBox(
+                    width: 25 * widget.fem,
+                  ),
+
+                  //avatar
+                  InkWell(
+                    onTap: () {
+                      _imageModelBottomSheet(context, _selectedAvatar);
+                    },
+                    child: BlocBuilder<StudentBloc, StudentState>(
+                      builder: (context, state) {
+                        if (state is StudentByIdSuccess) {
+                          final student = state.studentMode;
+                          return Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: _selectedAvatar == null
+                                    ? Image.network(
+                                        '${student.avatar}',
+                                        // 'assets/images/ava_signup.png',
+                                        width: 80 * widget.fem,
+                                        height: 80 * widget.hem,
+                                        fit: BoxFit.fill,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/ava_signup.png',
+                                            width: 80 * widget.fem,
+                                            height: 80 * widget.hem,
+                                          );
+                                        },
+                                      )
+                                    : Container(
+                                        width: 80 * widget.fem,
+                                        height: 80 * widget.hem,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: FileImage(
+                                                    _selectedAvatar!))),
+                                      ),
+                              ),
+                              Positioned(
+                                bottom: 0 * widget.hem,
+                                right: 0 * widget.fem,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: klighGreyColor),
+                                  padding: EdgeInsets.all(5),
+                                  child: Icon(
+                                    Icons.camera_alt_outlined,
+                                    weight: 1,
+                                    size: 20,
+                                  ),
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                        return Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: _selectedAvatar == null
+                                  ? Image.asset(
+                                      'assets/images/ava_signup.png',
+                                      // 'assets/images/ava_signup.png',
+                                      width: 80 * widget.fem,
+                                      height: 80 * widget.hem,
+                                      fit: BoxFit.fill,
+                                    )
+                                  : Container(
+                                      width: 80 * widget.fem,
+                                      height: 80 * widget.hem,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image:
+                                                  FileImage(_selectedAvatar!))),
+                                    ),
+                            ),
+                            Positioned(
+                              bottom: 0 * widget.hem,
+                              right: 0 * widget.fem,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: klighGreyColor),
+                                padding: EdgeInsets.all(5),
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  weight: 1,
+                                  size: 20,
+                                ),
+                              ),
+                            )
+                          ],
                         );
                       },
                     ),
                   ),
-                  Positioned(
-                    bottom: 0 * hem,
-                    right: 0 * fem,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: klighGreyColor),
-                      padding: EdgeInsets.all(5),
-                      child: Icon(
-                        Icons.camera_alt_outlined,
-                        weight: 1,
-                        size: 20,
-                      ),
+
+                  SizedBox(
+                    width: 20 * widget.fem,
+                  ),
+
+                  SizedBox(
+                    // color: Colors.red,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //Name
+                        BlocBuilder<StudentBloc, StudentState>(
+                          builder: (context, state) {
+                            if (state is StudentByIdSuccess) {
+                              return NameProfile(
+                                fem: widget.fem,
+                                ffem: widget.ffem,
+                                hem: widget.hem,
+                                name: state.studentMode.fullName,
+                              );
+                            }
+                            return NameProfile(
+                              fem: widget.fem,
+                              ffem: widget.ffem,
+                              hem: widget.hem,
+                              name: student == null
+                                  ? widget.studentModel.fullName
+                                  : student!.fullName,
+                            );
+                          },
+                        ),
+                        //email
+                        SizedBox(
+                          width: 150 * widget.fem,
+                          child: Text(
+                            '${widget.studentModel.email}',
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.openSans(
+                                textStyle: TextStyle(
+                                    fontSize: 12 * widget.ffem,
+                                    fontWeight: FontWeight.normal,
+                                    color: klowTextGrey)),
+                          ),
+                        ),
+                        //student code
+                        StudentCodeProfile(
+                          hem: widget.hem,
+                          fem: widget.fem,
+                          ffem: widget.ffem,
+                          studentCode: widget.studentModel.code,
+                        ),
+                        //university name
+                        UniversityProfile(
+                          fem: widget.fem,
+                          hem: widget.hem,
+                          ffem: widget.ffem,
+                          university: widget.studentModel.universityName,
+                        )
+                      ],
                     ),
-                  )
+                  ),
                 ],
               ),
-
               SizedBox(
-                width: 20 * fem,
+                height: 10 * widget.fem,
               ),
-
               SizedBox(
-                // color: Colors.red,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                width: 280 * widget.fem,
+                child: Divider(
+                  thickness: 1 * widget.fem,
+                  color: const Color.fromARGB(255, 225, 223, 223),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 10 * widget.hem,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    //Name
-                    NameProfile(
-                      fem: fem,
-                      ffem: ffem,
-                      hem: hem,
-                      name: studentModel.fullName,
-                    ),
-                    //email
-                    SizedBox(
-                      width: 150 * fem,
-                      child: Text(
-                        '${studentModel.email}',
-                        maxLines: 1,
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.openSans(
-                            textStyle: TextStyle(
-                                fontSize: 12 * ffem,
-                                fontWeight: FontWeight.normal,
-                                color: klowTextGrey)),
+                    InkWell(
+                      onTap: () async {
+                        final student =
+                            await AuthenLocalDataSource.getStudent();
+                        Navigator.pushNamed(
+                            context, ProfileUpdateDetailScreen.routeName,
+                            arguments: student);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 5 * widget.fem, right: 5 * widget.fem),
+                        width: 140 * widget.fem,
+                        height: 40 * widget.hem,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.grey[100],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: SvgPicture.asset(
+                                'assets/icons/pen-icon.svg',
+                                colorFilter: ColorFilter.mode(
+                                    kPrimaryColor, BlendMode.srcIn),
+                                height: 18 * widget.fem,
+                                width: 18 * widget.fem,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5 * widget.fem,
+                            ),
+                            Text(
+                              'Sửa thông tin',
+                              style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 12 * widget.fem,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.3625 * widget.ffem / widget.fem,
+                                      color: kPrimaryColor)),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    //student code
-                    StudentCodeProfile(
-                      hem: hem,
-                      fem: fem,
-                      ffem: ffem,
-                      studentCode: studentModel.code,
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 5 * widget.fem, right: 5 * widget.fem),
+                        width: 140 * widget.fem,
+                        height: 40 * widget.hem,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.grey[100],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: SvgPicture.asset(
+                                'assets/icons/following-icon.svg',
+                                colorFilter: ColorFilter.mode(
+                                    kPrimaryColor, BlendMode.srcIn),
+                                height: 25 * widget.fem,
+                                width: 25 * widget.fem,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5 * widget.fem,
+                            ),
+                            BlocBuilder<StudentBloc, StudentState>(
+                              builder: (context, state) {
+                                if (state is StudentByIdSuccess) {
+                                  return Text(
+                                    '${state.studentMode.following} theo dõi',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 12 * widget.fem,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.3625 *
+                                                widget.ffem /
+                                                widget.fem,
+                                            color: kPrimaryColor)),
+                                  );
+                                }
+                                return Text(
+                                  '${widget.studentModel.following} theo dõi',
+                                  style: GoogleFonts.openSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 12 * widget.fem,
+                                          fontWeight: FontWeight.bold,
+                                          height:
+                                              1.3625 * widget.ffem / widget.fem,
+                                          color: kPrimaryColor)),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                    //university name
-                    UniversityProfile(
-                      fem: fem,
-                      hem: hem,
-                      ffem: ffem,
-                      university: studentModel.universityName,
-                    )
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 10 * fem,
-          ),
-          SizedBox(
-            width: 280 * fem,
-            child: Divider(
-              thickness: 1 * fem,
-              color: const Color.fromARGB(255, 225, 223, 223),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 10 * hem,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        ),
+      ),
+    );
+  }
+
+  Future<void> getStudent() async {
+    final studentModel = await AuthenLocalDataSource.getStudent();
+    setState(() {
+      student = studentModel;
+    });
+  }
+
+  Future _pickerImageFromGallery(
+      File? selectedImage, BuildContext context) async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+
+    selectedImage = File(returnedImage.path);
+
+    setState(() {
+      _selectedAvatar = selectedImage;
+    });
+    Navigator.pop(context);
+  }
+
+  Future _pickerImageFromCamera(
+      File? selectedImage, BuildContext context) async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (returnedImage == null) return;
+
+    selectedImage = File(returnedImage.path);
+
+    setState(() {
+      _selectedAvatar = selectedImage;
+    });
+    Navigator.pop(context);
+  }
+
+  void _imageModelBottomSheet(BuildContext context, File? selectedImage) {
+    double baseWidth = 375;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    double baseHeight = 812;
+    double hem = MediaQuery.of(context).size.height / baseHeight;
+
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () async {
-                    final student = await AuthenLocalDataSource.getStudent();
-                    Navigator.pushNamed(
-                        context, ProfileUpdateDetailScreen.routeName,
-                        arguments: student);
+                GestureDetector(
+                  onTap: () {
+                    _pickerImageFromCamera(selectedImage, context)
+                        .then((value) async {
+                      int gender;
+                      if (widget.studentModel.gender == 'Male') {
+                        gender = 2;
+                      } else {
+                        gender = 1;
+                      }
+                      final studentModel =
+                          await AuthenLocalDataSource.getStudent();
+                      context.read<StudentBloc>().add(UpdateStudent(
+                          studentId: studentModel!.id,
+                          fullName: studentModel.fullName,
+                          majorId: studentModel.majorId,
+                          campusId: studentModel.campusId,
+                          avatar: _selectedAvatar!.path,
+                          gender: gender));
+                    });
                   },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
-                    width: 140 * fem,
-                    height: 40 * hem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.grey[100],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            'assets/icons/pen-icon.svg',
-                            colorFilter: ColorFilter.mode(
-                                kPrimaryColor, BlendMode.srcIn),
-                            height: 18 * fem,
-                            width: 18 * fem,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5 * fem,
-                        ),
-                        Text(
-                          'Sửa thông tin',
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  fontSize: 12 * fem,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.3625 * ffem / fem,
-                                  color: kPrimaryColor)),
-                        )
-                      ],
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        color: kPrimaryColor,
+                        size: 30 * fem,
+                      ),
+                      SizedBox(
+                        width: 5 * fem,
+                      ),
+                      Text(
+                        'Chụp ảnh',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 20 * ffem,
+                                fontWeight: FontWeight.bold,
+                                height: 1.3625 * ffem / fem,
+                                color: Colors.black)),
+                      )
+                    ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    padding: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
-                    width: 140 * fem,
-                    height: 40 * hem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.grey[100],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            'assets/icons/following-icon.svg',
-                            colorFilter: ColorFilter.mode(
-                                kPrimaryColor, BlendMode.srcIn),
-                            height: 25 * fem,
-                            width: 25 * fem,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5 * fem,
-                        ),
-                        Text(
-                          '${studentModel.following} theo dõi',
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  fontSize: 12 * fem,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.3625 * ffem / fem,
-                                  color: kPrimaryColor)),
-                        )
-                      ],
-                    ),
+                SizedBox(
+                  height: 18 * hem,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Divider(
+                    color: kLowTextColor,
+                    thickness: 2 * fem,
+                    // height: 300*fem,
+                  ),
+                ),
+                SizedBox(
+                  height: 18 * hem,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _pickerImageFromGallery(selectedImage, context).then(
+                      (value) async {
+                        int gender;
+                        if (widget.studentModel.gender == 'Male') {
+                          gender = 2;
+                        } else {
+                          gender = 1;
+                        }
+                        final studentModel =
+                            await AuthenLocalDataSource.getStudent();
+                        context.read<StudentBloc>().add(UpdateStudent(
+                            studentId: studentModel!.id,
+                            fullName: studentModel.fullName,
+                            majorId: studentModel.majorId,
+                            campusId: studentModel.campusId,
+                            avatar: _selectedAvatar!.path,
+                            gender: gender));
+                      },
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.photo_size_select_actual_rounded,
+                        color: kPrimaryColor,
+                        size: 30 * fem,
+                      ),
+                      SizedBox(
+                        width: 5 * fem,
+                      ),
+                      Text(
+                        'Chọn sẵn có',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 20 * ffem,
+                                fontWeight: FontWeight.bold,
+                                height: 1.3625 * ffem / fem,
+                                color: Colors.black)),
+                      )
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

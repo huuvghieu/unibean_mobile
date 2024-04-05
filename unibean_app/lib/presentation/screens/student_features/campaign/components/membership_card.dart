@@ -184,6 +184,7 @@ class MemberShipCard extends StatelessWidget {
               top: 10 * hem,
               right: 25 * fem,
               child: ClipRRect(
+                borderRadius: BorderRadius.circular(45),
                 child: Container(
                   width: 90 * fem,
                   height: 90 * hem,

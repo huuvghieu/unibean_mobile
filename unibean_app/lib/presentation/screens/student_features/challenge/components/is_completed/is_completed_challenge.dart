@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,17 +23,35 @@ class IsCompletedChallenge extends StatelessWidget {
       listener: (context, state) {
         if (state is ChallengesLoaded) {
           if (state.isClaimed) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.green,
-                content: Text(
-                  'Nhận thành công',
-                  style: GoogleFonts.openSans(
-                    fontSize: 16 * ffem,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                )));
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(
+                elevation: 0,
+                duration: const Duration(milliseconds: 2000),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                content: AwesomeSnackbarContent(
+                  title: 'Nhận thưởng',
+                  message: 'Nhận thưởng thành công!',
+                  contentType: ContentType.success,
+                ),
+              ));
           }
+        } else if (state is ClaimLoading) {
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) {
+                Future.delayed(Duration(seconds: 5), () {
+                  Navigator.of(context).pop();
+                });
+                return AlertDialog(
+                    content: Container(
+                        width: 250,
+                        height: 250,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                                color: kPrimaryColor))));
+              });
         }
       },
       child: RefreshIndicator(

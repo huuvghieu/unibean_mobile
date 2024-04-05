@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/blocs/landing_screen/landing_screen_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/landing/components/cus_nav_bar.dart';
@@ -76,7 +77,7 @@ class LandingScreen extends StatelessWidget {
               bottomNavigationBar: CusNavBar(),
             ),
           );
-        }else if(state.tabIndex == 2){
+        } else if (state.tabIndex == 2) {
           return DefaultTabController(
             length: 3,
             child: SafeArea(
@@ -133,8 +134,7 @@ class LandingScreen extends StatelessWidget {
               ),
             ),
           );
-        } 
-       else{
+        } else {
           return SafeArea(
             child: Scaffold(
               floatingActionButtonLocation:
@@ -193,7 +193,7 @@ class LandingScreen extends StatelessWidget {
   }
 }
 
-const List<Widget> bottomNavScreen = [
+List<Widget> bottomNavScreen = [
   CampaignScreen(),
   VoucherScreen(),
   ChallengeScreen(),

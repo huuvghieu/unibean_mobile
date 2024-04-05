@@ -18,6 +18,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
+    
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -126,9 +127,17 @@ class _BodyState extends State<Body> {
             ),
 
             //
-            BlocProvider(
-              create: (context) => StudentBloc(
-                  studentRepository: context.read<StudentRepository>()),
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => StudentBloc(
+                      studentRepository: context.read<StudentRepository>()),
+                ),
+                BlocProvider(
+                  create: (context) => BrandBloc(
+                      brandRepository: context.read<BrandRepository>()),
+                ),
+              ],
               child: TabScanStudent(
                 cameraController2: cameraController2,
                 widget: widget,
@@ -137,4 +146,7 @@ class _BodyState extends State<Body> {
           ],
         ));
   }
+
 }
+
+

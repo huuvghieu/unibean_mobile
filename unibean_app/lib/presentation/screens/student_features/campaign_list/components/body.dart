@@ -53,11 +53,11 @@ class Body extends StatelessWidget {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
-                                          left: 10 * fem,
-                                          right: 10 * fem,
+                                          left: 15 * fem,
+                                          right: 15 * fem,
                                           bottom: 15 * hem),
-                                      width: 350 * fem,
-                                      height: 150 * hem,
+                                      width: double.infinity,
+                                      height: 125 * hem,
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(15 * fem),
@@ -114,9 +114,9 @@ class Body extends StatelessWidget {
                                                     style: GoogleFonts.openSans(
                                                         textStyle: TextStyle(
                                                       fontSize: 13 * ffem,
-                                                      color: kLowTextColor,
+                                                      color: klowTextGrey,
                                                       fontWeight:
-                                                          FontWeight.normal,
+                                                          FontWeight.w500,
                                                     ))),
                                               ),
                                               Container(

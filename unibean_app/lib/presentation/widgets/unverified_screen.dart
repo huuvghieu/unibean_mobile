@@ -55,7 +55,7 @@ class UnverifiedScreen extends StatelessWidget {
             'UniBean',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-                    fontSize: 25 * ffem,
+                    fontSize: 22 * ffem,
                     fontWeight: FontWeight.w900,
                     height: 1.3625 * ffem / fem,
                     color: Colors.white)),

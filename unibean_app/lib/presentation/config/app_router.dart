@@ -70,13 +70,21 @@ class AppRouter {
         return ProfileVoucherScreen.route(id: settings.arguments as String);
 
       case ProfileUpdateDetailStoreScreen.routeName:
-        return ProfileUpdateDetailStoreScreen.route(storeModel: settings.arguments as StoreModel);
+        return ProfileUpdateDetailStoreScreen.route(
+            storeModel: settings.arguments as StoreModel);
 
       case ProductScreen.routeName:
         return ProductScreen.route();
 
+      case ProductListScreen.routeName:
+        return ProductListScreen.route(search: settings.arguments as String);
+
       case ProductDetailScreen.routeName:
         return ProductDetailScreen.route(id: settings.arguments as String);
+
+      case ProductConfirmScreen.routeName:
+        return ProductConfirmScreen.route(
+            stationModel: settings.arguments as StationModel);
 
       case ProfileOrderScreen.routeName:
         return ProfileOrderScreen.route(id: settings.arguments as String);
@@ -92,6 +100,9 @@ class AppRouter {
       case ProfileVerificationScreen.routeName:
         return ProfileVerificationScreen.route(
             studentModel: settings.arguments as StudentModel);
+
+      case ProfileCartScreen.routeName:
+        return ProfileCartScreen.route();
 
       case UpdateVerificationScreen.routeName:
         return UpdateVerificationScreen.route(
@@ -128,6 +139,9 @@ class AppRouter {
       case BrandListScreen.routeName:
         return BrandListScreen.route();
 
+      case BrandDetailStoreScreen.routeName:
+        return BrandDetailStoreScreen.route(id: settings.arguments as String);
+
       case VoucherScreen.routeName:
         return VoucherScreen.route();
 
@@ -162,6 +176,10 @@ class AppRouter {
         return SuccessScanVoucherScreen.route(
             success: settings.arguments as String);
 
+      case SuccessCreateOrderScreen.routeName:
+        return SuccessCreateOrderScreen.route(
+            orderModel: settings.arguments as OrderModel);
+
       case SuccessTransactScreen.routeName:
         return SuccessTransactScreen.route(
             transactResultModel: settings.arguments as TransactResultModel);
@@ -192,13 +210,21 @@ class AppRouter {
       case ChallengeScreen.routeName:
         return ChallengeScreen.route();
 
+      case StationScreen.routeName:
+        return StationScreen.route();
+
       //Store
       case TransactionStoreScreen.routeName:
         return TransactionStoreScreen.route();
 
       case TransactScreen.routeName:
-        return TransactScreen.route(
-            studentModel: settings.arguments as StudentModel);
+        List<dynamic> args = settings.arguments as List<dynamic>;
+        return TransactScreen.route(studentModel: args[0], brandId: args[1]);
+
+      case CampaignVoucherInformationScreen.routeName:
+        return CampaignVoucherInformationScreen.route(
+            campaginVoucherInformation:
+                settings.arguments as CampaignVoucherInformationModel);
 
       default:
         return _errorRoute();

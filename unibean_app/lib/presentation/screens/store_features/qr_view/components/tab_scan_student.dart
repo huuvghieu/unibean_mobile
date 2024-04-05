@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 
 import '../../../../config/constants.dart';
@@ -19,7 +20,7 @@ class TabScanStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<StudentBloc, StudentState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is StudentByIdFailed) {
           Navigator.pushNamedAndRemoveUntil(
               context,
@@ -30,7 +31,7 @@ class TabScanStudent extends StatelessWidget {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 2), () {
+                Future.delayed(Duration(seconds: 5), () {
                   Navigator.of(context).pop();
                 });
                 return AlertDialog(
@@ -42,8 +43,10 @@ class TabScanStudent extends StatelessWidget {
                                 color: kPrimaryColor))));
               });
         } else if (state is StudentByIdSuccess) {
+              final storeModel = await AuthenLocalDataSource.getStore();
+
           Navigator.pushReplacementNamed(context, TransactScreen.routeName,
-              arguments: state.studentMode);
+              arguments: <dynamic>[state.studentMode, storeModel!.brandId]);
         }
       },
       child: Stack(

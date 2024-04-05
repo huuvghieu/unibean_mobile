@@ -88,36 +88,7 @@ class Body extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Container(
-                  //   height: 50 * hem,
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       Text(
-                  //         'Mã ưu đãi',
-                  //         style: GoogleFonts.openSans(
-                  //             textStyle: TextStyle(
-                  //                 fontSize: 14 * ffem,
-                  //                 fontWeight: FontWeight.w500,
-                  //                 color: Colors.grey)),
-                  //       ),
-                  //       Container(
-                  //         width: 120 * fem,
-                  //         child: Text(
-                  //           '$voucherCode',
-                  //           maxLines: 2,
-                  //           softWrap: true,
-                  //           textAlign: TextAlign.end,
-                  //           style: GoogleFonts.openSans(
-                  //               textStyle: TextStyle(
-                  //                   fontSize: 15 * ffem,
-                  //                   fontWeight: FontWeight.bold,
-                  //                   color: Colors.black)),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+              
                   Container(
                     height: 50 * hem,
                     child: Row(

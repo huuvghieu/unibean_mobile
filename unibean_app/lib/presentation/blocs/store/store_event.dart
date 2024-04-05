@@ -120,3 +120,22 @@ final class UpdateStore extends StoreEvent {
         address
       ];
 }
+
+final class LoadCampaignVoucherInformation extends StoreEvent {
+  final String storeId;
+  final String voucherCode;
+
+  LoadCampaignVoucherInformation(
+      {required this.storeId, required this.voucherCode});
+  @override
+  List<Object?> get props => [storeId, voucherCode];
+}
+
+final class LoadStoreById extends StoreEvent {
+  final String storeId;
+
+  LoadStoreById({required this.storeId});
+
+  @override
+  List<Object?> get props => [storeId];
+}

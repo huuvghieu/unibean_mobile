@@ -255,7 +255,7 @@ class _FormBody7State extends State<FormBody7> {
             phoneNumber:
                 '${countryController.text + phoneNumberController.text}',
             verificationCompleted: (PhoneAuthCredential credential) {
-              Future.delayed(const Duration(seconds: 2), () {
+              Future.delayed(const Duration(seconds: 5), () {
                 Navigator.pushNamed(context, SignUp8Screen.routeName,
                     arguments: phoneNumberController.text);
               });
@@ -284,7 +284,7 @@ class _FormBody7State extends State<FormBody7> {
           print(createAuthenString);
           AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
           //go to next screen
-          Future.delayed(const Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 5), () {
             Navigator.pushNamed(context, SignUp8Screen.routeName,
                 arguments: phoneNumberController.text);
           });
@@ -306,6 +306,7 @@ class _FormBody7State extends State<FormBody7> {
           await FirebaseAuth.instance.verifyPhoneNumber(
             phoneNumber:
                 '${countryController.text + phoneNumberController.text}',
+            timeout: const Duration(seconds: 60),
             verificationCompleted: (PhoneAuthCredential credential) {
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.pushNamed(context, SignUp8Screen.routeName,
@@ -348,7 +349,6 @@ class _FormBody7State extends State<FormBody7> {
           }
         }
       });
-      
     }
   }
 }

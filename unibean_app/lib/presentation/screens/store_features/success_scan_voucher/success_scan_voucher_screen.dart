@@ -46,7 +46,7 @@ class SuccessScanVoucherScreen extends StatelessWidget {
                     image: AssetImage('assets/images/background_splash.png'),
                     fit: BoxFit.cover)),
           ),
-          toolbarHeight: 80 * hem,
+          toolbarHeight: 50 * hem,
           centerTitle: true,
           title: Text(
             'Kết quả giao dịch',

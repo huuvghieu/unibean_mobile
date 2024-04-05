@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/body.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/filter_showdal_bottom.dart';
@@ -43,7 +44,7 @@ class CampaignListScreen extends StatelessWidget {
                   image: AssetImage('assets/images/background_splash.png'),
                   fit: BoxFit.cover)),
         ),
-        toolbarHeight: 80 * hem,
+        toolbarHeight: 40 * hem,
         title: Container(
           child: Text(
             'Đề xuất cho bạn',
@@ -65,7 +66,7 @@ class CampaignListScreen extends StatelessWidget {
             child: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
-              size: 35 * fem,
+              size: 30 * fem,
             ),
           ),
         ),
@@ -77,17 +78,18 @@ class CampaignListScreen extends StatelessWidget {
             },
             child: Container(
               margin: EdgeInsets.only(right: 20 * fem),
-              width: 25 * fem,
-              height: 25 * fem,
+              width: 20 * fem,
+              height: 20 * fem,
               decoration: BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage('assets/images/filter-icon.png'),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               )),
             ),
           )
         ],
       ),
+      backgroundColor: klighGreyColor,
       body: Body(),
     ));
   }

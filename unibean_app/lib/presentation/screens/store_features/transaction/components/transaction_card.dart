@@ -44,12 +44,12 @@ class TransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                
                   Padding(
                     padding: EdgeInsets.only(left: 10 * fem),
                     child: Container(
-                      width: 220*fem,
-                      child: Text('${transaction.studentName}${transaction.activity}${transaction.storeName}',
+                      width: 200 * fem,
+                      child: Text(
+                          '${transaction.studentName}${transaction.activity}${transaction.storeName}',
                           style: GoogleFonts.openSans(
                               fontSize: 14 * ffem,
                               fontWeight: FontWeight.w500,
@@ -80,12 +80,15 @@ class TransactionCard extends StatelessWidget {
 
 Widget _buildAmount(
     double fem, double hem, double ffem, TransactionStoreModel transaction) {
-  if (transaction.walletTypeId == 1 ) {
+  if (transaction.walletTypeId == 1) {
     return Container(
       height: 32 * hem,
+      width: 100 * fem,
       padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(8 * fem)),
+          border: Border.all(color: Colors.red),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -94,8 +97,8 @@ Widget _buildAmount(
             '- ${formatter.format(transaction.amount)}',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-              fontSize: 14 * ffem,
-              color: Colors.white,
+              fontSize: 15 * ffem,
+              color: Colors.red,
               fontWeight: FontWeight.bold,
             )),
           ),
@@ -114,9 +117,12 @@ Widget _buildAmount(
   } else {
     return Container(
       height: 32 * hem,
+      width: 100 * fem,
       padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(8 * fem)),
+          border: Border.all(color: Colors.red),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -125,8 +131,8 @@ Widget _buildAmount(
             '- ${formatter.format(transaction.amount)}',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-              fontSize: 14 * ffem,
-              color: Colors.white,
+              fontSize: 15 * ffem,
+              color: Colors.red,
               fontWeight: FontWeight.bold,
             )),
           ),

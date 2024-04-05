@@ -39,7 +39,7 @@ class Body extends StatelessWidget {
                     'Giao dịch thành công',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                            fontSize: 18 * ffem,
+                            fontSize: 22 * ffem,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                   ),
@@ -47,7 +47,7 @@ class Body extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 50 * hem,
+              height: 30 * hem,
             ),
             Container(
               width: double.infinity,
@@ -74,7 +74,7 @@ class Body extends StatelessWidget {
                           'Thời gian thanh toán',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -82,7 +82,7 @@ class Body extends StatelessWidget {
                           '${_formatDateTime(DateTime.now())}',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
+                                  fontSize: 16 * ffem,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                         ),
@@ -98,7 +98,7 @@ class Body extends StatelessWidget {
                           'Ưu đãi',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -111,7 +111,7 @@ class Body extends StatelessWidget {
                             textAlign: TextAlign.end,
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
+                                    fontSize: 16 * ffem,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black)),
                           ),
@@ -128,7 +128,7 @@ class Body extends StatelessWidget {
                           'Tổng đậu xanh',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 14 * ffem,
+                                  fontSize: 15 * ffem,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey)),
                         ),
@@ -136,9 +136,9 @@ class Body extends StatelessWidget {
                           '${formatter.format(total)}',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
+                                  fontSize: 22 * ffem,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
+                                  color: kPrimaryColor)),
                         ),
                       ],
                     ),

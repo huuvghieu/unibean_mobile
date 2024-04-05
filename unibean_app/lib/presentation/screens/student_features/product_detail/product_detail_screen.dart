@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/widgets/shimmer_widget.dart';
 
 import '../../../cubits/counter/counter_cubit.dart';
+import '../../screens.dart';
 import 'components/body.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -64,46 +66,160 @@ class ProductDetailScreen extends StatelessWidget {
             child: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
-              size: 35 * fem,
+              size: 30 * fem,
             ),
           ),
-          toolbarHeight: 80 * hem,
+          toolbarHeight: 50 * hem,
           centerTitle: true,
           title: Text(
             'Chi tiết sản phẩm',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-                    fontSize: 20 * ffem,
+                    fontSize: 22 * ffem,
                     fontWeight: FontWeight.w900,
-                    height: 1.3625 * ffem / fem,
                     color: Colors.white)),
           ),
+          actions: [
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartLoaded) {
+                  if (state.cart.products.length == 0) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 20 * fem),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          color: Colors.white,
+                          size: 25 * fem,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, ProfileCartScreen.routeName);
+                        },
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 20 * fem),
+                      child: Stack(
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: Colors.white,
+                              size: 25 * fem,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, ProfileCartScreen.routeName);
+                            },
+                          ),
+                          Positioned(
+                            top: 5,
+                            right: 3,
+                            child: Container(
+                              width: 25,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.red),
+                              child: Center(
+                                  child: Text(
+                                '${state.cart.products.length}',
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 11 * ffem,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.white)),
+                              )),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }
+                return Padding(
+                  padding: EdgeInsets.only(right: 20 * fem),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                      size: 25 * fem,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, ProfileCartScreen.routeName);
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-        body: Body(),
-        bottomNavigationBar: BlocBuilder<ProductBloc, ProductState>(
+        body: BlocListener<CartBloc, CartState>(
+          listener: (context, state) {
+            if (state is CartError) {
+              showCupertinoDialog(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  content: Text(
+                    '${state.error}',
+                    style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                            fontSize: 14 * ffem,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black)),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        context.read<CartBloc>().add(ReloadCart());
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Đồng ý',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 15 * ffem,
+                                fontWeight: FontWeight.normal,
+                                color: kPrimaryColor)),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+          },
+          child: Body(),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
             if (state is ProductByIdLoading) {
               return ShimmerWidget.rectangular(height: 35 * hem);
             } else if (state is ProductByIdLoaded) {
-              return BottomAppBar(child: BlocBuilder<CartBloc, CartState>(
+              return BlocBuilder<CartBloc, CartState>(
                 builder: (context, _) {
                   if (_ is CartLoading) {
-                    return InkWell(
-                        onTap: () async {},
-                        child: Container(
-                          height: 35 * hem,
-                          decoration: BoxDecoration(
-                              color: kPrimaryColor,
-                              borderRadius: BorderRadius.circular(10 * fem)),
-                          child: Center(
-                              child: CircularProgressIndicator(
-                            color: Colors.white,
+                    return BottomAppBar(
+                      child: InkWell(
+                          onTap: () async {},
+                          child: Container(
+                            height: 35 * hem,
+                            width: 200 * fem,
+                            decoration: BoxDecoration(
+                                color: kPrimaryColor,
+                                borderRadius: BorderRadius.circular(10 * fem)),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.white,
+                            )),
                           )),
-                        ));
+                    );
                   } else if (_ is CartLoaded) {
                     return BlocBuilder<CounterCubit, CounterState>(
                       builder: (context, counter) {
-                        return InkWell(
+                        return GestureDetector(
                             onTap: () async {
                               context.read<CartBloc>().add(AddProduct(
                                   product: state.productDetail,
@@ -124,7 +240,10 @@ class ProductDetailScreen extends StatelessWidget {
                                 ));
                             },
                             child: Container(
-                              height: 35 * hem,
+                              height: 45 * hem,
+                              width: 250 * fem,
+                              margin: EdgeInsets.only(
+                                  left: 40 * fem, right: 40 * fem),
                               decoration: BoxDecoration(
                                   color: kPrimaryColor,
                                   borderRadius:
@@ -145,7 +264,7 @@ class ProductDetailScreen extends StatelessWidget {
                   }
                   return Container();
                 },
-              ));
+              );
             }
             return Container();
           },

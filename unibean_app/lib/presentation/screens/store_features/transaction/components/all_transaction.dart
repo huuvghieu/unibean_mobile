@@ -32,7 +32,9 @@ class _AllTransactionState extends State<AllTransaction> {
   @override
   void initState() {
     scrollTransactionController.addListener(() {
-      context.read<StoreBloc>().add(LoadMoreTransactionStore(scrollTransactionController));
+      context
+          .read<StoreBloc>()
+          .add(LoadMoreTransactionStore(scrollTransactionController));
     });
     super.initState();
   }

@@ -96,7 +96,8 @@ class _FormBody1State extends State<FormUpdate> {
                 contentType: ContentType.success,
               ),
             ));
-          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/landing-screen-store', (Route<dynamic> route) => false);
         } else if (state is StoreUpdateFailed) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()

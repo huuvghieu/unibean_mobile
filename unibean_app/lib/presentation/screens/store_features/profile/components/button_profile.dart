@@ -75,21 +75,20 @@ class ButtonProfile extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 10 * hem, left: 20 * fem),
-            child: SizedBox(
-              width: 130 * fem,
+            child: Container(
+              width: 165 * fem,
               child: Text(
                 title,
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 14 * ffem,
-                        height: 1.3625 * ffem / fem,
                         fontWeight: FontWeight.w700,
                         color: Colors.black)),
               ),
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: 10 * hem, left: 70 * fem),
+              padding: EdgeInsets.only(top: 10 * hem, left: 35 * fem),
               child: Icon(
                 Icons.arrow_forward_outlined,
                 color: kLowTextColor,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
+import '../../../../../domain/repositories.dart';
 import '../../../../blocs/blocs.dart';
 import 'button_profile.dart';
-import 'name_profile.dart';
+import 'information_card_profile.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -56,241 +56,16 @@ class Body extends StatelessWidget {
                           Positioned(
                             top: 80 * hem,
                             left: 25 * fem,
-                            child: Container(
-                              width: 324 * fem,
-                              height: 200 * hem,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15 * fem),
-                                color: Colors.white,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 10 * hem,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 25 * fem,
-                                      ),
-
-                                      //avatar
-                                      Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child: Image.network(
-                                              '${storeModel.avatar}',
-                                              // 'assets/images/ava_signup.png',
-                                              width: 80 * fem,
-                                              height: 80 * hem,
-                                              fit: BoxFit.fill,
-                                              errorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return Image.asset(
-                                                  'assets/images/ava_signup.png',
-                                                  width: 80 * fem,
-                                                  height: 80 * hem,
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 0 * hem,
-                                            right: 0 * fem,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  color: klighGreyColor),
-                                              padding: EdgeInsets.all(5),
-                                              child: Icon(
-                                                Icons.camera_alt_outlined,
-                                                weight: 1,
-                                                size: 20,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-
-                                      SizedBox(
-                                        width: 20 * fem,
-                                      ),
-
-                                      SizedBox(
-                                        // color: Colors.red,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            //Name
-                                            NameProfile(
-                                              fem: fem,
-                                              ffem: ffem,
-                                              hem: hem,
-                                              name: storeModel.storeName,
-                                            ),
-                                            //email
-                                            SizedBox(
-                                              width: 150 * fem,
-                                              child: Text(
-                                                '${storeModel.email}',
-                                                maxLines: 1,
-                                                softWrap: true,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: GoogleFonts.openSans(
-                                                    textStyle: TextStyle(
-                                                        fontSize: 12 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color: klowTextGrey)),
-                                              ),
-                                            ),
-                                            // //student code
-                                            // StudentCodeProfile(
-                                            //   hem: hem,
-                                            //   fem: fem,
-                                            //   ffem: ffem,
-                                            //   studentCode: studentModel.code,
-                                            // ),
-                                            // //university name
-                                            // UniversityProfile(
-                                            //   fem: fem,
-                                            //   hem: hem,
-                                            //   ffem: ffem,
-                                            //   university: studentModel.universityName,
-                                            // )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10 * fem,
-                                  ),
-                                  SizedBox(
-                                    width: 280 * fem,
-                                    child: Divider(
-                                      thickness: 1 * fem,
-                                      color: const Color.fromARGB(
-                                          255, 225, 223, 223),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 10 * hem,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            padding: EdgeInsets.only(
-                                                left: 5 * fem, right: 5 * fem),
-                                            width: 140 * fem,
-                                            height: 40 * hem,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.grey[100],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Center(
-                                                  child: SvgPicture.asset(
-                                                    'assets/icons/campaign-navbar-icon.svg',
-                                                    colorFilter:
-                                                        ColorFilter.mode(
-                                                            kPrimaryColor,
-                                                            BlendMode.srcIn),
-                                                    height: 18 * fem,
-                                                    width: 18 * fem,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 5 * fem,
-                                                ),
-                                                Text(
-                                                  '${storeModel.numberOfCampaigns} chiến dịch',
-                                                  style: GoogleFonts.openSans(
-                                                      textStyle: TextStyle(
-                                                          fontSize: 12 * fem,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          height: 1.3625 *
-                                                              ffem /
-                                                              fem,
-                                                          color:
-                                                              kPrimaryColor)),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            padding: EdgeInsets.only(
-                                                left: 5 * fem, right: 5 * fem),
-                                            width: 140 * fem,
-                                            height: 40 * hem,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.grey[100],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Center(
-                                                  child: SvgPicture.asset(
-                                                    'assets/icons/voucher-navbar-icon.svg',
-                                                    colorFilter:
-                                                        ColorFilter.mode(
-                                                            kPrimaryColor,
-                                                            BlendMode.srcIn),
-                                                    height: 15 * fem,
-                                                    width: 15 * fem,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 5 * fem,
-                                                ),
-                                                Text(
-                                                  '${storeModel.numberOfVouchers} ưu đãi',
-                                                  style: GoogleFonts.openSans(
-                                                      textStyle: TextStyle(
-                                                          fontSize: 12 * fem,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          height: 1.3625 *
-                                                              ffem /
-                                                              fem,
-                                                          color:
-                                                              kPrimaryColor)),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            child: BlocProvider(
+                              create: (context) => StoreBloc(
+                                  storeRepository:
+                                      context.read<StoreRepository>())
+                                ..add(LoadStoreById(storeId: storeModel.id)),
+                              child: InformationCardProfile(
+                                  fem: fem,
+                                  hem: hem,
+                                  storeModel: storeModel,
+                                  ffem: ffem),
                             ),
                           ),
 
@@ -326,7 +101,48 @@ class Body extends StatelessWidget {
                                     SizedBox(
                                       height: 10 * hem,
                                     ),
-
+                                    ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      widthIcon: 17,
+                                      heightIcon: 17,
+                                      onPressed: () async {
+                                        final storeModel =
+                                            await AuthenLocalDataSource
+                                                .getStore();
+                                        Navigator.pushNamed(context,
+                                            BrandDetailStoreScreen.routeName,
+                                            arguments: storeModel!.brandId);
+                                      },
+                                      svgIcon:
+                                          'assets/icons/following-icon.svg',
+                                      title: 'Thông tin thương hiệu',
+                                    ),
+                                    SizedBox(
+                                      height: 10 * hem,
+                                    ),
+                                    ButtonProfile(
+                                      fem: fem,
+                                      hem: hem,
+                                      ffem: ffem,
+                                      widthIcon: 14,
+                                      heightIcon: 14,
+                                      onPressed: () async {
+                                        final storeModel =
+                                            await AuthenLocalDataSource
+                                                .getStore();
+                                        Navigator.pushNamed(context,
+                                            BrandDetailStoreScreen.routeName,
+                                            arguments: storeModel!.brandId);
+                                      },
+                                      svgIcon:
+                                          'assets/icons/bonus-bean-icon.svg',
+                                      title: 'Danh sách điểm thưởng',
+                                    ),
+                                    SizedBox(
+                                      height: 10 * hem,
+                                    ),
                                     //button logout
                                     ButtonProfile(
                                         fem: fem,

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile_products/components/tab_cart/tab_cart.dart';
-import 'package:unibean_app/presentation/screens/student_features/profile_products/components/tab_product/tab_product.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
+
+import '../../../../blocs/blocs.dart';
+import 'tab_product/tab_product.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -14,93 +18,123 @@ class Body extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
-    return NestedScrollView(headerSliverBuilder: (context, innerBoxIsScrolled) {
-      return [
-        new SliverAppBar(
-          pinned: true,
-          floating: true,
-          elevation: 0,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/background_splash.png'),
-                    fit: BoxFit.cover)),
-          ),
-          toolbarHeight: 40 * hem,
-          leading: Container(
-            margin: EdgeInsets.only(left: 20 * fem,top: 10*hem),
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 30 * fem,
+    return NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            new SliverAppBar(
+              pinned: true,
+              floating: true,
+              elevation: 0,
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/background_splash.png'),
+                        fit: BoxFit.cover)),
               ),
-            ),
-          ),
-          centerTitle: true,
-          title: Padding(
-            padding: EdgeInsets.only(top: 10 * hem),
-            child: Text(
-              'UniBean',
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      fontSize: 22 * ffem,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white)),
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                  size: 25 * fem,
+              toolbarHeight: 55 * hem,
+              leading: Container(
+                margin: EdgeInsets.only(left: 20 * fem),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                    size: 25 * fem,
+                  ),
                 ),
-                onPressed: () {},
               ),
-            ),
-          ],
-          bottom: TabBar(
-            // controller: tabController,
-
-            indicatorColor: Colors.white,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorWeight: 3,
-            // indicatorPadding: EdgeInsets.only(bottom: 1 * fem),
-            labelColor: Colors.white,
-            labelStyle: GoogleFonts.openSans(
-                textStyle: TextStyle(
-              fontSize: 12 * ffem,
-              height: 1.3625 * ffem / fem,
-              fontWeight: FontWeight.w700,
-            )),
-            unselectedLabelColor: Colors.white60,
-            unselectedLabelStyle: GoogleFonts.openSans(
-                textStyle: TextStyle(
-              fontSize: 12 * ffem,
-              fontWeight: FontWeight.w700,
-            )),
-            tabs: [
-              Tab(
-                text: 'Đổi quà',
+              centerTitle: true,
+              title: Text(
+                'Đổi đậu lấy quà',
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: 20 * ffem,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white)),
               ),
-              Tab(text: 'Giỏ hàng'),
-            ],
-          ),
-        )
-      ];
-    },
-        body: TabBarView(
-          children: [
-            TabProduct(),
-            TabCart(),
-          ],
-        ),
-        );
+              actions: [
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoaded) {
+                      if (state.cart.products.length == 0) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: 20 * fem),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: Colors.white,
+                              size: 25 * fem,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, ProfileCartScreen.routeName);
+                            },
+                          ),
+                        );
+                      } else {
+                        return Padding(
+                          padding: EdgeInsets.only(right: 20 * fem),
+                          child: Stack(
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.white,
+                                  size: 25 * fem,
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, ProfileCartScreen.routeName);
+                                },
+                              ),
+                              Positioned(
+                                top: 5,
+                                right: 3,
+                                child: Container(
+                                  width: 25,
+                                  height: 15,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Colors.red),
+                                  child: Center(
+                                      child: Text(
+                                    '${state.cart.products.length}',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 11 * ffem,
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.white)),
+                                  )),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    }
+                    return Padding(
+                      padding: EdgeInsets.only(right: 20 * fem),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          color: Colors.white,
+                          size: 25 * fem,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, ProfileCartScreen.routeName);
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            )
+          ];
+        },
+        body: TabProduct());
   }
 }

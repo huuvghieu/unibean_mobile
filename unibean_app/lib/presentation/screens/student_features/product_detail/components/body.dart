@@ -2,6 +2,7 @@ import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/cubits/counter/counter_cubit.dart';
 
@@ -66,13 +67,13 @@ class Body extends StatelessWidget {
                           '${product.productName.toUpperCase()}',
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 20 * ffem,
+                                  fontSize: 18 * ffem,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                         ),
                       ),
                       SizedBox(
-                        height: 5 * hem,
+                        height: 2 * hem,
                       ),
                       Container(
                         color: Colors.white,
@@ -197,12 +198,25 @@ class Body extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(top: 5 * hem),
                               child: Text(
-                                '${product.description}',
+                                'Mô tả sản phẩm',
                                 textAlign: TextAlign.justify,
                                 softWrap: true,
                                 style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
-                                    fontSize: 13 * ffem,
+                                    fontSize: 15 * ffem,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 5 * hem),
+                              child: HtmlWidget(
+                                '${product.description}',
+                                textStyle: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                    fontSize: 14 * ffem,
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -214,7 +228,7 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  'Còn lại: 5',
+                                  'Còn lại: ${product.quantity}',
                                   style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
                                     fontSize: 15 * ffem,
@@ -305,7 +319,7 @@ class Body extends StatelessWidget {
                                                   textStyle: TextStyle(
                                                     fontSize: 13 * ffem,
                                                     fontStyle: FontStyle.italic,
-                                                    color: kPrimaryColor,
+                                                    color: Colors.black,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
@@ -328,7 +342,7 @@ class Body extends StatelessWidget {
                                                   textStyle: TextStyle(
                                                     fontSize: 13 * ffem,
                                                     fontStyle: FontStyle.italic,
-                                                    color: kPrimaryColor,
+                                                    color: Colors.black,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
@@ -343,7 +357,10 @@ class Body extends StatelessWidget {
                                 }
                                 return Container();
                               },
-                            )
+                            ),
+                            SizedBox(
+                              height: 50 * hem,
+                            ),
                           ],
                         ),
                       ),

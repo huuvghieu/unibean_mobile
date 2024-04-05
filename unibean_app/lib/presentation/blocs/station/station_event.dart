@@ -7,7 +7,7 @@ final class LoadStations extends StationEvent {
   final int page;
   final int limit;
 
-  LoadStations({this.page = 1, this.limit = 2});
+  LoadStations({this.page = 1, this.limit = 100});
   @override
   List<Object?> get props => [page, limit];
 }

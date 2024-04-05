@@ -31,6 +31,7 @@ class ChallengeBloc extends Bloc<ChallengeEvent, ChallengeState> {
 
   Future<void> _onClaimChallenge(
       ClaimChallengeStudentId event, Emitter<ChallengeState> emit) async {
+    emit(ClaimLoading());
     try {
       var isSuccess = await studentRepository.postChallengeStudentId(
           challengeId: event.challengeId, studentId: event.studentId);

@@ -12,7 +12,7 @@ export 'models/student_features/voucher_model.dart';
 export 'models/student_features/product_model.dart';
 export 'models/student_features/student_model.dart';
 export 'models/student_features/challenge_model.dart';
-export 'models/student_features/create_authen_model.dart';
+export 'models/student_features/create_model/create_authen_model.dart';
 export 'models/student_features/voucher_student_model.dart';
 export 'models/student_features/campaign_detail_model.dart';
 export 'models/student_features/campaign_store_model.dart';
@@ -27,6 +27,9 @@ export 'models/student_features/product_detail_model.dart';
 export 'models/student_features/station_model.dart';
 export 'models/student_features/verify_authen_model.dart';
 export 'models/student_features/voucher_student_item_model.dart';
+export 'models/student_features/create_model/create_order_model.dart';
+export 'models/student_features/create_model/create_order_detail_model.dart';
+export 'models/student_features/checkout_model.dart';
 
 //store
 export 'models/store_features/transaction_store_model.dart';
@@ -37,3 +40,4 @@ export 'models/store_features/campagin_ranking_model.dart';
 export 'models/store_features/student_ranking_model.dart';
 export 'models/store_features/transact_result_model.dart';
 export 'models/store_features/area_model.dart';
+export 'models/store_features/campaign_voucher_information_model.dart';

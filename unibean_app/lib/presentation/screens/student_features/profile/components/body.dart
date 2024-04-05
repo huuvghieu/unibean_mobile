@@ -5,14 +5,28 @@ import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
+import '../../../../../data/models.dart';
+import '../../../../../domain/repositories.dart';
 import '../../../../blocs/blocs.dart';
 import 'button_profile.dart';
 import 'pending_card.dart';
 import 'unverified_card.dart';
 import 'verified_card.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key});
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  StudentModel? studentModel;
+  @override
+  void initState() {
+    getStudent();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +67,17 @@ class Body extends StatelessWidget {
                         ),
 
                         //widget information of profile
-                        VerifiedCard(
-                            hem: hem,
-                            fem: fem,
-                            ffem: ffem,
-                            studentModel: state.studentModel),
+                        BlocProvider(
+                          create: (context) => RoleAppBloc(
+                              context.read<StudentRepository>(),
+                              context.read<StoreRepository>())
+                            ..add(RoleAppStart()),
+                          child: VerifiedCard(
+                              hem: hem,
+                              fem: fem,
+                              ffem: ffem,
+                            ),
+                        ),
 
                         Positioned(
                             left: 0 * fem,
@@ -533,5 +553,12 @@ class Body extends StatelessWidget {
             ],
           );
         });
+  }
+
+  Future getStudent() async {
+    final student = await AuthenLocalDataSource.getStudent();
+    setState(() {
+      studentModel = student;
+    });
   }
 }

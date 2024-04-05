@@ -5,6 +5,9 @@ import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/name_profile.dart';
 
+import '../../../../widgets/unverified_screen.dart';
+import '../../../screens.dart';
+
 class UnverifiedCard extends StatelessWidget {
   const UnverifiedCard({
     super.key,
@@ -126,10 +129,12 @@ class UnverifiedCard extends StatelessWidget {
                 top: 10 * hem,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, UnverifiedScreen.routeName);
+                    },
                     child: Container(
                       padding: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
                       width: 120 * fem,
@@ -168,7 +173,10 @@ class UnverifiedCard extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, SignUp1Screen.routeName,
+                          arguments: false);
+                    },
                     child: Container(
                       padding: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
                       width: 140 * fem,

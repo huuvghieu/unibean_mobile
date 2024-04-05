@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/domain/repositories.dart';
 
+import '../../../../../data/models.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import '../../../../widgets/brand_card.dart';
@@ -16,8 +18,21 @@ import 'campaign_carousel.dart';
 import 'campaign_list_card.dart';
 import 'membership_card.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key});
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  StudentModel? studentModel;
+
+  @override
+  void initState() {
+    getStudent();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,26 +50,26 @@ class Body extends StatelessWidget {
       Pending(
         // ignore: unused_local_variable
         authenModel: final authenModel,
-        studentModel: final studentModel
+        studentModel: final student
       ) =>
         MemberShipCard(
             fem: fem,
             hem: hem,
             ffem: ffem,
             heightText: heightText,
-            studentModel: studentModel),
+            studentModel: studentModel ?? student),
       Rejected() => Container(),
       Verified(
         // ignore: unused_local_variable
         authenModel: final authenModel,
-        studentModel: final studentModel
+        studentModel: final student
       ) =>
         MemberShipCard(
             fem: fem,
             hem: hem,
             ffem: ffem,
             heightText: heightText,
-            studentModel: studentModel),
+            studentModel: studentModel ?? student),
       StoreRole() => Container(),
       RoleAppLoading() => Container(
           child: Center(
@@ -95,7 +110,7 @@ class Body extends StatelessWidget {
                         Container(
                           // margin: EdgeInsets.only(left: 10 * fem),
                           child: Padding(
-                            padding: EdgeInsets.only(bottom: 0 * hem),
+                            padding: EdgeInsets.only(left: 10 * hem),
                             child: Text(
                               'HÔM NAY CÓ GÌ',
                               style: GoogleFonts.openSans(
@@ -130,106 +145,6 @@ class Body extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 5 * hem,
-                  ),
-
-                  //Đề xuất cho bạn
-                  Container(
-                    color: kbgWhiteColor,
-                    padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10 * fem),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'ĐỀ XUẤT CHO BẠN',
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w800,
-                                )),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (roleState is Unverified) {
-                                    Navigator.pushNamed(
-                                        context, UnverifiedScreen.routeName);
-                                  } else {
-                                    Navigator.pushNamed(
-                                        context, CampaignListScreen.routeName);
-                                  }
-                                },
-                                child: Container(
-                                  height: 22 * hem,
-                                  width: 22 * fem,
-                                  margin: EdgeInsets.only(left: 8 * fem),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(80)),
-                                  child: Icon(
-                                    Icons.arrow_forward_rounded,
-                                    size: 18 * fem,
-                                    color: kDarkPrimaryColor,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10 * hem,
-                        ),
-                        BlocBuilder<CampaignBloc, CampaignState>(
-                          builder: (context, state) {
-                            if (state is CampaignsLoaded) {
-                              return SizedBox(
-                                  height: 250 * hem,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: 3,
-                                    itemBuilder: (context, index) {
-                                      return CampaignCard(
-                                        fem: fem,
-                                        hem: hem,
-                                        ffem: ffem,
-                                        campaignModel: state.campaigns[index],
-                                        onTap: () {
-                                          if (roleState is Unverified) {
-                                            Navigator.pushNamed(context,
-                                                UnverifiedScreen.routeName);
-                                          } else {
-                                            Navigator.pushNamed(context,
-                                                CampaignDetailScreen.routeName,
-                                                arguments:
-                                                    state.campaigns[index]);
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ));
-                            }
-                            return Container(
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: kPrimaryColor,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 10 * hem,
-                        ),
-                      ],
-                    ),
-                  ),
-
                   SizedBox(
                     height: 5 * hem,
                   ),
@@ -382,6 +297,106 @@ class Body extends StatelessWidget {
                     height: 5 * hem,
                   ),
 
+                  //Đề xuất cho bạn
+                  Container(
+                    color: kbgWhiteColor,
+                    padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 10 * fem),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'ĐỀ XUẤT CHO BẠN',
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                  fontSize: 15 * ffem,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
+                                )),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  if (roleState is Unverified) {
+                                    Navigator.pushNamed(
+                                        context, UnverifiedScreen.routeName);
+                                  } else {
+                                    Navigator.pushNamed(
+                                        context, CampaignListScreen.routeName);
+                                  }
+                                },
+                                child: Container(
+                                  height: 22 * hem,
+                                  width: 22 * fem,
+                                  margin: EdgeInsets.only(left: 8 * fem),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(80)),
+                                  child: Icon(
+                                    Icons.arrow_forward_rounded,
+                                    size: 18 * fem,
+                                    color: kDarkPrimaryColor,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10 * hem,
+                        ),
+                        BlocBuilder<CampaignBloc, CampaignState>(
+                          builder: (context, state) {
+                            if (state is CampaignsLoaded) {
+                              return SizedBox(
+                                  height: 250 * hem,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: 2,
+                                    itemBuilder: (context, index) {
+                                      return CampaignCard(
+                                        fem: fem,
+                                        hem: hem,
+                                        ffem: ffem,
+                                        campaignModel: state.campaigns[index],
+                                        onTap: () {
+                                          if (roleState is Unverified) {
+                                            Navigator.pushNamed(context,
+                                                UnverifiedScreen.routeName);
+                                          } else {
+                                            Navigator.pushNamed(context,
+                                                CampaignDetailScreen.routeName,
+                                                arguments:
+                                                    state.campaigns[index]);
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ));
+                            }
+                            return Container(
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 10 * hem,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 5 * hem,
+                  ),
+
                   //Chiến dịch ưu đãi
                   Container(
                     color: kbgWhiteColor,
@@ -415,37 +430,22 @@ class Body extends StatelessWidget {
                             if (state is CampaignLoading) {
                               return shimmerLoading(1);
                             } else if (state is CampaignsLoaded) {
-                              return ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: state.hasReachMax
-                                    ? state.campaigns.length
-                                    : state.campaigns.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (index >= state.campaigns.length) {
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        color: kPrimaryColor,
-                                      ),
-                                    );
-                                  } else {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        if (roleState is Unverified) {
-                                          Navigator.pushNamed(context,
-                                              UnverifiedScreen.routeName);
-                                        } else {
-                                          Navigator.pushNamed(context,
-                                              CampaignDetailScreen.routeName,
-                                              arguments:
-                                                  state.campaigns);
-                                        }
-                                      },
-                                      child: CampaignListCard(
-                                        fem: fem,
-                                        hem: hem,
-                                        ffem: ffem,
-                                        campaignModel: state.campaigns[index],
+                              return Container(
+                                child: ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: state.hasReachMax
+                                      ? state.campaigns.length
+                                      : state.campaigns.length + 1,
+                                  itemBuilder: (context, index) {
+                                    if (index >= state.campaigns.length) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: kPrimaryColor,
+                                        ),
+                                      );
+                                    } else {
+                                      return GestureDetector(
                                         onTap: () {
                                           if (roleState is Unverified) {
                                             Navigator.pushNamed(context,
@@ -453,14 +453,30 @@ class Body extends StatelessWidget {
                                           } else {
                                             Navigator.pushNamed(context,
                                                 CampaignDetailScreen.routeName,
-                                                arguments:
-                                                    state.campaigns[index]);
+                                                arguments: state.campaigns[index]);
                                           }
                                         },
-                                      ),
-                                    );
-                                  }
-                                },
+                                        child: CampaignListCard(
+                                          fem: fem,
+                                          hem: hem,
+                                          ffem: ffem,
+                                          campaignModel: state.campaigns[index],
+                                          onTap: () {
+                                            if (roleState is Unverified) {
+                                              Navigator.pushNamed(context,
+                                                  UnverifiedScreen.routeName);
+                                            } else {
+                                              Navigator.pushNamed(context,
+                                                  CampaignDetailScreen.routeName,
+                                                  arguments:
+                                                      state.campaigns[index]);
+                                            }
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
                               );
                             }
                             return Container(
@@ -485,6 +501,13 @@ class Body extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future getStudent() async {
+    final student = await AuthenLocalDataSource.getStudent();
+    setState(() {
+      studentModel = student;
+    });
   }
 }
 

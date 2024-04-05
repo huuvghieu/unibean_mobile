@@ -42,4 +42,7 @@ abstract class StoreRepository {
       required String description,
       required String storeId,
       required bool state});
+
+  Future<Map<bool, dynamic>> fecthCampaignVoucherInformation(
+      {required String storeId, required String voucherCode});
 }

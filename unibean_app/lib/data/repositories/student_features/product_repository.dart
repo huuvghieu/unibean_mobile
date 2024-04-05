@@ -17,7 +17,7 @@ class ProductRepositoryImp extends ProductRepository {
   String? token;
   @override
   Future<ApiResponse<List<ProductModel>>?> fetchProducts(
-      {int? page, int? limit}) async {
+      {int? page, int? limit, String? search}) async {
     try {
       token = await AuthenLocalDataSource.getToken();
       final Map<String, String> headers = {
@@ -30,24 +30,40 @@ class ProductRepositoryImp extends ProductRepository {
       if (limit == null) {
         limit = this.limit;
       }
-
-      http.Response response = await http.get(
-          Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
-          headers: headers);
-
-      if (response.statusCode == 200) {
-        final result = jsonDecode(utf8.decode(response.bodyBytes));
-        ApiResponse<List<ProductModel>> apiResponse =
-            ApiResponse<List<ProductModel>>.fromJson(result,
-                (data) => data.map((e) => ProductModel.fromJson(e)).toList());
-        print(apiResponse.result);
-        return apiResponse;
-      } else {
-        return null;
+      if (search != null) {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint?sort=$sort&search=$search&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<ProductModel>> apiResponse =
+              ApiResponse<List<ProductModel>>.fromJson(result,
+                  (data) => data.map((e) => ProductModel.fromJson(e)).toList());
+          print(apiResponse.result);
+          return apiResponse;
+        } else {
+          return null;
+        }
+      } else if (search == null || search == '') {
+        http.Response response = await http.get(
+            Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<ProductModel>> apiResponse =
+              ApiResponse<List<ProductModel>>.fromJson(result,
+                  (data) => data.map((e) => ProductModel.fromJson(e)).toList());
+          print(apiResponse.result);
+          return apiResponse;
+        } else {
+          return null;
+        }
       }
     } catch (e) {
       throw Exception(e.toString());
     }
+    return null;
   }
 
   @override

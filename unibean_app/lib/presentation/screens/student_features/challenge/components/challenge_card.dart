@@ -198,63 +198,9 @@ Widget _checkCondition(
       onPressed: () async {
         final studentId = await AuthenLocalDataSource.getStudentId();
         context.read<ChallengeBloc>().add(ClaimChallengeStudentId(
-            studentId: studentId!, challengeId: challenge.challengeId));
+            studentId: studentId!, challengeId: challenge.id));
       },
     );
   }
   return InProcessButton(fem: fem, hem: hem);
 }
-
-
- // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Container(
-                  //       width: 180 * fem,
-                  //       height: 50 * hem,
-                  //       child: Text(
-                  //         challengeModel.challengeName,
-                  //         textAlign: TextAlign.center,
-                  //         style: GoogleFonts.openSans(
-                  //             textStyle: TextStyle(
-                  //           color: kDarkPrimaryColor,
-                  //           fontSize: 16 * ffem,
-                  //           height: 1.3625 * ffem / fem,
-                  //           fontWeight: FontWeight.w900,
-                  //         )),
-                  //       ),
-                  //     ),
-                  //     Container(
-                  //       width: 100 * fem,
-                  //       height: 35 * hem,
-                  //       margin: EdgeInsets.only(bottom: 10 * hem),
-                  //       decoration: BoxDecoration(
-                  //           borderRadius: BorderRadius.circular(5 * fem),
-                  //           color: Color(0xff83f28f)),
-                  //       child:
-                  // Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Padding(
-                  //             padding: EdgeInsets.only(left: 10 * fem),
-                  //             child: Text(
-                  //               '+ ${formatter.format(challengeModel.amount)}',
-                  //               style: GoogleFonts.openSans(
-                  //                 color: Colors.white,
-                  //                 height: 1.3625 * ffem / fem,
-                  //                 fontSize: 14 * ffem,
-                  //                 fontWeight: FontWeight.w900,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           SvgPicture.asset(
-                  //             'assets/icons/green-bean-icon.svg',
-                  //             width: 25 * fem,
-                  //             height: 30 * fem,
-                  //           )
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),

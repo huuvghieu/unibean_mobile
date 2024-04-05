@@ -33,7 +33,7 @@ class CampaignDetailScreen extends StatelessWidget {
               forceMaterialTransparency: true,
               elevation: 0,
            
-              toolbarHeight: 80 * hem,
+              toolbarHeight: 50 * hem,
               leading: Container(
                 margin: EdgeInsets.only(left: 20 * fem),
                 child: Row(

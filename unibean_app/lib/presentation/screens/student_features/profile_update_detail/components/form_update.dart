@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import '../../../../../domain/repositories.dart';
@@ -87,7 +88,8 @@ class _FormBody1State extends State<FormUpdate> {
                 contentType: ContentType.success,
               ),
             ));
-          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/landing-screen', (Route<dynamic> route) => false);
         } else if (state is StudentFaled) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -102,79 +104,77 @@ class _FormBody1State extends State<FormUpdate> {
                 contentType: ContentType.failure,
               ),
             ));
-          Navigator.pop(context);
         }
       },
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(
-                  right: 15 * widget.fem, left: 15 * widget.fem),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15 * widget.fem),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x0c000000),
-                      offset: Offset(0 * widget.fem, 4 * widget.fem),
-                      blurRadius: 2.5 * widget.fem,
-                    )
-                  ]),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 25 * widget.hem,
-                  ),
-                  TextFormFieldDefault(
-                    hem: widget.hem,
-                    fem: widget.fem,
-                    ffem: widget.ffem,
-                    labelText: 'HỌ VÀ TÊN',
-                    hintText: 'Nhập họ và tên...',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Họ và tên không được bỏ trống';
-                      } else if (!vietNameseTextOnlyPattern.hasMatch(value)) {
-                        return 'Họ và tên không hợp lệ';
-                      }
-                      return null;
-                    },
-                    textController: nameController,
-                  ),
-                  SizedBox(
-                    height: 25 * widget.hem,
-                  ),
-                  DropDownMajor(
-                    hem: widget.hem,
-                    fem: widget.fem,
-                    ffem: widget.ffem,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Chuyên ngành không được bỏ trống';
-                      }
-                      return null;
-                    },
-                    labelText: 'CHUYÊN NGÀNH',
-                    hintText: 'Chọn chuyên ngành',
-                    majorController: majorController,
-                    majorId: widget.studentModel.majorId,
-                  ),
-                  SizedBox(
-                    height: 25 * widget.hem,
-                  ),
-                  BlocProvider(
-                    lazy: false,
-                    create: (context) =>
-                        CampusBloc(context.read<CampusRepository>())
-                          ..add(LoadCampus(
-                              universityId: widget.studentModel.universityId)),
-                    child: BlocBuilder<CampusBloc, CampusState>(
-                      builder: (context, state) {
-                        if (state is CampusLoaded) {
-                          return DropDownCampus(
+      child: BlocProvider(
+        lazy: false,
+        create: (context) => CampusBloc(context.read<CampusRepository>())
+          ..add(LoadCampus(universityId: widget.studentModel.universityId)),
+        child: BlocBuilder<CampusBloc, CampusState>(
+          builder: (context, state) {
+            if (state is CampusLoaded) {
+              return Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(
+                          right: 15 * widget.fem, left: 15 * widget.fem),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15 * widget.fem),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0x0c000000),
+                              offset: Offset(0 * widget.fem, 4 * widget.fem),
+                              blurRadius: 2.5 * widget.fem,
+                            )
+                          ]),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
+                          TextFormFieldDefault(
+                            hem: widget.hem,
+                            fem: widget.fem,
+                            ffem: widget.ffem,
+                            labelText: 'HỌ VÀ TÊN',
+                            hintText: 'Nhập họ và tên...',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Họ và tên không được bỏ trống';
+                              } else if (!vietNameseTextOnlyPattern
+                                  .hasMatch(value)) {
+                                return 'Họ và tên không hợp lệ';
+                              }
+                              return null;
+                            },
+                            textController: nameController,
+                          ),
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
+                          DropDownMajor(
+                            hem: widget.hem,
+                            fem: widget.fem,
+                            ffem: widget.ffem,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Chuyên ngành không được bỏ trống';
+                              }
+                              return null;
+                            },
+                            labelText: 'CHUYÊN NGÀNH',
+                            hintText: 'Chọn chuyên ngành',
+                            majorController: majorController,
+                            majorId: widget.studentModel.majorId,
+                          ),
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
+                          DropDownCampus(
                             fem: widget.fem,
                             hem: widget.hem,
                             ffem: widget.ffem,
@@ -189,57 +189,73 @@ class _FormBody1State extends State<FormUpdate> {
                             },
                             campusId: widget.studentModel.campusId,
                             campuses: state.campuses,
-                          );
-                        }
-                        return Center(
-                            child: CircularProgressIndicator(
-                                color: kPrimaryColor));
-                      },
+                          ),
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
+                          DropDownGender(
+                            fem: widget.fem,
+                            hem: widget.hem,
+                            ffem: widget.ffem,
+                            hintText: 'Chọn giới tính',
+                            labelText: 'GIỚI TÍNH',
+                            genderController: genderController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Giới tính không được bỏ trống';
+                              }
+                              return null;
+                            },
+                            genderName: widget.studentModel.gender,
+                          ),
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
+                          TextFormFieldDefault(
+                            hem: widget.hem,
+                            fem: widget.fem,
+                            ffem: widget.ffem,
+                            labelText: 'ĐỊA CHỈ',
+                            hintText: 'Nhập địa chỉ...',
+                            validator: (value) {
+                              return null;
+                            },
+                            textController: addressController,
+                          ),
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 25 * widget.hem,
-                  ),
-                  DropDownGender(
-                    fem: widget.fem,
-                    hem: widget.hem,
-                    ffem: widget.ffem,
-                    hintText: 'Chọn giới tính',
-                    labelText: 'GIỚI TÍNH',
-                    genderController: genderController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Giới tính không được bỏ trống';
-                      }
-                      return null;
-                    },
-                    genderName: widget.studentModel.gender,
-                  ),
-                  SizedBox(
-                    height: 25 * widget.hem,
-                  ),
-                  TextFormFieldDefault(
-                    hem: widget.hem,
-                    fem: widget.fem,
-                    ffem: widget.ffem,
-                    labelText: 'ĐỊA CHỈ',
-                    hintText: 'Nhập địa chỉ...',
-                    validator: (value) {
-                      return null;
-                    },
-                    textController: addressController,
-                  ),
-                  SizedBox(
-                    height: 25 * widget.hem,
-                  ),
-                ],
+                    SizedBox(
+                      height: 25 * widget.hem,
+                    ),
+                    buttonWidget(changed, context)
+                  ],
+                ),
+              );
+            }
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: 400,
+              margin: EdgeInsets.only(
+                  right: 15 * widget.fem, left: 15 * widget.fem),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15 * widget.fem),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x0c000000),
+                      offset: Offset(0 * widget.fem, 4 * widget.fem),
+                      blurRadius: 2.5 * widget.fem,
+                    )
+                  ]),
+              child: Center(
+                child: Lottie.asset('assets/animations/loading-screen.json'),
               ),
-            ),
-            SizedBox(
-              height: 25 * widget.hem,
-            ),
-            buttonWidget(changed, context)
-          ],
+            );
+          },
         ),
       ),
     );
@@ -256,6 +272,7 @@ class _FormBody1State extends State<FormUpdate> {
               campusId: campusController.text,
               address: addressController.text,
               gender: int.parse(genderController.text)));
+          context.read<RoleAppBloc>().add(RoleAppStart());
         },
         child: Container(
             width: 220 * widget.fem,

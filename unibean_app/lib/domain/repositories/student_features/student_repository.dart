@@ -33,4 +33,7 @@ abstract class StudentRepository {
   Future<VoucherStudentItemModel?> fetchVoucherItemByStudentId(
       {required String studentId, required String voucherId});
 
+  Future<List<String>?> fetchWishListByStudentId();
+
+  Future<OrderModel?> createOrder(CreateOrderModel createOrderModel);
 }

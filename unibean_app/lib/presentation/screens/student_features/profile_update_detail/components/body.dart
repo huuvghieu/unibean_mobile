@@ -41,8 +41,8 @@ class Body extends StatelessWidget {
                             fontSize: 18 * ffem,
                             fontWeight: FontWeight.w700)),
                   ),
-                  SizedBox(
-                    height: 5 * hem,
+                    SizedBox(
+                    height: 20 * hem,
                   ),
                   BlocProvider(
                     create: (context) => StudentBloc(

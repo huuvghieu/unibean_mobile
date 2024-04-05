@@ -27,7 +27,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
     List<CampaignModel> camps = [
       widget.campaigns[0],
       widget.campaigns[1],
-      widget.campaigns[2],
+      // widget.campaigns[2],
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

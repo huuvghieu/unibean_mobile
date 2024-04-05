@@ -132,7 +132,7 @@ Widget _buildAuthIntial(
           hem: hem,
           fem: fem,
           ffem: ffem,
-          labelText: 'TÀI KHOẢN',
+          labelText: 'TÀI KHOẢN *',
           hintText: 'Nhập tài khoản của bạn',
           validator: (value) {
             if (value == null || value.isEmpty) {

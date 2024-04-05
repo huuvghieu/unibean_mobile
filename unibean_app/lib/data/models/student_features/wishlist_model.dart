@@ -16,13 +16,13 @@ class WishListModel extends WishList {
   factory WishListModel.fromJson(Map<String, dynamic> json) {
     return WishListModel(
       id: json['id'],
-      studentId: json['studentId'],
-      studentName: json['studentName'],
-      studentImage: json['studentImage'],
-      brandId: json['brandId'],
-      brandName: json['brandName'],
-      brandImage: json['brandImage'],
-      description: json['description'],
+      studentId: json['studentId'] ?? '',
+      studentName: json['studentName'] ?? '',
+      studentImage: json['studentImage'] ?? '',
+      brandId: json['brandId'] ?? '',
+      brandName: json['brandName'] ?? '',
+      brandImage: json['brandImage'] ?? '',
+      description: json['description'] ?? '',
       state: json['state'],
       status: json['status'],
     );

@@ -42,6 +42,9 @@ class BrandCard extends StatelessWidget {
               child: Container(
                 width: 80 * fem,
                 height: 80 * hem,
+                decoration: BoxDecoration(
+                  
+                ),
                 child: Image.network(
                   brandModel.logo,
                   fit: BoxFit.cover,

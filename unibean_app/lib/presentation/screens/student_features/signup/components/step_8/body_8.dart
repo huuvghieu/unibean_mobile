@@ -31,60 +31,63 @@ class Body8 extends StatelessWidget {
             // color: kPrimaryColor,
             border: Border(bottom: BorderSide(color: Colors.black))));
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-      },
-      child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/images/bg_signup_5.png'),
-          )),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 400 * hem,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/bg_signup_5.png'),
+                )),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 400 * hem,
+                    ),
+                    Text(
+                      'Nhập mã xác nhận',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              fontSize: 20 * ffem,
+                              fontWeight: FontWeight.w900,
+                              height: 1.3625 * ffem / fem,
+                              color: Colors.black)),
+                    ),
+                    SizedBox(
+                      height: 10 * hem,
+                    ),
+                    Text(
+                      'Nhập mã số xác nhận đã được gửi đến\n số điện thoại +84$phoneNumber',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              fontSize: 15 * ffem,
+                              fontWeight: FontWeight.w600,
+                              height: 1.3625 * ffem / fem,
+                              color: kLowTextColor)),
+                    ),
+                    SizedBox(
+                      height: 30 * hem,
+                    ),
+                    OTPForm(
+                      fem: fem,
+                      hem: hem,
+                      defaultPinTheme: defaultPinTheme,
+                      ffem: ffem,
+                      phoneNumber: '+84$phoneNumber',
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                'Nhập mã xác nhận',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                        fontSize: 20 * ffem,
-                        fontWeight: FontWeight.w900,
-                        height: 1.3625 * ffem / fem,
-                        color: Colors.black)),
-              ),
-              SizedBox(
-                height: 10 * hem,
-              ),
-              Text(
-                'Nhập mã số xác nhận đã được gửi đến\n số điện thoại +84$phoneNumber',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                        fontSize: 15 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.3625 * ffem / fem,
-                        color: kLowTextColor)),
-              ),
-              SizedBox(
-                height: 30 * hem,
-              ),
-              OTPForm(
-                fem: fem,
-                hem: hem,
-                defaultPinTheme: defaultPinTheme,
-                ffem: ffem,
-                phoneNumber: '+84$phoneNumber',
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ]))
+          ],
+        ));
   }
 }

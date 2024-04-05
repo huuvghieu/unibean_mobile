@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -24,12 +25,12 @@ class TransactionCard extends StatelessWidget {
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(bottom: 15 * hem),
-        height: 90 * hem,
+        height: 100 * hem,
         child: Stack(
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 90 * hem,
+              height: 100 * hem,
               margin: EdgeInsets.only(right: 15 * fem, left: 15 * fem),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10 * fem),
@@ -42,24 +43,26 @@ class TransactionCard extends StatelessWidget {
                   ]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 10 * fem),
                     child: Text(
                       '${transaction.typeName}',
                       style: GoogleFonts.openSans(
-                          fontSize: 15 * ffem,
+                          fontSize: 17 * ffem,
                           fontWeight: FontWeight.bold,
                           height: 1.3625 * ffem / fem,
                           color: kPrimaryColor),
                     ),
                   ),
-                  Padding(
+                  Container(
                     padding: EdgeInsets.only(left: 10 * fem),
+                    width: 200 * fem,
                     child: Text('${transaction.name}',
+                        maxLines: 2,
                         style: GoogleFonts.openSans(
-                            fontSize: 14 * ffem,
+                            fontSize: 15 * ffem,
                             fontWeight: FontWeight.w500,
                             height: 1.3625 * ffem / fem,
                             color: Colors.black)),
@@ -68,7 +71,7 @@ class TransactionCard extends StatelessWidget {
                     padding: EdgeInsets.only(left: 10 * fem, top: 5 * hem),
                     child: Text(_formatDatetime(transaction.dateCreated),
                         style: GoogleFonts.openSans(
-                            fontSize: 12 * ffem,
+                            fontSize: 14 * ffem,
                             fontWeight: FontWeight.w600,
                             height: 1.3625 * ffem / fem,
                             color: kLowTextColor)),
@@ -77,7 +80,7 @@ class TransactionCard extends StatelessWidget {
               ),
             ),
             Positioned(
-                right: 20 * fem,
+                right: 25 * fem,
                 top: 10 * hem,
                 child: _buildAmount(fem, hem, ffem, transaction))
           ],
@@ -87,13 +90,15 @@ class TransactionCard extends StatelessWidget {
 
 Widget _buildAmount(
     double fem, double hem, double ffem, TransactionModel transaction) {
-  print(transaction.amount < 0);
   if (transaction.walletTypeId == 1 && transaction.amount > 0) {
     return Container(
-      height: 32 * hem,
+      height: 40 * hem,
+      width: 125 * fem,
       padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
-          color: kPrimaryColor, borderRadius: BorderRadius.circular(8 * fem)),
+          border: Border.all(color: kPrimaryColor, width: 1),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,29 +108,28 @@ Widget _buildAmount(
             textAlign: TextAlign.center,
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-              fontSize: 14 * ffem,
-              color: Colors.white,
+              fontSize: 16 * ffem,
+              color: kPrimaryColor,
               fontWeight: FontWeight.bold,
             )),
           ),
-          Padding(
-            padding:
-                EdgeInsets.only(left: 2 * fem, top: 4 * hem, bottom: 2 * hem),
-            child: SvgPicture.asset(
-              'assets/icons/green-bean-icon.svg',
-              width: 24 * fem,
-              height: 22 * fem,
-            ),
+          SvgPicture.asset(
+            'assets/icons/green-bean-icon.svg',
+            width: 24 * fem,
+            height: 24 * fem,
           )
         ],
       ),
     );
   } else if (transaction.walletTypeId == 2 && transaction.amount > 0) {
     return Container(
-      height: 32 * hem,
+      height: 40 * hem,
+      width: 125 * fem,
       padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
-          color: kPrimaryColor, borderRadius: BorderRadius.circular(8 * fem)),
+          border: Border.all(color: kPrimaryColor, width: 1),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -134,8 +138,8 @@ Widget _buildAmount(
             '${formatter.format(transaction.amount)}',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-              fontSize: 14 * ffem,
-              color: Colors.white,
+              fontSize: 16 * ffem,
+              color: kPrimaryColor,
               fontWeight: FontWeight.bold,
             )),
           ),
@@ -153,10 +157,13 @@ Widget _buildAmount(
     );
   } else if (transaction.walletTypeId == 1 && transaction.amount < 0) {
     return Container(
-      height: 32 * hem,
+      height: 40 * hem,
+      width: 125 * fem,
       padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(8 * fem)),
+          border: Border.all(color: Colors.red, width: 1),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -165,8 +172,8 @@ Widget _buildAmount(
             '${formatter.format(transaction.amount)}',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-              fontSize: 14 * ffem,
-              color: Colors.white,
+              fontSize: 16 * ffem,
+              color: Colors.red,
               fontWeight: FontWeight.bold,
             )),
           ),
@@ -176,7 +183,7 @@ Widget _buildAmount(
             child: SvgPicture.asset(
               'assets/icons/green-bean-icon.svg',
               width: 24 * fem,
-              height: 22 * fem,
+              height: 24 * fem,
             ),
           )
         ],
@@ -184,10 +191,13 @@ Widget _buildAmount(
     );
   } else {
     return Container(
-      height: 32 * hem,
+      height: 40 * hem,
+      width: 125 * fem,
       padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
       decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(8 * fem)),
+          border: Border.all(color: Colors.red, width: 1),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * fem)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -196,8 +206,8 @@ Widget _buildAmount(
             '${formatter.format(transaction.amount)}',
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-              fontSize: 14 * ffem,
-              color: Colors.white,
+              fontSize: 16 * ffem,
+              color: Colors.red,
               fontWeight: FontWeight.bold,
             )),
           ),

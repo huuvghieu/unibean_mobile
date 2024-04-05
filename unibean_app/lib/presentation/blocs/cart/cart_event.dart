@@ -27,3 +27,22 @@ final class RemoveProduct extends CartEvent {
   @override
   List<Object?> get props => [product];
 }
+
+final class RefreshCart extends CartEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+final class RemoveAllProduct extends CartEvent {
+  final ProductDetailModel product;
+
+  RemoveAllProduct({required this.product});
+
+  @override
+  List<Object?> get props => [product];
+}
+
+final class ReloadCart extends CartEvent {
+  @override
+  List<Object?> get props => [];
+}

@@ -23,13 +23,13 @@ class TabScanVoucher extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<StoreBloc, StoreState>(
       listener: (context, state) {
-        if (state is ScanVoucherFailed) {
+        if (state is StoreCampaignVoucherInforFailed) {
           Navigator.pushNamedAndRemoveUntil(
               context,
               FailedScanVoucherScreen.routeName,
               (Route<dynamic> route) => false,
               arguments: state.error);
-        } else if (state is ScanVoucherLoading) {
+        } else if (state is StoreCampaignVoucherInforLoading) {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
@@ -44,12 +44,12 @@ class TabScanVoucher extends StatelessWidget {
                             child: CircularProgressIndicator(
                                 color: kPrimaryColor))));
               });
-        } else if (state is ScanVoucherSuccess) {
+        } else if (state is StoreCampaigVoucherInforSuccess) {
           Navigator.pushNamedAndRemoveUntil(
               context,
-              SuccessScanVoucherScreen.routeName,
+              CampaignVoucherInformationScreen.routeName,
               (Route<dynamic> route) => false,
-              arguments: state.result);
+              arguments: state.campaignVoucherInformationModel);
         }
       },
       child: Stack(
@@ -69,11 +69,13 @@ class TabScanVoucher extends StatelessWidget {
                 }
               }
               if (value != null) {
-                context.read<StoreBloc>().add(ScanVoucherCode(
-                    storeId: widget.id,
-                    voucherCode: value,
-                    description: 'string',
-                    state: true));
+                // context.read<StoreBloc>().add(ScanVoucherCode(
+                //     storeId: widget.id,
+                //     voucherCode: value,
+                //     description: 'string',
+                //     state: true));
+                context.read<StoreBloc>().add(LoadCampaignVoucherInformation(
+                    storeId: widget.id, voucherCode: value));
               }
             },
           ),

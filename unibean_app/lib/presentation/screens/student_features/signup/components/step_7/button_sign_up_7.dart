@@ -28,7 +28,7 @@ class ButtonSignUp7 extends StatelessWidget {
             if (state is ValidationInProcess) {
               return Center(
                 child: CircularProgressIndicator(
-                  color: kPrimaryColor,
+                  color: Colors.white,
                 ),
               );
             }

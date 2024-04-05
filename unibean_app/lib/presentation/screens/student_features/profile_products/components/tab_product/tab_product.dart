@@ -26,6 +26,7 @@ class TabProduct extends StatelessWidget {
       },
       child: GestureDetector(
         child: CustomScrollView(
+          controller: context.read<ProductBloc>().scrollController,
           slivers: [
             SliverList(
               delegate: SliverChildListDelegate([
@@ -35,17 +36,29 @@ class TabProduct extends StatelessWidget {
                     BlocBuilder<RoleAppBloc, RoleAppState>(
                       builder: (context, state) {
                         if (state is Verified) {
-                          return HeaderTitle(hem: hem, ffem: ffem, authenModel: state.authenModel,);
-                        }else if(state is Pending){
-                          return HeaderTitle(hem: hem, ffem: ffem, authenModel: state.authenModel,);
-                        }else if(state is Rejected){
-                          return HeaderTitle(hem: hem, ffem: ffem, authenModel: state.authenModel,);
+                          return HeaderTitle(
+                            hem: hem,
+                            ffem: ffem,
+                            authenModel: state.authenModel,
+                          );
+                        } else if (state is Pending) {
+                          return HeaderTitle(
+                            hem: hem,
+                            ffem: ffem,
+                            authenModel: state.authenModel,
+                          );
+                        } else if (state is Rejected) {
+                          return HeaderTitle(
+                            hem: hem,
+                            ffem: ffem,
+                            authenModel: state.authenModel,
+                          );
                         }
                         return Container();
                       },
                     ),
                     SizedBox(
-                      height: 10 * hem,
+                      height: 5 * hem,
                     ),
                     Container(
                       color: kbgWhiteColor,
@@ -58,10 +71,10 @@ class TabProduct extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'SẢN PHẨM',
+                                  'SẢN PHẨM NỔI BẬT',
                                   style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
+                                    fontSize: 16 * ffem,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w800,
                                   )),
@@ -95,20 +108,30 @@ class TabProduct extends StatelessWidget {
                                       childAspectRatio: 0.75,
                                     ),
                                     shrinkWrap: true,
-                                    itemCount: state.products.length,
+                                    itemCount: state.hasReachedMax
+                                        ? state.products.length
+                                        : state.products.length + 1,
                                     itemBuilder: (context, index) {
-                                      return ProductCard(
-                                        fem: fem,
-                                        hem: hem,
-                                        ffem: ffem,
-                                        product: state.products[index],
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              ProductDetailScreen.routeName,
-                                              arguments:
-                                                  state.products[index].id);
-                                        },
-                                      );
+                                      if (index >= state.products.length) {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            color: kPrimaryColor,
+                                          ),
+                                        );
+                                      } else {
+                                        return ProductCard(
+                                          fem: fem,
+                                          hem: hem,
+                                          ffem: ffem,
+                                          product: state.products[index],
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                ProductDetailScreen.routeName,
+                                                arguments:
+                                                    state.products[index].id);
+                                          },
+                                        );
+                                      }
                                     },
                                   ),
                                 );
@@ -151,31 +174,8 @@ class HeaderTitle extends StatelessWidget {
       color: kbgWhiteColor,
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 20 * hem),
-            child: Center(
-              child: Text(
-                'Xin chào, ${authenModel.userModel.name}!',
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 21 * ffem,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ),
-          ),
-          Center(
-            child: Text(
-              'Tham gia các hoạt động để tích lũy ưu đãi',
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12 * ffem,
-                      fontWeight: FontWeight.normal)),
-            ),
-          ),
           SizedBox(
-            height: 10 * hem,
+            height: 15 * hem,
           ),
           SearchBarCustom(),
           SizedBox(

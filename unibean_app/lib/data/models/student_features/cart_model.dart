@@ -7,9 +7,9 @@ class Cart extends Equatable {
 
   const Cart({this.products = const <ProductDetailModel>[]});
 
-  Map productQuantity(products) {
+  Map productQuantity(List<ProductDetailModel> products) {
     var quantity = Map();
-
+    products.sort((a, b) => a.id.compareTo(b.id),);
     products.forEach((product) {
       if (!quantity.containsKey(product)) {
         quantity[product] = 1;
@@ -25,4 +25,10 @@ class Cart extends Equatable {
 
   @override
   List<Object?> get props => [products];
+
+    Cart copyWith({
+    List<ProductDetailModel>? products,
+  }) {
+    return Cart(products: products ?? this.products);
+  }
 }

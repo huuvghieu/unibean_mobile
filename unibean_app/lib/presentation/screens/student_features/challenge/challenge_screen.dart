@@ -64,7 +64,7 @@ class ChallengeScreen extends StatelessWidget {
         } else if (state is ChallengesLoaded) {
           return Body();
         }
-        return Container();
+        return Body();
       },
     );
   }

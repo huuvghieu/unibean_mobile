@@ -66,7 +66,7 @@ class ProfileVerificationScreen extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back_rounded,
                 color: Colors.white,
-                size: 35 * fem,
+                size: 30 * fem,
               ),
             ),
           ),

@@ -32,10 +32,9 @@ class Body extends StatelessWidget {
           } else if (state is BrandsLoaded) {
             return GridView.builder(
               controller: context.read<BrandBloc>().scrollController,
-              padding: EdgeInsets.symmetric(
-                  horizontal: 8.0 * fem, vertical: 16.0 * hem),
+            
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 1.15),
+                  crossAxisCount: 2, childAspectRatio: 1),
               shrinkWrap: true,
               itemCount: state.hasReachedMax
                   ? state.brands.length
@@ -83,7 +82,7 @@ class BrandCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width / 2.5,
+        width: 150*fem,
         height: 150 * hem,
         // margin: EdgeInsets.only(bottom: 20*hem),
         decoration: BoxDecoration(
@@ -135,7 +134,7 @@ class BrandCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 150 * hem,
+                    width: 100 * hem,
                     padding: EdgeInsets.only(top: 5 * hem),
                     child: Text(
                       brandModel.brandName,
@@ -146,8 +145,8 @@ class BrandCard extends StatelessWidget {
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                         fontSize: 13 * ffem,
-                        color: kDarkPrimaryColor,
-                        fontWeight: FontWeight.w900,
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
                       )),
                     ),
                   ),

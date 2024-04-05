@@ -56,7 +56,7 @@ class ProfileDetailScreen extends StatelessWidget {
                       color: Colors.white)),
             ),
           ),
-          toolbarHeight: 60 * hem,
+          toolbarHeight: 50  * hem,
           leading: Container(
             margin: EdgeInsets.only(left: 20 * fem),
             child: InkWell(

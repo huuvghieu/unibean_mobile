@@ -11,21 +11,28 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
   final StudentRepository studentRepository;
 
   StudentBloc({required this.studentRepository}) : super(StudentInitial()) {
-    scrollTransactionController.addListener(() {
-      add(LoadMoreTransactions());
-    });
     on<LoadStudentVouchers>(_onLoadStudentVouchers);
     on<LoadStudentTransactions>(_onLoadStudentTransactions);
     on<LoadStudentOrders>(_onLoadStudentOrder);
     on<LoadMoreTransactions>(_onLoadMoreTransactions);
+    on<LoadMoreActivityTransactions>(_onLoadMoreActivityTransactions);
+    on<LoadMoreBonusTransactions>(_onLoadMoreBonusTransactions);
+    on<LoadMoreChallengeTransactions>(_onLoadMoreChallengeTransactions);
+    on<LoadMoreOrderTransactions>(_onLoadMoreOrderTransactions);
+    on<LoadMoreOrders>(_onLoadMoreOrders);
     on<LoadVoucherItem>(_onLoadvoucherItem);
     on<UpdateStudent>(_onUpdateStudent);
     on<LoadStudentById>(_onLoadStudentById);
   }
-
-  ScrollController scrollTransactionController = ScrollController();
   var isLoadingMore = false;
   int pageTransaction = 1;
+  int pageActivityTransaction = 1;
+  int pageBonusTransaction = 1;
+  int pageChallengeTransaction = 1;
+  int pageOrderTransaction = 1;
+
+  int pageOrder = 1;
+  var isLoadingMoreOrder = false;
 
 //--------------------
   Future<void> _onLoadStudentVouchers(
@@ -53,12 +60,48 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     }
   }
 
+  Future<void> _onLoadMoreOrders(
+      LoadMoreOrders event, Emitter<StudentState> emit) async {
+    try {
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      if ((this.state as StudentOrdersLoaded).hasReachedMax) {
+        emit(StudentOrdersLoaded(
+            orderModels:
+                List.from((this.state as StudentOrdersLoaded).orderModels),
+            hasReachedMax: true));
+      } else {
+        if (event.scrollController.position.pixels ==
+            event.scrollController.position.maxScrollExtent) {
+          isLoadingMoreOrder = true;
+          pageOrder++;
+          var apiResponse = await studentRepository
+              .fetchOrdersStudentId(pageOrder, event.limit, id: studentId!);
+          if (apiResponse!.result.length == 0) {
+            emit(StudentOrdersLoaded(
+                orderModels:
+                    List.from((this.state as StudentOrdersLoaded).orderModels)
+                      ..addAll(apiResponse.result),
+                hasReachedMax: true));
+            pageOrder = 1;
+          } else {
+            emit(StudentOrdersLoaded(
+                orderModels:
+                    List.from((this.state as StudentOrdersLoaded).orderModels)
+                      ..addAll(apiResponse.result)));
+          }
+        }
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
   Future<void> _onLoadMoreTransactions(
       LoadMoreTransactions event, Emitter<StudentState> emit) async {
     try {
       final studentId = await AuthenLocalDataSource.getStudentId();
-      if (scrollTransactionController.position.pixels ==
-          scrollTransactionController.position.maxScrollExtent) {
+      if (event.scrollController.position.pixels ==
+          event.scrollController.position.maxScrollExtent) {
         isLoadingMore = true;
         pageTransaction++;
         var apiResponse = await studentRepository.fetchTransactionsStudentId(
@@ -70,7 +113,122 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
                   (this.state as StudentTransactionsLoaded).transactions)
                 ..addAll(apiResponse.result),
               hasReachedMax: true));
-          print(state);
+        } else {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result)));
+        }
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMoreActivityTransactions(
+      LoadMoreActivityTransactions event, Emitter<StudentState> emit) async {
+    try {
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      if (event.scrollController.position.pixels ==
+          event.scrollController.position.maxScrollExtent) {
+        isLoadingMore = true;
+        pageActivityTransaction++;
+        var apiResponse = await studentRepository.fetchTransactionsStudentId(
+            pageActivityTransaction, event.limit, event.typeIds,
+            id: studentId!);
+        if (apiResponse!.result.length == 0) {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result),
+              hasReachedMax: true));
+        } else {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result)));
+        }
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMoreBonusTransactions(
+      LoadMoreBonusTransactions event, Emitter<StudentState> emit) async {
+    try {
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      if (event.scrollController.position.pixels ==
+          event.scrollController.position.maxScrollExtent) {
+        isLoadingMore = true;
+        pageBonusTransaction++;
+        var apiResponse = await studentRepository.fetchTransactionsStudentId(
+            pageBonusTransaction, event.limit, event.typeIds,
+            id: studentId!);
+        if (apiResponse!.result.length == 0) {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result),
+              hasReachedMax: true));
+        } else {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result)));
+        }
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMoreChallengeTransactions(
+      LoadMoreChallengeTransactions event, Emitter<StudentState> emit) async {
+    try {
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      if (event.scrollController.position.pixels ==
+          event.scrollController.position.maxScrollExtent) {
+        isLoadingMore = true;
+        pageChallengeTransaction++;
+        var apiResponse = await studentRepository.fetchTransactionsStudentId(
+            pageChallengeTransaction, event.limit, event.typeIds,
+            id: studentId!);
+        if (apiResponse!.result.length == 0) {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result),
+              hasReachedMax: true));
+        } else {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result)));
+        }
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMoreOrderTransactions(
+      LoadMoreOrderTransactions event, Emitter<StudentState> emit) async {
+    try {
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      if (event.scrollController.position.pixels ==
+          event.scrollController.position.maxScrollExtent) {
+        isLoadingMore = true;
+        pageOrderTransaction++;
+        var apiResponse = await studentRepository.fetchTransactionsStudentId(
+            pageOrderTransaction, event.limit, event.typeIds,
+            id: studentId!);
+        if (apiResponse!.result.length == 0) {
+          emit(StudentTransactionsLoaded(
+              transactions: List.from(
+                  (this.state as StudentTransactionsLoaded).transactions)
+                ..addAll(apiResponse.result),
+              hasReachedMax: true));
         } else {
           emit(StudentTransactionsLoaded(
               transactions: List.from(
@@ -129,12 +287,12 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     }
   }
 
-    Future<void> _onLoadStudentById(
+  Future<void> _onLoadStudentById(
       LoadStudentById event, Emitter<StudentState> emit) async {
     emit(StudentByIdLoading());
     try {
-      var apiResponse = await studentRepository.fetchStudentById(
-          id: event.studentId);
+      var apiResponse =
+          await studentRepository.fetchStudentById(id: event.studentId);
       emit(StudentByIdSuccess(studentMode: apiResponse!));
     } catch (e) {
       emit(StudentByIdFailed(error: e.toString()));
