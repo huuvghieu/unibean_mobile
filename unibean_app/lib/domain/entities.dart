@@ -29,3 +29,4 @@ export 'entities/store_features/campaign_ranking.dart';
 export 'entities/store_features/area.dart';
 export 'entities/store_features/student_ranking.dart';
 export 'entities/store_features/campaign_voucher_information.dart';
+export 'entities/store_features/bonus.dart';

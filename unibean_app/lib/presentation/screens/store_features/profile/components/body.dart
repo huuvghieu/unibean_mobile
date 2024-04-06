@@ -132,13 +132,13 @@ class Body extends StatelessWidget {
                                         final storeModel =
                                             await AuthenLocalDataSource
                                                 .getStore();
-                                        Navigator.pushNamed(context,
-                                            BrandDetailStoreScreen.routeName,
-                                            arguments: storeModel!.brandId);
+                                        Navigator.pushNamed(
+                                            context, BonusScreen.routeName,
+                                            arguments: storeModel);
                                       },
                                       svgIcon:
                                           'assets/icons/bonus-bean-icon.svg',
-                                      title: 'Danh sách điểm thưởng',
+                                      title: 'Danh sách tặng đậu',
                                     ),
                                     SizedBox(
                                       height: 10 * hem,

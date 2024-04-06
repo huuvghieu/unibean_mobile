@@ -33,10 +33,14 @@ class AuthenticationBloc
       var authenModel = await authenticationRepository.loginWithAccount(
           event.userName, event.password);
       if (authenModel != null) {
-        if (authenModel.role == 'Student') {
-          emit(AuthenticationSuccess());
+        if (authenModel.userModel.state == 'Inactive') {
+          emit(AuthenticationFailed(error: 'Tài khoản không còn hoạt động'));
         } else {
-          emit(AuthenticationStoreSuccess());
+          if (authenModel.role == 'Student') {
+            emit(AuthenticationSuccess());
+          } else {
+            emit(AuthenticationStoreSuccess());
+          }
         }
       } else {
         emit(

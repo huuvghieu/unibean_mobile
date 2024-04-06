@@ -58,7 +58,12 @@ class _BodyState extends State<Body> {
             ffem: ffem,
             heightText: heightText,
             studentModel: studentModel ?? student),
-      Rejected() => Container(),
+      Rejected(studentModel: final student) => MemberShipCard(
+          fem: fem,
+          hem: hem,
+          ffem: ffem,
+          heightText: heightText,
+          studentModel: studentModel ?? student),
       Verified(
         // ignore: unused_local_variable
         authenModel: final authenModel,
@@ -70,6 +75,7 @@ class _BodyState extends State<Body> {
             ffem: ffem,
             heightText: heightText,
             studentModel: studentModel ?? student),
+      InActive() => Container(),
       StoreRole() => Container(),
       RoleAppLoading() => Container(
           child: Center(
@@ -453,7 +459,8 @@ class _BodyState extends State<Body> {
                                           } else {
                                             Navigator.pushNamed(context,
                                                 CampaignDetailScreen.routeName,
-                                                arguments: state.campaigns[index]);
+                                                arguments:
+                                                    state.campaigns[index]);
                                           }
                                         },
                                         child: CampaignListCard(
@@ -466,8 +473,10 @@ class _BodyState extends State<Body> {
                                               Navigator.pushNamed(context,
                                                   UnverifiedScreen.routeName);
                                             } else {
-                                              Navigator.pushNamed(context,
-                                                  CampaignDetailScreen.routeName,
+                                              Navigator.pushNamed(
+                                                  context,
+                                                  CampaignDetailScreen
+                                                      .routeName,
                                                   arguments:
                                                       state.campaigns[index]);
                                             }

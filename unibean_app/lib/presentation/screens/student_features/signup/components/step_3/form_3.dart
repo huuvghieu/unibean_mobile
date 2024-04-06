@@ -82,7 +82,7 @@ class _FormBody3State extends State<FormBody3> {
                       DateTime? dateValue = DateTime.parse(value.toString());
                       DateTime currentDate = DateTime.now();
                       int? age = currentDate.year - dateValue.year;
-                      if (age < 18 || age >= 100) {
+                      if (age < 18 || age >= 40) {
                         return 'Độ tuổi không hợp lệ';
                       }
                     }

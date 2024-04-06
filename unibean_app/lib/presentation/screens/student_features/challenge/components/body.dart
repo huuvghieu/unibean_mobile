@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
@@ -84,9 +83,9 @@ class Body extends StatelessWidget {
                   builder: (context, state) {
                     if (state is ChallengesLoaded) {
                       final challenges = state.challenge
-                          .where((c) => (c.isCompleted && c.isClaimed))
+                          .where((c) => (c.isCompleted && !c.isClaimed))
                           .toList();
-                      if (challenges.isEmpty) {
+                      if (challenges.isNotEmpty) {
                         return Stack(
                           children: [
                             Tab(text: 'Nhận thưởng'),

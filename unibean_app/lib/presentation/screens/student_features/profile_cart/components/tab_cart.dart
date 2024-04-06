@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../../blocs/blocs.dart';
@@ -198,7 +199,7 @@ class TabCart extends StatelessWidget {
                             ],
                           ),
                           _buildButton(
-                              roleState, fem, hem, ffem, context, Map())
+                              roleState, fem, hem, ffem, context, Map(), 0)
                         ],
                       ),
                     );
@@ -255,7 +256,7 @@ class TabCart extends StatelessWidget {
                               ),
                             ],
                           ),
-                          _buildButton(roleState, fem, hem, ffem, context, cart)
+                          _buildButton(roleState, fem, hem, ffem, context, cart, state.cart.total)
                         ],
                       ),
                     );
@@ -270,7 +271,7 @@ class TabCart extends StatelessWidget {
 }
 
 Widget _buildButton(roleState, double fem, double hem, double ffem,
-    BuildContext context, cart) {
+    BuildContext context, cart, total) {
   if (roleState is Pending || roleState is Rejected) {
     return InkWell(
       onTap: () async {},
@@ -295,6 +296,7 @@ Widget _buildButton(roleState, double fem, double hem, double ffem,
   } else if (roleState is Verified) {
     return InkWell(
       onTap: () async {
+        final studentModel = await AuthenLocalDataSource.getStudent();
         if (cart.isEmpty) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -306,6 +308,20 @@ Widget _buildButton(roleState, double fem, double hem, double ffem,
               content: AwesomeSnackbarContent(
                 title: 'Không có sản phẩm!',
                 message: 'Giỏ hàng không có sản phẩm để đổi!',
+                contentType: ContentType.failure,
+              ),
+            ));
+        }else if(studentModel!.redWalletBalance < total){
+   ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Đổi thất bại!',
+                message: 'Số đậu đỏ của bạn không đủ!',
                 contentType: ContentType.failure,
               ),
             ));

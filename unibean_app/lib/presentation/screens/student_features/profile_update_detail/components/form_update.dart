@@ -145,7 +145,12 @@ class _FormBody1State extends State<FormUpdate> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Họ và tên không được bỏ trống';
-                              } else if (!vietNameseTextOnlyPattern
+                              } else if (value.length < 3) {
+                                return 'Họ và tên ít nhất 3 kí tự';
+                              }
+                              else if (value.length > 50) {
+                                return 'Họ và tên tối đa 50 kí tự';
+                              }  else if (!vietNameseTextOnlyPattern
                                   .hasMatch(value)) {
                                 return 'Họ và tên không hợp lệ';
                               }

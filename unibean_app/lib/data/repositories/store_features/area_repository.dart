@@ -10,6 +10,7 @@ class AreaRepositoryImp implements AreaRepository {
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
+    bool state = true;
 
   @override
   Future<ApiResponse<List<AreaModel>>?> fetchArea(
@@ -23,7 +24,7 @@ class AreaRepositoryImp implements AreaRepository {
         limit = this.limit;
       }
       http.Response response = await http.get(
-          Uri.parse('$endPoint?sort=$sort&page=$page&limit=100'),
+          Uri.parse('$endPoint?state=$state&sort=$sort&page=$page&limit=100'),
           headers: headers);
 
       if (response.statusCode == 200) {

@@ -57,7 +57,7 @@ class CardForUnknow extends StatelessWidget {
                             fontWeight: FontWeight.bold)),
                   ),
                   Text(
-                    'Xác thực',
+                    'Xác minh',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: kLowTextColor,

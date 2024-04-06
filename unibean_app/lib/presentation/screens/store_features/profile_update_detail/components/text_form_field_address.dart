@@ -28,6 +28,7 @@ class TextFormFieldAddress extends StatelessWidget {
       width: 272 * fem,
       height: 100*fem,
       child: TextFormField(
+        readOnly: true,
         maxLines: null,
         expands: true,
         validator: validator,

@@ -72,7 +72,7 @@ class BrandCard extends StatelessWidget {
                     textStyle: TextStyle(
                   fontSize: 12 * ffem,
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.w500,
                 )),
               ),
             ),

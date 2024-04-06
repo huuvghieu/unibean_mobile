@@ -18,3 +18,4 @@ export 'store/store_bloc.dart';
 export 'ranking/ranking_bloc.dart';
 export 'area/area_bloc.dart';
 export 'wishlist/wishlist_bloc.dart';
+export 'bonus/bonus_bloc.dart';

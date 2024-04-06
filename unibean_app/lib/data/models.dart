@@ -41,3 +41,4 @@ export 'models/store_features/student_ranking_model.dart';
 export 'models/store_features/transact_result_model.dart';
 export 'models/store_features/area_model.dart';
 export 'models/store_features/campaign_voucher_information_model.dart';
+export 'models/store_features/bonus_model.dart';

@@ -10,6 +10,7 @@ class MajorRepositoryImp implements MajorRepository {
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
+  bool state = true;
 
   @override
   Future<ApiResponse<List<MajorModel>>?> fetchMajors({int? page}) async {
@@ -19,7 +20,7 @@ class MajorRepositoryImp implements MajorRepository {
         page = this.page;
       }
       http.Response response = await http.get(
-          Uri.parse('$endPoint?sort=$sort&page=$page&limit=100'),
+          Uri.parse('$endPoint?state=$state&sort=$sort&page=$page&limit=100'),
           headers: headers);
 
       if (response.statusCode == 200) {

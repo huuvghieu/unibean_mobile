@@ -104,6 +104,9 @@ dependencies:
   #syncfusion_flutter_charts
   syncfusion_flutter_charts: ^25.1.37
 
+  #connectivity_plus
+  connectivity_plus: ^6.0.1
+  
   chartui: ^0.0.1
 
 

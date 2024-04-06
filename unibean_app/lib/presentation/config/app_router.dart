@@ -225,6 +225,8 @@ class AppRouter {
         return CampaignVoucherInformationScreen.route(
             campaginVoucherInformation:
                 settings.arguments as CampaignVoucherInformationModel);
+      case BonusScreen.routeName:
+        return BonusScreen.route(storeModel: settings.arguments as StoreModel);
 
       default:
         return _errorRoute();

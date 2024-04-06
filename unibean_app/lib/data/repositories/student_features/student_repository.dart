@@ -19,6 +19,7 @@ class StudentRepositoryImp implements StudentRepository {
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
+  bool state = true;
   @override
   Future<StudentModel?> fetchStudentById({required String id}) async {
     try {
@@ -58,7 +59,7 @@ class StudentRepositoryImp implements StudentRepository {
       };
       http.Response response = await http.get(
           Uri.parse(
-              '$endPoint/$id/vouchers?sort=$sort&page=$page&limit=$limit'),
+              '$endPoint/$id/vouchers?state=$state&sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {
@@ -91,7 +92,7 @@ class StudentRepositoryImp implements StudentRepository {
       if (typeIds == 0) {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$id/histories?sort=$sort&page=$page&limit=$limit'),
+                '$endPoint/$id/histories?state=$state&sort=$sort&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));
@@ -107,7 +108,7 @@ class StudentRepositoryImp implements StudentRepository {
       } else {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$id/histories?typeIds=$typeIds&sort=$sort&page=$page&limit=$limit'),
+                '$endPoint/$id/histories?state=$state&typeIds=$typeIds&sort=$sort&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));
@@ -138,7 +139,8 @@ class StudentRepositoryImp implements StudentRepository {
         'Authorization': 'Bearer $token'
       };
       http.Response response = await http.get(
-          Uri.parse('$endPoint/$id/orders?sort=$sort&page=$page&limit=$limit'),
+          Uri.parse(
+              '$endPoint/$id/orders?state=$state&sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {
@@ -297,10 +299,6 @@ class StudentRepositoryImp implements StudentRepository {
     try {
       token = await AuthenLocalDataSource.getToken();
       studentId = (await AuthenLocalDataSource.getStudentId())!;
-      // final Map<String, String> headers = {
-      //   'Content-Type': 'application/json',
-      //   'Authorization': 'Bearer $token'
-      // };
       Map body = {
         'stationId': createOrderModel.stationId,
         'amount': createOrderModel.amount,
@@ -323,6 +321,55 @@ class StudentRepositoryImp implements StudentRepository {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         OrderModel apiResponse = OrderModel.fromJson(result);
         return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<StudentModel?> putVerification(
+      {required String studentId,
+      required String studentCode,
+      required String studentCardFont,
+      required String studentCardBack}) async {
+    try {
+      final token = await AuthenLocalDataSource.getToken();
+      final Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token'
+      };
+      var request = http.MultipartRequest(
+          'PUT', Uri.parse('$endPoint/$studentId/verification'));
+
+      //thêm file cho request
+      request.files.add(await http.MultipartFile.fromPath(
+          'StudentCardFront', studentCardFont));
+      request.files.add(await http.MultipartFile.fromPath(
+          'StudentCardBack', studentCardBack));
+
+      //thêm headers
+      request.headers.addAll(headers);
+
+      //thêm field cho request
+      request.fields.addAll({
+        'Code': studentCode,
+      });
+
+      //gửi request
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        print(response);
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        StudentModel studentModel = StudentModel.fromJson(result);
+
+        String studentString = jsonEncode(StudentModel.fromJson(result));
+        AuthenLocalDataSource.saveStudent(studentString);
+        return studentModel;
       } else {
         return null;
       }

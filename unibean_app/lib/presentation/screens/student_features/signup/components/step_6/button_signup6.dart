@@ -18,9 +18,6 @@ class ButtonSignUp6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      // onPressed: () {
-      //   // Navigator.pushNamed(context, SignUp3Screen.routeName);
-      // },
       onPressed: onPressed,
       child: Container(
         width: 220 * fem,

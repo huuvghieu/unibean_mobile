@@ -31,6 +31,16 @@ final class Rejected extends RoleAppState {
   List<Object?> get props => [authenModel, studentModel];
 }
 
+final class InActive extends RoleAppState {
+  final AuthenModel authenModel;
+
+  InActive({required this.authenModel});
+  @override
+  List<Object?> get props => [
+        authenModel,
+      ];
+}
+
 final class Unverified extends RoleAppState {
   final AuthenModel authenModel;
 
@@ -44,7 +54,6 @@ final class StoreRole extends RoleAppState {
   final StoreModel storeModel;
 
   StoreRole({required this.authenModel, required this.storeModel});
-
 
   @override
   List<Object?> get props => [authenModel, storeModel];

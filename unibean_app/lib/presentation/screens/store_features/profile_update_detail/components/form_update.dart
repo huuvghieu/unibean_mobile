@@ -2,12 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinput/pinput.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/store_features/profile_update_detail/components/text_form_field_address.dart';
 import '../../../../blocs/blocs.dart';
-import 'drop_down_area.dart';
 import 'text_form_field_default.dart';
 
 class FormUpdate extends StatefulWidget {
@@ -96,8 +96,8 @@ class _FormBody1State extends State<FormUpdate> {
                 contentType: ContentType.success,
               ),
             ));
-          Navigator.pushNamedAndRemoveUntil(
-              context, '/landing-screen-store', (Route<dynamic> route) => false);
+          Navigator.pushNamedAndRemoveUntil(context, '/landing-screen-store',
+              (Route<dynamic> route) => false);
         } else if (state is StoreUpdateFailed) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -157,34 +157,62 @@ class _FormBody1State extends State<FormUpdate> {
                   SizedBox(
                     height: 25 * widget.hem,
                   ),
-                  BlocBuilder<AreaBloc, AreaState>(
-                    builder: (context, state) {
-                      if (state is AreaLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
-                          ),
-                        );
-                      } else if (state is AreaLoaded) {
-                        return DropDownArea(
-                          hem: widget.hem,
-                          fem: widget.fem,
-                          ffem: widget.ffem,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Khu vực không được bỏ trống';
-                            }
-                            return null;
-                          },
-                          labelText: 'KHU VỰC',
-                          hintText: 'Chọn khu vực',
-                          areaController: areaController,
-                          areaId: widget.storeModel.areaId,
-                          areas: state.areas,
-                        );
-                      }
-                      return Container();
-                    },
+                  Container(
+                    width: 272 * widget.fem,
+                    // color: Colors.red,
+                    child: TextFormField(
+                      // initialValue: ,
+                      readOnly: true,
+                      initialValue: widget.storeModel.areaName,
+                      // controller: areaController,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15 * widget.ffem,
+                              fontWeight: FontWeight.bold)),
+                      decoration: InputDecoration(
+                        labelText: 'KHU VỰC',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15 * widget.ffem,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        hintStyle: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                color: kLowTextColor,
+                                fontSize: 15 * widget.ffem,
+                                fontWeight: FontWeight.w700)),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 26 * widget.fem,
+                            vertical: 10 * widget.hem),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(28 * widget.fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(28 * widget.fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(28 * widget.fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 20 * widget.hem,
@@ -379,16 +407,65 @@ class _FormBody1State extends State<FormUpdate> {
                   SizedBox(
                     height: 25 * widget.hem,
                   ),
-                  TextFormFieldAddress(
-                    hem: widget.hem,
-                    fem: widget.fem,
-                    ffem: widget.ffem,
-                    labelText: 'MÔ TẢ',
-                    hintText: 'Nhập mô tả...',
-                    validator: (value) {
-                      return null;
-                    },
-                    textController: descripController,
+                  Container(
+                    width: 272 * widget.fem,
+                    height: 100 * widget.fem,
+                    child: TextFormField(
+                      maxLines: null,
+                      expands: true,
+                      validator: (value) {
+                        return null;
+                      },
+                      controller: descripController,
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15 * widget.fem,
+                              fontWeight: FontWeight.bold)),
+                      decoration: InputDecoration(
+                        labelText: 'MÔ TẢ',
+                        hintText: 'Nhập mô tả',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15 * widget.ffem,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        hintStyle: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                color: kLowTextColor,
+                                fontSize: 15 * widget.ffem,
+                                fontWeight: FontWeight.w700)),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 26 * widget.fem,
+                            vertical: 10 * widget.hem),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(28 * widget.fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(28 * widget.fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(28 * widget.fem),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color:
+                                    const Color.fromARGB(255, 220, 220, 220)),
+                            gapPadding: 10),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 25 * widget.hem,
@@ -410,7 +487,38 @@ class _FormBody1State extends State<FormUpdate> {
     if (changed) {
       return TextButton(
         onPressed: () async {
-          final storeId = await AuthenLocalDataSource.getStoreId();
+       if(openingHours!.hour > closingHours!.hour){
+         ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Sửa thất bại',
+                message: 'Giờ mở cửa không được sau giờ đóng cửa!',
+                contentType: ContentType.failure,
+              ),
+            ));
+       }else if(descripController.length > 500){
+            ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Sửa thất bại',
+                message: 'Mô tả không được quá 500 từ!',
+                contentType: ContentType.failure,
+              ),
+            ));
+       }
+       
+       else{
+           final storeId = await AuthenLocalDataSource.getStoreId();
           context.read<StoreBloc>().add(UpdateStore(
               storeId: storeId!,
               areaId: areaController.text,
@@ -420,6 +528,7 @@ class _FormBody1State extends State<FormUpdate> {
               closeHours: closingHoursController.text,
               description: descripController.text,
               state: true));
+       }
         },
         child: Container(
             width: 220 * widget.fem,

@@ -49,6 +49,7 @@ class _DropDownAreaState extends State<DropDownArea> {
 
   DropdownButtonFormField<String> _dropDownAreaLoaded() {
     return DropdownButtonFormField(
+      
       validator: widget.validator,
       style: GoogleFonts.openSans(
           textStyle: TextStyle(

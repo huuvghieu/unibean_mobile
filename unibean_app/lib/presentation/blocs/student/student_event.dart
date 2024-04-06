@@ -32,52 +32,59 @@ final class LoadMoreTransactions extends StudentEvent {
   final int typeIds;
   final ScrollController scrollController;
 
-  LoadMoreTransactions(this.scrollController, {this.page = 1, this.limit = 10, this.typeIds = 0});
+  LoadMoreTransactions(this.scrollController,
+      {this.page = 1, this.limit = 10, this.typeIds = 0});
   @override
   List<Object?> get props => [page, limit, typeIds, scrollController];
 }
+
 final class LoadMoreActivityTransactions extends StudentEvent {
   final int page;
   final int limit;
   final int typeIds;
   final ScrollController scrollController;
 
-  LoadMoreActivityTransactions(this.scrollController, {this.page = 1, this.limit = 10, this.typeIds = 0});
+  LoadMoreActivityTransactions(this.scrollController,
+      {this.page = 1, this.limit = 10, this.typeIds = 0});
   @override
   List<Object?> get props => [page, limit, typeIds, scrollController];
 }
+
 final class LoadMoreBonusTransactions extends StudentEvent {
   final int page;
   final int limit;
   final int typeIds;
   final ScrollController scrollController;
 
-  LoadMoreBonusTransactions(this.scrollController, {this.page = 1, this.limit = 10, this.typeIds = 0});
+  LoadMoreBonusTransactions(this.scrollController,
+      {this.page = 1, this.limit = 10, this.typeIds = 0});
   @override
   List<Object?> get props => [page, limit, typeIds, scrollController];
 }
+
 final class LoadMoreOrderTransactions extends StudentEvent {
   final int page;
   final int limit;
   final int typeIds;
   final ScrollController scrollController;
 
-  LoadMoreOrderTransactions(this.scrollController, {this.page = 1, this.limit = 10, this.typeIds = 0});
+  LoadMoreOrderTransactions(this.scrollController,
+      {this.page = 1, this.limit = 10, this.typeIds = 0});
   @override
   List<Object?> get props => [page, limit, typeIds, scrollController];
 }
+
 final class LoadMoreChallengeTransactions extends StudentEvent {
   final int page;
   final int limit;
   final int typeIds;
   final ScrollController scrollController;
 
-  LoadMoreChallengeTransactions(this.scrollController, {this.page = 1, this.limit = 10, this.typeIds = 0});
+  LoadMoreChallengeTransactions(this.scrollController,
+      {this.page = 1, this.limit = 10, this.typeIds = 0});
   @override
   List<Object?> get props => [page, limit, typeIds, scrollController];
 }
-
-
 
 final class LoadMoreOrders extends StudentEvent {
   final int page;
@@ -139,4 +146,21 @@ final class LoadStudentById extends StudentEvent {
 
   @override
   List<Object?> get props => [studentId];
+}
+
+final class UpdateVerification extends StudentEvent {
+  final String studentId;
+  final String studentCode;
+  final String studentCardFront;
+  final String studentCardBack;
+
+  UpdateVerification(
+      {required this.studentId,
+      required this.studentCode,
+      required this.studentCardFront,
+      required this.studentCardBack});
+
+  @override
+  List<Object?> get props =>
+      [studentId, studentCode, studentCardBack, studentCardFront];
 }

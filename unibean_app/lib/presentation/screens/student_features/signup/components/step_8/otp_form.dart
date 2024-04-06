@@ -60,7 +60,7 @@ class _OTPFormState extends State<OTPForm> {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 5), () {
+                Future.delayed(Duration(seconds: 20), () {
                   Navigator.of(context).pop();
                 });
                 return AlertDialog(
@@ -75,7 +75,7 @@ class _OTPFormState extends State<OTPForm> {
                                 child: CircularProgressIndicator(
                                     color: kPrimaryColor)),
                             Text(
-                              'Đang thực hiện giao dịch...',
+                              'Đang tạo tài khoản...',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15,

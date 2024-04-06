@@ -21,6 +21,7 @@ class StoreRepositoryImp extends StoreRepository {
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
+  bool state = true;
 
   @override
   Future<ApiResponse<List<TransactionStoreModel>>?> fetchTransactionsStoreId(
@@ -36,7 +37,7 @@ class StoreRepositoryImp extends StoreRepository {
       if (typeIds == 0) {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$id/histories?sort=$sort&page=$page&limit=$limit'),
+                '$endPoint/$id/histories?state=$state&sort=$sort&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));
@@ -53,7 +54,7 @@ class StoreRepositoryImp extends StoreRepository {
       } else {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$id/histories?typeIds=$typeIds&sort=$sort&page=$page&limit=$limit'),
+                '$endPoint/$id/histories?state=$state&typeIds=$typeIds&sort=$sort&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));
@@ -112,7 +113,7 @@ class StoreRepositoryImp extends StoreRepository {
       if (search != null) {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$storeId/campaign-details?sort=$sort&search=$search&page=$page&limit=$limit'),
+                '$endPoint/$storeId/campaign-details?state=$state&sort=$sort&search=$search&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));
@@ -368,9 +369,8 @@ class StoreRepositoryImp extends StoreRepository {
   }
 
   @override
-  Future<Map<bool, dynamic>>
-      fecthCampaignVoucherInformation(
-          {required String storeId, required String voucherCode}) async {
+  Future<Map<bool, dynamic>> fecthCampaignVoucherInformation(
+      {required String storeId, required String voucherCode}) async {
     try {
       final token = await AuthenLocalDataSource.getToken();
 
@@ -382,7 +382,7 @@ class StoreRepositoryImp extends StoreRepository {
           Uri.parse(
               '$endPoint/$storeId/campaign-details/$voucherCode/information'),
           headers: headers);
-      Map<bool,  dynamic> mapResult = {};
+      Map<bool, dynamic> mapResult = {};
       if (response.statusCode == 200) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         CampaignVoucherInformationModel campaignVoucherDetail =
@@ -392,7 +392,7 @@ class StoreRepositoryImp extends StoreRepository {
         return mapResult;
       } else {
         final result = response.body;
-          mapResult[false] = result;
+        mapResult[false] = result;
         return mapResult;
       }
     } catch (e) {

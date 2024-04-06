@@ -26,19 +26,22 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
 
       bool isVerify = authenModel!.userModel.isVerify;
       String role = authenModel.role;
-      String state = authenModel.userModel.state;
+    
       String userId = authenModel.userModel.userId;
       if (userId != '') {
         final student = await studentRepository.fetchStudentById(
             id: authenModel.userModel.userId);
         if (role == 'Student') {
           if (isVerify) {
-            if (state == 'Active') {
-              emit(Verified(authenModel: authenModel, studentModel: student!));
-            } else if (state == 'Pending') {
-              emit(Pending(authenModel: authenModel, studentModel: student!));
-            } else {
-              emit(Rejected(authenModel: authenModel, studentModel: student!));
+              String stateName = student!.state;
+            if (stateName == 'Active') {
+              emit(Verified(authenModel: authenModel, studentModel: student));
+            } else if (stateName == 'Pending') {
+              emit(Pending(authenModel: authenModel, studentModel: student));
+            } else if(stateName == 'Rejected') {
+              emit(Rejected(authenModel: authenModel, studentModel: student));
+            }else{
+              
             }
           } else {
             emit(Unverified(authenModel: authenModel));

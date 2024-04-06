@@ -114,3 +114,18 @@ final class StudentByIdLoading extends StudentState {
   @override
   List<Object?> get props => [];
 }
+
+final class StudentUpdatingVerification extends StudentState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StudentUpdateVerificationSuccess extends StudentState {
+  final StudentModel studentModel;
+
+  StudentUpdateVerificationSuccess({required this.studentModel});
+
+  @override
+  List<Object?> get props => [studentModel];
+}
+

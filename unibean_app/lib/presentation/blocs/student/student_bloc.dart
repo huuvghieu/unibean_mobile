@@ -23,6 +23,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     on<LoadVoucherItem>(_onLoadvoucherItem);
     on<UpdateStudent>(_onUpdateStudent);
     on<LoadStudentById>(_onLoadStudentById);
+    on<UpdateVerification>(_onUpdateVerification);
   }
   var isLoadingMore = false;
   int pageTransaction = 1;
@@ -54,7 +55,12 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       var apiResponse = await studentRepository.fetchTransactionsStudentId(
           event.page, event.limit, event.typeIds,
           id: event.id);
-      emit(StudentTransactionsLoaded(transactions: apiResponse!.result));
+      if (apiResponse!.totalCount < apiResponse.pageSize) {
+        emit(StudentTransactionsLoaded(
+            transactions: apiResponse.result, hasReachedMax: true));
+      } else {
+        emit(StudentTransactionsLoaded(transactions: apiResponse.result));
+      }
     } catch (e) {
       emit(StudentFaled(error: e.toString()));
     }
@@ -296,6 +302,25 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       emit(StudentByIdSuccess(studentMode: apiResponse!));
     } catch (e) {
       emit(StudentByIdFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateVerification(
+      UpdateVerification event, Emitter<StudentState> emit) async {
+    emit(StudentUpdatingVerification());
+    try {
+      var studentModel = await studentRepository.putVerification(
+          studentId: event.studentId,
+          studentCode: event.studentCode,
+          studentCardFont: event.studentCardFront,
+          studentCardBack: event.studentCardBack);
+      if (studentModel == null) {
+        emit(StudentFaled(error: 'Xác minh thất bại!'));
+      } else {
+        emit(StudentUpdateVerificationSuccess(studentModel: studentModel));
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
     }
   }
 }

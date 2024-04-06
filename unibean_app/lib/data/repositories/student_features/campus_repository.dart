@@ -11,6 +11,7 @@ class CampusRepositoryImp implements CampusRepository {
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
+  bool state = true;
   @override
   Future<ApiResponse<List<CampusModel>>?> fetchCampusByUniId(
       {int? page, required String uniId}) async {
@@ -21,7 +22,7 @@ class CampusRepositoryImp implements CampusRepository {
       }
       http.Response response = await http.get(
           Uri.parse(
-              '$endPoint?universityIds=$uniId&sort=$sort&page=$page&limit=100'),
+              '$endPoint?state=$state&universityIds=$uniId&sort=$sort&page=$page&limit=100'),
           headers: headers);
 
       if (response.statusCode == 200) {

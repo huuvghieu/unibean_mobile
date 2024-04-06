@@ -94,9 +94,9 @@ class _FormBody1State extends State<FormBody1> {
                         child: TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Gmail không được bỏ trống';
+                              return 'Email không được bỏ trống';
                             } else if (!emailValidationRegExp.hasMatch(value)) {
-                              return 'Gmail không hợp lệ';
+                              return 'Email không hợp lệ';
                             }
                             return null;
                           },
@@ -107,8 +107,8 @@ class _FormBody1State extends State<FormBody1> {
                                   fontSize: 15 * widget.ffem,
                                   fontWeight: FontWeight.bold)),
                           decoration: InputDecoration(
-                            labelText: 'GMAIL *',
-                            hintText: 'Nhập gmail...',
+                            labelText: 'Email *',
+                            hintText: 'Nhập Email...',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelStyle: GoogleFonts.openSans(
                               textStyle: TextStyle(
@@ -183,6 +183,10 @@ class _FormBody1State extends State<FormBody1> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Họ và tên không được bỏ trống';
+                          } else if (value.length < 3) {
+                            return 'Họ và tên ít nhất 3 kí tự';
+                          } else if (value.length > 50) {
+                            return 'Họ và tên tối đa 50 kí tự';
                           } else if (!vietNameseTextOnlyPattern
                               .hasMatch(value)) {
                             return 'Họ và tên không hợp lệ';

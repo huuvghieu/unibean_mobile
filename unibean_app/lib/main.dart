@@ -10,6 +10,7 @@ import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';
 
+import 'data/repositories/store_features/bonus_repository.dart';
 import 'presentation/blocs/blocs.dart';
 import 'presentation/cubits/validation/validation_cubit.dart';
 import 'presentation/screens/screens.dart';
@@ -66,6 +67,8 @@ class MyApp extends StatelessWidget {
             create: (_) => ProductRepositoryImp()),
         RepositoryProvider<StationRepository>(
             create: (_) => StationRepositoryImp()),
+        RepositoryProvider<BonusRepository>(
+            create: (_) => BonusRepositoryImp()),
         RepositoryProvider<WishListRepository>(
             create: (_) => WishListRepositoryImp()),
         RepositoryProvider<AreaRepository>(create: (_) => AreaRepositoryImp())

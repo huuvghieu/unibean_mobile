@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../../data/models.dart';
 import '../../../blocs/blocs.dart';
+import '../../../widgets/app_bar_signup.dart';
 import '../../screens.dart';
 import 'components/body_verification.dart';
 
@@ -36,43 +35,10 @@ class UpdateVerificationScreen extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/background_splash.png'),
-                    fit: BoxFit.cover)),
-          ),
-          centerTitle: true,
-          title: Container(
-            child: Text(
-              'Thẻ sinh viên',
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      fontSize: 20 * ffem,
-                      fontWeight: FontWeight.w900,
-                      height: 1.3625 * ffem / fem,
-                      color: Colors.white)),
-            ),
-          ),
-          toolbarHeight: 50 * hem,
-          leading: Container(
-            margin: EdgeInsets.only(left: 20 * fem),
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 35 * fem,
-              ),
-            ),
-          ),
-          leadingWidth: 60 * fem,
-        ),
-        backgroundColor: klighGreyColor,
+        resizeToAvoidBottomInset: true,
+        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: 'Xác minh'),
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.transparent,
         body: BodyVerification(studentModel: studentModel,),
       ),
     );

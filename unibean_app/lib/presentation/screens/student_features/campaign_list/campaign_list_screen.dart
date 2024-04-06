@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/body.dart';
-import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/filter_showdal_bottom.dart';
+// import 'package:unibean_app/presentation/screens/student_features/campaign_list/components/filter_showdal_bottom.dart';
 
 import '../../../blocs/blocs.dart';
 
@@ -94,18 +94,18 @@ class CampaignListScreen extends StatelessWidget {
     ));
   }
 
-  void _filterModalBottomSheet(context) {
-    double baseWidth = 375;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
-    double baseHeight = 812;
-    double hem = MediaQuery.of(context).size.height / baseHeight;
+  // void _filterModalBottomSheet(context) {
+  //   double baseWidth = 375;
+  //   double fem = MediaQuery.of(context).size.width / baseWidth;
+  //   double ffem = fem * 0.97;
+  //   double baseHeight = 812;
+  //   double hem = MediaQuery.of(context).size.height / baseHeight;
 
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return FilterShowdalBottom(hem: hem, fem: fem, ffem: ffem);
-      },
-    );
-  }
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) {
+  //       return FilterShowdalBottom(hem: hem, fem: fem, ffem: ffem);
+  //     },
+  //   );
+  // }
 }

@@ -6,14 +6,13 @@ import '../../../../config/constants.dart';
 import '../../../../widgets/shimmer_widget.dart';
 
 class CampaignCard extends StatelessWidget {
-  const CampaignCard({
-    super.key,
-    required this.fem,
-    required this.hem,
-    required this.ffem,
-    required this.campaignModel,
-    required this.onTap
-  });
+  const CampaignCard(
+      {super.key,
+      required this.fem,
+      required this.hem,
+      required this.ffem,
+      required this.campaignModel,
+      required this.onTap});
 
   final double fem;
   final double hem;
@@ -23,7 +22,6 @@ class CampaignCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: onTap,
       child: Stack(
@@ -32,16 +30,26 @@ class CampaignCard extends StatelessWidget {
             width: 172 * fem,
             margin: EdgeInsets.only(left: 10 * fem),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15 * fem),
-              color: Colors.white,
-              
-            ),
+                borderRadius: BorderRadius.circular(15 * fem),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF757575).withOpacity(0.3),
+                    blurRadius: 10.0, // soften the shadow
+                    spreadRadius: 1.0, //extend the shadow
+                    offset: const Offset(
+                      5.0, // Move to right 5  horizontally
+                      5.0, // Move to bottom 5 Vertically
+                    ),
+                  )
+                ]),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(right: 5*fem, left: 5*fem, top: 5*hem),
+                  padding: EdgeInsets.only(
+                      right: 5 * fem, left: 5 * fem, top: 5 * hem),
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10 * fem),
@@ -52,14 +60,12 @@ class CampaignCard extends StatelessWidget {
                       child: Image.network(
                         campaignModel.image,
                         fit: BoxFit.fill,
-                         loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return ShimmerWidget.rectangular(
-                                    height: 150 * hem);
-                              },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return ShimmerWidget.rectangular(height: 150 * hem);
+                        },
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
                             width: 170 * fem,
@@ -80,7 +86,7 @@ class CampaignCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 150*fem,
+                      width: 150 * fem,
                       padding: EdgeInsets.only(top: 5 * hem),
                       child: Text(
                         campaignModel.brandName,
@@ -98,8 +104,8 @@ class CampaignCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 10*fem, right: 10*fem,
-                      top: 5 * hem),
+                  padding: EdgeInsets.only(
+                      left: 10 * fem, right: 10 * fem, top: 5 * hem),
                   child: Text(
                     campaignModel.campaignName,
                     maxLines: 2,
@@ -113,12 +119,9 @@ class CampaignCard extends StatelessWidget {
                     )),
                   ),
                 ),
-               
-              
               ],
             ),
           ),
-          
         ],
       ),
     );

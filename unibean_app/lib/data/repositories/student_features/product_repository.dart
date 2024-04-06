@@ -14,6 +14,7 @@ class ProductRepositoryImp extends ProductRepository {
   String sort = 'Id%2Cdesc';
   int page = 1;
   int limit = 10;
+  bool state = true;
   String? token;
   @override
   Future<ApiResponse<List<ProductModel>>?> fetchProducts(
@@ -33,7 +34,7 @@ class ProductRepositoryImp extends ProductRepository {
       if (search != null) {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint?sort=$sort&search=$search&page=$page&limit=$limit'),
+                '$endPoint?state=$state&sort=$sort&search=$search&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));
@@ -47,7 +48,7 @@ class ProductRepositoryImp extends ProductRepository {
         }
       } else if (search == null || search == '') {
         http.Response response = await http.get(
-            Uri.parse('$endPoint?sort=$sort&page=$page&limit=$limit'),
+            Uri.parse('$endPoint?state=$state&sort=$sort&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));

@@ -47,7 +47,7 @@ class ProfileStoreScreen extends StatelessWidget {
                       icon: Icon(
                         Icons.notifications,
                         color: Colors.white,
-                        size: 30 * fem,
+                        size: 25 * fem,
                       ),
                       onPressed: () {},
                     ),

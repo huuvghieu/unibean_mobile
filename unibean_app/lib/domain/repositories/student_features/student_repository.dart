@@ -36,4 +36,10 @@ abstract class StudentRepository {
   Future<List<String>?> fetchWishListByStudentId();
 
   Future<OrderModel?> createOrder(CreateOrderModel createOrderModel);
+
+  Future<StudentModel?> putVerification(
+      {required String studentId,
+      required String studentCode,
+      required String studentCardFont,
+      required String studentCardBack});
 }

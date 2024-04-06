@@ -10,6 +10,7 @@ import '../../../../../domain/repositories.dart';
 import '../../../../blocs/blocs.dart';
 import 'button_profile.dart';
 import 'pending_card.dart';
+import 'rejected_card.dart';
 import 'unverified_card.dart';
 import 'verified_card.dart';
 
@@ -73,10 +74,10 @@ class _BodyState extends State<Body> {
                               context.read<StoreRepository>())
                             ..add(RoleAppStart()),
                           child: VerifiedCard(
-                              hem: hem,
-                              fem: fem,
-                              ffem: ffem,
-                            ),
+                            hem: hem,
+                            fem: fem,
+                            ffem: ffem,
+                          ),
                         ),
 
                         Positioned(
@@ -411,7 +412,7 @@ class _BodyState extends State<Body> {
                         ),
 
                         //widget information of profile
-                        PendingCard(
+                        RejectedCard(
                           hem: hem,
                           fem: fem,
                           ffem: ffem,
