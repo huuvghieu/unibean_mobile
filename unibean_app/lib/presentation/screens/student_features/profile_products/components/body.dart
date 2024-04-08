@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../../blocs/blocs.dart';
@@ -67,9 +68,11 @@ class Body extends StatelessWidget {
                               color: Colors.white,
                               size: 25 * fem,
                             ),
-                            onPressed: () {
+                            onPressed: () async {
+                              final studentId =
+                                  await AuthenLocalDataSource.getStudentId();
                               Navigator.pushNamed(
-                                  context, ProfileCartScreen.routeName);
+                                  context, ProfileCartScreen.routeName, arguments: studentId);
                             },
                           ),
                         );

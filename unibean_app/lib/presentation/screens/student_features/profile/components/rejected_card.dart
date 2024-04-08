@@ -55,10 +55,8 @@ class RejectedCard extends StatelessWidget {
                     child: Container(
                       width: 80 * hem,
                       height: 80 * fem,
-                      child: Image(
-                        image: NetworkImage(
-                          '${studentModel.avatar}',
-                        ),
+                      child: Image.asset(
+                        '${studentModel.avatar}',
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Image.asset(

@@ -25,24 +25,22 @@ class ProfileScreen extends StatelessWidget {
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
     if (roleState is Unverified) {
-      return _buildVerifiedStudent(fem, hem, ffem);
+      return _buildVerifiedStudent(fem, hem, ffem, '');
     } else if (roleState is Verified) {
-      return _buildVerifiedStudent(fem, hem, ffem);
-    } else if (roleState is RoleAppLoading) {
-      return Scaffold(
-          appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
-          body: Container(
-              color: klighGreyColor,
-              child: Center(
-                child: Container(
-                    child:
-                        Lottie.asset('assets/animations/loading-screen.json')),
-              )));
+      return _buildVerifiedStudent(fem, hem, ffem, roleState.studentModel.id);
     }
-    return _buildVerifiedStudent(fem, hem, ffem);
+    return Scaffold(
+        appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+        body: Container(
+            color: klighGreyColor,
+            child: Center(
+              child: Container(
+                  child: Lottie.asset('assets/animations/loading-screen.json')),
+            )));
   }
 
-  Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
+  Widget _buildVerifiedStudent(
+      double fem, double hem, double ffem, String studentId) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -76,7 +74,9 @@ class ProfileScreen extends StatelessWidget {
         ),
         extendBodyBehindAppBar: true,
         extendBody: true,
-        body: Body(),
+        body: Body(
+          studentId: studentId,
+        ),
       ),
     );
   }

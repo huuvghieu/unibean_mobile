@@ -91,7 +91,7 @@ class Body extends StatelessWidget {
                   ),
                   
                   Container(
-                    height: 50 * hem,
+                    height: 80 * hem,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -104,11 +104,11 @@ class Body extends StatelessWidget {
                                   color: Colors.grey)),
                         ),
                         Container(
-                          width: 150*fem,
+                          width: 200*fem,
                           child: Text(
                             '$failed',
                             textAlign: TextAlign.end,
-                            maxLines: 2,
+                            maxLines: 3,
                             softWrap: true,
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(

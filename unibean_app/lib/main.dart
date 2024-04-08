@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => InternetBloc()),
           BlocProvider(create: (context) => LandingScreenBloc()),
           BlocProvider(
               create: (context) =>

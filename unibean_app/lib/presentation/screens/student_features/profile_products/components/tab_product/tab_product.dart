@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-import '../../../../../../data/models.dart';
 import '../../../../../blocs/blocs.dart';
 import '../../../../../config/constants.dart';
 import 'product_card.dart';
@@ -33,29 +32,19 @@ class TabProduct extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BlocBuilder<RoleAppBloc, RoleAppState>(
-                      builder: (context, state) {
-                        if (state is Verified) {
-                          return HeaderTitle(
-                            hem: hem,
-                            ffem: ffem,
-                            authenModel: state.authenModel,
-                          );
-                        } else if (state is Pending) {
-                          return HeaderTitle(
-                            hem: hem,
-                            ffem: ffem,
-                            authenModel: state.authenModel,
-                          );
-                        } else if (state is Rejected) {
-                          return HeaderTitle(
-                            hem: hem,
-                            ffem: ffem,
-                            authenModel: state.authenModel,
-                          );
-                        }
-                        return Container();
-                      },
+                    Container(
+                      color: kbgWhiteColor,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 15 * hem,
+                          ),
+                          SearchBarCustom(),
+                          SizedBox(
+                            height: 15 * hem,
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 5 * hem,
@@ -151,37 +140,6 @@ class TabProduct extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class HeaderTitle extends StatelessWidget {
-  const HeaderTitle({
-    super.key,
-    required this.hem,
-    required this.ffem,
-    required this.authenModel,
-  });
-
-  final double hem;
-  final double ffem;
-  final AuthenModel authenModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: kbgWhiteColor,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 15 * hem,
-          ),
-          SearchBarCustom(),
-          SizedBox(
-            height: 15 * hem,
-          ),
-        ],
       ),
     );
   }

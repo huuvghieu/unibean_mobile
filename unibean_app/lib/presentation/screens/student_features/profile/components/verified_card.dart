@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
-import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 
+import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
 
 class VerifiedCard extends StatelessWidget {
@@ -14,11 +13,13 @@ class VerifiedCard extends StatelessWidget {
     required this.hem,
     required this.fem,
     required this.ffem,
+    required this.studentModel,
   });
 
   final double hem;
   final double fem;
   final double ffem;
+  final StudentModel studentModel;
 
   @override
   Widget build(BuildContext context) {
@@ -49,42 +50,23 @@ class VerifiedCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   //avatar
-                  BlocBuilder<RoleAppBloc, RoleAppState>(
-                    builder: (context, state) {
-                      if (state is Verified) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(100 * fem),
-                          child: Container(
-                            width: 80 * hem,
-                            height: 80 * fem,
-                            child: Image(
-                              image: NetworkImage(
-                                '${state.studentModel.avatar}',
-                              ),
-                              fit: BoxFit.fill,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  'assets/images/ava_signup.png',
-                                  width: 100 * fem,
-                                  height: 100 * hem,
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      }
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(100 * fem),
-                        child: Container(
-                          width: 80 * hem,
-                          height: 80 * fem,
-                          child: Image.asset(
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100 * fem),
+                    child: Container(
+                      width: 80 * hem,
+                      height: 80 * fem,
+                      child: Image.network(
+                        '${studentModel.avatar}',
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
                             'assets/images/ava_signup.png',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      );
-                    },
+                            width: 100 * fem,
+                            height: 100 * hem,
+                          );
+                        },
+                      ),
+                    ),
                   ),
                   SizedBox(
                     width: 20 * fem,
@@ -94,53 +76,26 @@ class VerifiedCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Name
-                      BlocBuilder<RoleAppBloc, RoleAppState>(
-                        builder: (context, state) {
-                          if (state is Verified) {
-                            return Container(
-                              width: 190 * fem,
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      state.studentModel.fullName,
-                                      // softWrap: true,
-                                      maxLines: 2,
-                                      textAlign: TextAlign.start,
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                              fontSize: 17 * ffem,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black)),
-                                    ),
-                                  ),
-                                ],
+                      Container(
+                        width: 190 * fem,
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                studentModel.fullName,
+                                // softWrap: true,
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 17 * ffem,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black)),
                               ),
-                            );
-                          }
-                          return Container(
-                            width: 190 * fem,
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    '',
-                                    // softWrap: true,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            fontSize: 17 * ffem,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black)),
-                                  ),
-                                ),
-                              ],
                             ),
-                          );
-                        },
+                          ],
+                        ),
                       ),
-
                       //student code
                       Padding(
                         padding:

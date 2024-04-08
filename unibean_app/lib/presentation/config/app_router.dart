@@ -102,7 +102,7 @@ class AppRouter {
             studentModel: settings.arguments as StudentModel);
 
       case ProfileCartScreen.routeName:
-        return ProfileCartScreen.route();
+        return ProfileCartScreen.route(studentId: settings.arguments as String);
 
       case UpdateVerificationScreen.routeName:
         return UpdateVerificationScreen.route(
@@ -122,7 +122,7 @@ class AppRouter {
         List<dynamic> args = settings.arguments as List<dynamic>;
 
         return CampaignVoucherScreen.route(
-            campaignDetail: args[0], campaignVoucher: args[1]);
+            campaignDetail: args[0], campaignVoucher: args[1], studentId: args[2]);
 
       case CampaignVoucherDetailScreen.routeName:
         List<dynamic> args = settings.arguments as List<dynamic>;

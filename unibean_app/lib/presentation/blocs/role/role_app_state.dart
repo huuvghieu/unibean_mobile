@@ -13,33 +13,33 @@ final class Verified extends RoleAppState {
   List<Object?> get props => [authenModel, studentModel];
 }
 
-final class Pending extends RoleAppState {
-  final AuthenModel authenModel;
-  final StudentModel studentModel;
+// final class Pending extends RoleAppState {
+//   final AuthenModel authenModel;
+//   final StudentModel studentModel;
 
-  Pending({required this.authenModel, required this.studentModel});
-  @override
-  List<Object?> get props => [authenModel, studentModel];
-}
+//   Pending({required this.authenModel, required this.studentModel});
+//   @override
+//   List<Object?> get props => [authenModel, studentModel];
+// }
 
-final class Rejected extends RoleAppState {
-  final AuthenModel authenModel;
-  final StudentModel studentModel;
+// final class Rejected extends RoleAppState {
+//   final AuthenModel authenModel;
+//   final StudentModel studentModel;
 
-  Rejected({required this.authenModel, required this.studentModel});
-  @override
-  List<Object?> get props => [authenModel, studentModel];
-}
+//   Rejected({required this.authenModel, required this.studentModel});
+//   @override
+//   List<Object?> get props => [authenModel, studentModel];
+// }
 
-final class InActive extends RoleAppState {
-  final AuthenModel authenModel;
+// final class InActive extends RoleAppState {
+//   final AuthenModel authenModel;
 
-  InActive({required this.authenModel});
-  @override
-  List<Object?> get props => [
-        authenModel,
-      ];
-}
+//   InActive({required this.authenModel});
+//   @override
+//   List<Object?> get props => [
+//         authenModel,
+//       ];
+// }
 
 final class Unverified extends RoleAppState {
   final AuthenModel authenModel;

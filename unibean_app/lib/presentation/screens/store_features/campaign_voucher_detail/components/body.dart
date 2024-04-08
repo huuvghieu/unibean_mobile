@@ -1,3 +1,5 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,251 +21,292 @@ class Body extends StatelessWidget {
     double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
-    return BlocBuilder<StoreBloc, StoreState>(
-      builder: (context, state) {
-        if (state is StoreCampaignVoucherDetailLoading) {
-          return buildCampaignVoucherShimmer(fem, hem);
-        } else if (state is StoreCampaignVoucherDetailLoaded) {
-          var campaignVoucherDetail = state.campaignVoucherDetailModel;
-          return CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 220 * hem,
-                        child: Image.network(
-                          campaignVoucherDetail.voucherImage,
-                          fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              'assets/images/background_splash.png',
-                              fit: BoxFit.cover,
-                            );
-                          },
+    return BlocListener<InternetBloc, InternetState>(
+      listener: (context, state) {
+        if (state is Connected) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Đã kết nối internet',
+                message: 'Đã kết nối internet!',
+                contentType: ContentType.success,
+              ),
+            ));
+        } else if (state is NotConnected) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: const Text('Không kết nối Internet'),
+                content: Text('Vui lòng kết nối Internet'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        final stateInternet =
+                            context.read<InternetBloc>().state;
+                        if (stateInternet is Connected) {
+                          Navigator.pop(context);
+                        } else {}
+                      },
+                      child: const Text('Đồng ý'))
+                ],
+              );
+            },
+          );
+        }
+      },
+      child: BlocBuilder<StoreBloc, StoreState>(
+        builder: (context, state) {
+          if (state is StoreCampaignVoucherDetailLoading) {
+            return buildCampaignVoucherShimmer(fem, hem);
+          } else if (state is StoreCampaignVoucherDetailLoaded) {
+            var campaignVoucherDetail = state.campaignVoucherDetailModel;
+            return CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 220 * hem,
+                          child: Image.network(
+                            campaignVoucherDetail.voucherImage,
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                'assets/images/background_splash.png',
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        width: double.infinity,
-                        padding: EdgeInsets.only(
-                            left: 15 * fem,
-                            top: 10 * hem,
-                            bottom: 15 * hem,
-                            right: 15 * fem),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${campaignVoucherDetail.campaignName}',
-                              textAlign: TextAlign.justify,
-                              softWrap: true,
-                              style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                  fontSize: 15 * ffem,
-                                  color: klowTextGrey,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 2 * hem, bottom: 5 * hem),
-                              child: Text(
-                                '${campaignVoucherDetail.voucherName}',
+                        Container(
+                          color: Colors.white,
+                          width: double.infinity,
+                          padding: EdgeInsets.only(
+                              left: 15 * fem,
+                              top: 10 * hem,
+                              bottom: 15 * hem,
+                              right: 15 * fem),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${campaignVoucherDetail.campaignName}',
                                 textAlign: TextAlign.justify,
                                 softWrap: true,
                                 style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                     fontSize: 15 * ffem,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
+                                    color: klowTextGrey,
+                                    fontWeight: FontWeight.normal,
                                   ),
                                 ),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      '${formatter.format((campaignVoucherDetail.price))}',
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                        fontSize: 22 * ffem,
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 2 * hem, bottom: 5 * hem),
+                                child: Text(
+                                  '${campaignVoucherDetail.voucherName}',
+                                  textAlign: TextAlign.justify,
+                                  softWrap: true,
+                                  style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                      fontSize: 15 * ffem,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 0 * fem,
-                                          top: 4 * hem,
-                                          bottom: 0 * hem),
-                                      child: SvgPicture.asset(
-                                        'assets/icons/green-bean-icon.svg',
-                                        width: 32 * fem,
-                                        height: 32 * fem,
-                                      ),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      left: 10 * fem, right: 10 * fem),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: Colors.red,
-                                      )),
-                                  child: Row(
+                              ),
+                              Row(
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
-                                        'x${campaignVoucherDetail.rate.toStringAsFixed(0)}',
+                                        '${formatter.format((campaignVoucherDetail.price))}',
                                         style: GoogleFonts.openSans(
                                             textStyle: TextStyle(
-                                          fontSize: 18 * ffem,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 22 * ffem,
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.bold,
                                         )),
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            left: 5 * fem,
+                                            left: 0 * fem,
                                             top: 4 * hem,
                                             bottom: 0 * hem),
                                         child: SvgPicture.asset(
-                                          'assets/icons/red-bean-icon.svg',
-                                          width: 25 * fem,
-                                          height: 25 * fem,
+                                          'assets/icons/green-bean-icon.svg',
+                                          width: 32 * fem,
+                                          height: 32 * fem,
                                         ),
                                       )
                                     ],
                                   ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                SvgPicture.asset('assets/icons/cart-icon.svg'),
-                                Text(
-                                  '${campaignVoucherDetail.quantityInBought} | ${campaignVoucherDetail.quantity}',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                  )),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5 * hem,
-                      ),
-
-                      // BrandInformationCard(
-                      //     hem: hem,
-                      //     fem: fem,
-                      //     ffem: ffem,
-                      //     campaignDetil: campaignDetil),
-                      // SizedBox(
-                      //   height: 5 * hem,
-                      // ),
-                      GestureDetector(
-                        onTap: () {},
-                        // onTap: () {
-                        //   checkLength(campaignDetailModel.condition);
-                        // },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              right: 10 * fem,
-                              left: 10 * fem,
-                              top: 15 * hem,
-                              bottom: 15 * hem),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 0 * fem),
-                                child: Text(
-                                  'THỂ LỆ ƯU ĐÃI',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                                ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10 * fem, right: 10 * fem),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                        border: Border.all(
+                                          color: Colors.red,
+                                        )),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'x${campaignVoucherDetail.rate.toStringAsFixed(0)}',
+                                          style: GoogleFonts.openSans(
+                                              textStyle: TextStyle(
+                                            fontSize: 18 * ffem,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600,
+                                          )),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 5 * fem,
+                                              top: 4 * hem,
+                                              bottom: 0 * hem),
+                                          child: SvgPicture.asset(
+                                            'assets/icons/red-bean-icon.svg',
+                                            width: 25 * fem,
+                                            height: 25 * fem,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: 5 * fem, top: 5 * hem),
-                                child: HtmlWidget(
-                                  '${campaignVoucherDetail.voucherCondition}',
-                                  textStyle: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                      fontSize: 14 * ffem,
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/icons/cart-icon.svg'),
+                                  Text(
+                                    '${campaignVoucherDetail.quantityInBought} | ${campaignVoucherDetail.quantity}',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                      fontSize: 15 * ffem,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
-                                    ),
+                                    )),
                                   ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10 * hem,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 0 * fem),
-                                child: Text(
-                                  'NỘI DUNG ƯU ĐÃI',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: 5 * fem, top: 5 * hem),
-                                child: HtmlWidget(
-                                  '${campaignVoucherDetail.description}',
-                                  textStyle: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                      fontSize: 14 * ffem,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                ],
+                              )
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5 * hem,
-                      ),
-                    ],
-                  ),
-                ]),
-              )
-            ],
-          );
-        }
-        return Container();
-      },
+                        SizedBox(
+                          height: 5 * hem,
+                        ),
+
+                        // BrandInformationCard(
+                        //     hem: hem,
+                        //     fem: fem,
+                        //     ffem: ffem,
+                        //     campaignDetil: campaignDetil),
+                        // SizedBox(
+                        //   height: 5 * hem,
+                        // ),
+                        GestureDetector(
+                          onTap: () {},
+                          // onTap: () {
+                          //   checkLength(campaignDetailModel.condition);
+                          // },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                right: 10 * fem,
+                                left: 10 * fem,
+                                top: 15 * hem,
+                                bottom: 15 * hem),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(color: Colors.white),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 0 * fem),
+                                  child: Text(
+                                    'THỂ LỆ ƯU ĐÃI',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                      fontSize: 15 * ffem,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      left: 5 * fem, top: 5 * hem),
+                                  child: HtmlWidget(
+                                    '${campaignVoucherDetail.voucherCondition}',
+                                    textStyle: GoogleFonts.openSans(
+                                      textStyle: TextStyle(
+                                        fontSize: 14 * ffem,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10 * hem,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 0 * fem),
+                                  child: Text(
+                                    'NỘI DUNG ƯU ĐÃI',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                      fontSize: 15 * ffem,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      left: 5 * fem, top: 5 * hem),
+                                  child: HtmlWidget(
+                                    '${campaignVoucherDetail.description}',
+                                    textStyle: GoogleFonts.openSans(
+                                      textStyle: TextStyle(
+                                        fontSize: 14 * ffem,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5 * hem,
+                        ),
+                      ],
+                    ),
+                  ]),
+                )
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
     );
   }
 }

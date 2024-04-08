@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/domain/repositories.dart';
-import 'package:unibean_app/presentation/widgets/empty_widget.dart';
-
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import '../../../../widgets/shimmer_widget.dart';
@@ -36,7 +35,43 @@ class CampaignVoucherList extends StatelessWidget {
             return buildCampaignListShimmer(fem, hem);
           } else if (state is CampaignVouchersLoaded) {
             if (state.campaignVouchers.isEmpty) {
-              return EmptyWidget(text: 'Không có ưu đãi');
+              return Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(left: 15 * fem, right: 15 * fem),
+                height: 220 * hem,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/voucher-navbar-icon.svg',
+                      width: 60 * fem,
+                      colorFilter:
+                          ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          'Không có ưu đãi nào đang diễn ra!',
+                          style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          )),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10 * fem,
+                    ),
+                  ],
+                ),
+              );
             } else {
               return Container(
                   height: 250 * hem,
@@ -47,12 +82,15 @@ class CampaignVoucherList extends StatelessWidget {
                     itemCount: state.campaignVouchers.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          final studentId =
+                              await AuthenLocalDataSource.getStudentId();
                           Navigator.pushNamed(
                               context, CampaignVoucherScreen.routeName,
                               arguments: <dynamic>[
                                 campaignDetallModeil,
-                                state.campaignVouchers[index]
+                                state.campaignVouchers[index],
+                                studentId
                               ]);
                         },
                         child: Stack(

@@ -132,7 +132,7 @@ class Body extends StatelessWidget {
                                             left: 10 * fem,
                                             right: 10 * fem),
                                         constraints: BoxConstraints(
-                                            maxHeight: 130 * hem,
+                                            maxHeight: 150 * hem,
                                             minWidth: 340 * fem),
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -255,7 +255,23 @@ class Body extends StatelessWidget {
                                                             FontWeight.normal,
                                                       ))),
                                                 ),
-                                              ],
+                                                SizedBox(
+                                                  height: 5 * hem,
+                                                ),
+                                                Container(
+                                                  child: Text(
+                                                      'Ngày mua: ${changeFormateDate(studentVoucher.dateBought)}',
+                                                      style:
+                                                          GoogleFonts.openSans(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                        fontSize: 12 * ffem,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ))),
+                                                ),
+                                               ],
                                             )
                                           ],
                                         ),

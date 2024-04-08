@@ -33,16 +33,11 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
             id: authenModel.userModel.userId);
         if (role == 'Student') {
           if (isVerify) {
-              String stateName = student!.state;
-            if (stateName == 'Active') {
-              emit(Verified(authenModel: authenModel, studentModel: student));
-            } else if (stateName == 'Pending') {
-              emit(Pending(authenModel: authenModel, studentModel: student));
-            } else if(stateName == 'Rejected') {
-              emit(Rejected(authenModel: authenModel, studentModel: student));
-            }else{
-              
-            }
+              // String stateName = student!.state;
+            // if (stateName == 'Active') {
+            // }
+              emit(Verified(authenModel: authenModel, studentModel: student!));
+
           } else {
             emit(Unverified(authenModel: authenModel));
           }

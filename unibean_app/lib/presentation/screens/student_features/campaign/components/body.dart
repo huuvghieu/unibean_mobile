@@ -47,23 +47,6 @@ class _BodyState extends State<Body> {
 
     var roleWidget = (switch (roleState) {
       Unverified() => CardForUnVerified(fem: fem, hem: hem, ffem: ffem),
-      Pending(
-        // ignore: unused_local_variable
-        authenModel: final authenModel,
-        studentModel: final student
-      ) =>
-        MemberShipCard(
-            fem: fem,
-            hem: hem,
-            ffem: ffem,
-            heightText: heightText,
-            studentModel: studentModel ?? student),
-      Rejected(studentModel: final student) => MemberShipCard(
-          fem: fem,
-          hem: hem,
-          ffem: ffem,
-          heightText: heightText,
-          studentModel: studentModel ?? student),
       Verified(
         // ignore: unused_local_variable
         authenModel: final authenModel,
@@ -75,7 +58,7 @@ class _BodyState extends State<Body> {
             ffem: ffem,
             heightText: heightText,
             studentModel: studentModel ?? student),
-      InActive() => Container(),
+     
       StoreRole() => Container(),
       RoleAppLoading() => Container(
           child: Center(

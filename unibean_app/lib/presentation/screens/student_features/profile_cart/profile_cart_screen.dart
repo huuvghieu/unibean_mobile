@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/domain/repositories.dart';
+import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_cart/components/tab_cart.dart';
 
 class ProfileCartScreen extends StatelessWidget {
   static const String routeName = '/profile-card-student';
 
-  static Route route() {
+  static Route route({required String studentId}) {
     return MaterialPageRoute(
-        builder: (_) => ProfileCartScreen(),
+        builder: (_) => ProfileCartScreen(
+              studentId: studentId,
+            ),
         settings: const RouteSettings(arguments: routeName));
   }
 
-  const ProfileCartScreen({super.key});
+  const ProfileCartScreen({super.key, required this.studentId});
+  final String studentId;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +60,12 @@ class ProfileCartScreen extends StatelessWidget {
                       color: Colors.white)),
             ),
           ),
-          body: TabCart()),
+          body: BlocProvider(
+            create: (context) => StudentBloc(
+                studentRepository: context.read<StudentRepository>())
+              ..add(LoadStudentById(studentId: studentId)),
+            child: TabCart(),
+          )),
     );
   }
 }

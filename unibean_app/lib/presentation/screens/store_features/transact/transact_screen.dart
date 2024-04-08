@@ -1,4 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -158,119 +159,162 @@ class _TransactScreenState extends State<TransactScreen> {
                     ),
                   ],
                 ),
-                body: CustomScrollView(
-                  slivers: [
-                    SliverList(
-                        delegate: SliverChildListDelegate([
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 20,
+                body: BlocListener<InternetBloc, InternetState>(
+                  listener: (context, state) {
+                    if (state is Connected) {
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(SnackBar(
+                          elevation: 0,
+                          duration: const Duration(milliseconds: 2000),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          content: AwesomeSnackbarContent(
+                            title: 'Đã kết nối internet',
+                            message: 'Đã kết nối internet!',
+                            contentType: ContentType.success,
                           ),
-                          BlocBuilder<BrandBloc, BrandState>(
-                            builder: (context, state) {
-                              if (state is BrandLoading) {
-                                return Center(
-                                  child: Lottie.asset(
-                                      'assets/animations/loading-screen.json',
-                                      width: 50,
-                                      height: 50),
-                                );
-                              } else if (state is BrandByIdLoaded) {
-                                var brand = state.brand;
-                                greenBalance = brand.greenWalletBalance;
-                                return Container(
-                                  width: 324 * fem,
-                                  padding: EdgeInsets.only(
-                                      top: 15 * hem, bottom: 15 * hem),
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(15 * fem),
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 20 * fem,
-                                          ),
-                                          Text(
-                                            'Ví dư:',
-                                            style: GoogleFonts.openSans(
-                                                textStyle: TextStyle(
-                                                    fontSize: 17 * ffem,
+                        ));
+                    } else if (state is NotConnected) {
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (context) {
+                          return CupertinoAlertDialog(
+                            title: const Text('Không kết nối Internet'),
+                            content: Text('Vui lòng kết nối Internet'),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    final stateInternet =
+                                        context.read<InternetBloc>().state;
+                                    if (stateInternet is Connected) {
+                                      Navigator.pop(context);
+                                    } else {}
+                                  },
+                                  child: const Text('Đồng ý'))
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverList(
+                          delegate: SliverChildListDelegate([
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            BlocBuilder<BrandBloc, BrandState>(
+                              builder: (context, state) {
+                                if (state is BrandLoading) {
+                                  return Center(
+                                    child: Lottie.asset(
+                                        'assets/animations/loading-screen.json',
+                                        width: 50,
+                                        height: 50),
+                                  );
+                                } else if (state is BrandByIdLoaded) {
+                                  var brand = state.brand;
+                                  greenBalance = brand.greenWalletBalance;
+                                  return Container(
+                                    width: 324 * fem,
+                                    padding: EdgeInsets.only(
+                                        top: 15 * hem, bottom: 15 * hem),
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(15 * fem),
+                                      color: Colors.white,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: 20 * fem,
+                                            ),
+                                            Text(
+                                              'Ví dư:',
+                                              style: GoogleFonts.openSans(
+                                                  textStyle: TextStyle(
+                                                      fontSize: 17 * ffem,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      height:
+                                                          1.3625 * ffem / fem,
+                                                      color: Colors.black)),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '${formatter.format(brand.greenWalletBalance)}',
+                                                  style: GoogleFonts.openSans(
+                                                      textStyle: TextStyle(
+                                                    fontSize: 20 * ffem,
+                                                    color: Colors.green,
                                                     fontWeight: FontWeight.bold,
-                                                    height: 1.3625 * ffem / fem,
-                                                    color: Colors.black)),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${formatter.format(brand.greenWalletBalance)}',
-                                                style: GoogleFonts.openSans(
-                                                    textStyle: TextStyle(
-                                                  fontSize: 20 * ffem,
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                )),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                  left: 2 * fem,
-                                                  top: 4 * hem,
+                                                  )),
                                                 ),
-                                                child: SvgPicture.asset(
-                                                  'assets/icons/green-bean-icon.svg',
-                                                  width: 28 * fem,
-                                                  height: 26 * fem,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              return Container();
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          InformationCardProfile(
-                              hem: hem,
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: 2 * fem,
+                                                    top: 4 * hem,
+                                                  ),
+                                                  child: SvgPicture.asset(
+                                                    'assets/icons/green-bean-icon.svg',
+                                                    width: 28 * fem,
+                                                    height: 26 * fem,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                                return Container();
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            InformationCardProfile(
+                                hem: hem,
+                                fem: fem,
+                                ffem: ffem,
+                                studentModel: widget.studentModel),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            FormTransact(
                               fem: fem,
+                              hem: hem,
                               ffem: ffem,
-                              studentModel: widget.studentModel),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          FormTransact(
-                            fem: fem,
-                            hem: hem,
-                            ffem: ffem,
-                            beanController: beanController,
-                            desController: desController,
-                          )
-                        ],
-                      )
-                    ]))
-                  ],
+                              beanController: beanController,
+                              desController: desController,
+                            )
+                          ],
+                        )
+                      ]))
+                    ],
+                  ),
                 ),
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.centerDocked,

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/login/login_screen.dart';
 
+
 class Body extends StatelessWidget {
   const Body({super.key});
 
@@ -81,7 +82,6 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-       
         ],
       ),
     );

@@ -163,13 +163,31 @@ class _InformationCardBrandDetailState
                       isFollowed
                           ? InkWell(
                               onTap: () async {
-                                final studentId =
-                                    await AuthenLocalDataSource.getStudentId();
-                                context.read<WishlistBloc>().add(CreateWishList(
-                                    studentId: studentId!,
-                                    brandId: widget.brandModel.id,
-                                    description: "",
-                                    state: true));
+                                final studentModel =
+                                    await AuthenLocalDataSource.getStudent();
+                                if (studentModel!.state == 'Active') {
+                                  context.read<WishlistBloc>().add(
+                                      CreateWishList(
+                                          studentId: studentModel.id,
+                                          brandId: widget.brandModel.id,
+                                          description: "",
+                                          state: true));
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(SnackBar(
+                                      elevation: 0,
+                                      duration:
+                                          const Duration(milliseconds: 2000),
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Theo dõi thất bại',
+                                        message: 'Bạn chưa được xét duyệt!',
+                                        contentType: ContentType.failure,
+                                      ),
+                                    ));
+                                }
                               },
                               child: Container(
                                 width: 140 * widget.fem,
@@ -203,13 +221,31 @@ class _InformationCardBrandDetailState
                             )
                           : InkWell(
                               onTap: () async {
-                                final studentId =
-                                    await AuthenLocalDataSource.getStudentId();
-                                context.read<WishlistBloc>().add(CreateWishList(
-                                    studentId: studentId!,
-                                    brandId: widget.brandModel.id,
-                                    description: "",
-                                    state: true));
+                                final studentModel =
+                                    await AuthenLocalDataSource.getStudent();
+                                if (studentModel!.state == 'Active') {
+                                  context.read<WishlistBloc>().add(
+                                      CreateWishList(
+                                          studentId: studentModel.id,
+                                          brandId: widget.brandModel.id,
+                                          description: "",
+                                          state: true));
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(SnackBar(
+                                      elevation: 0,
+                                      duration:
+                                          const Duration(milliseconds: 2000),
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Theo dõi thất bại',
+                                        message: 'Bạn chưa được xét duyệt!',
+                                        contentType: ContentType.failure,
+                                      ),
+                                    ));
+                                }
                               },
                               child: Container(
                                 width: 100 * widget.fem,
@@ -256,7 +292,6 @@ class _InformationCardBrandDetailState
                 hem: widget.hem,
                 fem: widget.fem,
                 ffem: widget.ffem,
-
               ),
             )
           ],

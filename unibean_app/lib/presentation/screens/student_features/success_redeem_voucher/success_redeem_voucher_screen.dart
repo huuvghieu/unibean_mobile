@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
+// import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../config/constants.dart';
 import 'components/body.dart';
@@ -85,28 +86,9 @@ class SuccessRedeemVoucherScreen extends StatelessWidget {
             height: 80 * hem,
             elevation: 5,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Container(
-                    width: 150 * fem,
-                    height: 45 * hem,
-                    decoration: BoxDecoration(
-                        color: klightPrimaryColor,
-                        borderRadius: BorderRadius.circular(10 * fem)),
-                    child: Center(
-                      child: Text(
-                        'Chi tiết ưu đãi',
-                        style: GoogleFonts.openSans(
-                            textStyle: TextStyle(
-                                fontSize: 17 * ffem,
-                                fontWeight: FontWeight.w600,
-                                height: 1.3625 * ffem / fem,
-                                color: Colors.white)),
-                      ),
-                    ),
-                  ),
-                ),
+              
                 GestureDetector(
                   onTap: () {
                     context.read<CampaignBloc>().add(LoadCampaigns());
@@ -115,7 +97,7 @@ class SuccessRedeemVoucherScreen extends StatelessWidget {
                   },
                   child: Center(
                     child: Container(
-                      width: 150 * fem,
+                      width: 160 * fem,
                       height: 45 * hem,
                       decoration: BoxDecoration(
                           color: klightPrimaryColor,

@@ -54,10 +54,8 @@ class PendingCard extends StatelessWidget {
                     child: Container(
                       width: 80 * hem,
                       height: 80 * fem,
-                      child: Image(
-                        image: NetworkImage(
-                          '${studentModel.avatar}',
-                        ),
+                      child: Image.network(
+                        '${studentModel.avatar}',
                         fit: BoxFit.fill,
                         errorBuilder: (context, error, stackTrace) {
                           return Image.asset(
@@ -95,9 +93,7 @@ class PendingCard extends StatelessWidget {
                           height: 30 * hem,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Color(0xfffffe58f)
-                              ),
+                              border: Border.all(color: Color(0xfffffe58f)),
                               color: kbgYellow),
                           child: Center(
                             child: Text(
@@ -124,7 +120,7 @@ class PendingCard extends StatelessWidget {
                 color: const Color.fromARGB(255, 225, 223, 223),
               ),
             ),
-           Padding(
+            Padding(
               padding: EdgeInsets.only(
                 top: 10 * hem,
               ),

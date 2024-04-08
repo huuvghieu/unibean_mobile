@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
+import '../../../../../data/models.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../screens.dart';
 import 'cart_product_card.dart';
@@ -20,7 +21,6 @@ class TabCart extends StatelessWidget {
     double baseHeight = 812;
     double ffem = fem * 0.97;
     double hem = MediaQuery.of(context).size.height / baseHeight;
-    final roleState = context.read<RoleAppBloc>().state;
     return Column(
       children: [
         SizedBox(
@@ -198,8 +198,32 @@ class TabCart extends StatelessWidget {
                               ),
                             ],
                           ),
-                          _buildButton(
-                              roleState, fem, hem, ffem, context, Map(), 0)
+                          BlocBuilder<StudentBloc, StudentState>(
+                            builder: (context, state) {
+                              if (state is StudentByIdSuccess) {
+                                return _buildButton(state.studentMode, fem, hem,
+                                    ffem, context, Map(), 0);
+                              }
+                              return Container(
+                                width: 120 * fem,
+                                height: 55 * hem,
+                                decoration: BoxDecoration(
+                                    color: kLowTextColor,
+                                    borderRadius:
+                                        BorderRadius.circular(10 * fem)),
+                                child: Center(
+                                  child: Text(
+                                    'Đổi ngay',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 15 * ffem,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ),
+                                ),
+                              );
+                            },
+                          )
                         ],
                       ),
                     );
@@ -256,7 +280,32 @@ class TabCart extends StatelessWidget {
                               ),
                             ],
                           ),
-                          _buildButton(roleState, fem, hem, ffem, context, cart, state.cart.total)
+                          BlocBuilder<StudentBloc, StudentState>(
+                            builder: (context, stateStudent) {
+                              if (stateStudent is StudentByIdSuccess) {
+                                return _buildButton(stateStudent.studentMode, fem, hem,
+                                    ffem, context, cart, state.cart.total);
+                              }
+                              return Container(
+                                width: 120 * fem,
+                                height: 55 * hem,
+                                decoration: BoxDecoration(
+                                    color: kLowTextColor,
+                                    borderRadius:
+                                        BorderRadius.circular(10 * fem)),
+                                child: Center(
+                                  child: Text(
+                                    'Đổi ngay',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 15 * ffem,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ),
+                                ),
+                              );
+                            },
+                          )
                         ],
                       ),
                     );
@@ -270,9 +319,10 @@ class TabCart extends StatelessWidget {
   }
 }
 
-Widget _buildButton(roleState, double fem, double hem, double ffem,
-    BuildContext context, cart, total) {
-  if (roleState is Pending || roleState is Rejected) {
+Widget _buildButton(StudentModel studentModel, double fem, double hem,
+    double ffem, BuildContext context, cart, total) {
+  final stateName = studentModel.state;
+  if (stateName == 'Pending' || stateName == 'Rejected') {
     return InkWell(
       onTap: () async {},
       child: Container(
@@ -293,7 +343,7 @@ Widget _buildButton(roleState, double fem, double hem, double ffem,
         ),
       ),
     );
-  } else if (roleState is Verified) {
+  } else {
     return InkWell(
       onTap: () async {
         final studentModel = await AuthenLocalDataSource.getStudent();
@@ -311,8 +361,8 @@ Widget _buildButton(roleState, double fem, double hem, double ffem,
                 contentType: ContentType.failure,
               ),
             ));
-        }else if(studentModel!.redWalletBalance < total){
-   ScaffoldMessenger.of(context)
+        } else if (studentModel!.redWalletBalance < total) {
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
               elevation: 0,
@@ -351,23 +401,4 @@ Widget _buildButton(roleState, double fem, double hem, double ffem,
       ),
     );
   }
-  return InkWell(
-    onTap: () async {},
-    child: Container(
-      width: 220 * fem,
-      height: 45 * hem,
-      decoration: BoxDecoration(
-          color: klighGreyColor, borderRadius: BorderRadius.circular(10 * fem)),
-      child: Center(
-        child: Text(
-          'Đổi ngay',
-          style: GoogleFonts.openSans(
-              textStyle: TextStyle(
-                  fontSize: 16 * ffem,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
-        ),
-      ),
-    ),
-  );
 }

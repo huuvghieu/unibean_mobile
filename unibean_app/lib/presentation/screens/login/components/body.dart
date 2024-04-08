@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/login/components/form_login.dart';
 
+
 import '../../screens.dart';
 
 class Body extends StatelessWidget {
@@ -92,7 +93,8 @@ class Body extends StatelessWidget {
                       //         arguments: true);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
+                      padding:
+                          EdgeInsets.only(left: 2 * fem, bottom: 20 * hem),
                       child: Text(
                         'Đăng ký',
                         style: GoogleFonts.openSans(

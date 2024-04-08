@@ -1,3 +1,5 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,113 +58,151 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
 
-    return NestedScrollView(headerSliverBuilder: (context, innerBoxIsScrolled) {
-      return [
-        new SliverAppBar(
-          pinned: true,
-          floating: true,
-          elevation: 0,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/background_splash.png'),
-                    fit: BoxFit.cover)),
-          ),
-          toolbarHeight: 40 * hem,
-          centerTitle: true,
-          title: Padding(
-            padding: EdgeInsets.only(top: 10 * hem),
-            child: Text(
-              'UniBean',
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      fontSize: 22 * ffem,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white)),
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                  size: 25 * fem,
-                ),
-                onPressed: () {},
+    return BlocListener<InternetBloc, InternetState>(
+      listener: (context, state) {
+        if (state is Connected) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Đã kết nối internet',
+                message: 'Đã kết nối internet!',
+                contentType: ContentType.success,
               ),
-            ),
-          ],
-          bottom: TabBar(
-            controller: _controller,
-            onTap: (value) {
-              if (value == 1) {
-                context
-                    .read<StoreBloc>()
-                    .add(LoadStoreTransactions(typeIds: 1, id: widget.storeId));
-              } else if (value == 2) {
-                context
-                    .read<StoreBloc>()
-                    .add(LoadStoreTransactions(typeIds: 2, id: widget.storeId));
-              } else {
-                context
-                    .read<StoreBloc>()
-                    .add(LoadStoreTransactions(typeIds: 0, id: widget.storeId));
-              }
+            ));
+        } else if (state is NotConnected) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: const Text('Không kết nối Internet'),
+                content: Text('Vui lòng kết nối Internet'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        final stateInternet =
+                            context.read<InternetBloc>().state;
+                        if (stateInternet is Connected) {
+                          Navigator.pop(context);
+                        } else {}
+                      },
+                      child: const Text('Đồng ý'))
+                ],
+              );
             },
-            automaticIndicatorColorAdjustment: false,
-            indicatorColor: Colors.white,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorWeight: 3,
-            indicatorPadding: EdgeInsets.only(bottom: 1 * fem),
-            labelColor: Colors.white,
-            labelStyle: GoogleFonts.openSans(
-                textStyle: TextStyle(
-              fontSize: 13 * ffem,
-              fontWeight: FontWeight.w700,
-            )),
-            unselectedLabelColor: Colors.white60,
-            unselectedLabelStyle: GoogleFonts.openSans(
-                textStyle: TextStyle(
-              fontSize: 13 * ffem,
-              fontWeight: FontWeight.w700,
-            )),
-            tabs: list,
-          ),
-        )
-      ];
-    }, body: BlocBuilder<StoreBloc, StoreState>(
-      builder: (context, state) {
-        if (state is StoreTransactionLoading) {
-          return Container(
-              color: klighGreyColor,
-              child: Center(
-                  child:
-                      Lottie.asset('assets/animations/loading-screen.json')));
-        } else if (state is StoreTransactionsLoaded) {
-          return TabBarView(
-            controller: _controller,
-            children: [
-              AllTransaction(
-                fem: fem,
-                hem: hem,
-                ffem: ffem,
-                storeId: widget.storeId,
-              ),
-              ActivityTransaction(
-                fem: fem,
-                hem: hem,
-                ffem: ffem,
-                storeId: widget.storeId,
-              ),
-              BonusTransaction(
-                  hem: hem, fem: fem, ffem: ffem, storeId: widget.storeId)
-            ],
           );
         }
-        return Container();
       },
-    ));
+      child:
+          NestedScrollView(headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          new SliverAppBar(
+            pinned: true,
+            floating: true,
+            elevation: 0,
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background_splash.png'),
+                      fit: BoxFit.cover)),
+            ),
+            toolbarHeight: 40 * hem,
+            centerTitle: true,
+            title: Padding(
+              padding: EdgeInsets.only(top: 10 * hem),
+              child: Text(
+                'UniBean',
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: 22 * ffem,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white)),
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                    size: 25 * fem,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+            bottom: TabBar(
+              controller: _controller,
+              onTap: (value) {
+                if (value == 1) {
+                  context.read<StoreBloc>().add(
+                      LoadStoreTransactions(typeIds: 1, id: widget.storeId));
+                } else if (value == 2) {
+                  context.read<StoreBloc>().add(
+                      LoadStoreTransactions(typeIds: 2, id: widget.storeId));
+                } else {
+                  context.read<StoreBloc>().add(
+                      LoadStoreTransactions(typeIds: 0, id: widget.storeId));
+                }
+              },
+              automaticIndicatorColorAdjustment: false,
+              indicatorColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 3,
+              indicatorPadding: EdgeInsets.only(bottom: 1 * fem),
+              labelColor: Colors.white,
+              labelStyle: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                fontSize: 13 * ffem,
+                fontWeight: FontWeight.w700,
+              )),
+              unselectedLabelColor: Colors.white60,
+              unselectedLabelStyle: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                fontSize: 13 * ffem,
+                fontWeight: FontWeight.w700,
+              )),
+              tabs: list,
+            ),
+          )
+        ];
+      }, body: BlocBuilder<StoreBloc, StoreState>(
+        builder: (context, state) {
+          if (state is StoreTransactionLoading) {
+            return Container(
+                color: klighGreyColor,
+                child: Center(
+                    child:
+                        Lottie.asset('assets/animations/loading-screen.json')));
+          } else if (state is StoreTransactionsLoaded) {
+            return TabBarView(
+              controller: _controller,
+              children: [
+                AllTransaction(
+                  fem: fem,
+                  hem: hem,
+                  ffem: ffem,
+                  storeId: widget.storeId,
+                ),
+                ActivityTransaction(
+                  fem: fem,
+                  hem: hem,
+                  ffem: ffem,
+                  storeId: widget.storeId,
+                ),
+                BonusTransaction(
+                    hem: hem, fem: fem, ffem: ffem, storeId: widget.storeId)
+              ],
+            );
+          }
+          return Container();
+        },
+      )),
+    );
   }
 }
