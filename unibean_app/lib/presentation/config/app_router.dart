@@ -227,6 +227,9 @@ class AppRouter {
         return StoreListScreen.route(
             brandId: args[0], campaignDetailModel: args[1]);
 
+      case WishListScreen.routeName:
+        return WishListScreen.route();
+
       //Store
       case TransactionStoreScreen.routeName:
         return TransactionStoreScreen.route();

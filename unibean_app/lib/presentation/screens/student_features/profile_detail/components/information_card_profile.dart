@@ -345,7 +345,9 @@ class _InformationCardProfileState extends State<InformationCardProfile> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, WishListScreen.routeName);
+                      },
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 5 * widget.fem, right: 5 * widget.fem),

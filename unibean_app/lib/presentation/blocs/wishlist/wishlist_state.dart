@@ -15,7 +15,7 @@ final class WishListLoading extends WishlistState {
 }
 
 final class WishListLoaded extends WishlistState {
-  final List<String> wishList;
+  final List<WishListModel> wishList;
 
   WishListLoaded({required this.wishList});
 

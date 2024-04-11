@@ -12,11 +12,35 @@ class WishListRepositoryImp extends WishListRepository {
   int page = 1;
   int limit = 10;
   String? token;
+  bool state = true;
 
   @override
   Future<ApiResponse<List<WishListModel>>?> fetchWishLists(
-      {int? page, int? limit}) {
-    throw UnimplementedError();
+      {int? page, int? limit}) async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+
+      http.Response response = await http.get(
+          Uri.parse(
+              '$endPoint?studentIds=$studentId&state=$state&sort=$sort&page=1&limit=100'),
+          headers: headers);
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        ApiResponse<List<WishListModel>> apiResponse =
+            ApiResponse<List<WishListModel>>.fromJson(result,
+                (data) => data.map((e) => WishListModel.fromJson(e)).toList());
+        return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override

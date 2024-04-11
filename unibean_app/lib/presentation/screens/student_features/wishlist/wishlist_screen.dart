@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-
-import '../../../blocs/blocs.dart';
 import 'components/body.dart';
+import '../../../blocs/blocs.dart';
 
-class BrandListScreen extends StatelessWidget {
-  static const String routeName = '/brand-list-student';
+class WishListScreen extends StatelessWidget {
+  static const String routeName = '/wish-list-student';
   static Route route() {
     return MaterialPageRoute(
       builder: (_) => BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -17,13 +16,13 @@ class BrandListScreen extends StatelessWidget {
             Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName,
                 (Route<dynamic> route) => false);
         },
-        child: BrandListScreen(),
+        child: WishListScreen(),
       ),
       settings: const RouteSettings(name: routeName),
     );
   }
 
-  const BrandListScreen({super.key});
+  const WishListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class BrandListScreen extends StatelessWidget {
           centerTitle: true,
           title: Container(
             child: Text(
-              'Thương hiệu',
+              'Thương hiệu yêu thích',
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 20 * ffem,

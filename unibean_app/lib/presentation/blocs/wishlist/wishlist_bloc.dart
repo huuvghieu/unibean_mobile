@@ -21,8 +21,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       LoadWishListByStudentId event, Emitter<WishlistState> emit) async {
     emit(WishListLoading());
     try {
-      var apiResponse = await studentRepository.fetchWishListByStudentId();
-      emit(WishListLoaded(wishList: apiResponse!));
+      var apiResponse = await wishListRepository.fetchWishLists();
+      emit(WishListLoaded(wishList: apiResponse!.result));
     } catch (e) {
       emit(WishListFailed(error: e.toString()));
     }
