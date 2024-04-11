@@ -53,17 +53,6 @@ class LoginScreen extends StatelessWidget {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        // context.read<InternetBloc>().subscription =
-                        //     Connectivity()
-                        //         .onConnectivityChanged
-                        //         .listen((result) {
-                        //   if (result == ConnectivityResult.wifi ||
-                        //       result == ConnectivityResult.mobile || result == ConnectivityResult.other) {
-                        //     context.read<InternetBloc>().add(OnConnected());
-                        //   } else {
-                        //     context.read<InternetBloc>().add(OnNotConnected());
-                        //   }
-                        // });
                         final stateInternet =
                             context.read<InternetBloc>().state;
                         if (stateInternet is Connected) {

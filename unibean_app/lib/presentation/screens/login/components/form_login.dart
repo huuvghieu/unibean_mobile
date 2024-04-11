@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/api/push_notification.dart';
 import 'package:unibean_app/presentation/screens/login/components/button_login.dart';
 import 'package:unibean_app/presentation/screens/login/components/button_login_gmail.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
@@ -56,6 +57,8 @@ class _FormLoginState extends State<FormLogin> {
         if (state is AuthenticationSuccess) {
           context.read<RoleAppBloc>().add(RoleAppStart());
           context.read<ChallengeBloc>().add(LoadChallenge());
+          PushNotification().initNotifications();
+          PushNotification().localNotiInit();
           Navigator.pushNamedAndRemoveUntil(
               context, '/landing-screen', (Route<dynamic> route) => false);
         } else if (state is AuthenticationStoreSuccess) {

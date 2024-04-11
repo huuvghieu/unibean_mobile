@@ -1,7 +1,12 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/body_3.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/body_2.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/screens/signup_1_screen.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
+
+import '../../../../blocs/blocs.dart';
 
 class SignUp3Screen extends StatefulWidget {
   static const String routeName = '/signup_3';
@@ -10,6 +15,7 @@ class SignUp3Screen extends StatefulWidget {
         builder: (_) => SignUp3Screen(),
         settings: const RouteSettings(name: routeName));
   }
+
   const SignUp3Screen({super.key});
 
   @override
@@ -36,16 +42,57 @@ class _SignUp3ScreenState extends State<SignUp3Screen> {
     double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
-        extendBodyBehindAppBar: true,
-        backgroundColor: Colors.transparent,
-        body: Body3(),
+    return BlocListener<InternetBloc, InternetState>(
+      listener: (context, state) {
+        if (state is Connected) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Đã kết nối internet',
+                message: 'Đã kết nối internet!',
+                contentType: ContentType.success,
+              ),
+            ));
+        } else if (state is NotConnected) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: const Text('Không kết nối Internet'),
+                content: Text('Vui lòng kết nối Internet'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        final stateInternet =
+                            context.read<InternetBloc>().state;
+                        if (stateInternet is Connected) {
+                          Navigator.pop(context);
+                        } else {}
+                      },
+                      child: const Text('Đồng ý'))
+                ],
+              );
+            },
+          );
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
+          extendBodyBehindAppBar: true,
+          backgroundColor: Colors.transparent,
+          body: const Body2(),
+        ),
       ),
     );
   }
+
   @override
   void dispose() {
     super.dispose();

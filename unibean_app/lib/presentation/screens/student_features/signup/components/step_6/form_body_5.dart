@@ -124,7 +124,7 @@ void _submitForm(BuildContext context, codeController) async {
         createAuthenModel!.inviteCode = codeController.text;
         String createAuthenString = jsonEncode(createAuthenModel);
         AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
-        Navigator.pushNamed(context, SignUp6Screen.routeName,
+        Navigator.pushNamed(context, SignUp7Screen.routeName,
             arguments: SignUp1Screen.defaultRegister);
       } else {
         return null;
@@ -140,7 +140,7 @@ void _submitForm(BuildContext context, codeController) async {
         verifyAuthenModel!.inviteCode = codeController.text;
         String verifyAuthenString = jsonEncode(verifyAuthenModel);
         AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
-        Navigator.pushNamed(context, SignUp6Screen.routeName,
+        Navigator.pushNamed(context, SignUp7Screen.routeName,
             arguments: SignUp1Screen.defaultRegister);
       } else {
         return null;

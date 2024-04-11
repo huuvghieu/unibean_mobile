@@ -11,8 +11,8 @@ import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart
 
 import '../../../../../data/models.dart';
 import '../../../../config/constants.dart';
-import '../../signup/components/step_6/upload_back_card.dart';
-import '../../signup/components/step_6/upload_front_card.dart';
+import '../../signup/components/step_5/upload_back_card.dart';
+import '../../signup/components/step_5/upload_front_card.dart';
 import 'text_form_field_default.dart';
 
 class FormVerification extends StatefulWidget {
@@ -62,8 +62,8 @@ class _FormVerificationState extends State<FormVerification> {
                 contentType: ContentType.success,
               ),
             ));
-          Navigator.pushNamedAndRemoveUntil(context, '/landing-screen',
-              (Route<dynamic> route) => false);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/landing-screen', (Route<dynamic> route) => false);
         } else if (state is StudentFaled) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()

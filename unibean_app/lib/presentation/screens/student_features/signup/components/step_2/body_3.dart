@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/form_3.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/form_3.dart';
 
 class Body3 extends StatefulWidget {
   Body3({super.key});
@@ -27,7 +27,7 @@ class _Body3State extends State<Body3> {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return GestureDetector(
-            onTap: () {
+      onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: SingleChildScrollView(

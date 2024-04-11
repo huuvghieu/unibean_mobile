@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/button_sign_up_2.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/drop_down_campus.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/button_sign_up_2.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/drop_down_campus.dart';
 
 import '../../../../../../data/datasource/authen_local_datasource.dart';
 import '../../../../screens.dart';
@@ -116,12 +116,12 @@ void _submitForm(BuildContext context, campusController) async {
     // createAuthenModel.studentBackCard = _selectedFrontCard!.path;
     String createAuthenString = jsonEncode(createAuthenModel);
     AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
-    Navigator.pushNamed(context, SignUp3Screen.routeName);
+    Navigator.pushNamed(context, SignUp4Screen.routeName);
   } else {
     final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
     verifyAuthenModel!.campusId = campusController.text;
     String verifyString = jsonEncode(verifyAuthenModel);
     AuthenLocalDataSource.saveVerifyAuthen(verifyString);
-    Navigator.pushNamed(context, SignUp3Screen.routeName);
+    Navigator.pushNamed(context, SignUp4Screen.routeName);
   }
 }

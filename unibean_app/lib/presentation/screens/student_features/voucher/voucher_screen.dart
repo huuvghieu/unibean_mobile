@@ -29,22 +29,23 @@ class VoucherScreen extends StatelessWidget {
     double hem = MediaQuery.of(context).size.height / baseHeight;
     final roleState = context.watch<RoleAppBloc>().state;
 
-    return RefreshIndicator(
-        onRefresh: () async {
-          context.read<VoucherBloc>().add(LoadVouchers());
-        },
-        child: authenScreen(roleState, fem, hem, ffem, context));
+    return authenScreen(roleState, fem, hem, ffem, context);
   }
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
     if (roleState is Unverified) {
       return _buildUnverified(fem, hem, ffem);
+    } else if (roleState is Verified) {
+      return BlocProvider(
+        create: (context) =>
+            StudentBloc(studentRepository: context.read<StudentRepository>())
+              ..add(LoadStudentVouchers(id: roleState.studentModel.id)),
+        child: _buildVerifiedStudent(fem, hem, ffem, roleState.studentModel.id),
+      );
     }
-    return BlocProvider(
-      create: (context) =>
-          StudentBloc(studentRepository: context.read<StudentRepository>())
-            ..add(LoadStudentVouchers(id: roleState.studentModel.id)),
-      child: _buildVerifiedStudent(fem, hem, ffem),
+    return Center(
+      child: Container(
+          child: Lottie.asset('assets/animations/loading-screen.json')),
     );
   }
 
@@ -57,11 +58,11 @@ class VoucherScreen extends StatelessWidget {
                 child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
   }
 
-  Widget _buildVerifiedStudent(double fem, double hem, double ffem) {
+  Widget _buildVerifiedStudent(double fem, double hem, double ffem, String studentId) {
     return BlocBuilder<StudentBloc, StudentState>(
       builder: (context, state) {
         if (state is StudentVouchersLoaded) {
-          return Body();
+          return Body(studentId: studentId);
         } else if (state is StudentVoucherLoading) {
           return Center(
             child: Container(

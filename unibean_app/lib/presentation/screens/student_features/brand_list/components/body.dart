@@ -145,7 +145,7 @@ class BrandCard extends StatelessWidget {
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                         fontSize: 13 * ffem,
-                        color: kPrimaryColor,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       )),
                     ),

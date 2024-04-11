@@ -89,6 +89,10 @@ class AppRouter {
       case ProfileOrderScreen.routeName:
         return ProfileOrderScreen.route(id: settings.arguments as String);
 
+      case OrderDetailScreen.routeName:
+        List<dynamic> args = settings.arguments as List<dynamic>;
+        return OrderDetailScreen.route(orderId: args[0], studentId: args[1]);
+
       case ProfileDetailScreen.routeName:
         return ProfileDetailScreen.route(
             studentModel: settings.arguments as StudentModel);
@@ -116,13 +120,15 @@ class AppRouter {
 
       case CampaignDetailScreen.routeName:
         return CampaignDetailScreen.route(
-            campaignModel: settings.arguments as CampaignModel);
+            campaignId: settings.arguments as String);
 
       case CampaignVoucherScreen.routeName:
         List<dynamic> args = settings.arguments as List<dynamic>;
 
         return CampaignVoucherScreen.route(
-            campaignDetail: args[0], campaignVoucher: args[1], studentId: args[2]);
+            campaignDetail: args[0],
+            campaignVoucher: args[1],
+            studentId: args[2]);
 
       case CampaignVoucherDetailScreen.routeName:
         List<dynamic> args = settings.arguments as List<dynamic>;
@@ -146,8 +152,8 @@ class AppRouter {
         return VoucherScreen.route();
 
       case VoucherListScreen.routeName:
-        return VoucherListScreen.route(
-            voucherModels: settings.arguments as List<VoucherModel>);
+        List<dynamic> args = settings.arguments as List<dynamic>;
+        return VoucherListScreen.route(search: args[0], studentId: args[1]);
 
       case VoucherItemDetailScreen.routeName:
         return VoucherItemDetailScreen.route(
@@ -195,6 +201,9 @@ class AppRouter {
       case QRScreen.routeName:
         return QRScreen.route(id: settings.arguments as String);
 
+      case NotificationScreen.routeName:
+        return NotificationScreen.route(data: settings.arguments);
+
       case QRVoucherScreen.routeName:
         return QRVoucherScreen.route(id: settings.arguments as String);
 
@@ -212,6 +221,11 @@ class AppRouter {
 
       case StationScreen.routeName:
         return StationScreen.route();
+
+      case StoreListScreen.routeName:
+        List<dynamic> args = settings.arguments as List<dynamic>;
+        return StoreListScreen.route(
+            brandId: args[0], campaignDetailModel: args[1]);
 
       //Store
       case TransactionStoreScreen.routeName:

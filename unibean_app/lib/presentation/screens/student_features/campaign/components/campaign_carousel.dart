@@ -23,12 +23,15 @@ class CampaignCarousel extends StatefulWidget {
 class _CampaignCarouselState extends State<CampaignCarousel> {
   int activeIndex = 0;
   @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     List<CampaignModel> camps = [
       widget.campaigns[0],
-      widget.campaigns[1],
-      // widget.campaigns[2],
     ];
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -44,7 +47,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                   });
                 },
               ),
-              items: camps.map((campaign) {
+              items: widget.campaigns.map((campaign) {
                 return Builder(
                   builder: (BuildContext context) {
                     return GestureDetector(
@@ -135,7 +138,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                                       } else {
                                         Navigator.pushNamed(context,
                                             CampaignDetailScreen.routeName,
-                                            arguments: campaign);
+                                            arguments: campaign.id);
                                       }
                                     },
                                     child: Text(

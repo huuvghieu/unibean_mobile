@@ -26,7 +26,7 @@ class CampaignStoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 350 * fem,
-      height: 90 * hem,
+      height: 85 * hem,
       decoration: BoxDecoration(
         borderRadius:
             BorderRadius.circular(15 * fem),
@@ -49,7 +49,7 @@ class CampaignStoreCard extends StatelessWidget {
                       10 * fem),
               child: Container(
                 width: 70 * fem,
-                height: 80 * hem,
+                height: 85 * hem,
                 child: Image.network(
                   campaignDetailModel.brandLogo,
                   fit: BoxFit.fill,
@@ -120,11 +120,12 @@ class CampaignStoreCard extends StatelessWidget {
                 height: 2 * hem,
               ),
                 Container(
-                width: 250 * fem,
+                width: 220 * fem,
                 // height: 45*hem,
                 child: Text(
                     storeModel.address,
                     maxLines: 2,
+                    softWrap: true,
                     overflow:
                         TextOverflow.ellipsis,
                     style: GoogleFonts.openSans(

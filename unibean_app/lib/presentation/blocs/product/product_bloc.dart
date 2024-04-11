@@ -26,7 +26,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       LoadProducts event, Emitter<ProductState> emit) async {
     emit(ProductLoading());
     try {
-      var apiResponse = await productRepository.fetchProducts(page: event.page, limit: event.limit, search: event.search);
+      var apiResponse = await productRepository.fetchProducts(
+          page: event.page, limit: event.limit, search: event.search);
       emit(ProductsLoaded(products: apiResponse!.result));
     } catch (e) {
       emit(ProductFailed(error: e.toString()));

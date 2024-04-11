@@ -30,10 +30,14 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
       LoadCampaigns event, Emitter<CampaignState> emit) async {
     emit(CampaignLoading());
     try {
-      this.page = 1;
       var apiResponse = await campaignRepository.fecthCampaigns(
           page: event.page, limit: event.limit);
-      emit(CampaignsLoaded(campaigns: apiResponse!.result.toList()));
+      if (apiResponse!.totalCount == apiResponse.pageSize) {
+        emit(CampaignsLoaded(
+            campaigns: apiResponse.result.toList(), hasReachMax: true));
+      } else {
+        emit(CampaignsLoaded(campaigns: apiResponse.result.toList()));
+      }
     } catch (e) {
       emit(CampaignsFailed(error: e.toString()));
     }
@@ -44,20 +48,26 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
     try {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        isLoadingMore = true;
-        page++;
-        var apiResponse = await campaignRepository.fecthCampaigns(
-            page: page, limit: event.limit);
-        if (apiResponse!.result.length == 0) {
+        if ((this.state as CampaignsLoaded).hasReachMax) {
           emit(CampaignsLoaded(
-              campaigns: List.from((this.state as CampaignsLoaded).campaigns)
-                ..addAll(apiResponse.result),
+              campaigns: List.from((this.state as CampaignsLoaded).campaigns),
               hasReachMax: true));
-          print(state);
         } else {
-          emit(CampaignsLoaded(
-              campaigns: List.from((this.state as CampaignsLoaded).campaigns)
-                ..addAll(apiResponse.result)));
+          isLoadingMore = true;
+          page++;
+          var apiResponse = await campaignRepository.fecthCampaigns(
+              page: page, limit: event.limit);
+          if (apiResponse!.result.length == 0) {
+            emit(CampaignsLoaded(
+                campaigns: List.from((this.state as CampaignsLoaded).campaigns)
+                  ..addAll(apiResponse.result),
+                hasReachMax: true));
+            this.page = 1;
+          } else {
+            emit(CampaignsLoaded(
+                campaigns: List.from((this.state as CampaignsLoaded).campaigns)
+                  ..addAll(apiResponse.result)));
+          }
         }
       }
     } catch (e) {
@@ -76,7 +86,6 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
       emit(CampaignsFailed(error: e.toString()));
     }
   }
-
 
   Future<void> _onRedeemCampaignVoucher(
       RedeemCampaignVoucher event, Emitter<CampaignState> emit) async {

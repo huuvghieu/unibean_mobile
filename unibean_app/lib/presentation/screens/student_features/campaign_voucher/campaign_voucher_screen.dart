@@ -294,9 +294,7 @@ class CampaignVoucherScreen extends StatelessWidget {
         ),
       );
     } else {
-      if (campaignVoucherModel.quantityInStock == 0 ||
-          (campaignDetailModel.startOn.compareTo(DateTime.now().toString()) >
-              0)) {
+      if (campaignVoucherModel.quantityInStock == 0) {
         return Container(
           width: 200 * fem,
           height: 35 * hem,
@@ -305,7 +303,27 @@ class CampaignVoucherScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(10 * fem)),
           child: Center(
             child: Text(
-              'Mua ngay',
+              'Hết ưu đãi',
+              style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      fontSize: 15 * ffem,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+            ),
+          ),
+        );
+      } else if ((campaignDetailModel.startOn
+              .compareTo(DateTime.now().toString()) >
+          0)) {
+        return Container(
+          width: 200 * fem,
+          height: 35 * hem,
+          decoration: BoxDecoration(
+              color: kLowTextColor,
+              borderRadius: BorderRadius.circular(10 * fem)),
+          child: Center(
+            child: Text(
+              'Sắp diễn ra',
               style: GoogleFonts.openSans(
                   textStyle: TextStyle(
                       fontSize: 15 * ffem,

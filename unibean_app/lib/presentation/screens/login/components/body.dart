@@ -42,7 +42,7 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: responsiveSize()),
               Text(
-                'Chào mừng bạn đã quay trở lại!',
+                'Chào mừng bạn đến với Unibean!',
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                         fontSize: 20 * ffem,

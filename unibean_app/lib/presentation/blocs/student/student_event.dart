@@ -8,10 +8,12 @@ final class LoadStudentVouchers extends StudentEvent {
   final int page;
   final int limit;
   final String id;
-  LoadStudentVouchers({this.page = 1, this.limit = 10, required this.id});
+  final String search;
+  LoadStudentVouchers(
+      {this.page = 1, this.limit = 10, required this.id, this.search = ''});
 
   @override
-  List<Object?> get props => [page, limit, id];
+  List<Object?> get props => [page, limit, id, search];
 }
 
 final class LoadStudentTransactions extends StudentEvent {
@@ -163,4 +165,19 @@ final class UpdateVerification extends StudentEvent {
   @override
   List<Object?> get props =>
       [studentId, studentCode, studentCardBack, studentCardFront];
+}
+
+final class LoadOrderDetailById extends StudentEvent {
+  final String studentId;
+  final String orderId;
+
+  LoadOrderDetailById({required this.studentId, required this.orderId});
+
+  @override
+  List<Object?> get props => [studentId, orderId];
+}
+
+final class LoadWishList extends StudentEvent {
+  @override
+  List<Object?> get props => [];
 }

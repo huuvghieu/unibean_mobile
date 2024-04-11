@@ -30,6 +30,9 @@ export 'models/student_features/voucher_student_item_model.dart';
 export 'models/student_features/create_model/create_order_model.dart';
 export 'models/student_features/create_model/create_order_detail_model.dart';
 export 'models/student_features/checkout_model.dart';
+export 'models/student_features/order_detail_model.dart';
+export 'models/student_features/order_detail_detail_model.dart';
+export 'models/student_features/state_order_detail_model.dart';
 
 //store
 export 'models/store_features/transaction_store_model.dart';
@@ -42,3 +45,5 @@ export 'models/store_features/transact_result_model.dart';
 export 'models/store_features/area_model.dart';
 export 'models/store_features/campaign_voucher_information_model.dart';
 export 'models/store_features/bonus_model.dart';
+export 'models/store_features/bonus_transaction_model.dart';
+export 'models/store_features/bonus_detail_model.dart';

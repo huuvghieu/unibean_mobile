@@ -292,7 +292,3 @@ String _formatDatetimeString(String date) {
   return formattedDatetime;
 }
 
-String _formatDateTime(DateTime datetime) {
-  String formattedDatetime = DateFormat("HH:mm - dd/MM/yyyy").format(datetime);
-  return formattedDatetime;
-}

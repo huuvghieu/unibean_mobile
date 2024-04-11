@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';
 import '../../../../widgets/shimmer_widget.dart';
+import 'bonus_card.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -18,9 +19,13 @@ class Body extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return CustomScrollView(
+      controller: context.read<BonusBloc>().scrollController,
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
+          SizedBox(
+            height: 15 * fem,
+          ),
           BlocBuilder<BonusBloc, BonusState>(
             builder: (context, state) {
               if (state is BonusLoading) {
@@ -68,85 +73,25 @@ class Body extends StatelessWidget {
                     ),
                   );
                 }
+
                 return ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: bonuses.length,
+                  itemCount:
+                      state.hasReachedMax ? bonuses.length : bonuses.length + 1,
                   itemBuilder: (context, index) {
-                    var bonus = bonuses[index];
-                    // if (index >= state.transactions!.length) {
-                    //   return Center(
-                    //     child: CircularProgressIndicator(
-                    //       color: kPrimaryColor,
-                    //     ),
-                    //   );
-                    // } else {
-                    //   return TransactionCard(
-                    //     fem:  fem,
-                    //     hem:  hem,
-                    //     ffem:  ffem,
-                    //     transaction: state.transactions![index],
-                    //   );
-                    // }
-                    return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(bottom: 15 * hem),
-                        height: 90 * hem,
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 90 * hem,
-                              margin: EdgeInsets.only(
-                                  right: 15 * fem, left: 15 * fem),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10 * fem),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Color(0x0c000000),
-                                        offset: Offset(0 * fem, 10 * fem),
-                                        blurRadius: 5 * fem)
-                                  ]),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10 * fem),
-                                    child: Container(
-                                      width: 200 * fem,
-                                      child: Text(
-                                          'Bên gửi: ${bonus.storeName}',
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 14 * ffem,
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.3625 * ffem / fem,
-                                              color: Colors.black)),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10 * fem),
-                                    child: Container(
-                                      width: 200 * fem,
-                                      child: Text(
-                                          'Sinh viên nhận: ${bonus.studentName}',
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 14 * ffem,
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.3625 * ffem / fem,
-                                              color: Colors.black)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                //            Positioned(
-                // right: 20 * fem,
-                // top: 10 * hem,
-                // child: _buildAmount(fem, hem, ffem, transaction))
-                          ],
-                        ));
+                    if (index >= state.bonuses.length) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      );
+                    } else {
+                      var bonus = bonuses[index];
+
+                      return BonusCard(
+                          hem: hem, fem: fem, bonus: bonus, ffem: ffem);
+                    }
                   },
                 );
               }

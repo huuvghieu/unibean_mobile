@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/form_2.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/form_2.dart';
 
 class Body2 extends StatelessWidget {
   const Body2({super.key});
@@ -14,7 +14,7 @@ class Body2 extends StatelessWidget {
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return GestureDetector(
-            onTap: () {
+      onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: SingleChildScrollView(

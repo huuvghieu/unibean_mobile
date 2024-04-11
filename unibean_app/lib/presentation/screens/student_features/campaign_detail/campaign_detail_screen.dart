@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
-import '../../../../data/models.dart';
 import 'components/body.dart';
 
 class CampaignDetailScreen extends StatelessWidget {
   static const String routeName = '/campaign-detail-student';
 
-  static Route route({required CampaignModel campaignModel}) {
+  static Route route({required String campaignId}) {
     return MaterialPageRoute(
       builder: (_) => CampaignDetailScreen(
-       campaignModel: campaignModel,
+        campaignId: campaignId,
       ),
       settings: const RouteSettings(arguments: routeName),
     );
   }
 
-  const CampaignDetailScreen({super.key, required this.campaignModel});
+  const CampaignDetailScreen({super.key, required this.campaignId});
 
-  final CampaignModel campaignModel;
+  final String campaignId;
 
   @override
   Widget build(BuildContext context) {
@@ -29,39 +28,39 @@ class CampaignDetailScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-            appBar: AppBar(
-              forceMaterialTransparency: true,
-              elevation: 0,
-           
-              toolbarHeight: 50 * hem,
-              leading: Container(
-                margin: EdgeInsets.only(left: 20 * fem),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back_rounded,
-                        color: Colors.white,
-                        size: 35 * fem,
-                      ),
-                    ),
-                  ],
+        appBar: AppBar(
+          forceMaterialTransparency: true,
+          elevation: 0,
+          toolbarHeight: 50 * hem,
+          leading: Container(
+            margin: EdgeInsets.only(left: 20 * fem),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        '/landing-screen', (Route<dynamic> route) => false);
+                  },
+                  child: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                    size: 35 * fem,
+                  ),
                 ),
-              ),
-              leadingWidth: double.infinity,
-              backgroundColor: Colors.transparent,
-            ),
-            backgroundColor: klighGreyColor,
-            extendBodyBehindAppBar: true,
-            body: Body(
-              id: campaignModel.id,
+              ],
             ),
           ),
+          leadingWidth: double.infinity,
+          backgroundColor: Colors.transparent,
+        ),
+        backgroundColor: klighGreyColor,
+        extendBodyBehindAppBar: true,
+        body: Body(
+          id: campaignId,
+        ),
+      ),
     );
   }
 }

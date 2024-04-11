@@ -118,7 +118,7 @@ class BrandRepositoryImp implements BrandRepository {
 
       http.Response response = await http.get(
           Uri.parse(
-              '$endPoint/$id/campaigns?state=$state&sort=$sort&page=$page&limit=$limit'),
+              '$endPoint/$id/campaigns?stateIds=3&sort=$sort&page=$page&limit=$limit'),
           headers: headers);
 
       if (response.statusCode == 200) {

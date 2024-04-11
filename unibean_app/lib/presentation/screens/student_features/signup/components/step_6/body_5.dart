@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/form_body_5.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/form_body_5.dart';
 
 class Body5 extends StatelessWidget {
   const Body5({super.key});

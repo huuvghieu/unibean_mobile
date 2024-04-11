@@ -153,13 +153,6 @@ class Body extends StatelessWidget {
   }
 }
 
-String _formatDatetimeString(String date) {
-  DateTime dateTime = DateTime.parse(date).add(Duration(hours: 7));
-
-  String formattedDatetime = DateFormat("HH:mm - dd/MM/yyyy").format(dateTime);
-  return formattedDatetime;
-}
-
 String _formatDateTime(DateTime datetime) {
   String formattedDatetime = DateFormat("HH:mm - dd/MM/yyyy").format(datetime);
   return formattedDatetime;

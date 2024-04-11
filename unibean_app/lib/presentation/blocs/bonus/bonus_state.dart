@@ -16,11 +16,12 @@ final class BonusLoading extends BonusState {
 
 final class BonusesLoaded extends BonusState {
   final List<BonusModel> bonuses;
+  final bool hasReachedMax;
 
-  BonusesLoaded({required this.bonuses});
+  BonusesLoaded({required this.bonuses, this.hasReachedMax = false});
 
   @override
-  List<Object?> get props => [bonuses];
+  List<Object?> get props => [bonuses, hasReachedMax];
 }
 
 final class BonusesFailed extends BonusState {
@@ -30,4 +31,18 @@ final class BonusesFailed extends BonusState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class BonusByIdLoading extends BonusState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class BonusByIdLoaded extends BonusState {
+  final BonusDetailModel bonusDetailModel;
+
+  BonusByIdLoaded({required this.bonusDetailModel});
+
+  @override
+  List<Object?> get props => [bonusDetailModel];
 }

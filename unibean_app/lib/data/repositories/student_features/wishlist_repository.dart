@@ -27,10 +27,6 @@ class WishListRepositoryImp extends WishListRepository {
       required bool state}) async {
     try {
       token = await AuthenLocalDataSource.getToken();
-      // final Map<String, String> headers = {
-      //   'Content-Type': 'application/json',
-      //   'Authorization': 'Bearer $token'
-      // };
       Map body = {
         'studentId': studentId,
         'brandId': brandId,
@@ -51,6 +47,10 @@ class WishListRepositoryImp extends WishListRepository {
       if (response.statusCode == 201) {
         final result = jsonDecode(utf8.decode(response.bodyBytes));
         WishListModel wishList = WishListModel.fromJson(result);
+        if (!wishList.status) {
+          await AuthenLocalDataSource.saveUnsubcribeWishListId(
+              wishList.brandId);
+        }
         return wishList;
       } else {
         return null;

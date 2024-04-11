@@ -29,7 +29,23 @@ class AuthenLocalDataSource {
     return token;
   }
 
-    static Future<void> saveStoreId(String storeId) async {
+  static Future<void> saveUnsubcribeWishListId(String wishListId) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('wishListId', wishListId);
+  }
+
+  static Future<String?> getUnsubcribeWishListId() async {
+    final sf = await SharedPreferences.getInstance();
+    String? token = sf.getString('wishListId');
+    return token;
+  }
+
+    static Future<void> removeUnsubcribeWishListId() async {
+    final sf = await SharedPreferences.getInstance();
+    sf.remove('wishListId');
+  }
+
+  static Future<void> saveStoreId(String storeId) async {
     final sf = await SharedPreferences.getInstance();
     await sf.setString('storeId', storeId);
   }
@@ -39,7 +55,6 @@ class AuthenLocalDataSource {
     String? storeId = sf.getString('storeId');
     return storeId;
   }
-
 
   static Future<void> saveVerificationId(String verificationId) async {
     final sf = await SharedPreferences.getInstance();

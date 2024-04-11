@@ -5,7 +5,7 @@ abstract class StudentRepository {
   Future<StudentModel?> fetchStudentById({required String id});
 
   Future<ApiResponse<List<VoucherStudentModel>>?> fetchVoucherStudentId(
-      int? page, int? limit,
+      int? page, int? limit, String? search,
       {required String id});
 
   Future<ApiResponse<List<TransactionModel>>?> fetchTransactionsStudentId(
@@ -42,4 +42,8 @@ abstract class StudentRepository {
       required String studentCode,
       required String studentCardFont,
       required String studentCardBack});
+
+  Future<OrderDetailModel?> fetchOrderDetailByStudentId(
+      {required String studentId, required String orderId});
+
 }

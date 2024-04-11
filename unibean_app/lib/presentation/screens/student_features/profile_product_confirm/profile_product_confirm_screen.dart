@@ -397,20 +397,20 @@ class ProductConfirmScreen extends StatelessWidget {
                                                 quantity: quantity,
                                                 state: true);
                                         detailList.add(detailModel);
-
-                                        CreateOrderModel createOrder =
-                                            CreateOrderModel(
-                                                stationId: stationModel.id,
-                                                amount: state.cart!.total,
-                                                description: '',
-                                                state: true,
-                                                orderDetails: detailList);
-
-                                        context.read<CheckoutBloc>().add(
-                                            ConfirmCheckoutEvent(
-                                                createOrderModel: createOrder));
-                                        context.read<CartBloc>().add(RefreshCart());
                                       }
+                                      CreateOrderModel createOrder =
+                                          CreateOrderModel(
+                                              stationId: stationModel.id,
+                                              amount: state.cart!.total,
+                                              description: '',
+                                              state: true,
+                                              orderDetails: detailList);
+                                      context.read<CheckoutBloc>().add(
+                                          ConfirmCheckoutEvent(
+                                              createOrderModel: createOrder));
+                                      context
+                                          .read<CartBloc>()
+                                          .add(RefreshCart());
                                     }
                                   },
                                   child: Container(

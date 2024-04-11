@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/birthday_form.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_3/drop_down_gender.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/screens/signup_4_screen.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/birthday_form.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_2/drop_down_gender.dart';
 
 import '../../../../../../data/datasource/authen_local_datasource.dart';
+import '../../../../screens.dart';
 
 class FormBody3 extends StatefulWidget {
   const FormBody3({
@@ -136,14 +136,14 @@ class _FormBody3State extends State<FormBody3> {
       createAuthenModel.dateofBirth = widget.dobController.text;
       String createAuthenString = jsonEncode(createAuthenModel);
       AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
-      Navigator.pushNamed(context, SignUp4Screen.routeName);
+      Navigator.pushNamed(context, SignUp3Screen.routeName);
     } else {
       final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
       verifyAuthenModel!.gender = int.parse(genderController.text);
       verifyAuthenModel.dateofBirth = widget.dobController.text;
       String verifyAuthenString = jsonEncode(verifyAuthenModel);
       AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
-      Navigator.pushNamed(context, SignUp4Screen.routeName);
+      Navigator.pushNamed(context, SignUp3Screen.routeName);
     }
   }
 }

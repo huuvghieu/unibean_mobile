@@ -71,23 +71,23 @@ class CampaignListScreen extends StatelessWidget {
           ),
         ),
         leadingWidth: 50 * fem,
-        actions: [
-          InkWell(
-            onTap: () {
-              // _filterModalBottomSheet(context);
-            },
-            child: Container(
-              margin: EdgeInsets.only(right: 20 * fem),
-              width: 20 * fem,
-              height: 20 * fem,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('assets/images/filter-icon.png'),
-                fit: BoxFit.fill,
-              )),
-            ),
-          )
-        ],
+        // actions: [
+        //   InkWell(
+        //     onTap: () {
+        //       // _filterModalBottomSheet(context);
+        //     },
+        //     child: Container(
+        //       margin: EdgeInsets.only(right: 20 * fem),
+        //       width: 20 * fem,
+        //       height: 20 * fem,
+        //       decoration: BoxDecoration(
+        //           image: DecorationImage(
+        //         image: AssetImage('assets/images/filter-icon.png'),
+        //         fit: BoxFit.fill,
+        //       )),
+        //     ),
+        //   )
+        // ],
       ),
       backgroundColor: klighGreyColor,
       body: Body(),

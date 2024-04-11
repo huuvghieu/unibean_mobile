@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
-
-import 'filter_voucher_screen.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 
 class SearchBarCustom extends StatefulWidget {
   const SearchBarCustom({super.key});
@@ -38,6 +38,12 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
               viewConstraints: const BoxConstraints(
                 maxHeight: 400.0,
               ),
+              viewOnSubmitted: (value) async {
+                final studentId = await AuthenLocalDataSource.getStudentId();
+                FocusScope.of(context).unfocus();
+                Navigator.pushNamed(context, VoucherListScreen.routeName,
+                    arguments: <dynamic>[value, studentId]);
+              },
               builder: (BuildContext context, SearchController controller) {
                 return Container(
                   height: 45,
@@ -57,13 +63,9 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                       color: Colors.black54,
                     ),
                     onSubmitted: (value) {
-                      // String searchString = controller.text;
-                      // FocusScope.of(context).unfocus();
-                      // Navigator.pushNamed(context, '/product-list-search-screen',
-                      //     arguments: searchString);
-                      handleSearch(value, context);
+                      FocusScope.of(context).unfocus();
                     },
-                    hintText: 'Tìm kiếm theo tên ưu đãi hoặc thương hiệu',
+                    hintText: 'Tìm kiếm theo tên ưu đãi',
                     hintStyle: MaterialStateProperty.all(
                         const TextStyle(color: Colors.grey)),
                     overlayColor: MaterialStateProperty.all(kPrimaryColor),
@@ -87,11 +89,13 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                   return ListTile(
                     title: Text(item),
                     onTap: () {
-                      setState(() {
+                      setState(() async {
+                        final studentId =
+                            await AuthenLocalDataSource.getStudentId();
                         controller.closeView(item);
                         Navigator.pushNamed(
-                            context, '/product-list-search-screen',
-                            arguments: item);
+                            context, VoucherListScreen.routeName,
+                            arguments: <dynamic>[item, studentId]);
                         FocusScope.of(context).unfocus();
                       });
                     },
@@ -99,51 +103,30 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
                 }).toList();
               }),
         ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          flex: 1,
-          child: Container(
-            height: 45,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          
-            ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(_createRoute());
-              },
-              icon: const Icon(Icons.filter_list_rounded),
-              color: kPrimaryColor,
-              iconSize: 30,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10.0),
+        const SizedBox(width: 20.0),
       ],
     );
   }
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const FilterVoucherScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
+  // Route _createRoute() {
+  //   return PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) =>
+  //         const FilterVoucherScreen(),
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       const begin = Offset(1.0, 0.0);
+  //       const end = Offset.zero;
+  //       const curve = Curves.ease;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+  //       var tween =
+  //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
+  //       return SlideTransition(
+  //         position: animation.drive(tween),
+  //         child: child,
+  //       );
+  //     },
+  //   );
+  // }
 
   void handleSearch(String value, BuildContext context) {
     FocusScope.of(context).unfocus();

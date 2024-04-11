@@ -16,8 +16,11 @@ final class StudentVoucherLoading extends StudentState {
 
 final class StudentVouchersLoaded extends StudentState {
   final List<VoucherStudentModel> voucherModels;
+  final int page;
+  final int limit;
 
-  StudentVouchersLoaded({required this.voucherModels});
+  StudentVouchersLoaded(
+      {required this.voucherModels, this.page = 1, this.limit = 10});
 
   @override
   List<Object?> get props => [voucherModels];
@@ -129,3 +132,30 @@ final class StudentUpdateVerificationSuccess extends StudentState {
   List<Object?> get props => [studentModel];
 }
 
+final class StudentOrderDetailLoading extends StudentState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StudentOrderDetailLoaded extends StudentState {
+  final OrderDetailModel orderDetailModel;
+
+  StudentOrderDetailLoaded({required this.orderDetailModel});
+
+  @override
+  List<Object?> get props => [orderDetailModel];
+}
+
+final class StudentWishlistLoading extends StudentState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class StudentWishlistLoaded extends StudentState {
+  final List<String> wishLists;
+
+  StudentWishlistLoaded({required this.wishLists});
+
+  @override
+  List<Object?> get props => [wishLists];
+}

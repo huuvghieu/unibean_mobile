@@ -2,11 +2,11 @@ export 'student_features/welcome/welcome_screen.dart';
 export 'student_features/landing/landing_screen.dart';
 export 'login/login_screen.dart';
 export 'student_features/signup/screens/signup_1_screen.dart';
-export 'student_features/signup/screens/signup_2_screen.dart';
 export 'student_features/signup/screens/signup_3_screen.dart';
+export 'student_features/signup/screens/signup_2_screen.dart';
 export 'student_features/signup/screens/signup_4_screen.dart';
-export 'student_features/signup/screens/signup_5_screen.dart';
 export 'student_features/signup/screens/signup_6_screen.dart';
+export 'student_features/signup/screens/signup_5_screen.dart';
 export 'student_features/signup/screens/signup_7_screen.dart';
 export 'student_features/signup/screens/signup_8_screen.dart';
 export 'student_features/signup/screens/signup_9_screen.dart';
@@ -28,7 +28,6 @@ export 'student_features/profile_products/product_screen.dart';
 export 'student_features/brand_list/brand_list_screen.dart';
 export 'student_features/qr/qr_screen.dart';
 export 'student_features/qr/qr_voucher_screen.dart';
-export 'student_features/voucher_list/voucher_list_screen.dart';
 export 'student_features/campaign_voucher/campaign_voucher_screen.dart';
 export 'student_features/redeem_voucher/redeem_voucher_screen.dart';
 export 'student_features/profile_order/profile_order_screen.dart';
@@ -44,6 +43,10 @@ export 'student_features/profile_product_confirm/profile_product_confirm_screen.
 export 'student_features/station/station_screen.dart';
 export 'student_features/profile_cart/profile_cart_screen.dart';
 export 'student_features/success_create_order/success_create_order_screen.dart';
+export 'student_features/voucher/voucher_list_screen.dart';
+export 'student_features/profile_order_detail/profile_order_detail_screen.dart';
+export 'student_features/notification/notification_screen.dart';
+export 'student_features/store_list/store_list_screen.dart';
 
 //store
 export 'store_features/transaction/transaction_store_screen.dart';

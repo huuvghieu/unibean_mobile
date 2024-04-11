@@ -24,6 +24,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     on<UpdateStudent>(_onUpdateStudent);
     on<LoadStudentById>(_onLoadStudentById);
     on<UpdateVerification>(_onUpdateVerification);
+    on<LoadOrderDetailById>(_onLoadOrderDetailBydId);
   }
   var isLoadingMore = false;
   int pageTransaction = 1;
@@ -40,8 +41,8 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       LoadStudentVouchers event, Emitter<StudentState> emit) async {
     emit(StudentVoucherLoading());
     try {
-      var apiResponse = await studentRepository
-          .fetchVoucherStudentId(event.page, event.limit, id: event.id);
+      var apiResponse = await studentRepository.fetchVoucherStudentId(
+          event.page, event.limit, id: event.id, event.search);
       emit(StudentVouchersLoaded(voucherModels: apiResponse!.result));
     } catch (e) {
       emit(StudentFaled(error: e.toString()));
@@ -253,7 +254,12 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     try {
       var apiResponse = await studentRepository
           .fetchOrdersStudentId(event.page, event.limit, id: event.id);
-      emit(StudentOrdersLoaded(orderModels: apiResponse!.result));
+      if (apiResponse!.pageSize > apiResponse.totalCount) {
+        emit(StudentOrdersLoaded(
+            orderModels: apiResponse.result, hasReachedMax: true));
+      } else {
+        emit(StudentOrdersLoaded(orderModels: apiResponse.result));
+      }
     } catch (e) {
       emit(StudentFaled(error: e.toString()));
     }
@@ -323,4 +329,22 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       emit(StudentFaled(error: e.toString()));
     }
   }
+
+  Future<void> _onLoadOrderDetailBydId(
+      LoadOrderDetailById event, Emitter<StudentState> emit) async {
+    emit(StudentOrderDetailLoading());
+    try {
+      var apiResponse = await studentRepository.fetchOrderDetailByStudentId(
+          studentId: event.studentId, orderId: event.orderId);
+      if (apiResponse != null) {
+        emit(StudentOrderDetailLoaded(orderDetailModel: apiResponse));
+      } else {
+        emit(StudentFaled(error: 'Lỗi xử lí!'));
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+
 }

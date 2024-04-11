@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/form_body_5.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/form_body_5.dart';
 import 'package:unibean_app/presentation/widgets/text_form_field_default.dart';
-
 
 class Content5 extends StatelessWidget {
   const Content5(

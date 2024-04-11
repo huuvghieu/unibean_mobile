@@ -1,3 +1,5 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,179 +64,222 @@ class StationScreen extends StatelessWidget {
                       color: Colors.white)),
             ),
           ),
-          body: CustomScrollView(
-            slivers: [
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20 * hem,
+          body: BlocListener<InternetBloc, InternetState>(
+            listener: (context, state) {
+              if (state is Connected) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(
+                    elevation: 0,
+                    duration: const Duration(milliseconds: 2000),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Đã kết nối internet',
+                      message: 'Đã kết nối internet!',
+                      contentType: ContentType.success,
                     ),
-                    Text(
-                      'CHỌN TRẠM ĐỂ NHẬN HÀNG',
-                      style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                              fontSize: 16 * ffem,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black)),
-                    ),
-                    SizedBox(
-                      height: 20 * hem,
-                    ),
-                    BlocBuilder<StationBloc, StationState>(
-                        builder: (context, state) {
-                      if (state is StationLoading) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.only(
-                                  bottom: 10, left: 15, right: 15),
-                              child: ShimmerWidget.rectangular(
-                                height: 120,
-                              ),
-                            );
-                          },
-                        );
-                      } else if (state is StationsLoaded) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: state.stations.length,
-                          itemBuilder: (context, index) {
-                            var station = state.stations[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, ProductConfirmScreen.routeName,
-                                    arguments: station);
-                              },
-                              child: Container(
+                  ));
+              } else if (state is NotConnected) {
+                showCupertinoDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: const Text('Không kết nối Internet'),
+                      content: Text('Vui lòng kết nối Internet'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              final stateInternet =
+                                  context.read<InternetBloc>().state;
+                              if (stateInternet is Connected) {
+                                Navigator.pop(context);
+                              } else {}
+                            },
+                            child: const Text('Đồng ý'))
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20 * hem,
+                      ),
+                      Text(
+                        'CHỌN TRẠM ĐỂ NHẬN HÀNG',
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                fontSize: 16 * ffem,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black)),
+                      ),
+                      SizedBox(
+                        height: 20 * hem,
+                      ),
+                      BlocBuilder<StationBloc, StationState>(
+                          builder: (context, state) {
+                        if (state is StationLoading) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return Container(
                                 margin: EdgeInsets.only(
-                                    left: 15 * fem,
-                                    right: 15 * fem,
-                                    bottom: 15 * hem),
-                                width: double.infinity,
-                                height: 120 * hem,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15 * fem),
-                                  color: Colors.white,
+                                    bottom: 10, left: 15, right: 15),
+                                child: ShimmerWidget.rectangular(
+                                  height: 120,
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: 5 * hem,
-                                          left: 5 * fem,
-                                          bottom: 5 * hem),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(10 * fem),
-                                        child: Container(
-                                          width: 110 * fem,
-                                          height: 120 * hem,
-                                          child: Image.network(
-                                            station.image,
-                                            fit: BoxFit.fill,
-                                            loadingBuilder: (context, child,
-                                                loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              return ShimmerWidget.rectangular(
-                                                  height: 160 * hem);
-                                            },
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Image.asset(
-                                                'assets/images/image-404.jpg',
-                                              );
-                                            },
+                              );
+                            },
+                          );
+                        } else if (state is StationsLoaded) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: state.stations.length,
+                            itemBuilder: (context, index) {
+                              var station = state.stations[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, ProductConfirmScreen.routeName,
+                                      arguments: station);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: 15 * fem,
+                                      right: 15 * fem,
+                                      bottom: 15 * hem),
+                                  width: double.infinity,
+                                  height: 120 * hem,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(15 * fem),
+                                    color: Colors.white,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            top: 5 * hem,
+                                            left: 5 * fem,
+                                            bottom: 5 * hem),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10 * fem),
+                                          child: Container(
+                                            width: 110 * fem,
+                                            height: 120 * hem,
+                                            child: Image.network(
+                                              station.image,
+                                              fit: BoxFit.fill,
+                                              loadingBuilder: (context, child,
+                                                  loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return ShimmerWidget
+                                                    .rectangular(
+                                                        height: 160 * hem);
+                                              },
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return Image.asset(
+                                                  'assets/images/image-404.jpg',
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 10 * fem,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          width: 200 * fem,
-                                          // height: 45*hem,
-                                          child: Text(
-                                              'Trạm: ${station.stationName}',
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.openSans(
-                                                  textStyle: TextStyle(
-                                                fontSize: 14 * ffem,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w600,
-                                              ))),
-                                        ),
-                                        SizedBox(
-                                          height: 2 * hem,
-                                        ),
-                                        Container(
-                                          width: 200 * fem,
-                                          child: Text(
-                                              'Địa chỉ: ${station.address}',
-                                              softWrap: true,
-                                              style: GoogleFonts.openSans(
-                                                  textStyle: TextStyle(
-                                                fontSize: 13 * ffem,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal,
-                                              ))),
-                                        ),
-                                        SizedBox(
-                                          height: 2 * hem,
-                                        ),
-                                        Container(
-                                          width: 200 * fem,
-                                          child: Text(
-                                              'Số điện thoại: ${station.phone}',
-                                              softWrap: true,
-                                              style: GoogleFonts.openSans(
-                                                  textStyle: TextStyle(
-                                                fontSize: 13 * ffem,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal,
-                                              ))),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                      SizedBox(
+                                        width: 10 * fem,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            width: 200 * fem,
+                                            // height: 45*hem,
+                                            child: Text(
+                                                'Trạm: ${station.stationName}',
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.openSans(
+                                                    textStyle: TextStyle(
+                                                  fontSize: 14 * ffem,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600,
+                                                ))),
+                                          ),
+                                          SizedBox(
+                                            height: 2 * hem,
+                                          ),
+                                          Container(
+                                            width: 200 * fem,
+                                            child: Text(
+                                                'Địa chỉ: ${station.address}',
+                                                softWrap: true,
+                                                style: GoogleFonts.openSans(
+                                                    textStyle: TextStyle(
+                                                  fontSize: 13 * ffem,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.normal,
+                                                ))),
+                                          ),
+                                          SizedBox(
+                                            height: 2 * hem,
+                                          ),
+                                          Container(
+                                            width: 200 * fem,
+                                            child: Text(
+                                                'Số điện thoại: ${station.phone}',
+                                                softWrap: true,
+                                                style: GoogleFonts.openSans(
+                                                    textStyle: TextStyle(
+                                                  fontSize: 13 * ffem,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.normal,
+                                                ))),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      return Container(
-                          child: Text('Lỗi xử lí, vui lòng thử lại!',
-                              style: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
-                                      fontSize: 16 * ffem,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.3625 * ffem / fem,
-                                      color: Colors.black))));
-                    })
-                  ],
-                ),
-              ]))
-            ],
+                              );
+                            },
+                          );
+                        }
+                        return Container(
+                            child: Text('Lỗi xử lí, vui lòng thử lại!',
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 16 * ffem,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.3625 * ffem / fem,
+                                        color: Colors.black))));
+                      })
+                    ],
+                  ),
+                ]))
+              ],
+            ),
           ),
         ),
       ),

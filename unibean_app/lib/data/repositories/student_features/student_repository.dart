@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models/api_response.dart';
 import 'package:unibean_app/data/models/student_features/create_model/create_order_model.dart';
+import 'package:unibean_app/data/models/student_features/order_detail_model.dart';
 import 'package:unibean_app/data/models/student_features/order_model.dart';
 import 'package:unibean_app/data/models/student_features/student_model.dart';
 import 'package:unibean_app/data/models/student_features/transaction_model.dart';
@@ -48,7 +49,7 @@ class StudentRepositoryImp implements StudentRepository {
 
   @override
   Future<ApiResponse<List<VoucherStudentModel>>?> fetchVoucherStudentId(
-      int? page, int? limit,
+      int? page, int? limit, String? search,
       {required String id}) async {
     try {
       token = await AuthenLocalDataSource.getToken();
@@ -57,25 +58,45 @@ class StudentRepositoryImp implements StudentRepository {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       };
-      http.Response response = await http.get(
-          Uri.parse(
-              '$endPoint/$id/vouchers?sort=$sort&page=$page&limit=$limit'),
-          headers: headers);
-
-      if (response.statusCode == 200) {
-        final result = jsonDecode(utf8.decode(response.bodyBytes));
-        ApiResponse<List<VoucherStudentModel>> apiResponse =
-            ApiResponse<List<VoucherStudentModel>>.fromJson(
-                result,
-                (data) =>
-                    data.map((e) => VoucherStudentModel.fromJson(e)).toList());
-        return apiResponse;
-      } else {
-        return null;
+      if (search != null) {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$id/vouchers?sort=$sort&search=$search&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<VoucherStudentModel>> apiResponse =
+              ApiResponse<List<VoucherStudentModel>>.fromJson(
+                  result,
+                  (data) => data
+                      .map((e) => VoucherStudentModel.fromJson(e))
+                      .toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
+      } else if (search == null || search == '') {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$id/vouchers?sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<VoucherStudentModel>> apiResponse =
+              ApiResponse<List<VoucherStudentModel>>.fromJson(
+                  result,
+                  (data) => data
+                      .map((e) => VoucherStudentModel.fromJson(e))
+                      .toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
       }
     } catch (e) {
       throw Exception(e.toString());
     }
+    return null;
   }
 
   @override
@@ -377,4 +398,31 @@ class StudentRepositoryImp implements StudentRepository {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  Future<OrderDetailModel?> fetchOrderDetailByStudentId(
+      {required String studentId, required String orderId}) async {
+    try {
+      token = await AuthenLocalDataSource.getToken();
+      studentId = (await AuthenLocalDataSource.getStudentId())!;
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+      http.Response response = await http.get(
+          Uri.parse('$endPoint/$studentId/orders/$orderId'),
+          headers: headers);
+
+      if (response.statusCode == 200) {
+        final result = jsonDecode(utf8.decode(response.bodyBytes));
+        OrderDetailModel apiResponse = OrderDetailModel.fromJson(result);
+        return apiResponse;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
 }

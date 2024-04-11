@@ -54,6 +54,7 @@ class _DropDownCampusState extends State<DropDownCampus> {
             return Center(
                 child: Lottie.asset('assets/animations/loading-screen.json',
                     width: 50 * widget.fem, height: 50 * widget.hem));
+            //  return _dropDownCampusLoaded();
           } else if (state is CampusLoaded) {
             campuses = state.campuses.toList();
             return _dropDownCampusLoaded();

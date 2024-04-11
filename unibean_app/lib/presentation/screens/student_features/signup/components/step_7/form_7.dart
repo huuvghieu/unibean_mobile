@@ -255,7 +255,7 @@ class _FormBody7State extends State<FormBody7> {
             phoneNumber:
                 '${countryController.text + phoneNumberController.text}',
             verificationCompleted: (PhoneAuthCredential credential) {
-              Future.delayed(const Duration(seconds: 5), () {
+              Future.delayed(const Duration(seconds: 10), () {
                 Navigator.pushNamed(context, SignUp8Screen.routeName,
                     arguments: phoneNumberController.text);
               });

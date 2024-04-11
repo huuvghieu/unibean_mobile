@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/data/api/push_notification.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/domain/repositories/student_features/brand_repository.dart';
@@ -46,6 +47,8 @@ class _InformationCardBrandDetailState
             setState(() {
               isFollowed = true;
             });
+            PushNotification().initNotifications();
+            PushNotification().localNotiInit();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(
@@ -63,6 +66,8 @@ class _InformationCardBrandDetailState
             setState(() {
               isFollowed = false;
             });
+            PushNotification().initNotifications();
+            PushNotification().localNotiInit();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(

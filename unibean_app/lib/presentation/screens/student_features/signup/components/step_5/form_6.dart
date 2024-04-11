@@ -195,7 +195,7 @@ class _FormBody6State extends State<FormBody6> {
         createAuthenModel.studentBackCard = _selectedBackCard!.path;
         String createAuthenString = jsonEncode(createAuthenModel);
         AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
-        Navigator.pushNamed(context, SignUp7Screen.routeName);
+        Navigator.pushNamed(context, SignUp6Screen.routeName);
       }
     } else {
       if (_selectedBackCard == null || _selectedFrontCard == null) {
@@ -208,7 +208,7 @@ class _FormBody6State extends State<FormBody6> {
         verifyAuthenModel.studentBackCard = _selectedBackCard!.path;
         String verifyAuthenString = jsonEncode(verifyAuthenModel);
         AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
-        Navigator.pushNamed(context, SignUp7Screen.routeName);
+        Navigator.pushNamed(context, SignUp6Screen.routeName);
       }
     }
   }

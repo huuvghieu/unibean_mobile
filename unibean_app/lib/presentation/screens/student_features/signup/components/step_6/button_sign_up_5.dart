@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/cubits/validation/validation_cubit.dart';
-import 'package:unibean_app/presentation/screens/student_features/signup/components/step_5/form_body_5.dart';
+import 'package:unibean_app/presentation/screens/student_features/signup/components/step_6/form_body_5.dart';
 
 class ButtonSignUp5 extends StatelessWidget {
   const ButtonSignUp5({

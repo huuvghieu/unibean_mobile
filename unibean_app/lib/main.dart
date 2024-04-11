@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:unibean_app/data/api/push_notification.dart';
 import 'package:unibean_app/data/repositories.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/firebase_options.dart';
@@ -15,9 +19,45 @@ import 'presentation/blocs/blocs.dart';
 import 'presentation/cubits/validation/validation_cubit.dart';
 import 'presentation/screens/screens.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
+//function to listen to background changes
+Future _firebaseBackgroundMessage(RemoteMessage message) async {
+  if (message.notification != null) {
+    print('Some notification Received!');
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // on background notification tapped
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    if (message.notification != null) {
+      print('Backgorond Notification Tapped');
+      navigatorKey.currentState!
+          .pushNamed(NotificationScreen.routeName, arguments: message);
+    }
+  });
+  await PushNotification().initNotifications();
+  await PushNotification().localNotiInit();
+  //listen to background notification
+  FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
+ 
+  // to handle foreground notifications
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    String payloadData = jsonEncode(message.data);
+    print("Got a message in foreground");
+    if (message.notification != null) {
+      PushNotification.showSimpleNotification(
+          title: message.notification!.title!,
+          body: message.notification!.body!,
+          payload: payloadData);
+    }
+  });
+
+  //-----------
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Future.delayed(const Duration(seconds: 2));
@@ -162,6 +202,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Unibean',
           theme: ThemeData(

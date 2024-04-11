@@ -1,3 +1,5 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unibean_app/presentation/screens/student_features/brand_detail/components/brand_campaigns.dart';
@@ -19,78 +21,118 @@ class Body extends StatelessWidget {
     double ffem = fem * 0.97;
     double baseHeight = 812;
     double hem = MediaQuery.of(context).size.height / baseHeight;
-    return BlocBuilder<BrandBloc, BrandState>(
-      builder: (context, state) {
-        if (state is BrandLoading) {
-          return buildBrandDetailShimmer(fem, hem);
-        } else if (state is BrandByIdLoaded) {
-          return CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 180 * hem,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/background_splash.png'),
-                                      fit: BoxFit.cover))),
-                          SizedBox(
-                            height: 120 * hem,
-                          )
-                        ],
-                      ),
-                      Positioned(
-                        top: 80 * hem,
-                        left: 0 * fem,
-                        right: 0 * fem,
-                        child: BlocProvider(
-                          create: (context) => WishlistBloc(
-                              studentRepository:
-                                  context.read<StudentRepository>(),
-                              wishListRepository:
-                                  context.read<WishListRepository>()),
-                          child: InformationCardBrandDetail(
-                            hem: hem,
-                            fem: fem,
-                            ffem: ffem,
-                            brandModel: state.brand,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  BrandDetailShadow(
-                    fem: fem,
-                    hem: hem,
-                    ffem: ffem,
-                    onTap: () {
-                      _detailModelBottomSheet(context, state.brand);
-                    },
-                    brandModel: state.brand,
-                  ),
-                  SizedBox(
-                    height: 15 * hem,
-                  ),
-                  BlocProvider(
-                    create: (context) => BrandBloc(
-                        brandRepository: context.read<BrandRepository>())
-                      ..add(LoadBrandCampaignsById(id: state.brand.id)),
-                    child: BrandCampaigns(
-                        fem: fem, ffem: ffem, hem: hem, id: state.brand.id),
-                  )
-                ]),
-              )
-            ],
+    return BlocListener<InternetBloc, InternetState>(
+      listener: (context, state) {
+        if (state is Connected) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              elevation: 0,
+              duration: const Duration(milliseconds: 2000),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Đã kết nối internet',
+                message: 'Đã kết nối internet!',
+                contentType: ContentType.success,
+              ),
+            ));
+        } else if (state is NotConnected) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: const Text('Không kết nối Internet'),
+                content: Text('Vui lòng kết nối Internet'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        final stateInternet =
+                            context.read<InternetBloc>().state;
+                        if (stateInternet is Connected) {
+                          Navigator.pop(context);
+                        } else {}
+                      },
+                      child: const Text('Đồng ý'))
+                ],
+              );
+            },
           );
         }
-        return Container();
       },
+      child: BlocBuilder<BrandBloc, BrandState>(
+        builder: (context, state) {
+          if (state is BrandLoading) {
+            return buildBrandDetailShimmer(fem, hem);
+          } else if (state is BrandByIdLoaded) {
+            return CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 180 * hem,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/background_splash.png'),
+                                        fit: BoxFit.cover))),
+                            SizedBox(
+                              height: 120 * hem,
+                            )
+                          ],
+                        ),
+                        Positioned(
+                          top: 80 * hem,
+                          left: 0 * fem,
+                          right: 0 * fem,
+                          child: BlocProvider(
+                            create: (context) => WishlistBloc(
+                                studentRepository:
+                                    context.read<StudentRepository>(),
+                                wishListRepository:
+                                    context.read<WishListRepository>()),
+                            child: InformationCardBrandDetail(
+                              hem: hem,
+                              fem: fem,
+                              ffem: ffem,
+                              brandModel: state.brand,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    BrandDetailShadow(
+                      fem: fem,
+                      hem: hem,
+                      ffem: ffem,
+                      onTap: () {
+                        _detailModelBottomSheet(context, state.brand);
+                      },
+                      brandModel: state.brand,
+                    ),
+                    SizedBox(
+                      height: 15 * hem,
+                    ),
+                    BlocProvider(
+                      create: (context) => BrandBloc(
+                          brandRepository: context.read<BrandRepository>())
+                        ..add(LoadBrandCampaignsById(id: state.brand.id)),
+                      child: BrandCampaigns(
+                          fem: fem, ffem: ffem, hem: hem, id: state.brand.id),
+                    )
+                  ]),
+                )
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
     );
   }
 }
