@@ -9,11 +9,34 @@ final class LoadStudentVouchers extends StudentEvent {
   final int limit;
   final String id;
   final String search;
-  LoadStudentVouchers(
-      {this.page = 1, this.limit = 10, required this.id, this.search = ''});
+
+  LoadStudentVouchers({
+    this.page = 1,
+    this.limit = 10,
+    required this.id,
+    this.search = '',
+  });
 
   @override
   List<Object?> get props => [page, limit, id, search];
+}
+
+final class LoadMoreStudentVouchers extends StudentEvent {
+  final int page;
+  final int limit;
+  final String search;
+  final String id;
+  final ScrollController scrollController;
+
+  LoadMoreStudentVouchers(
+    this.scrollController, {
+    required this.id,
+    this.page = 1,
+    this.limit = 10,
+    this.search = '',
+  });
+  @override
+  List<Object?> get props => [page, limit, search, scrollController, id];
 }
 
 final class LoadStudentTransactions extends StudentEvent {

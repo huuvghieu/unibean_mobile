@@ -115,20 +115,43 @@ class BrandRepositoryImp implements BrandRepository {
       if (limit == null) {
         limit = this.limit;
       }
+      final studentModel = await AuthenLocalDataSource.getStudent();
+      if (studentModel == null) {
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$id/campaigns?stateIds=3&sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
 
-      http.Response response = await http.get(
-          Uri.parse(
-              '$endPoint/$id/campaigns?stateIds=3&sort=$sort&page=$page&limit=$limit'),
-          headers: headers);
-
-      if (response.statusCode == 200) {
-        final result = jsonDecode(utf8.decode(response.bodyBytes));
-        ApiResponse<List<CampaignModel>> apiResponse =
-            ApiResponse<List<CampaignModel>>.fromJson(result,
-                (data) => data.map((e) => CampaignModel.fromJson(e)).toList());
-        return apiResponse;
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<CampaignModel>> apiResponse =
+              ApiResponse<List<CampaignModel>>.fromJson(
+                  result,
+                  (data) =>
+                      data.map((e) => CampaignModel.fromJson(e)).toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
       } else {
-        return null;
+        String majorId = studentModel.majorId;
+        String campusId = studentModel.campusId;
+        http.Response response = await http.get(
+            Uri.parse(
+                '$endPoint/$id/campaigns?majorIds=$majorId&campusIds=$campusId&stateIds=3&sort=$sort&page=$page&limit=$limit'),
+            headers: headers);
+
+        if (response.statusCode == 200) {
+          final result = jsonDecode(utf8.decode(response.bodyBytes));
+          ApiResponse<List<CampaignModel>> apiResponse =
+              ApiResponse<List<CampaignModel>>.fromJson(
+                  result,
+                  (data) =>
+                      data.map((e) => CampaignModel.fromJson(e)).toList());
+          return apiResponse;
+        } else {
+          return null;
+        }
       }
     } catch (e) {
       throw Exception(e.toString());

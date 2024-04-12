@@ -7,6 +7,8 @@ import 'package:unibean_app/presentation/screens/student_features/profile/compon
 
 import '../../../config/constants.dart';
 import '../../../widgets/app_bar_campaign.dart';
+import '../../../widgets/unverified_screen.dart';
+import '../../screens.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -25,9 +27,10 @@ class ProfileScreen extends StatelessWidget {
 
   Widget authenScreen(roleState, fem, hem, ffem, context) {
     if (roleState is Unverified) {
-      return _buildVerifiedStudent(fem, hem, ffem, '');
+      return _buildVerifiedStudent(fem, hem, ffem, '', roleState);
     } else if (roleState is Verified) {
-      return _buildVerifiedStudent(fem, hem, ffem, roleState.studentModel.id);
+      return _buildVerifiedStudent(
+          fem, hem, ffem, roleState.studentModel.id, roleState);
     }
     return Scaffold(
         appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
@@ -40,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildVerifiedStudent(
-      double fem, double hem, double ffem, String studentId) {
+      double fem, double hem, double ffem, String studentId, roleState) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -61,13 +64,46 @@ class ProfileScreen extends StatelessWidget {
             // SvgPicture.asset('assets/icons/notification-icon.svg')
             Padding(
               padding: EdgeInsets.only(right: 20 * fem),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                  size: 30 * fem,
-                ),
-                onPressed: () {},
+              child: BlocBuilder<NotificationBloc, NotificationState>(
+                builder: (context, state) {
+                  if (state is NewNotification) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.notifications_active_rounded,
+                        color: Colors.yellow,
+                        size: 25 * fem,
+                      ),
+                      onPressed: () {
+                        if (roleState is Unverified) {
+                          Navigator.pushNamed(
+                              context, UnverifiedScreen.routeName);
+                        } else {
+                          context
+                              .read<NotificationBloc>()
+                              .add(LoadNotification());
+                          Navigator.pushNamed(
+                              context, NotificationListScreen.routeName);
+                        }
+                      },
+                    );
+                  }
+                  return IconButton(
+                    icon: Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                      size: 25 * fem,
+                    ),
+                    onPressed: () {
+                      if (roleState is Unverified) {
+                        Navigator.pushNamed(
+                            context, UnverifiedScreen.routeName);
+                      } else {
+                        Navigator.pushNamed(
+                            context, NotificationListScreen.routeName);
+                      }
+                    },
+                  );
+                },
               ),
             ),
           ],

@@ -32,7 +32,7 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
     try {
       var apiResponse = await campaignRepository.fecthCampaigns(
           page: event.page, limit: event.limit);
-      if (apiResponse!.totalCount == apiResponse.pageSize) {
+      if (apiResponse!.totalCount < apiResponse.pageSize) {
         emit(CampaignsLoaded(
             campaigns: apiResponse.result.toList(), hasReachMax: true));
       } else {

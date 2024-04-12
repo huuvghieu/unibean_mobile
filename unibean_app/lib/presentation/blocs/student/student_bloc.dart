@@ -12,6 +12,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
 
   StudentBloc({required this.studentRepository}) : super(StudentInitial()) {
     on<LoadStudentVouchers>(_onLoadStudentVouchers);
+    on<LoadMoreStudentVouchers>(_onLoadMoreVouchers);
     on<LoadStudentTransactions>(_onLoadStudentTransactions);
     on<LoadStudentOrders>(_onLoadStudentOrder);
     on<LoadMoreTransactions>(_onLoadMoreTransactions);
@@ -34,6 +35,8 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
   int pageOrderTransaction = 1;
 
   int pageOrder = 1;
+
+  int pageVouchers = 1;
   var isLoadingMoreOrder = false;
 
 //--------------------
@@ -42,8 +45,50 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     emit(StudentVoucherLoading());
     try {
       var apiResponse = await studentRepository.fetchVoucherStudentId(
-          event.page, event.limit, id: event.id, event.search);
-      emit(StudentVouchersLoaded(voucherModels: apiResponse!.result));
+          event.page, event.limit, event.search,
+          id: event.id);
+      if (apiResponse!.totalCount < apiResponse.pageSize) {
+        emit(StudentVouchersLoaded(
+            voucherModels: apiResponse.result.toList(), hasReachedMax: true));
+      } else {
+        emit(StudentVouchersLoaded(voucherModels: apiResponse.result.toList()));
+      }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMoreVouchers(
+      LoadMoreStudentVouchers event, Emitter<StudentState> emit) async {
+    try {
+      if (event.scrollController.position.pixels ==
+          event.scrollController.position.maxScrollExtent) {
+        if ((this.state as StudentVouchersLoaded).hasReachedMax) {
+          emit(StudentVouchersLoaded(
+              voucherModels: List.from(
+                  (this.state as StudentVouchersLoaded).voucherModels),
+              hasReachedMax: true));
+        } else {
+          isLoadingMore = true;
+          pageVouchers++;
+          var apiResponse = await studentRepository.fetchVoucherStudentId(
+              pageVouchers, event.limit, event.search,
+              id: event.id);
+          if (apiResponse!.result.length == 0) {
+            emit(StudentVouchersLoaded(
+                voucherModels: List.from(
+                    (this.state as StudentVouchersLoaded).voucherModels)
+                  ..addAll(apiResponse.result),
+                hasReachedMax: true));
+            this.pageVouchers = 1;
+          } else {
+            emit(StudentVouchersLoaded(
+                voucherModels: List.from(
+                    (this.state as StudentVouchersLoaded).voucherModels)
+                  ..addAll(apiResponse.result)));
+          }
+        }
+      }
     } catch (e) {
       emit(StudentFaled(error: e.toString()));
     }
@@ -345,6 +390,4 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       emit(StudentFaled(error: e.toString()));
     }
   }
-
-
 }

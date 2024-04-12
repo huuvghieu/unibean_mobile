@@ -191,7 +191,11 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
         emit(ScanVoucherSuccess(result: result));
       } else {
         String error = apiResponse.values.first;
+        if(error == '["Khuyến mãi không hợp lệ"]'){
+             emit(ScanVoucherFailed(error: 'Khuyến mãi không hợp lệ'));
+        }else{
         emit(ScanVoucherFailed(error: error));
+        }
       }
     } catch (e) {
       emit(StoreFailed(error: e.toString()));
@@ -266,8 +270,12 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
         emit(StoreCampaigVoucherInforSuccess(
             campaignVoucherInformationModel: result!));
       } else {
-        var result = apiResponse.values.first;
-        emit(StoreCampaignVoucherInforFailed(error: result!));
+        String error = apiResponse.values.first;
+        if(error == '["Khuyến mãi không hợp lệ"]'){
+             emit(StoreCampaignVoucherInforFailed(error: 'Khuyến mãi không hợp lệ'));
+        }else{
+        emit(StoreCampaignVoucherInforFailed(error: error));
+        }
       }
     } catch (e) {
       emit(StoreCampaignVoucherInforFailed(error: e.toString()));

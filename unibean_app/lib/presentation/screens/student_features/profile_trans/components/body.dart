@@ -8,6 +8,7 @@ import 'package:unibean_app/presentation/screens/student_features/profile_trans/
 
 import '../../../../../domain/repositories.dart';
 import '../../../../blocs/blocs.dart';
+import '../../../screens.dart';
 import 'all_transaction.dart';
 import 'bonus_transaction.dart';
 import 'challenge_transaction.dart';
@@ -102,13 +103,36 @@ class Body extends StatelessWidget {
                 actions: [
                   Padding(
                     padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: 25 * fem,
-                      ),
-                      onPressed: () {},
+                    child: BlocBuilder<NotificationBloc, NotificationState>(
+                      builder: (context, state) {
+                        if (state is NewNotification) {
+                          return IconButton(
+                            icon: Icon(
+                              Icons.notifications_active_rounded,
+                              color: Colors.yellow,
+                              size: 25 * fem,
+                            ),
+                            onPressed: () {
+                              context
+                                  .read<NotificationBloc>()
+                                  .add(LoadNotification());
+                              Navigator.pushNamed(
+                                  context, NotificationListScreen.routeName);
+                            },
+                          );
+                        }
+                        return IconButton(
+                          icon: Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                            size: 25 * fem,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, NotificationListScreen.routeName);
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],

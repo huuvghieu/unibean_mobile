@@ -16,14 +16,14 @@ final class StudentVoucherLoading extends StudentState {
 
 final class StudentVouchersLoaded extends StudentState {
   final List<VoucherStudentModel> voucherModels;
-  final int page;
-  final int limit;
+
+  final bool hasReachedMax;
 
   StudentVouchersLoaded(
-      {required this.voucherModels, this.page = 1, this.limit = 10});
+      {required this.voucherModels, this.hasReachedMax = false});
 
   @override
-  List<Object?> get props => [voucherModels];
+  List<Object?> get props => [voucherModels, hasReachedMax];
 }
 
 final class StudentFaled extends StudentState {

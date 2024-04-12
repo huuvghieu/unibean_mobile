@@ -40,7 +40,7 @@ class AuthenLocalDataSource {
     return token;
   }
 
-    static Future<void> removeUnsubcribeWishListId() async {
+  static Future<void> removeUnsubcribeWishListId() async {
     final sf = await SharedPreferences.getInstance();
     sf.remove('wishListId');
   }
@@ -115,6 +115,25 @@ class AuthenLocalDataSource {
       Map<String, dynamic> json = jsonDecode(storeString);
       StoreModel? storeModel = StoreModel.fromJson(json);
       return storeModel;
+    }
+  }
+
+  static Future<void> saveNotification(String notificationString) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('notiString', notificationString);
+  }
+
+  static Future<List<NotificationModel>?> getNotifications() async {
+    final sf = await SharedPreferences.getInstance();
+    String? notiString = sf.getString('notiString');
+    if (notiString == null) {
+      return null;
+    } else {
+      final List<dynamic> jsonList = jsonDecode(notiString);
+      List<NotificationModel> listNotification = jsonList
+          .map((e) => NotificationModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+      return listNotification;
     }
   }
 

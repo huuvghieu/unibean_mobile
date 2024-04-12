@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
+import 'package:unibean_app/data/models.dart';
+import 'package:unibean_app/presentation/blocs/notification/notification_bloc.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
-
+import 'package:http/http.dart' as http;
 import '../../main.dart';
 import '../repositories.dart';
 
@@ -106,21 +110,45 @@ class PushNotification {
         arguments: notificationResponse);
   }
 
+  static Future<String> _base64encodedImage(String url) async {
+    final http.Response response = await http.get(Uri.parse(url));
+    final String base64Data = base64Encode(response.bodyBytes);
+    return base64Data;
+  }
+
   // show a simple notification
   static Future showSimpleNotification({
     required String title,
     required String body,
     required String payload,
   }) async {
-    const AndroidNotificationDetails androidNotificationDetails =
+    final String largeIcon =
+        await _base64encodedImage('https://dummyimage.com/48x48');
+    final String bigPicture =
+        await _base64encodedImage('https://dummyimage.com/400x800');
+    final BigPictureStyleInformation bigPictureStyleInformation =
+        BigPictureStyleInformation(
+            ByteArrayAndroidBitmap.fromBase64String(
+                bigPicture), //Base64AndroidBitmap(bigPicture),
+            largeIcon: ByteArrayAndroidBitmap.fromBase64String(largeIcon),
+            contentTitle: title,
+            htmlFormatContentTitle: true,
+            summaryText: body,
+            htmlFormatSummaryText: true);
+
+    final AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('your channel id', 'your channel name',
             channelDescription: 'your channel description',
             importance: Importance.max,
             priority: Priority.high,
+            styleInformation: bigPictureStyleInformation,
             ticker: 'ticker');
-    const NotificationDetails notificationDetails =
+    final NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin
         .show(0, title, body, notificationDetails, payload: payload);
+    notificationBloc.add(AddNewNotification(
+        notificationModel:
+            NotificationModel(title: title, body: body, payload: payload)));
   }
 }

@@ -230,6 +230,9 @@ class AppRouter {
       case WishListScreen.routeName:
         return WishListScreen.route();
 
+      case NotificationListScreen.routeName:
+        return NotificationListScreen.route();
+
       //Store
       case TransactionStoreScreen.routeName:
         return TransactionStoreScreen.route();

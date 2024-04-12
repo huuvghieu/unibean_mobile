@@ -28,6 +28,8 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
   }
 }
 
+final notificationBloc = NotificationBloc();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -35,7 +37,7 @@ Future<void> main() async {
   // on background notification tapped
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
-      print('Backgorond Notification Tapped');
+      print('Backgroud Notification Tapped');
       navigatorKey.currentState!
           .pushNamed(NotificationScreen.routeName, arguments: message);
     }
@@ -44,7 +46,7 @@ Future<void> main() async {
   await PushNotification().localNotiInit();
   //listen to background notification
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
- 
+
   // to handle foreground notifications
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     String payloadData = jsonEncode(message.data);
@@ -116,6 +118,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => InternetBloc()),
+          BlocProvider(create: (context) => notificationBloc..add(LoadNotification())),
           BlocProvider(create: (context) => LandingScreenBloc()),
           BlocProvider(
               create: (context) =>

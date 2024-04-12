@@ -22,16 +22,23 @@ class CampaignCarousel extends StatefulWidget {
 
 class _CampaignCarouselState extends State<CampaignCarousel> {
   int activeIndex = 0;
+  late List<CampaignModel> camps;
   @override
   void initState() {
+    if (widget.campaigns.length >= 3) {
+      camps = [
+        widget.campaigns[0],
+        widget.campaigns[1],
+        widget.campaigns[2],
+      ];
+    } else if (widget.campaigns.length < 3) {
+      camps = widget.campaigns;
+    }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    List<CampaignModel> camps = [
-      widget.campaigns[0],
-    ];
-    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -47,7 +54,7 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                   });
                 },
               ),
-              items: widget.campaigns.map((campaign) {
+              items: camps.map((campaign) {
                 return Builder(
                   builder: (BuildContext context) {
                     return GestureDetector(
@@ -64,9 +71,9 @@ class _CampaignCarouselState extends State<CampaignCarousel> {
                       child: Container(
                         width: 300,
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

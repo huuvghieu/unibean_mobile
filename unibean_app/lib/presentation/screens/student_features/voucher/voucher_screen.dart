@@ -7,7 +7,6 @@ import 'package:unibean_app/presentation/screens/student_features/voucher/compon
 import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../config/constants.dart';
-import '../../../widgets/app_bar_campaign.dart';
 
 class VoucherScreen extends StatelessWidget {
   static const String routeName = '/voucher-student';
@@ -50,15 +49,14 @@ class VoucherScreen extends StatelessWidget {
   }
 
   Widget _buildUnverified(double fem, double hem, double ffem) {
-    return Scaffold(
-        appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
-        body: Container(
-            color: klighGreyColor,
-            child: Center(
-                child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem))));
+    return Container(
+        color: klighGreyColor,
+        child:
+            Center(child: CardForUnVerified(fem: fem, hem: hem, ffem: ffem)));
   }
 
-  Widget _buildVerifiedStudent(double fem, double hem, double ffem, String studentId) {
+  Widget _buildVerifiedStudent(
+      double fem, double hem, double ffem, String studentId) {
     return BlocBuilder<StudentBloc, StudentState>(
       builder: (context, state) {
         if (state is StudentVouchersLoaded) {

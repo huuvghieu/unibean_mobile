@@ -33,6 +33,7 @@ export 'models/student_features/checkout_model.dart';
 export 'models/student_features/order_detail_model.dart';
 export 'models/student_features/order_detail_detail_model.dart';
 export 'models/student_features/state_order_detail_model.dart';
+export 'models/student_features/notification_model.dart';
 
 //store
 export 'models/store_features/transaction_store_model.dart';

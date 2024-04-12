@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
+
+import '../blocs/blocs.dart';
+import 'unverified_screen.dart';
 
 class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
   const AppBarCampaign({
@@ -15,6 +20,7 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final roleState = context.read<RoleAppBloc>().state;
     return AppBar(
       elevation: 0,
       flexibleSpace: Container(
@@ -31,20 +37,50 @@ class AppBarCampaign extends StatelessWidget implements PreferredSizeWidget {
             textStyle: TextStyle(
                 fontSize: 22 * ffem,
                 fontWeight: FontWeight.w900,
-                height: 1.3625 * ffem / fem,
                 color: Colors.white)),
       ),
       actions: [
         // SvgPicture.asset('assets/icons/notification-icon.svg')
         Padding(
           padding: EdgeInsets.only(right: 20 * fem),
-          child: IconButton(
-            icon: Icon(
-              Icons.notifications,
-              color: Colors.white,
-              size: 25 * fem,
-            ),
-            onPressed: () {},
+          child: BlocBuilder<NotificationBloc, NotificationState>(
+            builder: (context, state) {
+              if (state is NewNotification) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.notifications_active_rounded,
+                    color: Colors.yellow,
+                    size: 25 * fem,
+                  ),
+                  onPressed: () {
+                    if (roleState is Unverified) {
+                      Navigator.pushNamed(context, UnverifiedScreen.routeName);
+                    } else if (roleState is StoreRole) {
+                    } else {
+                      context.read<NotificationBloc>().add(LoadNotification());
+                      Navigator.pushNamed(
+                          context, NotificationListScreen.routeName);
+                    }
+                  },
+                );
+              }
+              return IconButton(
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                  size: 25 * fem,
+                ),
+                onPressed: () {
+                  if (roleState is Unverified) {
+                    Navigator.pushNamed(context, UnverifiedScreen.routeName);
+                  } else if (roleState is StoreRole) {
+                  } else {
+                    Navigator.pushNamed(
+                        context, NotificationListScreen.routeName);
+                  }
+                },
+              );
+            },
           ),
         ),
       ],

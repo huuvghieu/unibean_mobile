@@ -48,6 +48,7 @@ export 'student_features/profile_order_detail/profile_order_detail_screen.dart';
 export 'student_features/notification/notification_screen.dart';
 export 'student_features/store_list/store_list_screen.dart';
 export 'student_features/wishlist/wishlist_screen.dart';
+export 'student_features/notification/notification_list_screen.dart';
 
 //store
 export 'store_features/transaction/transaction_store_screen.dart';

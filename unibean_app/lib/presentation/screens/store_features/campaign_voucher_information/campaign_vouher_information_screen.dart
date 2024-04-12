@@ -190,7 +190,7 @@ class CampaignVoucherInformationScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${campaginVoucherInformation.brandName}',
+                            '${campaginVoucherInformation.campaignName}',
                             textAlign: TextAlign.justify,
                             softWrap: true,
                             style: GoogleFonts.openSans(

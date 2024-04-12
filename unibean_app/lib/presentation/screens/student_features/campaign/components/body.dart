@@ -15,7 +15,6 @@ import '../../../../widgets/brand_card.dart';
 import '../../../../widgets/card_for_unverified.dart';
 import '../../../../widgets/unverified_screen.dart';
 import '../../../screens.dart';
-import 'campaign_card.dart';
 import 'campaign_carousel.dart';
 import 'campaign_list_card.dart';
 import 'membership_card.dart';
@@ -328,109 +327,6 @@ class _BodyState extends State<Body> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 5 * hem,
-                    ),
-
-                    //Đề xuất cho bạn
-                    Container(
-                      color: kbgWhiteColor,
-                      padding: EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 10 * fem),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ĐỀ XUẤT CHO BẠN',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  )),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    if (roleState is Unverified) {
-                                      Navigator.pushNamed(
-                                          context, UnverifiedScreen.routeName);
-                                    } else {
-                                      Navigator.pushNamed(context,
-                                          CampaignListScreen.routeName);
-                                    }
-                                  },
-                                  child: Container(
-                                    height: 22 * hem,
-                                    width: 22 * fem,
-                                    margin: EdgeInsets.only(left: 8 * fem),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(80)),
-                                    child: Icon(
-                                      Icons.arrow_forward_rounded,
-                                      size: 18 * fem,
-                                      color: kDarkPrimaryColor,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10 * hem,
-                          ),
-                          BlocBuilder<CampaignBloc, CampaignState>(
-                            builder: (context, state) {
-                              if (state is CampaignsLoaded) {
-                                return SizedBox(
-                                    height: 250 * hem,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: 2,
-                                      itemBuilder: (context, index) {
-                                        return CampaignCard(
-                                          fem: fem,
-                                          hem: hem,
-                                          ffem: ffem,
-                                          campaignModel: state.campaigns[index],
-                                          onTap: () {
-                                            if (roleState is Unverified) {
-                                              Navigator.pushNamed(context,
-                                                  UnverifiedScreen.routeName);
-                                            } else {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  CampaignDetailScreen
-                                                      .routeName,
-                                                  arguments:
-                                                      state.campaigns[index].id);
-                                            }
-                                          },
-                                        );
-                                      },
-                                    ));
-                              }
-                              return Container(
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 10 * hem,
-                          ),
-                        ],
-                      ),
-                    ),
-
                     SizedBox(
                       height: 5 * hem,
                     ),

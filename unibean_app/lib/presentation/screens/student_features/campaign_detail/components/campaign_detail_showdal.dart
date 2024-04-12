@@ -51,7 +51,7 @@ class CampaignDetailShowdal extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(left: 5 * fem, top: 5 * hem),
-              height: campaignDetailModel.condition.length >= 200 ? 75 : 35, 
+              height: campaignDetailModel.condition.length >= 200 ? 75 : 35,
               child: HtmlWidget(
                 '${campaignDetailModel.condition}',
                 textStyle: GoogleFonts.openSans(
@@ -64,7 +64,7 @@ class CampaignDetailShowdal extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10*hem,
+              height: 10 * hem,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,8 +80,12 @@ class CampaignDetailShowdal extends StatelessWidget {
                   )),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 3*fem, top: 2*hem),
-                  child: Icon(Icons.arrow_forward_ios, size: 15, color: kPrimaryColor,))
+                    padding: EdgeInsets.only(left: 3 * fem, top: 2 * hem),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 15,
+                      color: kPrimaryColor,
+                    ))
               ],
             )
           ],
@@ -90,4 +94,3 @@ class CampaignDetailShowdal extends StatelessWidget {
     );
   }
 }
-
