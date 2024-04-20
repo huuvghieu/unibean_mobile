@@ -80,7 +80,8 @@ class Body extends StatelessWidget {
                 toolbarHeight: 50 * hem,
                 leading: InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        '/landing-screen', (Route<dynamic> route) => false);
                   },
                   child: Icon(
                     Icons.arrow_back_rounded,

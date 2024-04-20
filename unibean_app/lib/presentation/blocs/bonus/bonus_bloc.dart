@@ -28,7 +28,7 @@ class BonusBloc extends Bloc<BonusEvent, BonusState> {
     try {
       var apiResponse = await bonusRepository.fecthBonuses(
           page: event.page, limit: event.limit);
-      if (apiResponse!.pageSize == apiResponse.totalCount) {
+      if (apiResponse!.result.length == apiResponse.totalCount) {
         emit(BonusesLoaded(
             bonuses: apiResponse.result.toList(), hasReachedMax: true));
       } else {

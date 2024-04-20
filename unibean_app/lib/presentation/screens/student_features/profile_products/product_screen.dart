@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile_products/components/body.dart';
 
-import '../../../widgets/app_bar_campaign.dart';
 
 class ProductScreen extends StatelessWidget {
   static const String routeName = '/profile-product';
@@ -31,7 +31,26 @@ class ProductScreen extends StatelessWidget {
         if (state is ProductLoading) {
           return SafeArea(
             child: Scaffold(
-              appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+              appBar: AppBar(
+                elevation: 0,
+                flexibleSpace: Container(
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image:
+                              AssetImage('assets/images/background_splash.png'),
+                          fit: BoxFit.cover)),
+                ),
+                toolbarHeight: 50 * hem,
+                centerTitle: true,
+                title: Text(
+                  'UniBean',
+                  style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                          fontSize: 22 * ffem,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white)),
+                ),
+              ),
               body: Center(
                 child: Lottie.asset('assets/animations/loading-screen.json'),
               ),

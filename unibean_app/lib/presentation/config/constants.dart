@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 // import 'package:hive/hive.dart';
 
 const kAnimationDuration = Duration(milliseconds: 200);
@@ -66,3 +67,41 @@ String timeOfDayToString(TimeOfDay timeOfDay) {
   // Format the TimeOfDay object into a string
   return '${timeOfDay.hour}:${timeOfDay.minute}';
 }
+
+ Color checkColorState(String stateName) {
+    if (stateName == 'Đã hủy') {
+      return Colors.red;
+    } else {
+      return kPrimaryColor;
+    }
+  }
+
+  IndicatorStyle checkIndicatorStyle(String stateName) {
+    if (stateName == 'Đã hủy') {
+      return IndicatorStyle(
+          width: 50,
+          height: 50,
+          indicator: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100 ),
+                  color: Colors.red[200]),
+              child: Icon(
+                Icons.cancel_outlined,
+                color: Colors.red,
+                size: 25,
+              )));
+    } else {
+      return IndicatorStyle(
+          width: 50,
+          height: 50,
+          indicator: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: const Color.fromARGB(255, 178, 247, 180)),
+              child: Icon(
+                Icons.check_rounded,
+                color: kPrimaryColor,
+                size: 25,
+              )));
+    }
+  }

@@ -48,10 +48,17 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
           event.page, event.limit, event.search,
           id: event.id);
       if (apiResponse!.totalCount < apiResponse.pageSize) {
+          var vouchers = apiResponse.result.toList();
+        vouchers.sort((a, b) => b.dateBought.compareTo(a.dateBought));
+        vouchers.sort((a, b) => a.isUsed ? 1 : -1);
         emit(StudentVouchersLoaded(
-            voucherModels: apiResponse.result.toList(), hasReachedMax: true));
+            voucherModels: vouchers, hasReachedMax: true));
       } else {
-        emit(StudentVouchersLoaded(voucherModels: apiResponse.result.toList()));
+        var vouchers = apiResponse.result.toList();
+        vouchers.sort((a, b) => b.dateBought.compareTo(a.dateBought));
+        vouchers.sort((a, b) => a.isUsed ? 1 : -1);
+
+        emit(StudentVouchersLoaded(voucherModels: vouchers));
       }
     } catch (e) {
       emit(StudentFaled(error: e.toString()));

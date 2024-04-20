@@ -97,7 +97,7 @@ class Body extends StatelessWidget {
                                   color: Colors.grey)),
                         ),
                         Container(
-                          width: 120 * fem,
+                          width: 200 * fem,
                           child: Text(
                             '$voucherName',
                             textAlign: TextAlign.end,

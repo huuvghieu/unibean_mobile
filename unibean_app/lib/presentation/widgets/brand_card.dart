@@ -37,14 +37,20 @@ class BrandCard extends StatelessWidget {
         margin: EdgeInsets.only(left: 5 * fem, right: 5 * fem),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10 * fem),
-              child: Container(
-                width: 80 * fem,
-                height: 80 * hem,
-                decoration: BoxDecoration(
-                  
-                ),
+            Container(
+              width: 80 * fem,
+              height: 80 * hem,
+              // decoration: BoxDecoration(
+              //   boxShadow: [
+              //     BoxShadow(
+              //       color: Colors.black26,
+              //       blurRadius: 5.0,
+              //       offset: Offset(2, 0), // Adjust the offset as needed
+              //     ),
+              //   ],
+              // ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10 * fem),
                 child: Image.network(
                   brandModel.logo,
                   fit: BoxFit.cover,

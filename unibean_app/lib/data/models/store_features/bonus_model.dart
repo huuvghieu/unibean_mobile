@@ -18,17 +18,17 @@ class BonusModel extends Bonus {
 
   factory BonusModel.fromJson(Map<String, dynamic> json) {
     return BonusModel(
-      id: json['id'],
-      brandId: json['brandId'],
-      brandName: json['brandName'],
-      storeId: json['storeId'],
-      storeName: json['storeName'],
-      studentId: json['studentId'],
-      studentName: json['studentName'],
-      amount: json['amount'],
-      dateCreated: json['dateCreated'],
-      dateUpdated: json['dateUpdated'],
-      description: json['description'],
+      id: json['id'] ?? '',
+      brandId: json['brandId'] ?? '',
+      brandName: json['brandName'] ?? '',
+      storeId: json['storeId'] ?? '',
+      storeName: json['storeName'] ?? '',
+      studentId: json['studentId'] ?? '',
+      studentName: json['studentName'] ?? '',
+      amount: json['amount'] ?? 0,
+      dateCreated: json['dateCreated'] ?? '',
+      dateUpdated: json['dateUpdated'] ?? '',
+      description: json['description'] ?? '',
       state: json['state'],
       status: json['status'],
     );

@@ -97,7 +97,7 @@ class SuccessRedeemVoucherScreen extends StatelessWidget {
                   },
                   child: Center(
                     child: Container(
-                      width: 160 * fem,
+                      width: 270 * fem,
                       height: 45 * hem,
                       decoration: BoxDecoration(
                           color: klightPrimaryColor,

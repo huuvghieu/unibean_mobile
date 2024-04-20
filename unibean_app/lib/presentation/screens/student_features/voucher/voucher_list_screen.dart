@@ -7,9 +7,8 @@ import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../../data/models.dart';
 import '../../../blocs/blocs.dart';
+import '../../../widgets/paint_voucher_card.dart';
 import '../../screens.dart';
-import '../profile_voucher/components/is_used_button.dart';
-import '../profile_voucher/components/not_use_butotn.dart';
 
 class VoucherListScreen extends StatelessWidget {
   static const String routeName = '/voucher-list-student';
@@ -183,12 +182,14 @@ class _BodyVoucherListState extends State<BodyVoucherList> {
                   );
                 } else {
                   final vouchers = state.voucherModels;
-                  vouchers.sort((a, b) => b.dateBought.compareTo(a.dateBought));
-                  vouchers.sort((a, b) => a.isUsed ? 1 : -1);
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 15,
+                      ),
                       Container(
                         child: ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
@@ -205,159 +206,223 @@ class _BodyVoucherListState extends State<BodyVoucherList> {
                               );
                             } else {
                               var studentVoucher = vouchers[index];
-                              return GestureDetector(
-                                onTap: () async {
-                                  Navigator.pushNamed(context,
-                                      VoucherItemDetailScreen.routeName,
-                                      arguments: studentVoucher);
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: 15 * widget.hem,
-                                          left: 10 * widget.fem,
-                                          right: 10 * widget.fem),
-                                      constraints: BoxConstraints(
-                                          maxHeight: 150 * widget.hem,
-                                          minWidth: 340 * widget.fem),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              15 * widget.fem),
-                                          color: Colors.white,
-                                          border:
-                                              Border.all(color: klighGreyColor),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Color(0x0c000000),
-                                                offset: Offset(0 * widget.fem,
-                                                    0 * widget.fem),
-                                                blurRadius: 5 * widget.fem)
-                                          ]),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.all(5),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Container(
-                                                width: 130 * widget.fem,
-                                                height: 140 * widget.hem,
-                                                child: Image.network(
-                                                  studentVoucher.voucherImage,
-                                                  fit: BoxFit.fill,
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    return Icon(
-                                                      Icons.error_outlined,
-                                                      size: 50 * widget.fem,
-                                                      color: kPrimaryColor,
-                                                    );
-                                                  },
-                                                ),
+                              return Container(
+                                decoration: BoxDecoration(boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0x0c000000),
+                                      offset: Offset(
+                                          3 * widget.fem, 2 * widget.fem),
+                                      blurRadius: 5 * widget.fem)
+                                ]),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.18,
+                                margin: EdgeInsets.only(
+                                    bottom: 15, left: 15, right: 15),
+                                width: double.infinity,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        VoucherItemDetailScreen.routeName,
+                                        arguments: studentVoucher);
+                                  },
+                                  child: Stack(children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            color: kPrimaryColor,
+                                            child: Center(
+                                                child: RotatedBox(
+                                              quarterTurns: 3,
+                                              child: Text(
+                                                '${studentVoucher.brandName}',
+                                                style: GoogleFonts.openSans(
+                                                    textStyle: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
                                               ),
-                                            ),
+                                            )),
                                           ),
-                                          SizedBox(
-                                            width: 8 * widget.fem,
+                                        ),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                            color: Colors.white,
+                                            padding: const EdgeInsets.all(10),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    '${studentVoucher.voucherName}',
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(children: [
+                                                      SizedBox(
+                                                        height: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .height,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                        child:
+                                                            Column(children: [
+                                                          Expanded(
+                                                            flex: 2,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              child: Container(
+                                                                width: 130 *
+                                                                    widget.fem,
+                                                                height: 140 *
+                                                                    widget.hem,
+                                                                child: Image
+                                                                    .network(
+                                                                  studentVoucher
+                                                                      .voucherImage,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  errorBuilder:
+                                                                      (context,
+                                                                          error,
+                                                                          stackTrace) {
+                                                                    return Icon(
+                                                                      Icons
+                                                                          .error_outlined,
+                                                                      size: 50 *
+                                                                          widget
+                                                                              .fem,
+                                                                      color:
+                                                                          kPrimaryColor,
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 2,
+                                                          ),
+                                                        ]),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    'Ngày mua: ',
+                                                                    style: GoogleFonts.openSans(
+                                                                        textStyle: TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.black)),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                      '${changeFormateDate(studentVoucher.dateBought)}',
+                                                                      style: GoogleFonts.openSans(
+                                                                          textStyle: TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.black)),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    'Hạn sử dụng: ',
+                                                                    style: GoogleFonts.openSans(
+                                                                        textStyle: TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.black)),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                      '${changeFormateDate(studentVoucher.expireOn)}',
+                                                                      style: GoogleFonts.openSans(
+                                                                          textStyle: TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.black)),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              buildButtonVoucher(
+                                                                  widget.hem,
+                                                                  widget.fem,
+                                                                  studentVoucher,
+                                                                  context)
+                                                            ]),
+                                                      ),
+                                                    ]),
+                                                  ),
+                                                ]),
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 5 * widget.hem,
-                                                    bottom: 5 * widget.hem),
-                                                child: Text(
-                                                    studentVoucher.brandName,
-                                                    textAlign: TextAlign.center,
-                                                    softWrap: true,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: GoogleFonts.openSans(
-                                                        textStyle: TextStyle(
-                                                      fontSize:
-                                                          12 * widget.ffem,
-                                                      color: kDarkPrimaryColor,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ))),
-                                              ),
-                                              Container(
-                                                width: 200 * widget.fem,
-                                                child: Text(
-                                                    studentVoucher.voucherName,
-                                                    softWrap: true,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: GoogleFonts.openSans(
-                                                        textStyle: TextStyle(
-                                                      fontSize:
-                                                          14 * widget.ffem,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ))),
-                                              ),
-                                              SizedBox(
-                                                height: 5 * widget.hem,
-                                              ),
-                                              Container(
-                                                child: Text(
-                                                    'Thời gian sử dụng:',
-                                                    style: GoogleFonts.openSans(
-                                                        textStyle: TextStyle(
-                                                      fontSize:
-                                                          12 * widget.ffem,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ))),
-                                              ),
-                                              Container(
-                                                width: 200 * widget.fem,
-                                                child: Text(
-                                                    '${changeFormateDate(studentVoucher.validOn)} - ${changeFormateDate(studentVoucher.expireOn)}',
-                                                    style: GoogleFonts.openSans(
-                                                        textStyle: TextStyle(
-                                                      fontSize:
-                                                          12 * widget.ffem,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ))),
-                                              ),
-                                              SizedBox(
-                                                height: 5 * widget.hem,
-                                              ),
-                                              Container(
-                                                child: Text(
-                                                    'Ngày mua: ${changeFormateDate(studentVoucher.dateBought)}',
-                                                    style: GoogleFonts.openSans(
-                                                        textStyle: TextStyle(
-                                                      fontSize:
-                                                          12 * widget.ffem,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ))),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                        ),
+                                      ],
+                                    ),
+                                    CustomPaint(
+                                      painter: SideCutsDesign(),
+                                      child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.25,
+                                        width: double.infinity,
                                       ),
                                     ),
-                                    buildButtonVoucher(
-                                        widget.hem, widget.fem, studentVoucher)
-                                  ],
+                                    CustomPaint(
+                                      painter: DottedInitialPath(),
+                                      child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.25,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                    CustomPaint(
+                                      painter: DottedMiddlePath(),
+                                      child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.25,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                  ]),
                                 ),
                               );
                             }
@@ -376,35 +441,69 @@ class _BodyVoucherListState extends State<BodyVoucherList> {
     );
   }
 
-  Positioned buildButtonVoucher(
-      double hem, double fem, VoucherStudentModel studentVoucher) {
+  Widget buildButtonVoucher(
+      double hem, double fem, VoucherStudentModel studentVoucher, context) {
     if (studentVoucher.isUsed) {
-      return Positioned(
-          bottom: 9 * hem,
-          right: 25 * fem,
-          child: IsUsedButton(fem: fem, hem: hem));
+      return ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, QRVoucherScreen.routeName,
+              arguments: studentVoucher.voucherCode);
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: klighGreyColor,
+            shape: const StadiumBorder(
+              side: BorderSide(width: 1, color: klowTextGrey),
+            )),
+        child: Text(
+          'Đã sử dụng',
+          style: GoogleFonts.openSans(
+              textStyle: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: klowTextGrey)),
+        ),
+      );
     } else if (DateTime.now()
         .isAfter(DateTime.parse(studentVoucher.expireOn))) {
-      return Positioned(
-          bottom: 9 * hem,
-          right: 25 * fem,
-          child: Text(
-            'Đã quá hạn',
-            style: GoogleFonts.openSans(
-                textStyle: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey)),
-          ));
+      return ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, QRVoucherScreen.routeName,
+              arguments: studentVoucher.voucherCode);
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: klighGreyColor,
+            shape: const StadiumBorder(
+              side: BorderSide(width: 1, color: klowTextGrey),
+            )),
+        child: Text(
+          'Đã quá hạn',
+          style: GoogleFonts.openSans(
+              textStyle: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: klowTextGrey)),
+        ),
+      );
     } else {
-      return Positioned(
-          bottom: 9 * hem,
-          right: 25 * fem,
-          child: NotUseButton(
-            fem: fem,
-            hem: hem,
-            id: studentVoucher.id,
-          ));
+      return ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, QRVoucherScreen.routeName,
+              arguments: studentVoucher.voucherCode);
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: const StadiumBorder(
+              side: BorderSide(width: 1, color: klightPrimaryColor),
+            )),
+        child: Text(
+          'Mã QR',
+          style: GoogleFonts.openSans(
+              textStyle: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: kPrimaryColor)),
+        ),
+      );
     }
   }
 }

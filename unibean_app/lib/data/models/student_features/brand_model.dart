@@ -57,7 +57,7 @@ class BrandModel extends Brand {
       state: json['state'] ?? true,
       status: json['status'] ?? true,
       isFavor: json['isFavor'] ?? false,
-      numberOfFollowers: json['numberOfFollwers'] ?? 0,
+      numberOfFollowers: json['numberOfFollowers'] ?? 0,
       numberOfCampaigns: json['numberOfCampaigns'] ?? 0,
       greenWalletId: json['greenWalletId'] ?? '',
       greenWallet: json['greenWallet'],

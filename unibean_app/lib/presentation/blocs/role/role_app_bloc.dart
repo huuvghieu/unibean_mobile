@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:unibean_app/data/api/push_notification.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
@@ -13,7 +14,8 @@ part 'role_app_state.dart';
 class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
   final StudentRepository studentRepository;
   final StoreRepository storeRepository;
-  RoleAppBloc(this.studentRepository, this.storeRepository) : super(RoleAppLoading()) {
+  RoleAppBloc(this.studentRepository, this.storeRepository)
+      : super(RoleAppLoading()) {
     on<RoleAppStart>(_onStartRoleApp);
     on<RoleAppEnd>(_onEndRoleApp);
   }
@@ -26,25 +28,21 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
 
       bool isVerify = authenModel!.userModel.isVerify;
       String role = authenModel.role;
-    
+
       String userId = authenModel.userModel.userId;
       if (userId != '') {
         final student = await studentRepository.fetchStudentById(
             id: authenModel.userModel.userId);
         if (role == 'Student') {
           if (isVerify) {
-              // String stateName = student!.state;
-            // if (stateName == 'Active') {
-            // }
-              emit(Verified(authenModel: authenModel, studentModel: student!));
-
+            emit(Verified(authenModel: authenModel, studentModel: student!));
           } else {
             emit(Unverified(authenModel: authenModel));
           }
         } else {
           final store = await storeRepository.fetchStoreById(
               storeId: authenModel.userModel.userId);
-          emit(StoreRole(authenModel: authenModel,storeModel: store!));
+          emit(StoreRole(authenModel: authenModel, storeModel: store!));
         }
       } else {
         emit(Unverified(authenModel: authenModel));
@@ -59,6 +57,7 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
     try {
       AuthenLocalDataSource.removeAuthen();
       AuthenLocalDataSource.clearAuthen();
+      PushNotification().unSubcribeNoti();
       if (googleSignIn.currentUser != null) {
         await googleSignIn.disconnect();
         await FirebaseAuth.instance.signOut();

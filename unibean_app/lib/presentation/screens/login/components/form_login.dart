@@ -59,11 +59,13 @@ class _FormLoginState extends State<FormLogin> {
           context.read<ChallengeBloc>().add(LoadChallenge());
           PushNotification().initNotifications();
           PushNotification().localNotiInit();
+          context.read<LandingScreenBloc>().add(TabChange(tabIndex: 0));
           Navigator.pushNamedAndRemoveUntil(
               context, '/landing-screen', (Route<dynamic> route) => false);
         } else if (state is AuthenticationStoreSuccess) {
           context.read<RoleAppBloc>().add(RoleAppStart());
           context.read<StoreBloc>().add(LoadStoreCampaignVouchers());
+          context.read<LandingScreenBloc>().add(TabChange(tabIndex: 0));
           Navigator.pushNamedAndRemoveUntil(context, '/landing-screen-store',
               (Route<dynamic> route) => false);
         }

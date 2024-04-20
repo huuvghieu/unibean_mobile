@@ -6,8 +6,10 @@ import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models.dart';
+import '../../repositories.dart';
 
 class CampaignRepositoryImp implements CampaignRepository {
+  final _studentRepository = StudentRepositoryImp();
   String endPoint = '${baseURL}campaigns';
   String sort = 'Id%2Cdesc';
   int page = 1;
@@ -25,7 +27,9 @@ class CampaignRepositoryImp implements CampaignRepository {
       if (limit == null) {
         limit = this.limit;
       }
-      final studentModel = await AuthenLocalDataSource.getStudent();
+      final authenModel = await AuthenLocalDataSource.getAuthen();
+      final studentModel = await _studentRepository.fetchStudentById(
+          id: authenModel!.userModel.userId);
       if (studentModel == null) {
         http.Response response = await http.get(
             Uri.parse(

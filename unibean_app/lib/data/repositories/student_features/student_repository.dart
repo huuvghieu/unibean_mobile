@@ -195,6 +195,10 @@ class StudentRepositoryImp implements StudentRepository {
 
       if (response.statusCode == 201) {
         return true;
+      } else if (response.statusCode == 400) {
+        return false;
+      } else if (response.statusCode == 404) {
+        return false;
       } else {
         return false;
       }
@@ -424,5 +428,4 @@ class StudentRepositoryImp implements StudentRepository {
       throw Exception(e.toString());
     }
   }
-
 }

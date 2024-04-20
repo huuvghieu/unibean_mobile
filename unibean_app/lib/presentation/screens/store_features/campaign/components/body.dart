@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
@@ -48,17 +49,6 @@ class Body extends StatelessWidget {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        // context.read<InternetBloc>().subscription =
-                        //     Connectivity()
-                        //         .onConnectivityChanged
-                        //         .listen((result) {
-                        //   if (result == ConnectivityResult.wifi ||
-                        //       result == ConnectivityResult.mobile || result == ConnectivityResult.other) {
-                        //     context.read<InternetBloc>().add(OnConnected());
-                        //   } else {
-                        //     context.read<InternetBloc>().add(OnNotConnected());
-                        //   }
-                        // });
                         final stateInternet =
                             context.read<InternetBloc>().state;
                         if (stateInternet is Connected) {
@@ -152,82 +142,136 @@ class Body extends StatelessWidget {
                                             .voucherCampaign(state
                                                 .campaignStoreCart
                                                 .campaignVouchers);
-                                        return ListView.builder(
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: campaign.keys.length,
-                                          itemBuilder: (context, index) {
-                                            var campaignName =
-                                                campaign.keys.elementAt(index);
-                                            List<CampaignVoucherStoreModel>
-                                                campaignVouchers = campaign
-                                                    .values
-                                                    .elementAt(index);
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                  bottom: 15 * hem),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 15 * fem),
+                                        if (campaign.isEmpty) {
+                                          return Container(
+                                            width: double.infinity,
+                                            margin: EdgeInsets.only(
+                                                left: 15 * fem,
+                                                right: 15 * fem),
+                                            height: 220 * hem,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/empty-icon.svg',
+                                                  width: 60 * fem,
+                                                  colorFilter: ColorFilter.mode(
+                                                      kLowTextColor,
+                                                      BlendMode.srcIn),
+                                                ),
+                                                Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.only(top: 5),
                                                     child: Text(
-                                                      '${campaignName.toString().toUpperCase()}',
+                                                      'Không có ưu đãi \n đang diễn ra',
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style:
                                                           GoogleFonts.openSans(
                                                               textStyle:
                                                                   TextStyle(
-                                                        fontSize: 15 * ffem,
                                                         color: Colors.black,
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                            FontWeight.w600,
+                                                        fontSize: 16,
                                                       )),
                                                     ),
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      ListView.builder(
-                                                        physics:
-                                                            NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        itemCount:
-                                                            campaignVouchers
-                                                                .length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          var voucher =
-                                                              campaignVouchers[
-                                                                  index];
-                                                          return VoucherCardList(
-                                                              hem: hem,
-                                                              fem: fem,
-                                                              voucher: voucher,
-                                                              ffem: ffem);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 15 * hem,
-                                                  ),
-                                                  Container(
+                                                ),
+                                                SizedBox(
+                                                  height: 10 * fem,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          return ListView.builder(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: campaign.keys.length,
+                                            itemBuilder: (context, index) {
+                                              var campaignName = campaign.keys
+                                                  .elementAt(index);
+                                              List<CampaignVoucherStoreModel>
+                                                  campaignVouchers = campaign
+                                                      .values
+                                                      .elementAt(index);
+                                              return Container(
+                                                margin: EdgeInsets.only(
+                                                    bottom: 15 * hem),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
                                                       margin: EdgeInsets.only(
-                                                          left: 25 * fem,
-                                                          right: 25 * fem),
-                                                      child: Divider())
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
+                                                          left: 15 * fem),
+                                                      child: Text(
+                                                        '${campaignName.toString().toUpperCase()}',
+                                                        style: GoogleFonts
+                                                            .openSans(
+                                                                textStyle:
+                                                                    TextStyle(
+                                                          fontSize: 15 * ffem,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        )),
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        ListView.builder(
+                                                          physics:
+                                                              NeverScrollableScrollPhysics(),
+                                                          shrinkWrap: true,
+                                                          itemCount:
+                                                              campaignVouchers
+                                                                  .length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            var voucher =
+                                                                campaignVouchers[
+                                                                    index];
+                                                            return VoucherCardList(
+                                                                hem: hem,
+                                                                fem: fem,
+                                                                voucher:
+                                                                    voucher,
+                                                                ffem: ffem);
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15 * hem,
+                                                    ),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 25 * fem,
+                                                            right: 25 * fem),
+                                                        child: Divider())
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }
                                       }
                                       return Container();
                                     },

@@ -6,7 +6,7 @@ import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../../blocs/blocs.dart';
 
-class OthersInforBrandDetail extends StatelessWidget {
+class OthersInforBrandDetail extends StatefulWidget {
   const OthersInforBrandDetail({
     super.key,
     required this.hem,
@@ -19,10 +19,15 @@ class OthersInforBrandDetail extends StatelessWidget {
   final double ffem;
 
   @override
+  State<OthersInforBrandDetail> createState() => _OthersInforBrandDetailState();
+}
+
+class _OthersInforBrandDetailState extends State<OthersInforBrandDetail> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 10 * hem,
+        top: 10 * widget.hem,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -32,8 +37,8 @@ class OthersInforBrandDetail extends StatelessWidget {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: 40 * fem,
-                  height: 40 * hem,
+                  width: 40 * widget.fem,
+                  height: 40 * widget.hem,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey[100],
@@ -53,18 +58,16 @@ class OthersInforBrandDetail extends StatelessWidget {
                     '${state.brand.numberOfFollowers} Theo dõi',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                            fontSize: 10 * fem,
+                            fontSize: 10 * widget.fem,
                             fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
                             color: kLowTextColor)),
                   );
                  } return Text(
                     '0 Theo dõi',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                            fontSize: 10 * fem,
+                            fontSize: 10 * widget.fem,
                             fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
                             color: kLowTextColor)),
                   );
                 },
@@ -76,8 +79,8 @@ class OthersInforBrandDetail extends StatelessWidget {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: 40 * fem,
-                  height: 40 * hem,
+                  width: 40 * widget.fem,
+                  height: 40 * widget.hem,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey[100],
@@ -87,8 +90,8 @@ class OthersInforBrandDetail extends StatelessWidget {
                       'assets/icons/campaign-navbar-icon.svg',
                       colorFilter:
                           ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
-                      width: 18 * fem,
-                      height: 18 * hem,
+                      width: 18 * widget.fem,
+                      height: 18 * widget.hem,
                     ),
                   ),
                 ),
@@ -100,18 +103,18 @@ class OthersInforBrandDetail extends StatelessWidget {
                     '${state.brand.numberOfCampaigns} Chiến dịch',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                            fontSize: 10 * fem,
+                            fontSize: 10 * widget.fem,
                             fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
+                            height: 1.3625 * widget.ffem / widget.fem,
                             color: kLowTextColor)),
                   );
                  } return Text(
                     '0 Chiến dịch',
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                            fontSize: 10 * fem,
+                            fontSize: 10 * widget.fem,
                             fontWeight: FontWeight.w600,
-                            height: 1.3625 * ffem / fem,
+                            height: 1.3625 * widget.ffem / widget.fem,
                             color: kLowTextColor)),
                   );
                 },

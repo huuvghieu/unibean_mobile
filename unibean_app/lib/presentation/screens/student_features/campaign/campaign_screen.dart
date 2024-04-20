@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/student_features/campaign/components/body.dart';
 
@@ -18,17 +19,30 @@ class CampaignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CampaignBloc, CampaignState>(
-      builder: (context, state) {
-        if (state is CampaignsLoaded) {
-          return Body();
-         
-        }
-        return Center(
-          child: Container(
-              child: Lottie.asset('assets/animations/loading-screen.json')),
-        );
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          lazy: false,
+            create: (context) => RoleAppBloc(context.read<StudentRepository>(),
+                context.read<StoreRepository>())
+              ..add(RoleAppStart())),
+        BlocProvider(
+          create: (context) => CampaignBloc(
+              campaignRepository: context.read<CampaignRepository>())
+            ..add(LoadCampaigns()),
+        ),
+      ],
+      child: BlocBuilder<CampaignBloc, CampaignState>(
+        builder: (context, state) {
+          if (state is CampaignsLoaded) {
+            return Body();
+          }
+          return Center(
+            child: Container(
+                child: Lottie.asset('assets/animations/loading-screen.json')),
+          );
+        },
+      ),
     );
   }
 }

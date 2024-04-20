@@ -118,7 +118,8 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => InternetBloc()),
-          BlocProvider(create: (context) => notificationBloc..add(LoadNotification())),
+          BlocProvider(
+              create: (context) => notificationBloc..add(LoadNotification())),
           BlocProvider(create: (context) => LandingScreenBloc()),
           BlocProvider(
               create: (context) =>
@@ -162,10 +163,8 @@ class MyApp extends StatelessWidget {
                   ..add(LoadCampaignRanking()),
           ),
           BlocProvider(
-            create: (context) =>
-                CampaignBloc(campaignRepository: CampaignRepositoryImp())
-                  ..add(LoadCampaigns()),
-          ),
+              create: (context) =>
+                  CampaignBloc(campaignRepository: CampaignRepositoryImp())),
           BlocProvider(
               create: (context) => WishlistBloc(
                   studentRepository: StudentRepositoryImp(),

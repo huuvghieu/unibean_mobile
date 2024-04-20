@@ -261,10 +261,9 @@ class Body extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    SvgPicture.asset(
-                                        'assets/icons/cart-icon.svg'),
+                                   
                                     Text(
-                                      '${campaignVoucherDetail.quantityInBought} | ${campaignVoucherDetail.quantity}',
+                                      'Còn lại: ${campaignVoucherDetail.quantityInStock}',
                                       style: GoogleFonts.openSans(
                                           textStyle: TextStyle(
                                         fontSize: 15 * ffem,

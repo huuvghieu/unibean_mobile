@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
 
@@ -35,7 +36,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     });
   }
 
-  void navigateToCampaignDetailScreen() {
+  Future<void> navigateToCampaignDetailScreen() async {
     if (widget.data is RemoteMessage) {
       payload = widget.data.data;
     } else if (widget.data is NotificationResponse) {
@@ -43,8 +44,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
     }
 
     if (payload.containsKey('campaignId')) {
-      Navigator.of(context).pushNamed(CampaignDetailScreen.routeName,
-          arguments: payload['campaignId']);
+      if (payload['campaignId'] == '') {
+        final studentId = await AuthenLocalDataSource.getStudentId();
+
+        Navigator.of(context).pushNamed(
+            ProfileTransactionHistoryScreen.routeName,
+            arguments: studentId);
+      } else {
+        Navigator.of(context).pushNamed(CampaignDetailScreen.routeName,
+            arguments: payload['campaignId']);
+      }
     }
   }
 

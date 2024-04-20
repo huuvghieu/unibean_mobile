@@ -6,7 +6,7 @@ import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/store_features/profile/profile_store_screen.dart';
-import 'package:unibean_app/presentation/widgets/app_bar_campaign.dart';
+import 'package:unibean_app/presentation/widgets/app_bar_store.dart';
 
 import 'components/cus_nav_bar_strore.dart';
 
@@ -185,7 +185,7 @@ List<Widget> bottomNavScreen = [
 PreferredSizeWidget? _buildAppbar(
     int tabIndex, double hem, double fem, double ffem) {
   if (tabIndex == 0 || tabIndex == 1) {
-    return AppBarCampaign(hem: hem, ffem: ffem, fem: fem);
+    return AppBarStore(hem: hem, ffem: ffem, fem: fem);
   } else
     return null;
 }

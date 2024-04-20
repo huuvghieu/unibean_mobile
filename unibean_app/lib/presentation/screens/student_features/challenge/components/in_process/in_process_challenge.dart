@@ -22,19 +22,19 @@ class InProcessChallenge extends StatelessWidget {
       listener: (context, state) {
         if (state is ChallengesLoaded) {
           if (state.isClaimed) {
-               ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              elevation: 0,
-              duration: const Duration(milliseconds: 2000),
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.transparent,
-              content: AwesomeSnackbarContent(
-                title: 'Nhận thưởng',
-                message: 'Nhận thưởng thành công!',
-                contentType: ContentType.success,
-              ),
-            ));
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(
+                elevation: 0,
+                duration: const Duration(milliseconds: 2000),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                content: AwesomeSnackbarContent(
+                  title: 'Nhận thưởng',
+                  message: 'Nhận thưởng thành công!',
+                  contentType: ContentType.success,
+                ),
+              ));
           }
         } else if (state is ClaimLoading) {
           showDialog<String>(
@@ -74,24 +74,24 @@ class InProcessChallenge extends StatelessWidget {
                                   'assets/animations/loading-screen.dart'),
                             );
                           } else if (state is ChallengesLoaded) {
-                            if (state.challenge.isEmpty) {
+                            final challenges = state.challenge
+                                .where((c) => (c.isClaimed == false))
+                                .toList();
+                            if (challenges.isEmpty) {
                               return EmptyWidget(text: 'Không có thử thách');
                             } else {
-                              state.challenge
-                                  .sort((a, b) => b.isCompleted ? 1 : -1);
-                              state.challenge
-                                  .sort((a, b) => a.isClaimed ? 1 : -1);
-                              print(state.challenge);
+                              challenges.sort((a, b) => b.isCompleted ? 1 : -1);
+                              challenges.sort((a, b) => a.isClaimed ? 1 : -1);
                               return ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: state.challenge.length,
+                                itemCount: challenges.length,
                                 itemBuilder: (context, index) {
                                   return ChallengeCard(
                                     fem: fem,
                                     hem: hem,
                                     ffem: ffem,
-                                    challengeModel: state.challenge[index],
+                                    challengeModel: challenges[index],
                                   );
                                 },
                               );

@@ -97,7 +97,7 @@ class ProductCard extends StatelessWidget {
                   padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
                   child: Text(
                     product.categoryName,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(

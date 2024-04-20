@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -35,6 +36,7 @@ class PushNotification {
       for (var element in wishList!) {
         _firebaseMessing.subscribeToTopic(element);
       }
+      _firebaseMessing.subscribeToTopic('${studentId}');
       final unWishList = await AuthenLocalDataSource.getUnsubcribeWishListId();
       if (unWishList == null) {
       } else {
@@ -52,6 +54,15 @@ class PushNotification {
       final _fCMToken = await _firebaseMessing.getToken();
       print('Device token: $_fCMToken');
     }
+  }
+
+  Future unSubcribeNoti() async {
+    final wishList = await _studentRepository.fetchWishListByStudentId();
+    for (var element in wishList!) {
+      _firebaseMessing.unsubscribeFromTopic(element);
+    }
+    final studentId = await AuthenLocalDataSource.getStudentId();
+    _firebaseMessing.unsubscribeFromTopic('${studentId}');
   }
 
   // initalize local notifications
@@ -79,6 +90,7 @@ class PushNotification {
       for (var element in wishList!) {
         _firebaseMessing.subscribeToTopic(element);
       }
+      _firebaseMessing.subscribeToTopic('${studentId}');
       final unWishList = await AuthenLocalDataSource.getUnsubcribeWishListId();
       if (unWishList == null) {
       } else {
@@ -122,33 +134,54 @@ class PushNotification {
     required String body,
     required String payload,
   }) async {
-    final String largeIcon =
-        await _base64encodedImage('https://dummyimage.com/48x48');
-    final String bigPicture =
-        await _base64encodedImage('https://dummyimage.com/400x800');
-    final BigPictureStyleInformation bigPictureStyleInformation =
-        BigPictureStyleInformation(
-            ByteArrayAndroidBitmap.fromBase64String(
-                bigPicture), //Base64AndroidBitmap(bigPicture),
-            largeIcon: ByteArrayAndroidBitmap.fromBase64String(largeIcon),
-            contentTitle: title,
-            htmlFormatContentTitle: true,
-            summaryText: body,
-            htmlFormatSummaryText: true);
+    try {
+      Map payloadMap = jsonDecode(payload);
+      var check = payloadMap['image'];
+      if (check == 'https://image') {
+        final AndroidNotificationDetails androidNotificationDetails =
+            AndroidNotificationDetails('UnibeanSE', 'Unibean',
+                channelDescription: 'This is Unibean',
+                importance: Importance.max,
+                priority: Priority.high,
+                ticker: 'ticker');
+        final NotificationDetails notificationDetails =
+            NotificationDetails(android: androidNotificationDetails);
+        await _flutterLocalNotificationsPlugin
+            .show(0, title, body, notificationDetails, payload: payload);
+        notificationBloc.add(AddNewNotification(
+            notificationModel:
+                NotificationModel(title: title, body: body, payload: payload)));
+      } else {
+        final String largeIcon = await _base64encodedImage(payloadMap['image']);
+        final String bigPicture =
+            await _base64encodedImage(payloadMap['image']);
+        final BigPictureStyleInformation bigPictureStyleInformation =
+            BigPictureStyleInformation(
+                ByteArrayAndroidBitmap.fromBase64String(
+                    bigPicture), //Base64AndroidBitmap(bigPicture),
+                largeIcon: ByteArrayAndroidBitmap.fromBase64String(largeIcon),
+                contentTitle: title,
+                htmlFormatContentTitle: true,
+                summaryText: body,
+                htmlFormatSummaryText: true);
 
-    final AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            styleInformation: bigPictureStyleInformation,
-            ticker: 'ticker');
-    final NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await _flutterLocalNotificationsPlugin
-        .show(0, title, body, notificationDetails, payload: payload);
-    notificationBloc.add(AddNewNotification(
-        notificationModel:
-            NotificationModel(title: title, body: body, payload: payload)));
+        final AndroidNotificationDetails androidNotificationDetails =
+            AndroidNotificationDetails('UnibeanSE', 'Unibean',
+                channelDescription: 'This is Unibean',
+                importance: Importance.max,
+                priority: Priority.high,
+                styleInformation: bigPictureStyleInformation,
+                ticker: 'ticker');
+        final NotificationDetails notificationDetails =
+            NotificationDetails(android: androidNotificationDetails);
+        await _flutterLocalNotificationsPlugin
+            .show(0, title, body, notificationDetails, payload: payload);
+        notificationBloc.add(AddNewNotification(
+            notificationModel:
+                NotificationModel(title: title, body: body, payload: payload)));
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -188,20 +188,14 @@ class Body extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/icons/cart-icon.svg'),
-                                  Text(
-                                    '${campaignVoucherDetail.quantityInBought} | ${campaignVoucherDetail.quantity}',
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                      fontSize: 15 * ffem,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                    )),
-                                  ),
-                                ],
+                              Text(
+                                'Còn lại: ${campaignVoucherDetail.quantityInStock}',
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                  fontSize: 15 * ffem,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                )),
                               )
                             ],
                           ),

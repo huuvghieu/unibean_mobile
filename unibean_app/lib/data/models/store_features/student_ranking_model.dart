@@ -10,9 +10,9 @@ class StudentRankingModel extends CampaignRanking {
   factory StudentRankingModel.fromJson(Map<String, dynamic> json) {
     return StudentRankingModel(
       rank: json['rank'],
-      name: json['name'],
-      image: json['image'],
-      value: json['value'],
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
+      value: json['value'] ?? 0,
     );
   }
 

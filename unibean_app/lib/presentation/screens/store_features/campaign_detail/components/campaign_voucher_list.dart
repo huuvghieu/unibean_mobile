@@ -81,7 +81,6 @@ class CampaignVoucherList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: state.campaignVouchers.length,
                     itemBuilder: (context, index) {
-                      var campaignVoucher = state.campaignVouchers[0];
                       return GestureDetector(
                         onTap: () async {
                           final studentId =
@@ -120,7 +119,7 @@ class CampaignVoucherList extends StatelessWidget {
                                         height: 150 * hem,
                                         width: 180 * fem,
                                         child: Image.network(
-                                         campaignVoucher
+                                          state.campaignVouchers[index]
                                               .voucherImage,
                                           fit: BoxFit.fill,
                                           loadingBuilder: (context, child,
@@ -148,7 +147,7 @@ class CampaignVoucherList extends StatelessWidget {
                                         right: 10 * fem,
                                         top: 10 * hem),
                                     child: Text(
-                                      campaignVoucher.voucherName,
+                                      state.campaignVouchers[index].voucherName,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       style: GoogleFonts.openSans(
@@ -184,7 +183,7 @@ class CampaignVoucherList extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          '${formatter.format(campaignVoucher.price)}',
+                                          '${formatter.format(state.campaignVouchers[index].price)}',
                                           style: GoogleFonts.openSans(
                                               textStyle: TextStyle(
                                             fontSize: 20 * ffem,

@@ -40,94 +40,102 @@ class _ChallengeTransactionState extends State<ChallengeTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: scrollController,
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate([
-            Column(
-              children: [
-                SizedBox(
-                  height: 25 * widget.hem,
-                ),
-                BlocBuilder<StudentBloc, StudentState>(
-                  builder: (context, state) {
-                    if (state is StudentTransactionLoading) {
-                      return buildTransactionShimmer(5, widget.fem, widget.hem);
-                    } else if (state is StudentTransactionsLoaded) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        context
+            .read<StudentBloc>()
+            .add(LoadStudentTransactions(id: widget.studentId, typeIds: 3));
+      },
+      child: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Column(
+                children: [
+                  SizedBox(
+                    height: 25 * widget.hem,
+                  ),
+                  BlocBuilder<StudentBloc, StudentState>(
+                    builder: (context, state) {
+                      if (state is StudentTransactionLoading) {
+                        return buildTransactionShimmer(
+                            5, widget.fem, widget.hem);
+                      } else if (state is StudentTransactionsLoaded) {
                         if (state.transactions.isEmpty) {
-                        return Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(
-                              left: 15 * widget.fem, right: 15 * widget.fem),
-                          height: 220 * widget.hem,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/transaction-icon.svg',
-                                width: 60 * widget.fem,
-                                colorFilter: ColorFilter.mode(
-                                    kLowTextColor, BlendMode.srcIn),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    'Không có lịch sử giao dịch',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    )),
+                          return Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.only(
+                                left: 15 * widget.fem, right: 15 * widget.fem),
+                            height: 220 * widget.hem,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/transaction-icon.svg',
+                                  width: 60 * widget.fem,
+                                  colorFilter: ColorFilter.mode(
+                                      kLowTextColor, BlendMode.srcIn),
+                                ),
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      'Không có lịch sử giao dịch',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      )),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10 * widget.fem,
-                              ),
-                            ],
-                          ),
+                                SizedBox(
+                                  height: 10 * widget.fem,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: state.hasReachedMax
+                              ? state.transactions.length
+                              : state.transactions.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index >= state.transactions.length) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ),
+                              );
+                            } else {
+                              return TransactionCard(
+                                fem: widget.fem,
+                                hem: widget.hem,
+                                ffem: widget.ffem,
+                                transaction: state.transactions[index],
+                              );
+                            }
+                          },
                         );
                       }
-                      return ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: state.hasReachedMax
-                            ? state.transactions.length
-                            : state.transactions.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index >= state.transactions.length) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: kPrimaryColor,
-                              ),
-                            );
-                          } else {
-                            return TransactionCard(
-                              fem: widget.fem,
-                              hem: widget.hem,
-                              ffem: widget.ffem,
-                              transaction: state.transactions[index],
-                            );
-                          }
-                        },
-                      );
-                    }
-                    return Container();
-                  },
-                ),
-              ],
-            ),
-          ]),
-        )
-      ],
+                      return Container();
+                    },
+                  ),
+                ],
+              ),
+            ]),
+          )
+        ],
+      ),
     );
   }
 }

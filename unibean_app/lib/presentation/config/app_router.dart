@@ -245,9 +245,13 @@ class AppRouter {
         return CampaignVoucherInformationScreen.route(
             campaginVoucherInformation:
                 settings.arguments as CampaignVoucherInformationModel);
+                
       case BonusScreen.routeName:
         return BonusScreen.route(storeModel: settings.arguments as StoreModel);
 
+      case CampaignDetailStoreScreen.routeName:
+        return CampaignDetailStoreScreen.route(
+            campaignId: settings.arguments as String);
       default:
         return _errorRoute();
     }

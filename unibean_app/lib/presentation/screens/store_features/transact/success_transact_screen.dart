@@ -204,7 +204,7 @@ class SuccessTransactScreen extends StatelessWidget {
                                         color: Colors.grey)),
                               ),
                               Container(
-                                width: 120 * fem,
+                                width: 150 * fem,
                                 child: Text(
                                   '${transactResultModel.studentName}',
                                   maxLines: 2,
@@ -234,7 +234,7 @@ class SuccessTransactScreen extends StatelessWidget {
                                         color: Colors.grey)),
                               ),
                               Container(
-                                width: 120 * fem,
+                                width: 150 * fem,
                                 child: Text(
                                   '${transactResultModel.description}',
                                   maxLines: 2,

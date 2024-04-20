@@ -21,20 +21,20 @@ class OrderModel extends Order {
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       id: json['id'],
-      orderImage: json['orderImage'],
-      studentId: json['studentId'],
-      studentName: json['studentName'],
-      studentCode: json['studentCode'],
-      stationId: json['stationId'],
-      stationName: json['stationName'],
-      amount: json['amount'],
-      dateCreated: json['dateCreated'],
+      orderImage: json['orderImage'] ?? '',
+      studentId: json['studentId'] ?? '',
+      studentName: json['studentName'] ?? '',
+      studentCode: json['studentCode'] ?? '',
+      stationId: json['stationId'] ?? '',
+      stationName: json['stationName'] ?? '',
+      amount: json['amount'] ?? 0,
+      dateCreated: json['dateCreated'] ?? '',
       description: json['description'] ?? '',
       state: json['state'],
       status: json['status'],
-      currentStateId: json['currentStateId'],
-      currentState: json['currentState'],
-      currentStateName: json['currentStateName'],
+      currentStateId: json['currentStateId'] ?? '',
+      currentState: json['currentState'] ?? '',
+      currentStateName: json['currentStateName'] ?? '',
     );
   }
 

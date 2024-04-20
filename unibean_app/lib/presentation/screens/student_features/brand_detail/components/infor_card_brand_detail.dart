@@ -32,9 +32,11 @@ class InformationCardBrandDetail extends StatefulWidget {
 class _InformationCardBrandDetailState
     extends State<InformationCardBrandDetail> {
   bool isFollowed = false;
+  late int numberOfFollowers;
   @override
   void initState() {
     isFollowed = widget.brandModel.isFavor;
+    numberOfFollowers = widget.brandModel.numberOfFollowers;
     super.initState();
   }
 

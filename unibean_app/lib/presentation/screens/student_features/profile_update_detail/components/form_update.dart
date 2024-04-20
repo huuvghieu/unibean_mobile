@@ -37,6 +37,7 @@ class _FormBody1State extends State<FormUpdate> {
   TextEditingController genderController = TextEditingController();
   TextEditingController majorController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController invitedCodeController = TextEditingController();
 
   bool changed = false;
   @override
@@ -50,6 +51,7 @@ class _FormBody1State extends State<FormUpdate> {
     }
     majorController.text = widget.studentModel.majorId;
     addressController.text = widget.studentModel.address;
+    invitedCodeController.text = widget.studentModel.inviteCode;
 
     nameController.addListener(() => setState(() {
           changed = true;
@@ -136,6 +138,63 @@ class _FormBody1State extends State<FormUpdate> {
                           SizedBox(
                             height: 25 * widget.hem,
                           ),
+                          Container(
+                            width: 272 * widget.fem,
+                            height: 65 * widget.hem,
+                            // color: Colors.red,
+                            child: TextFormField(
+                              readOnly: true,
+                              maxLines: null,
+                              expands: true,
+                              controller: invitedCodeController,
+                              style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15 * widget.ffem,
+                                      fontWeight: FontWeight.bold)),
+                              decoration: InputDecoration(
+                                labelText: 'MÃ GIỚI THIỆU',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                labelStyle: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15 * widget.ffem,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 26 * widget.fem,
+                                    vertical: 10 * widget.hem),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(28 * widget.fem),
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: const Color.fromARGB(
+                                            255, 220, 220, 220)),
+                                    gapPadding: 10),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(28 * widget.fem),
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: const Color.fromARGB(
+                                            255, 220, 220, 220)),
+                                    gapPadding: 10),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(28 * widget.fem),
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: const Color.fromARGB(
+                                            255, 220, 220, 220)),
+                                    gapPadding: 10),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25 * widget.hem,
+                          ),
                           TextFormFieldDefault(
                             hem: widget.hem,
                             fem: widget.fem,
@@ -147,10 +206,9 @@ class _FormBody1State extends State<FormUpdate> {
                                 return 'Họ và tên không được bỏ trống';
                               } else if (value.length < 3) {
                                 return 'Họ và tên ít nhất 3 kí tự';
-                              }
-                              else if (value.length > 50) {
+                              } else if (value.length > 50) {
                                 return 'Họ và tên tối đa 50 kí tự';
-                              }  else if (!vietNameseTextOnlyPattern
+                              } else if (!vietNameseTextOnlyPattern
                                   .hasMatch(value)) {
                                 return 'Họ và tên không hợp lệ';
                               }

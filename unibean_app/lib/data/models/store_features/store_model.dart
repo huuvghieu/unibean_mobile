@@ -31,6 +31,11 @@ class StoreModel extends Store {
       required super.numberOfBonuses,
       required super.amountOfBonuses});
   factory StoreModel.fromJson(Map<String, dynamic> json) {
+    double amountOfBonuses = 0;
+    if (json['amountOfBonuses'] != 0) {
+      amountOfBonuses = json['amountOfBonuses'];
+    }
+
     return StoreModel(
       id: json['id'],
       brandId: json['brandId'],
@@ -59,7 +64,7 @@ class StoreModel extends Store {
       numberOfCampaigns: json['numberOfCampaigns'],
       numberOfVouchers: json['numberOfVouchers'],
       numberOfBonuses: json['numberOfBonuses'],
-      amountOfBonuses: json['amountOfBonuses'],
+      amountOfBonuses: amountOfBonuses
     );
   }
 

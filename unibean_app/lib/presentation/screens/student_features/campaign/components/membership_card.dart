@@ -35,6 +35,13 @@ class MemberShipCard extends StatelessWidget {
               height: 200 * hem,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20 * fem),
+                  boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 5.0,
+                                offset: Offset(3.0, 2),
+                              ),
+                            ],
                   image: DecorationImage(
                       image: AssetImage('assets/images/bg-card-level.png'),
                       fit: BoxFit.cover)),

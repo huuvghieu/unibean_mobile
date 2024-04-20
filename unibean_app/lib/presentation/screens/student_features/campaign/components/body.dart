@@ -46,26 +46,6 @@ class _BodyState extends State<Body> {
 
     final roleState = context.watch<RoleAppBloc>().state;
 
-    var roleWidget = (switch (roleState) {
-      Unverified() => CardForUnVerified(fem: fem, hem: hem, ffem: ffem),
-      Verified(
-        // ignore: unused_local_variable
-        authenModel: final authenModel,
-        studentModel: final student
-      ) =>
-        MemberShipCard(
-            fem: fem,
-            hem: hem,
-            ffem: ffem,
-            heightText: heightText,
-            studentModel: studentModel ?? student),
-      StoreRole() => Container(),
-      RoleAppLoading() => Container(
-          child: Center(
-              child: Lottie.asset('assets/animations/loading-screen.json',
-                  width: 50 * fem, height: 50 * hem)),
-        )
-    });
 
     return BlocListener<InternetBloc, InternetState>(
       listener: (context, state) {
@@ -120,11 +100,36 @@ class _BodyState extends State<Body> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //RoleWidget
-                    Container(
-                        padding:
-                            EdgeInsets.only(top: 15 * fem, bottom: 15 * fem),
-                        color: kbgWhiteColor,
-                        child: roleWidget),
+                    BlocBuilder<RoleAppBloc, RoleAppState>(
+                      builder: (context, state) {
+                        if (state is Unverified) {
+                          return Container(
+                              padding: EdgeInsets.only(
+                                  top: 15 * fem, bottom: 15 * fem),
+                              color: kbgWhiteColor,
+                              child: CardForUnVerified(
+                                  fem: fem, hem: hem, ffem: ffem));
+                        } else if (state is Verified) {
+                          return Container(
+                              padding: EdgeInsets.only(
+                                  top: 15 * fem, bottom: 15 * fem),
+                              color: kbgWhiteColor,
+                              child: MemberShipCard(
+                                  fem: fem,
+                                  hem: hem,
+                                  ffem: ffem,
+                                  heightText: heightText,
+                                  studentModel: state.studentModel));
+                        }
+                        return Container(
+                          child: Center(
+                              child: Lottie.asset(
+                                  'assets/animations/loading-screen.json',
+                                  width: 50 * fem,
+                                  height: 50 * hem)),
+                        );
+                      },
+                    ),
                     SizedBox(
                       height: 5 * hem,
                     ),
@@ -132,6 +137,7 @@ class _BodyState extends State<Body> {
                     //Hôm nay có gì
                     Container(
                       padding: EdgeInsets.only(top: 10 * fem, bottom: 10 * fem),
+                      width: double.infinity,
                       color: kbgWhiteColor,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,9 +163,13 @@ class _BodyState extends State<Body> {
                           BlocBuilder<CampaignBloc, CampaignState>(
                             builder: (context, state) {
                               if (state is CampaignsLoaded) {
-                                return CampaignCarousel(
-                                  campaigns: state.campaigns,
-                                  roleState: roleState,
+                                return Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: CampaignCarousel(
+                                    campaigns: state.campaigns,
+                                    roleState: roleState,
+                                  ),
                                 );
                               }
                               return Container(
@@ -258,6 +268,16 @@ class _BodyState extends State<Body> {
                                             },
                                             child: Container(
                                               width: 80 * fem,
+                                              decoration: BoxDecoration(
+                                                  // boxShadow: [
+                                                  //   BoxShadow(
+                                                  //     color: Colors.black26,
+                                                  //     blurRadius: 5.0,
+                                                  //     offset: Offset(3.0, 2.0
+                                                  //         ), // Adjust the offset as needed
+                                                  //   ),
+                                                  // ],
+                                                  ),
                                               margin: EdgeInsets.only(
                                                   left: 5 * fem,
                                                   right: 5 * fem),
@@ -389,8 +409,8 @@ class _BodyState extends State<Body> {
                                                   context,
                                                   CampaignDetailScreen
                                                       .routeName,
-                                                  arguments:
-                                                      state.campaigns[index].id);
+                                                  arguments: state
+                                                      .campaigns[index].id);
                                             }
                                           },
                                           child: CampaignListCard(
@@ -408,8 +428,8 @@ class _BodyState extends State<Body> {
                                                     context,
                                                     CampaignDetailScreen
                                                         .routeName,
-                                                    arguments:
-                                                        state.campaigns[index].id);
+                                                    arguments: state
+                                                        .campaigns[index].id);
                                               }
                                             },
                                           ),

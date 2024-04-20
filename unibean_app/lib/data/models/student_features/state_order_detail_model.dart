@@ -22,13 +22,13 @@ class StateOrderDetailModel extends Equatable {
 
   factory StateOrderDetailModel.fromJson(Map<String, dynamic> json) {
     return StateOrderDetailModel(
-      id: json['id'],
-      orderId: json['orderId'],
-      stateId: json['stateId'],
+      id: json['id'] ?? '',
+      orderId: json['orderId'] ?? '',
+      stateId: json['stateId'] ?? '',
       state: json['state'],
-      stateName: json['stateName'],
-      dateCreated: json['dateCreated'],
-      description: json['description'],
+      stateName: json['stateName'] ?? '',
+      dateCreated: json['dateCreated'] ?? '',
+      description: json['description'] ?? '',
       status: json['status'],
     );
   }

@@ -114,7 +114,7 @@ class BrandCampaigns extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, CampaignDetailScreen.routeName,
+                                context, CampaignDetailStoreScreen.routeName,
                                 arguments: campaignModel.id);
                           },
                           child: Stack(
@@ -146,13 +146,23 @@ class BrandCampaigns extends StatelessWidget {
                                           child: Image.network(
                                             campaignModel.image,
                                             fit: BoxFit.fill,
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              }
+                                              return ShimmerWidget.rectangular(
+                                                width: 150 * fem,
+                                                height: 180 * hem,
+                                              );
+                                            },
                                             errorBuilder:
                                                 (context, error, stackTrace) {
                                               return Container(
                                                 width: 170 * fem,
                                                 height: 180 * hem,
                                                 child: Image.asset(
-                                                  'assets/images/campaign-default.png',
+                                                  'assets/images/image-404.jpg',
                                                   width: 40 * fem,
                                                   height: 40 * hem,
                                                 ),

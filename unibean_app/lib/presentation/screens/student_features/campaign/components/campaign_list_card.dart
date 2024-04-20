@@ -26,9 +26,10 @@ class CampaignListCard extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(
-              left: 10 * fem, right: 10 * fem, bottom: 15 * hem),
-          width: 350 * fem,
-          height: 150 * hem,
+              left: 15 * fem, right: 15 * fem,
+               bottom: 15 * hem),
+          width: double.infinity,
+          height: 130 * hem,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15 * fem),
               color: Colors.white,
@@ -38,8 +39,8 @@ class CampaignListCard extends StatelessWidget {
                   blurRadius: 10.0, // soften the shadow
                   spreadRadius: 1.0, //extend the shadow
                   offset: const Offset(
-                    5.0, // Move to right 5  horizontally
-                    5.0, // Move to bottom 5 Vertically
+                    5.0, 
+                    5.0, 
                   ),
                 )
               ]),
@@ -53,8 +54,8 @@ class CampaignListCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10 * fem),
                   child: Container(
-                    width: 130 * fem,
-                    height: 160 * hem,
+                    width: 120 * fem,
+                    height: 150 * hem,
                     child: Image.network(
                       campaignModel.image,
                       fit: BoxFit.fill,
@@ -80,7 +81,7 @@ class CampaignListCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 5 * hem, bottom: 5 * hem),
+                    padding: EdgeInsets.only(top: 5 * hem),
                     child: Text(campaignModel.brandName,
                         softWrap: true,
                         maxLines: 2,
@@ -88,7 +89,7 @@ class CampaignListCard extends StatelessWidget {
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                           fontSize: 13 * ffem,
-                          color: kLowTextColor,
+                          color: klowTextGrey,
                           fontWeight: FontWeight.normal,
                         ))),
                   ),
@@ -96,7 +97,7 @@ class CampaignListCard extends StatelessWidget {
                     width: 200 * fem,
                     // height: 45*hem,
                     child: Text(campaignModel.campaignName,
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
@@ -139,22 +140,24 @@ class CampaignListCard extends StatelessWidget {
         Positioned(
           bottom: 25 * hem,
           right: 22 * fem,
-          child: Container(
-            width: 80 * fem,
-            height: 32 * hem,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: kPrimaryColor),
-                borderRadius: BorderRadius.circular(5)),
-            child: TextButton(
-              onPressed: onTap,
-              child: Text(
-                'Xem ngay',
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                        fontSize: 11 * ffem,
-                        fontWeight: FontWeight.w600,
-                        color: kPrimaryColor)),
+          child: InkWell(
+            onTap: onTap,
+            child: Container(
+              width: 60 * fem,
+              height: 25 * hem,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: kPrimaryColor),
+                  borderRadius: BorderRadius.circular(5)),
+              child: Center(
+                child: Text(
+                  'Xem ngay',
+                  style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                          fontSize: 10 * ffem,
+                          fontWeight: FontWeight.w600,
+                          color: kPrimaryColor)),
+                ),
               ),
             ),
           ),

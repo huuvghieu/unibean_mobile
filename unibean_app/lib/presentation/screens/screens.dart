@@ -66,3 +66,4 @@ export 'store_features/profile_update_detail/profile_update_detail_screen.dart';
 export 'store_features/campaign_voucher_information/campaign_vouher_information_screen.dart';
 export 'store_features/brand/brand_detail_store_screen.dart';
 export 'store_features/bonus/bonus_screen.dart';
+export 'store_features/campaign_detail/campaign_detail_store_screen.dart';

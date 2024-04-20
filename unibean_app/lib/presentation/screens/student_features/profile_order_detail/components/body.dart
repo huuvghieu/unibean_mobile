@@ -3,10 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unibean_app/data/models/student_features/order_detail_model.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_order_detail/components/order_state_2.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_order_detail/components/order_state_3.dart';
+import 'package:unibean_app/presentation/screens/student_features/profile_order_detail/components/order_state_4.dart';
 
+import '../../../../../data/models.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../store_features/brand/components/detail_shadow_bottom.dart';
+import 'order_state_1.dart';
+import 'order_state_5.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -34,36 +41,7 @@ class Body extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        color: Colors.white,
-                        padding:
-                            EdgeInsetsDirectional.only(top: 10, bottom: 10),
-                        child: Text(
-                          'Trạng thái: ${orderDetail.currentStateName}',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  fontSize: 18 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20 * hem,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Text(
-                          'Thông tin người nhận',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  fontSize: 18 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  color: klowTextGrey)),
-                        ),
-                      ),
+                      _buildOrderStateWidget(ffem, fem, orderDetail),
                       SizedBox(
                         height: 5 * hem,
                       ),
@@ -75,6 +53,18 @@ class Body extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'THÔNG TIN NGƯỜI NHẬN',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 16 * ffem,
+                                        fontWeight: FontWeight.w600,
+                                        color: kPrimaryColor)),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 '${orderDetail.studentName} - MSSV: ${orderDetail.studentCode}',
                                 textAlign: TextAlign.center,
@@ -123,21 +113,6 @@ class Body extends StatelessWidget {
                             ],
                           )),
                       SizedBox(
-                        height: 20 * hem,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Text(
-                          'Trạm lấy hàng',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  fontSize: 18 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  color: klowTextGrey)),
-                        ),
-                      ),
-                      SizedBox(
                         height: 5 * hem,
                       ),
                       Container(
@@ -149,7 +124,19 @@ class Body extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${orderDetail.stationName} - ${orderDetail.stationPhone}',
+                                'THÔNG TIN TRẠM',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 16 * ffem,
+                                        fontWeight: FontWeight.w600,
+                                        color: kPrimaryColor)),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '${orderDetail.stationName}',
                                 textAlign: TextAlign.start,
                                 style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
@@ -160,52 +147,93 @@ class Body extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              Row(
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    'Thời gian làm việc: ',
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                      fontSize: 15 * ffem,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                    )),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Số điện thoại: ',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 15 * ffem,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        )),
+                                      ),
+                                      Text(
+                                        '${orderDetail.stationPhone}',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 15 * ffem,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${formatTime(orderDetail.stationOpeningHours)} - ${formatTime(orderDetail.stationClosingHours)}.',
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                      fontSize: 15 * ffem,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Thời gian làm việc: ',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 15 * ffem,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        )),
+                                      ),
+                                      Text(
+                                        '${formatTime(orderDetail.stationOpeningHours)} - ${formatTime(orderDetail.stationClosingHours)}',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 15 * ffem,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Địa chỉ: ',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          fontSize: 15 * ffem,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        )),
+                                      ),
+                                      Container(
+                                        width: 200,
+                                        child: Text(
+                                          '${orderDetail.stationAdress}',
+                                          textAlign: TextAlign.end,
+                                          style: GoogleFonts.openSans(
+                                              textStyle: TextStyle(
+                                            fontSize: 15 * ffem,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600,
+                                          )),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Địa chỉ: ',
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                    fontSize: 15 * ffem,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                  )),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: '${orderDetail.stationAdress}',
-                                      style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
-                                        fontSize: 15 * ffem,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                    ),
-                                  ],
-                                ),
                               ),
                               SizedBox(
                                 height: 5,
@@ -213,7 +241,7 @@ class Body extends StatelessWidget {
                             ],
                           )),
                       SizedBox(
-                        height: 30 * hem,
+                        height: 5 * hem,
                       ),
                       Container(
                           width: double.infinity,
@@ -223,24 +251,14 @@ class Body extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border:
-                                        Border.all(color: Color(0xfffb7eb8f)),
-                                    color: Color(0xffff6ffed)),
-                                padding: EdgeInsets.only(
-                                    top: 10, bottom: 10, left: 10, right: 10),
-                                width: double.infinity,
-                                child: Text(
-                                  'Sản phẩm',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.openSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 16 * ffem,
-                                          fontWeight: FontWeight.bold,
-                                          color: kPrimaryColor)),
-                                ),
+                              Text(
+                                'SẢN PHẨM',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.openSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 16 * ffem,
+                                        fontWeight: FontWeight.w600,
+                                        color: kPrimaryColor)),
                               ),
                               SizedBox(
                                 height: 5,
@@ -272,6 +290,8 @@ class Body extends StatelessWidget {
                                                       stackTrace) {
                                                     return Image.asset(
                                                       'assets/images/image-404.jpg',
+                                                      height: 80,
+                                                      width: 80,
                                                     );
                                                   },
                                                 ),
@@ -314,7 +334,7 @@ class Body extends StatelessWidget {
                                               width: 15,
                                             ),
                                             Container(
-                                              width: 100 * fem,
+                                              width: 90 * fem,
                                               child: Text(
                                                 '${orderD.productName}',
                                                 textAlign: TextAlign.start,
@@ -414,5 +434,21 @@ class Body extends StatelessWidget {
         return Container();
       },
     );
+  }
+
+  Widget _buildOrderStateWidget(ffem, fem, OrderDetailModel orderDetail) {
+    if (orderDetail.stateDetails.length == 1) {
+      return OrderState1(ffem: ffem, orderDetail: orderDetail, fem: fem);
+    } else if (orderDetail.stateDetails.length == 2) {
+      return OrderState2(ffem: ffem, orderDetail: orderDetail, fem: fem);
+    } else if (orderDetail.stateDetails.length == 3) {
+      return OrderState3(ffem: ffem, orderDetail: orderDetail, fem: fem);
+    } else if (orderDetail.stateDetails.length == 4) {
+      return OrderState4(ffem: ffem, orderDetail: orderDetail, fem: fem);
+    } else if (orderDetail.stateDetails.length == 5){
+       return OrderState5(ffem: ffem, orderDetail: orderDetail, fem: fem);
+    } else {
+      return Container();
+    }
   }
 }
