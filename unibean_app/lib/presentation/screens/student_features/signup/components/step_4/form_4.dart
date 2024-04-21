@@ -68,7 +68,7 @@ class _FormBody4State extends State<FormBody4> {
                         labelText: 'MÃ SỐ SINH VIÊN *',
                         hintText: 'Nhập mã số sinh viên',
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value == null || value.isEmpty || value.trim().isEmpty) {
                             return 'MSSV không được bỏ trống';
                           }
                           return null;
@@ -161,8 +161,8 @@ void _submitForm(
         .then((value) async {
       if (value == '') {
         final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
-        createAuthenModel!.code = studentCodeController.text;
-        createAuthenModel.majorId = majorController.text;
+        createAuthenModel!.code = studentCodeController.text.trim();
+        createAuthenModel.majorId = majorController.text.trim();
         String createAuthenString = jsonEncode(createAuthenModel);
         AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
         Navigator.pushNamed(context, SignUp5Screen.routeName,
@@ -178,8 +178,8 @@ void _submitForm(
         .then((value) async {
       if (value == '') {
         final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
-        verifyAuthenModel!.code = studentCodeController.text;
-        verifyAuthenModel.majorId = majorController.text;
+        verifyAuthenModel!.code = studentCodeController.text.trim();
+        verifyAuthenModel.majorId = majorController.text.trim();
         String verifyAuthenString = jsonEncode(verifyAuthenModel);
         AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
         Navigator.pushNamed(context, SignUp5Screen.routeName,

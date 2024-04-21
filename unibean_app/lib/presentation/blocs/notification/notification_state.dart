@@ -15,8 +15,12 @@ final class NotificationLoading extends NotificationState {
 }
 
 final class NewNotification extends NotificationState {
+  final List<NotificationModel> notifications;
+
+  NewNotification({required this.notifications});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [notifications];
 }
 
 final class NotificationLoaded extends NotificationState {

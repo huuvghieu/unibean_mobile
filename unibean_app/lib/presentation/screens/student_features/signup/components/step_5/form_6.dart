@@ -66,7 +66,7 @@ class _FormBody6State extends State<FormBody6> {
                           height: 150 * widget.hem,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                   image: FileImage(_selectedFrontCard!))),
                         ),
                       )
@@ -113,7 +113,7 @@ class _FormBody6State extends State<FormBody6> {
                           height: 150 * widget.hem,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                   image: FileImage(_selectedBackCard!))),
                         ),
                       )

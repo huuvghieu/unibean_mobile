@@ -50,6 +50,8 @@ class _FormTransactState extends State<FormTransact> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Số đậu xanh không được bỏ trống';
+                } else if (!numberRegExp.hasMatch(value)) {
+                  return 'Số đậu xanh không hợp lệ!';
                 }
                 return null;
               },

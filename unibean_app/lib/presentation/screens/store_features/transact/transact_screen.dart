@@ -82,9 +82,7 @@ class _TransactScreenState extends State<TransactScreen> {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 2), () {
-                  Navigator.of(context).pop();
-                });
+                Future.delayed(Duration(seconds: 2));
                 return AlertDialog(
                     content: Container(
                         width: 250,

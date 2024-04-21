@@ -33,9 +33,7 @@ class TabScanVoucher extends StatelessWidget {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 5), () {
-                  Navigator.of(context).pop();
-                });
+                Future.delayed(Duration(seconds: 5));
                 return AlertDialog(
                     content: Container(
                         width: 250,
@@ -69,11 +67,7 @@ class TabScanVoucher extends StatelessWidget {
                 }
               }
               if (value != null) {
-                // context.read<StoreBloc>().add(ScanVoucherCode(
-                //     storeId: widget.id,
-                //     voucherCode: value,
-                //     description: 'string',
-                //     state: true));
+            
                 context.read<StoreBloc>().add(LoadCampaignVoucherInformation(
                     storeId: widget.id, voucherCode: value));
               }

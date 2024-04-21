@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/domain/repositories.dart';
+import 'package:unibean_app/presentation/blocs/bonus/bonus_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../blocs/blocs.dart';
+import 'components/body.dart';
 // import 'components/body.dart';
 
 class BonusDetailScreen extends StatelessWidget {
@@ -68,8 +70,8 @@ class BonusDetailScreen extends StatelessWidget {
         backgroundColor: klighGreyColor,
         body: BlocProvider(
           create: (context) =>
-              BonusBloc(context.read<BonusRepository>())..add(LoadBonus()),
-          // child: Body(),
+              BonusBloc(context.read<BonusRepository>())..add(LoadBonusDetail(bonusId: bonusId)),
+          child: Body(),
         ),
       ),
     );

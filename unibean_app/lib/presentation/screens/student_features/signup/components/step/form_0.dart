@@ -98,7 +98,7 @@ class _FormBodyState extends State<FormBody> {
                                 if (value == null || value.isEmpty) {
                                   return 'Tài khoản không được bỏ trống';
                                 } else if (!userNamePattern.hasMatch(value)) {
-                                  return 'Tài khoản phải chứa ký tự thường hoặc số,\ncó độ dài từ 5 đến 50 ký tự';
+                                  return 'Tài khoản phải chứa ký tự thường \nhoặc số, có độ dài từ 5 đến 50 ký tự';
                                 }
                                 return null;
                               },
@@ -132,7 +132,7 @@ class _FormBodyState extends State<FormBody> {
                                 if (value == null || value.isEmpty) {
                                   return 'Mật khẩu không được bỏ trống';
                                 } else if (!passwordPattern.hasMatch(value)) {
-                                  return 'Mật khẩu phải chứa ít nhất tám ký tự,\nít nhất một số và cả chữ thường,\nchữ hoa và ký tự đặc biệt.';
+                                  return 'Mật khẩu phải chứa ít nhất tám ký tự, \nít nhất một số và cả chữ thường, \nchữ hoa và ký tự đặc biệt.';
                                 }
                                 return null;
                               },
@@ -202,17 +202,17 @@ class _FormBodyState extends State<FormBody> {
   }
 }
 
-void _submitForm(
-    BuildContext context, userNameController, passController, confirmPassController) {
+void _submitForm(BuildContext context, TextEditingController userNameController,
+    TextEditingController passController, confirmPassController) {
   context
       .read<ValidationCubit>()
       .validateUserName(userNameController.text)
       .then((value) {
     if (value == '') {
       CreateAuthenModel createAuthenModel = CreateAuthenModel(
-        userName: userNameController.text,
-        password: passController.text,
-        passwordConfirmed: confirmPassController.text,
+        userName: userNameController.text.trim(),
+        password: passController.text.trim(),
+        passwordConfirmed: confirmPassController.text.trim(),
       );
       String createAuthenString = jsonEncode(createAuthenModel);
       AuthenLocalDataSource.saveCreateAuthen(createAuthenString);

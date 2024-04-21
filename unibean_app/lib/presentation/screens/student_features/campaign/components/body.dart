@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
@@ -45,7 +46,6 @@ class _BodyState extends State<Body> {
     double heightText = 1.3625 * ffem / fem;
 
     final roleState = context.watch<RoleAppBloc>().state;
-
 
     return BlocListener<InternetBloc, InternetState>(
       listener: (context, state) {
@@ -163,14 +163,54 @@ class _BodyState extends State<Body> {
                           BlocBuilder<CampaignBloc, CampaignState>(
                             builder: (context, state) {
                               if (state is CampaignsLoaded) {
-                                return Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  width: MediaQuery.of(context).size.width,
-                                  child: CampaignCarousel(
-                                    campaigns: state.campaigns,
-                                    roleState: roleState,
-                                  ),
-                                );
+                                if (state.campaigns.length == 0) {
+                                  return Container(
+                                    width: double.infinity,
+                                    margin: EdgeInsets.only(
+                                        left: 15 * fem, right: 15 * fem),
+                                    height: 220 * hem,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/icons/campaign-navbar-icon.svg',
+                                          width: 60 * fem,
+                                          colorFilter: ColorFilter.mode(
+                                              kLowTextColor, BlendMode.srcIn),
+                                        ),
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 5),
+                                            child: Text(
+                                              'Không có chiến dịch nào \nđang diễn ra!',
+                                              style: GoogleFonts.openSans(
+                                                  textStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: CampaignCarousel(
+                                      campaigns: state.campaigns,
+                                      roleState: roleState,
+                                    ),
+                                  );
+                                }
                               }
                               return Container(
                                 child: Center(
@@ -268,16 +308,7 @@ class _BodyState extends State<Body> {
                                             },
                                             child: Container(
                                               width: 80 * fem,
-                                              decoration: BoxDecoration(
-                                                  // boxShadow: [
-                                                  //   BoxShadow(
-                                                  //     color: Colors.black26,
-                                                  //     blurRadius: 5.0,
-                                                  //     offset: Offset(3.0, 2.0
-                                                  //         ), // Adjust the offset as needed
-                                                  //   ),
-                                                  // ],
-                                                  ),
+                                              decoration: BoxDecoration(),
                                               margin: EdgeInsets.only(
                                                   left: 5 * fem,
                                                   right: 5 * fem),
@@ -384,41 +415,61 @@ class _BodyState extends State<Body> {
                               if (state is CampaignLoading) {
                                 return shimmerLoading(1);
                               } else if (state is CampaignsLoaded) {
-                                return Container(
-                                  child: ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: state.hasReachMax
-                                        ? state.campaigns.length
-                                        : state.campaigns.length + 1,
-                                    itemBuilder: (context, index) {
-                                      if (index >= state.campaigns.length) {
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            color: kPrimaryColor,
+                                if (state.campaigns.length == 0) {
+                                  return Container(
+                                    width: double.infinity,
+                                    margin: EdgeInsets.only(
+                                        left: 15 * fem, right: 15 * fem),
+                                    height: 220 * hem,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/icons/campaign-navbar-icon.svg',
+                                          width: 60 * fem,
+                                          colorFilter: ColorFilter.mode(
+                                              kLowTextColor, BlendMode.srcIn),
+                                        ),
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 5),
+                                            child: Text(
+                                              'Không có chiến dịch nào \nđang diễn ra!',
+                                              style: GoogleFonts.openSans(
+                                                  textStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              )),
+                                            ),
                                           ),
-                                        );
-                                      } else {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            if (roleState is Unverified) {
-                                              Navigator.pushNamed(context,
-                                                  UnverifiedScreen.routeName);
-                                            } else {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  CampaignDetailScreen
-                                                      .routeName,
-                                                  arguments: state
-                                                      .campaigns[index].id);
-                                            }
-                                          },
-                                          child: CampaignListCard(
-                                            fem: fem,
-                                            hem: hem,
-                                            ffem: ffem,
-                                            campaignModel:
-                                                state.campaigns[index],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    child: ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: state.hasReachMax
+                                          ? state.campaigns.length
+                                          : state.campaigns.length + 1,
+                                      itemBuilder: (context, index) {
+                                        if (index >= state.campaigns.length) {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              color: kPrimaryColor,
+                                            ),
+                                          );
+                                        } else {
+                                          return GestureDetector(
                                             onTap: () {
                                               if (roleState is Unverified) {
                                                 Navigator.pushNamed(context,
@@ -432,12 +483,34 @@ class _BodyState extends State<Body> {
                                                         .campaigns[index].id);
                                               }
                                             },
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                );
+                                            child: CampaignListCard(
+                                              fem: fem,
+                                              hem: hem,
+                                              ffem: ffem,
+                                              campaignModel:
+                                                  state.campaigns[index],
+                                              onTap: () {
+                                                if (roleState is Unverified) {
+                                                  Navigator.pushNamed(
+                                                      context,
+                                                      UnverifiedScreen
+                                                          .routeName);
+                                                } else {
+                                                  Navigator.pushNamed(
+                                                      context,
+                                                      CampaignDetailScreen
+                                                          .routeName,
+                                                      arguments: state
+                                                          .campaigns[index].id);
+                                                }
+                                              },
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  );
+                                }
                               }
                               return Container(
                                 child: Center(

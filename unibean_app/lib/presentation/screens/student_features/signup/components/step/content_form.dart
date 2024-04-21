@@ -32,7 +32,7 @@ class ContentForm extends StatelessWidget {
             if (value == null || value.isEmpty) {
               return 'Tài khoản không được bỏ trống';
             } else if (!userNamePattern.hasMatch(value)) {
-              return 'Tài khoản phải chứa ký tự thường hoặc số,\ncó độ dài từ 5 đến 50 ký tự';
+              return 'Tài khoản phải chứa ký tự thường \nhoặc số, có độ dài từ 5 đến 50 ký tự';
             }
             return null;
           },
@@ -52,7 +52,7 @@ class ContentForm extends StatelessWidget {
             if (value == null || value.isEmpty) {
               return 'Mật khẩu không được bỏ trống';
             } else if (!passwordPattern.hasMatch(value)) {
-              return 'Mật khẩu phải chứa ít nhất tám ký tự,\nít nhất một số và cả chữ thường,\nchữ hoa và ký tự đặc biệt.';
+              return 'Mật khẩu phải chứa ít nhất tám ký tự, \nít nhất một số và cả chữ thường, \nchữ hoa và ký tự đặc biệt.';
             }
             return null;
           },

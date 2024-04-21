@@ -55,12 +55,23 @@ class RoleAppBloc extends Bloc<RoleAppEvent, RoleAppState> {
   Future<void> _onEndRoleApp(
       RoleAppEnd event, Emitter<RoleAppState> emit) async {
     try {
-      AuthenLocalDataSource.removeAuthen();
-      AuthenLocalDataSource.clearAuthen();
-      PushNotification().unSubcribeNoti();
-      if (googleSignIn.currentUser != null) {
-        await googleSignIn.disconnect();
-        await FirebaseAuth.instance.signOut();
+      final studentId = await AuthenLocalDataSource.getStudentId();
+      if (studentId == null) {
+        AuthenLocalDataSource.removeAuthen();
+        AuthenLocalDataSource.clearAuthen();
+        if (googleSignIn.currentUser != null) {
+          await googleSignIn.disconnect();
+          await FirebaseAuth.instance.signOut();
+        }
+      } else {
+        PushNotification().unSubcribeNoti().then((value) async {
+          AuthenLocalDataSource.removeAuthen();
+          AuthenLocalDataSource.clearAuthen();
+          if (googleSignIn.currentUser != null) {
+            await googleSignIn.disconnect();
+            await FirebaseAuth.instance.signOut();
+          }
+        });
       }
 
       // emit(Unknown());

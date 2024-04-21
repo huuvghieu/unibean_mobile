@@ -198,4 +198,9 @@ class AuthenLocalDataSource {
 
     await sf.clear();
   }
+
+  static Future<void> clearNotifications() async {
+    final sf = await SharedPreferences.getInstance();
+    sf.remove('notiString');
+  }
 }

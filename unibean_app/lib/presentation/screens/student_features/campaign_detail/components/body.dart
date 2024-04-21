@@ -307,7 +307,7 @@ class Body extends StatelessWidget {
                                   child: ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: 1,
+                                    itemCount: state.campaignStores.length,
                                     itemBuilder: (context, index) {
                                       var storeModel =
                                           state.campaignStores[index];

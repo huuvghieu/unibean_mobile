@@ -37,6 +37,7 @@ final RegExp userNamePattern = RegExp(r'^(?=.*[a-z0-9])[a-z0-9]{5,50}$');
 
 final RegExp phoneNumberPattern = RegExp(r'^\d{9}$');
 
+final RegExp numberRegExp = RegExp(r'^[0-9]+$');
 //response failed from api
 final String invalidStudentCode = '["Student code is already in use"]';
 
@@ -68,40 +69,40 @@ String timeOfDayToString(TimeOfDay timeOfDay) {
   return '${timeOfDay.hour}:${timeOfDay.minute}';
 }
 
- Color checkColorState(String stateName) {
-    if (stateName == 'Đã hủy') {
-      return Colors.red;
-    } else {
-      return kPrimaryColor;
-    }
+Color checkColorState(String stateName) {
+  if (stateName == 'Đã hủy') {
+    return Colors.red;
+  } else {
+    return kPrimaryColor;
   }
+}
 
-  IndicatorStyle checkIndicatorStyle(String stateName) {
-    if (stateName == 'Đã hủy') {
-      return IndicatorStyle(
-          width: 50,
-          height: 50,
-          indicator: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100 ),
-                  color: Colors.red[200]),
-              child: Icon(
-                Icons.cancel_outlined,
-                color: Colors.red,
-                size: 25,
-              )));
-    } else {
-      return IndicatorStyle(
-          width: 50,
-          height: 50,
-          indicator: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: const Color.fromARGB(255, 178, 247, 180)),
-              child: Icon(
-                Icons.check_rounded,
-                color: kPrimaryColor,
-                size: 25,
-              )));
-    }
+IndicatorStyle checkIndicatorStyle(String stateName) {
+  if (stateName == 'Đã hủy') {
+    return IndicatorStyle(
+        width: 50,
+        height: 50,
+        indicator: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: Colors.red[200]),
+            child: Icon(
+              Icons.cancel_outlined,
+              color: Colors.red,
+              size: 25,
+            )));
+  } else {
+    return IndicatorStyle(
+        width: 50,
+        height: 50,
+        indicator: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: const Color.fromARGB(255, 178, 247, 180)),
+            child: Icon(
+              Icons.check_rounded,
+              color: kPrimaryColor,
+              size: 25,
+            )));
   }
+}

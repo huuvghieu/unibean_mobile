@@ -266,6 +266,7 @@ class CampaignVoucherScreen extends StatelessWidget {
           body: Body(
             campaignVoucherModel: campaignVoucherModel,
             campaignDetil: campaignDetailModel,
+            studentId: studentId,
           ),
         ),
       ),

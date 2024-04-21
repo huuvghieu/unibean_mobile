@@ -14,6 +14,7 @@ import 'package:unibean_app/presentation/config/app_router.dart';
 import 'package:unibean_app/presentation/cubits/verification/verification_cubit.dart';
 import 'package:unibean_app/simple_bloc_observer.dart';
 
+import 'data/models.dart';
 import 'data/repositories/store_features/bonus_repository.dart';
 import 'presentation/blocs/blocs.dart';
 import 'presentation/cubits/validation/validation_cubit.dart';
@@ -25,6 +26,11 @@ final navigatorKey = GlobalKey<NavigatorState>();
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null) {
     print('Some notification Received!');
+    notificationBloc.add(AddNewNotification(
+        notificationModel: NotificationModel(
+            title: message.notification!.title!,
+            body: message.notification!.body!,
+            payload: jsonEncode(message.data))));
   }
 }
 

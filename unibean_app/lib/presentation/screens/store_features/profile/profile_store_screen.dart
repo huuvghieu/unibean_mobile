@@ -39,20 +39,6 @@ class ProfileStoreScreen extends StatelessWidget {
                           height: 1.3625 * ffem / fem,
                           color: Colors.white)),
                 ),
-                actions: [
-                  // SvgPicture.asset('assets/icons/notification-icon.svg')
-                  Padding(
-                    padding: EdgeInsets.only(right: 20 * fem),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: 25 * fem,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
               ),
               extendBodyBehindAppBar: true,
               extendBody: true,

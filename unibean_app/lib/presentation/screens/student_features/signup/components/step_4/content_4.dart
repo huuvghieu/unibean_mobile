@@ -6,7 +6,9 @@ import 'form_4.dart';
 
 class Content4 extends StatelessWidget {
   const Content4(
-      {super.key, required this.widget, required this.studentCodeController,
+      {super.key,
+      required this.widget,
+      required this.studentCodeController,
       required this.majorController});
 
   final FormBody4 widget;
@@ -39,7 +41,7 @@ class Content4 extends StatelessWidget {
             labelText: 'MÃ SỐ SINH VIÊN *',
             hintText: 'Nhập mã số sinh viên',
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (value == null || value.isEmpty || value.trim().isEmpty) {
                 return 'MSSV không được bỏ trống';
               }
 
@@ -51,19 +53,19 @@ class Content4 extends StatelessWidget {
             height: 25 * widget.hem,
           ),
           DropDownMajor(
-              hem: widget.hem,
-              fem: widget.fem,
-              ffem: widget.ffem,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Chuyên ngành không được bỏ trống';
-                }
-                return null;
-              },
-              labelText: 'CHUYÊN NGÀNH *',
-              hintText: 'Chọn chuyên ngành',
-              majorController: majorController,
-              ),
+            hem: widget.hem,
+            fem: widget.fem,
+            ffem: widget.ffem,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Chuyên ngành không được bỏ trống';
+              }
+              return null;
+            },
+            labelText: 'CHUYÊN NGÀNH *',
+            hintText: 'Chọn chuyên ngành',
+            majorController: majorController,
+          ),
           SizedBox(
             height: 40 * widget.hem,
           ),

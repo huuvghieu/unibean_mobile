@@ -150,11 +150,11 @@ Widget buildBonusShimmer(count, double fem, double hem) {
                     ),
                     ShimmerWidget.rectangular(
                       height: 15 * hem,
-                      width: 300 * fem,
+                      width: 200 * fem,
                     ),
                     ShimmerWidget.rectangular(
                       height: 15 * hem,
-                      width: 300 * fem,
+                      width: 100 * fem,
                     ),
                   ],
                 ),

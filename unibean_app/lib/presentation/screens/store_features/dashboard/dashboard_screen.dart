@@ -156,134 +156,139 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                       stateStudent
                                                               .studentRankings[
                                                           index];
-                                                  return Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Stack(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.star,
-                                                            color: kYellow,
-                                                            size: 40,
-                                                          ),
-                                                          Positioned.fill(
-                                                            top: 12,
-                                                            child: Text(
-                                                              '${studentRanking.rank}',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: GoogleFonts
-                                                                  .openSans(
-                                                                      textStyle:
-                                                                          TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              )),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          child: Image.network(
-                                                            '${studentRanking.image}',
-                                                            // 'assets/images/ava_signup.png',
-                                                            width: 55,
-                                                            height: 55,
-                                                            fit: BoxFit.fill,
-                                                            errorBuilder:
-                                                                (context, error,
-                                                                    stackTrace) {
-                                                              return Image.asset(
-                                                                  'assets/images/ava_signup.png',
-                                                                  width: 55,
-                                                                  height: 55);
-                                                            },
-                                                          )),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          color: kYellow,
-                                                        ),
-                                                        width: 200,
-                                                        height: 45,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
+                                                  return Container(
+                                                    margin: EdgeInsets.only(
+                                                        bottom: 10),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Stack(
                                                           children: [
-                                                            Text(
-                                                              '${studentRanking.name}',
-                                                              style: GoogleFonts
-                                                                  .openSans(
-                                                                      textStyle:
-                                                                          TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              )),
+                                                            Icon(
+                                                              Icons.star,
+                                                              color: kYellow,
+                                                              size: 40,
                                                             ),
-                                                            Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  '${formatter.format(studentRanking.value)}',
-                                                                  style: GoogleFonts
-                                                                      .openSans(
-                                                                          textStyle:
-                                                                              TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  )),
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              2,
-                                                                          top:
-                                                                              4,
-                                                                          bottom:
-                                                                              2),
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    'assets/icons/green-bean-icon.svg',
-                                                                    width: 24,
-                                                                    height: 22,
-                                                                  ),
-                                                                )
-                                                              ],
+                                                            Positioned.fill(
+                                                              top: 12,
+                                                              child: Text(
+                                                                '${studentRanking.rank}',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: GoogleFonts
+                                                                    .openSans(
+                                                                        textStyle:
+                                                                            TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                )),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                    ],
+                                                        ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50),
+                                                            child:
+                                                                Image.network(
+                                                              '${studentRanking.image}',
+                                                              // 'assets/images/ava_signup.png',
+                                                              width: 55,
+                                                              height: 55,
+                                                              fit: BoxFit.fill,
+                                                              errorBuilder:
+                                                                  (context,
+                                                                      error,
+                                                                      stackTrace) {
+                                                                return Image.asset(
+                                                                    'assets/images/ava_signup.png',
+                                                                    width: 55,
+                                                                    height: 55);
+                                                              },
+                                                            )),
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        30),
+                                                            color: kYellow,
+                                                          ),
+                                                          width: 200,
+                                                          height: 45,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            children: [
+                                                              Text(
+                                                                '${studentRanking.name}',
+                                                                style: GoogleFonts
+                                                                    .openSans(
+                                                                        textStyle:
+                                                                            TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                )),
+                                                              ),
+                                                              Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Text(
+                                                                    '${formatter.format(studentRanking.value)}',
+                                                                    style: GoogleFonts
+                                                                        .openSans(
+                                                                            textStyle:
+                                                                                TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    )),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsets.only(
+                                                                        left: 2,
+                                                                        top: 4,
+                                                                        bottom:
+                                                                            2),
+                                                                    child: SvgPicture
+                                                                        .asset(
+                                                                      'assets/icons/green-bean-icon.svg',
+                                                                      width: 24,
+                                                                      height:
+                                                                          22,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   );
                                                 },
                                               )

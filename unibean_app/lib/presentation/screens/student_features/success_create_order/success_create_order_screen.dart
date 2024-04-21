@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/presentation/blocs/blocs.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../../data/models.dart';
 import '../../../config/constants.dart';
@@ -86,10 +88,12 @@ class SuccessCreateOrderScreen extends StatelessWidget {
               height: 80 * hem,
               elevation: 5,
               child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    final studentId =
+                        await AuthenLocalDataSource.getStudentId();
                     context.read<CampaignBloc>().add(LoadCampaigns());
-                    Navigator.pushNamedAndRemoveUntil(context,
-                        '/landing-screen', (Route<dynamic> route) => false);
+                    Navigator.pushNamed(context, OrderDetailScreen.routeName,
+                        arguments: <dynamic>[orderModel.id, studentId]);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -19,10 +19,13 @@ class Body extends StatelessWidget {
   const Body(
       {super.key,
       required this.campaignVoucherModel,
-      required this.campaignDetil});
+      required this.campaignDetil,
+      required this.studentId
+      });
 
   final CampaignVoucherModel campaignVoucherModel;
   final CampaignDetailModel campaignDetil;
+  final String studentId;
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +264,6 @@ class Body extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                   
                                     Text(
                                       'Còn lại: ${campaignVoucherDetail.quantityInStock}',
                                       style: GoogleFonts.openSans(
@@ -424,6 +426,7 @@ class Body extends StatelessWidget {
                                   ffem: ffem,
                                   campaignDetallModeil: campaignDetil,
                                   id: campaignVoucherModel.id,
+                                  studentId: studentId,
                                 ),
                               ],
                             ),

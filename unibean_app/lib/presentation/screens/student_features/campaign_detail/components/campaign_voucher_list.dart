@@ -81,7 +81,7 @@ class CampaignVoucherList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: state.campaignVouchers.length,
                     itemBuilder: (context, index) {
-                      var campaignVoucher = state.campaignVouchers[0];
+                      var campaignVoucher = state.campaignVouchers[index];
                       return GestureDetector(
                         onTap: () async {
                           final studentId =
@@ -120,8 +120,7 @@ class CampaignVoucherList extends StatelessWidget {
                                         height: 150 * hem,
                                         width: 180 * fem,
                                         child: Image.network(
-                                         campaignVoucher
-                                              .voucherImage,
+                                          campaignVoucher.voucherImage,
                                           fit: BoxFit.fill,
                                           loadingBuilder: (context, child,
                                               loadingProgress) {
@@ -203,6 +202,48 @@ class CampaignVoucherList extends StatelessWidget {
                                             height: 22 * fem,
                                           ),
                                         )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 10 * fem,
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 10 * fem, right: 10 * fem),
+                              
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                     Row(
+                                      children: [
+                                        Text(
+                                          '${state.campaignVouchers[index].quantityInStock}',
+                                          style: GoogleFonts.openSans(
+                                              textStyle: TextStyle(
+                                            fontSize: 14 * ffem,
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.normal,
+                                          )),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(right: 5 * fem),
+                                          child: Text(
+                                            '/${state.campaignVouchers[index].quantity}',
+                                            style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                              fontSize: 14 * ffem,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            )),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],

@@ -83,9 +83,7 @@ class _FormVerificationState extends State<FormVerification> {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 10), () {
-                  Navigator.of(context).pop();
-                });
+                Future.delayed(Duration(seconds: 10));
                 return AlertDialog(
                     content: Container(
                         width: 250,

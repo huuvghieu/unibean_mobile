@@ -171,7 +171,11 @@ class TabCart extends StatelessWidget {
                     );
                   }
                 }
-                return Container();
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                );
               },
             ),
           ),

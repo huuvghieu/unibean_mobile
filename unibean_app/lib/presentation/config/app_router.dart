@@ -249,6 +249,9 @@ class AppRouter {
       case BonusScreen.routeName:
         return BonusScreen.route(storeModel: settings.arguments as StoreModel);
 
+       case BonusDetailScreen.routeName:
+        return BonusDetailScreen.route(bonusId: settings.arguments as String);
+
       case CampaignDetailStoreScreen.routeName:
         return CampaignDetailStoreScreen.route(
             campaignId: settings.arguments as String);

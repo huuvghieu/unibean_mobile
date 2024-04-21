@@ -47,15 +47,13 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       var apiResponse = await studentRepository.fetchVoucherStudentId(
           event.page, event.limit, event.search,
           id: event.id);
-      if (apiResponse!.totalCount < apiResponse.pageSize) {
-          var vouchers = apiResponse.result.toList();
-        vouchers.sort((a, b) => b.dateBought.compareTo(a.dateBought));
+      if (apiResponse!.totalCount == apiResponse.result.length) {
+        var vouchers = apiResponse.result.toList();
         vouchers.sort((a, b) => a.isUsed ? 1 : -1);
         emit(StudentVouchersLoaded(
             voucherModels: vouchers, hasReachedMax: true));
       } else {
         var vouchers = apiResponse.result.toList();
-        vouchers.sort((a, b) => b.dateBought.compareTo(a.dateBought));
         vouchers.sort((a, b) => a.isUsed ? 1 : -1);
 
         emit(StudentVouchersLoaded(voucherModels: vouchers));
@@ -71,10 +69,11 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       if (event.scrollController.position.pixels ==
           event.scrollController.position.maxScrollExtent) {
         if ((this.state as StudentVouchersLoaded).hasReachedMax) {
+          List<VoucherStudentModel> vouchers =
+              List.from((this.state as StudentVouchersLoaded).voucherModels);
+          vouchers.sort((a, b) => a.isUsed ? 1 : -1);
           emit(StudentVouchersLoaded(
-              voucherModels: List.from(
-                  (this.state as StudentVouchersLoaded).voucherModels),
-              hasReachedMax: true));
+              voucherModels: vouchers, hasReachedMax: true));
         } else {
           isLoadingMore = true;
           pageVouchers++;
@@ -82,17 +81,19 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
               pageVouchers, event.limit, event.search,
               id: event.id);
           if (apiResponse!.result.length == 0) {
+            List<VoucherStudentModel> vouchers =
+                List.from((this.state as StudentVouchersLoaded).voucherModels)
+                  ..addAll(apiResponse.result);
+            vouchers.sort((a, b) => a.isUsed ? 1 : -1);
             emit(StudentVouchersLoaded(
-                voucherModels: List.from(
-                    (this.state as StudentVouchersLoaded).voucherModels)
-                  ..addAll(apiResponse.result),
-                hasReachedMax: true));
+                voucherModels: vouchers, hasReachedMax: true));
             this.pageVouchers = 1;
           } else {
-            emit(StudentVouchersLoaded(
-                voucherModels: List.from(
-                    (this.state as StudentVouchersLoaded).voucherModels)
-                  ..addAll(apiResponse.result)));
+            List<VoucherStudentModel> vouchers =
+                List.from((this.state as StudentVouchersLoaded).voucherModels)
+                  ..addAll(apiResponse.result);
+            vouchers.sort((a, b) => a.isUsed ? 1 : -1);
+            emit(StudentVouchersLoaded(voucherModels: vouchers));
           }
         }
       }

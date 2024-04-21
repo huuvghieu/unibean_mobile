@@ -72,6 +72,8 @@ class Body extends StatelessWidget {
                     Stack(
                       children: [
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                                 width: MediaQuery.of(context).size.width,
@@ -116,7 +118,7 @@ class Body extends StatelessWidget {
                       brandModel: state.brand,
                     ),
                     SizedBox(
-                      height: 15 * hem,
+                      height: 5 * hem,
                     ),
                     BlocProvider(
                       create: (context) => BrandBloc(

@@ -31,9 +31,7 @@ class TabScanStudent extends StatelessWidget {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 5), () {
-                  Navigator.of(context).pop();
-                });
+                Future.delayed(Duration(seconds: 5));
                 return AlertDialog(
                     content: Container(
                         width: 250,
@@ -43,7 +41,7 @@ class TabScanStudent extends StatelessWidget {
                                 color: kPrimaryColor))));
               });
         } else if (state is StudentByIdSuccess) {
-              final storeModel = await AuthenLocalDataSource.getStore();
+          final storeModel = await AuthenLocalDataSource.getStore();
 
           Navigator.pushReplacementNamed(context, TransactScreen.routeName,
               arguments: <dynamic>[state.studentMode, storeModel!.brandId]);

@@ -132,15 +132,15 @@ class _FormBody3State extends State<FormBody3> {
     final authenModel = await AuthenLocalDataSource.getAuthen();
     if (authenModel == null) {
       final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
-      createAuthenModel!.gender = int.parse(genderController.text);
-      createAuthenModel.dateofBirth = widget.dobController.text;
+      createAuthenModel!.gender = int.parse(genderController.text.trim());
+      createAuthenModel.dateofBirth = widget.dobController.text.trim();
       String createAuthenString = jsonEncode(createAuthenModel);
       AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
       Navigator.pushNamed(context, SignUp3Screen.routeName);
     } else {
       final verifyAuthenModel = await AuthenLocalDataSource.getVerifyAuthen();
-      verifyAuthenModel!.gender = int.parse(genderController.text);
-      verifyAuthenModel.dateofBirth = widget.dobController.text;
+      verifyAuthenModel!.gender = int.parse(genderController.text.trim());
+      verifyAuthenModel.dateofBirth = widget.dobController.text.trim();
       String verifyAuthenString = jsonEncode(verifyAuthenModel);
       AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
       Navigator.pushNamed(context, SignUp3Screen.routeName);

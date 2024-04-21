@@ -61,7 +61,7 @@ class StudentRepositoryImp implements StudentRepository {
       if (search != null) {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$id/vouchers?sort=$sort&search=$search&page=$page&limit=$limit'),
+                '$endPoint/$id/vouchers?sort=Id%2Casc&search=$search&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));

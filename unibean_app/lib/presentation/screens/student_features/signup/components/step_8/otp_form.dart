@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
@@ -37,6 +36,15 @@ class _OTPFormState extends State<OTPForm> {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   String? errorString;
+  late DateTime _endTime; // Add property to store end time
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize end time only once
+    _endTime = DateTime.now().add(Duration(seconds: 60));
+  }
+
   @override
   Widget build(BuildContext context) {
     final authState = context.watch<AuthenticationBloc>().state;
@@ -60,9 +68,7 @@ class _OTPFormState extends State<OTPForm> {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 20), () {
-                  Navigator.of(context).pop();
-                });
+                Future.delayed(Duration(seconds: 20));
                 return AlertDialog(
                     content: Container(
                         width: 250,
@@ -154,12 +160,9 @@ class _OTPFormState extends State<OTPForm> {
             ),
           ),
           SizedBox(
-            height: 30 * widget.hem,
+            height: 20 * widget.hem,
           ),
-          buttonWidget,
-          SizedBox(
-            height: 10 * widget.hem,
-          ),
+
           TimerCountdown(
             spacerWidth: 5,
             colonsTextStyle: GoogleFonts.openSans(
@@ -176,7 +179,7 @@ class _OTPFormState extends State<OTPForm> {
             )),
             format: CountDownTimerFormat.secondsOnly,
             enableDescriptions: false,
-            endTime: DateTime.now().add(Duration(seconds: 60)),
+            endTime: _endTime,
             onEnd: () {
               Navigator.pop(context);
             },
@@ -184,62 +187,67 @@ class _OTPFormState extends State<OTPForm> {
           SizedBox(
             height: 10 * widget.hem,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 20 * widget.hem),
-                child: Text(
-                  'Bạn không nhận được mã xác nhận?',
-                  style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
-                          fontSize: 13 * widget.ffem,
-                          fontWeight: FontWeight.bold,
-                          height: 1.3625 * widget.ffem / widget.fem,
-                          color: kLowTextColor)),
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  await FirebaseAuth.instance.verifyPhoneNumber(
-                    phoneNumber: widget.phoneNumber,
-                    verificationCompleted: (PhoneAuthCredential credential) {
-                      Future.delayed(const Duration(seconds: 5), () {
-                        Navigator.pushNamed(context, SignUp8Screen.routeName,
-                            arguments: widget.phoneNumber);
-                      });
-                    },
-                    verificationFailed: (FirebaseAuthException e) {
-                      if (e.code == 'invalid-phone-number') {
-                        setState(() {
-                          errorString = 'Số điện thoại không hợp lệ';
-                        });
-                      }
-                    },
-                    codeSent: (String verificationId, int? resendToken) async {
-                      AuthenLocalDataSource.saveVerificationId(verificationId);
-                    },
-                    codeAutoRetrievalTimeout: (String verificationId) {
-                      AuthenLocalDataSource.saveVerificationId(verificationId);
-                    },
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: 2 * widget.fem, bottom: 20 * widget.hem),
-                  child: Text(
-                    'Gửi lại mã',
-                    style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                            fontSize: 13 * widget.ffem,
-                            fontWeight: FontWeight.w900,
-                            height: 1.3625 * widget.ffem / widget.fem,
-                            color: kPrimaryColor)),
-                  ),
-                ),
-              )
-            ],
-          )
+          buttonWidget,
+
+          SizedBox(
+            height: 50 * widget.hem,
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Padding(
+          //       padding: EdgeInsets.only(bottom: 20 * widget.hem),
+          //       child: Text(
+          //         'Bạn không nhận được mã xác nhận?',
+          //         style: GoogleFonts.openSans(
+          //             textStyle: TextStyle(
+          //                 fontSize: 13 * widget.ffem,
+          //                 fontWeight: FontWeight.bold,
+          //                 height: 1.3625 * widget.ffem / widget.fem,
+          //                 color: kLowTextColor)),
+          //       ),
+          //     ),
+          //     InkWell(
+          //       onTap: () async {
+          //         await FirebaseAuth.instance.verifyPhoneNumber(
+          //           phoneNumber: widget.phoneNumber,
+          //           verificationCompleted: (PhoneAuthCredential credential) {
+          //             Future.delayed(const Duration(seconds: 5), () {
+          //               Navigator.pushNamed(context, SignUp8Screen.routeName,
+          //                   arguments: widget.phoneNumber);
+          //             });
+          //           },
+          //           verificationFailed: (FirebaseAuthException e) {
+          //             if (e.code == 'invalid-phone-number') {
+          //               setState(() {
+          //                 errorString = 'Số điện thoại không hợp lệ';
+          //               });
+          //             }
+          //           },
+          //           codeSent: (String verificationId, int? resendToken) async {
+          //             AuthenLocalDataSource.saveVerificationId(verificationId);
+          //           },
+          //           codeAutoRetrievalTimeout: (String verificationId) {
+          //             AuthenLocalDataSource.saveVerificationId(verificationId);
+          //           },
+          //         );
+          //       },
+          //       child: Padding(
+          //         padding: EdgeInsets.only(
+          //             left: 2 * widget.fem, bottom: 20 * widget.hem),
+          //         child: Text(
+          //           'Gửi lại mã',
+          //           style: GoogleFonts.openSans(
+          //               textStyle: TextStyle(
+          //                   fontSize: 13 * widget.ffem,
+          //                   fontWeight: FontWeight.w900,
+          //                   height: 1.3625 * widget.ffem / widget.fem,
+          //                   color: kPrimaryColor)),
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // )
         ],
       ),
     );

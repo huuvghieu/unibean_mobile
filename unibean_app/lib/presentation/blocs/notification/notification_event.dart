@@ -16,3 +16,8 @@ final class LoadNotification extends NotificationEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class ClearNotification extends NotificationEvent {
+  @override
+  List<Object?> get props => [];
+}

@@ -13,6 +13,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc() : super(NotificationInitial()) {
     on<LoadNotification>(_onLoadNotification);
     on<AddNewNotification>(_onAddNewNotification);
+    on<ClearNotification>(_onClearNotification);
   }
 
   Future<void> _onLoadNotification(
@@ -25,6 +26,17 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       } else {
         emit(NotificationLoaded(notifications: notifications));
       }
+    } catch (e) {
+      emit(NotificationFailed(error: e.toString()));
+    }
+  }
+
+  Future<void> _onClearNotification(
+      ClearNotification event, Emitter<NotificationState> emit) async {
+    // emit(NotificationLoading());
+    try {
+      AuthenLocalDataSource.clearNotifications();
+      emit(NotificationLoaded(notifications: []));
     } catch (e) {
       emit(NotificationFailed(error: e.toString()));
     }
@@ -44,17 +56,20 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
             listNoti.map((item) => item.toJson()).toList();
         String notiString = json.encode(jsonList);
         AuthenLocalDataSource.saveNotification(notiString);
-        emit(NewNotification());
+        emit(NewNotification(notifications: listNoti));
       } else {
-        notifications.add(NotificationModel(
-            title: event.notificationModel.title,
-            body: event.notificationModel.body,
-            payload: event.notificationModel.payload));
+        notifications.insert(
+            0,
+            NotificationModel(
+                title: event.notificationModel.title,
+                body: event.notificationModel.body,
+                payload: event.notificationModel.payload));
+
         List<Map<String, dynamic>> jsonList =
             notifications.map((item) => item.toJson()).toList();
         String notiString = json.encode(jsonList);
         AuthenLocalDataSource.saveNotification(notiString);
-        emit(NewNotification());
+        emit(NewNotification(notifications: notifications));
       }
     } catch (e) {
       emit(NotificationFailed(error: e.toString()));

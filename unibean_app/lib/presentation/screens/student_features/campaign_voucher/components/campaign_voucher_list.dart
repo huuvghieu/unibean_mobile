@@ -18,13 +18,15 @@ class CampaignVoucherList extends StatelessWidget {
       required this.hem,
       required this.ffem,
       required this.campaignDetallModeil,
-      required this.id});
+      required this.id,
+      required this.studentId});
 
   final double fem;
   final double hem;
   final double ffem;
   final CampaignDetailModel campaignDetallModeil;
   final String id;
+  final String studentId;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,12 @@ class CampaignVoucherList extends StatelessWidget {
           if (state is CampaignVoucherLoading) {
             return buildCampaignListShimmer(fem, hem);
           } else if (state is CampaignVouchersLoaded) {
-              var listCampaignVouchers =
-                  state.campaignVouchers.where((c) => (c.id != id)).toList();
+            var listCampaignVouchers =
+                state.campaignVouchers.where((c) => (c.id != id)).toList();
             if (listCampaignVouchers.isEmpty) {
               return Container(
-                margin: EdgeInsets.only(top: 10*hem),
-                child: EmptyWidget(text: 'Không có ưu đãi'));
+                  margin: EdgeInsets.only(top: 10 * hem),
+                  child: EmptyWidget(text: 'Không có ưu đãi'));
             } else {
               return Container(
                   height: 240 * hem,
@@ -52,13 +54,15 @@ class CampaignVoucherList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: listCampaignVouchers.length,
                     itemBuilder: (context, index) {
+                      // var campaignVoucher = listCampaignVouchers[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
                               context, CampaignVoucherScreen.routeName,
                               arguments: <dynamic>[
                                 campaignDetallModeil,
-                                listCampaignVouchers[index]
+                                listCampaignVouchers[index],
+                                studentId
                               ]);
                         },
                         child: Stack(
@@ -67,9 +71,19 @@ class CampaignVoucherList extends StatelessWidget {
                               width: 170 * fem,
                               margin: EdgeInsets.only(right: 10 * fem),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15 * fem),
-                                color: Colors.white,
-                              ),
+                                  borderRadius: BorderRadius.circular(15 * fem),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0xFF757575).withOpacity(0.3),
+                                      blurRadius: 10.0, // soften the shadow
+                                      spreadRadius: 1.0, //extend the shadow
+                                      offset: const Offset(
+                                        5.0,
+                                        5.0,
+                                      ),
+                                    )
+                                  ]),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -87,7 +101,7 @@ class CampaignVoucherList extends StatelessWidget {
                                         height: 150 * hem,
                                         width: 180 * fem,
                                         child: Image.network(
-                                          state.campaignVouchers[index]
+                                         listCampaignVouchers[index]
                                               .voucherImage,
                                           fit: BoxFit.fill,
                                           errorBuilder:
@@ -107,7 +121,7 @@ class CampaignVoucherList extends StatelessWidget {
                                         right: 10 * fem,
                                         top: 10 * hem),
                                     child: Text(
-                                      state.campaignVouchers[index].voucherName,
+                                     listCampaignVouchers[index].voucherName,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       style: GoogleFonts.openSans(
@@ -135,10 +149,10 @@ class CampaignVoucherList extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          '${formatter.format(state.campaignVouchers[index].price)}',
+                                          '${formatter.format(listCampaignVouchers[index].price)}',
                                           style: GoogleFonts.openSans(
                                               textStyle: TextStyle(
-                                            fontSize: 14 * ffem,
+                                            fontSize: 16 * ffem,
                                             color: kPrimaryColor,
                                             fontWeight: FontWeight.bold,
                                           )),
@@ -159,7 +173,7 @@ class CampaignVoucherList extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          '${state.campaignVouchers[index].quantityInStock}',
+                                          '${listCampaignVouchers[index].quantityInStock}',
                                           style: GoogleFonts.openSans(
                                               textStyle: TextStyle(
                                             fontSize: 14 * ffem,
@@ -171,7 +185,7 @@ class CampaignVoucherList extends StatelessWidget {
                                           padding:
                                               EdgeInsets.only(right: 5 * fem),
                                           child: Text(
-                                            '/${state.campaignVouchers[index].quantity}',
+                                            '/${listCampaignVouchers[index].quantity}',
                                             style: GoogleFonts.openSans(
                                                 textStyle: TextStyle(
                                               fontSize: 14 * ffem,

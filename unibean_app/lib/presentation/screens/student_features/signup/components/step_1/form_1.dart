@@ -94,9 +94,9 @@ class _FormBody1State extends State<FormBody1> {
                         child: TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Email không được bỏ trống';
+                              return 'Gmail không được bỏ trống';
                             } else if (!emailValidationRegExp.hasMatch(value)) {
-                              return 'Email không hợp lệ';
+                              return 'Gmail không hợp lệ';
                             }
                             return null;
                           },
@@ -107,8 +107,8 @@ class _FormBody1State extends State<FormBody1> {
                                   fontSize: 15 * widget.ffem,
                                   fontWeight: FontWeight.bold)),
                           decoration: InputDecoration(
-                            labelText: 'Email *',
-                            hintText: 'Nhập Email...',
+                            labelText: 'Gmail *',
+                            hintText: 'Nhập Gmail...',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelStyle: GoogleFonts.openSans(
                               textStyle: TextStyle(
@@ -181,7 +181,9 @@ class _FormBody1State extends State<FormBody1> {
                         labelText: 'HỌ VÀ TÊN *',
                         hintText: 'Nhập họ và tên...',
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.trim().isEmpty) {
                             return 'Họ và tên không được bỏ trống';
                           } else if (value.length < 3) {
                             return 'Họ và tên ít nhất 3 kí tự';
@@ -244,8 +246,8 @@ void _submitForm(BuildContext context, emailController, nameController) async {
         .then((value) async {
       if (value == '') {
         final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
-        createAuthenModel!.email = emailController.text;
-        createAuthenModel.fullName = nameController.text;
+        createAuthenModel!.email = emailController.text.trim();
+        createAuthenModel.fullName = nameController.text.trim();
         String createAuthenString = jsonEncode(createAuthenModel);
         AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
         Navigator.pushNamed(context, SignUp2Screen.routeName,
@@ -256,7 +258,8 @@ void _submitForm(BuildContext context, emailController, nameController) async {
     });
   } else {
     VerifyAuthenModel verifyAuthenModel = VerifyAuthenModel(
-        email: emailController.text, fullName: nameController.text);
+        email: emailController.text.trim(),
+        fullName: nameController.text.trim());
     String verifyAuthenString = jsonEncode(verifyAuthenModel);
     AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
     Navigator.pushNamed(context, SignUp2Screen.routeName,

@@ -40,9 +40,7 @@ class InProcessChallenge extends StatelessWidget {
           showDialog<String>(
               context: context,
               builder: (BuildContext context) {
-                Future.delayed(Duration(seconds: 5), () {
-                  Navigator.of(context).pop();
-                });
+                Future.delayed(Duration(seconds: 5));
                 return AlertDialog(
                     content: Container(
                         width: 250,
