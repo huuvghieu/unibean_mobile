@@ -94,6 +94,20 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // InkWell(
+                  //   onTap: () {
+                  //     context.read<StudentBloc>().add(HideUsedVouchers());
+                  //   },
+                  //   child: Text(
+                  //     'Ẩn đã sử dụng',
+                  //     style: GoogleFonts.openSans(
+                  //         textStyle: TextStyle(
+                  //       color: Colors.black,
+                  //       fontWeight: FontWeight.w600,
+                  //       fontSize: 16,
+                  //     )),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 15 * fem,
                   ),
@@ -345,11 +359,11 @@ class VoucherCard extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Ngày mua: ',
-                                         style: GoogleFonts.openSans(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.black)),
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                                color: Colors.black)),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -362,15 +376,16 @@ class VoucherCard extends StatelessWidget {
                                         ),
                                       )
                                     ],
-                                  ), Row(
+                                  ),
+                                  Row(
                                     children: [
                                       Text(
                                         'Hạn sử dụng: ',
-                                         style: GoogleFonts.openSans(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.black)),
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                                color: Colors.black)),
                                       ),
                                       Expanded(
                                         child: Text(

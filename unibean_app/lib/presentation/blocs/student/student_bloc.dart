@@ -26,6 +26,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     on<LoadStudentById>(_onLoadStudentById);
     on<UpdateVerification>(_onUpdateVerification);
     on<LoadOrderDetailById>(_onLoadOrderDetailBydId);
+    on<HideUsedVouchers>(_onHideUsedVoucher);
   }
   var isLoadingMore = false;
   int pageTransaction = 1;
@@ -58,6 +59,18 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
 
         emit(StudentVouchersLoaded(voucherModels: vouchers));
       }
+    } catch (e) {
+      emit(StudentFaled(error: e.toString()));
+    }
+  }
+
+  Future<void> _onHideUsedVoucher(
+      HideUsedVouchers event, Emitter<StudentState> emit) async {
+    try {
+      var vouchers = (this.state as StudentVouchersLoaded).voucherModels;
+      var notUseVouchers = vouchers.where((v) => v.isUsed == false).toList();
+
+      emit(StudentVouchersLoaded(voucherModels: notUseVouchers));
     } catch (e) {
       emit(StudentFaled(error: e.toString()));
     }

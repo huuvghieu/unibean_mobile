@@ -21,6 +21,14 @@ final class LoadStudentVouchers extends StudentEvent {
   List<Object?> get props => [page, limit, id, search];
 }
 
+final class HideUsedVouchers extends StudentEvent {
+  final bool hide;
+
+  HideUsedVouchers({required this.hide});
+  @override
+  List<Object?> get props => [hide];
+}
+
 final class LoadMoreStudentVouchers extends StudentEvent {
   final int page;
   final int limit;
