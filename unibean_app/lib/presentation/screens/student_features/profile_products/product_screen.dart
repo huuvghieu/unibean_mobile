@@ -132,7 +132,7 @@ class ProductScreen extends StatelessWidget {
                                             .getStudentId();
                                     Navigator.pushNamed(
                                         context, ProfileCartScreen.routeName,
-                                        arguments: studentId);
+                                        arguments: <dynamic>[studentId, false]);
                                   },
                                 ),
                                 Positioned(

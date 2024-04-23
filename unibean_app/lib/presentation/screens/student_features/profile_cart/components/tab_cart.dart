@@ -13,7 +13,8 @@ import '../../../screens.dart';
 import 'cart_product_card.dart';
 
 class TabCart extends StatelessWidget {
-  const TabCart({super.key});
+  const TabCart({super.key, required this.fromProductDetail});
+  final bool fromProductDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -68,113 +69,154 @@ class TabCart extends StatelessWidget {
           ),
           Expanded(
             flex: 8,
-            child: BlocBuilder<CartBloc, CartState>(
-              builder: (context, state) {
-                if (state is CartLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: kPrimaryColor,
-                    ),
-                  );
-                } else if (state is CartLoaded) {
-                  if (state.cart.products.isEmpty) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 20 * hem,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin:
-                              EdgeInsets.only(left: 15 * fem, right: 15 * fem),
-                          height: 220 * hem,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/empty-icon.svg',
-                                width: 70 * fem,
-                                colorFilter: ColorFilter.mode(
-                                    kLowTextColor, BlendMode.srcIn),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    'Không có sản phẩm',
-                                    style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    )),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10 * fem,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                  );
-                                },
-                                child: Container(
-                                    width: 180 * fem,
-                                    height: 45 * hem,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: kPrimaryColor, width: 2),
-                                        borderRadius:
-                                            BorderRadius.circular(15 * fem)),
-                                    child: Center(
-                                      child: Text(
-                                        'Đặt hàng ngay',
-                                        style: GoogleFonts.openSans(
-                                            textStyle: TextStyle(
-                                                fontSize: 15 * ffem,
-                                                fontWeight: FontWeight.bold,
-                                                color: kPrimaryColor)),
-                                      ),
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
+            child: BlocConsumer<CartBloc, CartState>(
+              listener: (context, state) {
+                if (state is CartError) {
+                  if (fromProductDetail) {
                   } else {
-                    Map cart = state.cart.productQuantity(state.cart.products);
-
-                    return ListView.builder(
-                      itemCount: cart.keys.length,
-                      itemBuilder: (context, index) {
-                        var listProduct = cart.keys.toList();
-                        return Column(
-                          children: [
-                            CartProductCard(
-                              fem: fem,
-                              hem: hem,
-                              ffem: ffem,
-                              product: listProduct[index],
-                              quantity: cart.values.elementAt(index),
+                    showCupertinoDialog(
+                      context: context,
+                      builder: (context) => CupertinoAlertDialog(
+                        content: Text(
+                          '${state.error}',
+                          style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                                  fontSize: 14 * ffem,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black)),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              context.read<CartBloc>().add(ReloadCart());
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Đồng ý',
+                              style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 15 * ffem,
+                                      fontWeight: FontWeight.normal,
+                                      color: kPrimaryColor)),
                             ),
-                          ],
-                        );
-                      },
+                          )
+                        ],
+                      ),
                     );
                   }
                 }
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: kPrimaryColor,
-                  ),
+              },
+              builder: (context, state) {
+                return BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      );
+                    } else if (state is CartLoaded) {
+                      if (state.cart.products.isEmpty) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 20 * hem,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(
+                                  left: 15 * fem, right: 15 * fem),
+                              height: 220 * hem,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/empty-icon.svg',
+                                    width: 70 * fem,
+                                    colorFilter: ColorFilter.mode(
+                                        kLowTextColor, BlendMode.srcIn),
+                                  ),
+                                  Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        'Không có sản phẩm',
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10 * fem,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(
+                                        context,
+                                      );
+                                    },
+                                    child: Container(
+                                        width: 180 * fem,
+                                        height: 45 * hem,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: kPrimaryColor, width: 2),
+                                            borderRadius: BorderRadius.circular(
+                                                15 * fem)),
+                                        child: Center(
+                                          child: Text(
+                                            'Đặt hàng ngay',
+                                            style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                                    fontSize: 15 * ffem,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: kPrimaryColor)),
+                                          ),
+                                        )),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        Map cart =
+                            state.cart.productQuantity(state.cart.products);
+
+                        return ListView.builder(
+                          itemCount: cart.keys.length,
+                          itemBuilder: (context, index) {
+                            var listProduct = cart.keys.toList();
+                            return Column(
+                              children: [
+                                CartProductCard(
+                                  fem: fem,
+                                  hem: hem,
+                                  ffem: ffem,
+                                  product: listProduct[index],
+                                  quantity: cart.values.elementAt(index),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: kPrimaryColor,
+                      ),
+                    );
+                  },
                 );
               },
             ),

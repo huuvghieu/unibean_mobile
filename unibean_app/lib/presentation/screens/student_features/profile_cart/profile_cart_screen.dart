@@ -9,16 +9,18 @@ import 'package:unibean_app/presentation/screens/student_features/profile_cart/c
 class ProfileCartScreen extends StatelessWidget {
   static const String routeName = '/profile-card-student';
 
-  static Route route({required String studentId}) {
+  static Route route({required String studentId, required bool fromProductDetail}) {
     return MaterialPageRoute(
         builder: (_) => ProfileCartScreen(
               studentId: studentId,
+              fromProductDetail: fromProductDetail,
             ),
         settings: const RouteSettings(arguments: routeName));
   }
 
-  const ProfileCartScreen({super.key, required this.studentId});
+  const ProfileCartScreen({super.key, required this.studentId, required this.fromProductDetail});
   final String studentId;
+  final bool fromProductDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class ProfileCartScreen extends StatelessWidget {
             create: (context) => StudentBloc(
                 studentRepository: context.read<StudentRepository>())
               ..add(LoadStudentById(studentId: studentId)),
-            child: TabCart(),
+            child: TabCart(fromProductDetail: fromProductDetail,),
           )),
     );
   }

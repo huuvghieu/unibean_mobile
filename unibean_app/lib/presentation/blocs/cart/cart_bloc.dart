@@ -13,6 +13,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartLoading()) {
     on<LoadCart>(_onLoadCart);
     on<AddProduct>(_onAddProduct);
+    on<AddOneProduct>(_onAddOneProduct);
     on<RemoveProduct>(_onRemoveProduct);
     on<RemoveAllProduct>(_onRemoveAllProduct);
     on<ReloadCart>(_onReloadCart);
@@ -116,6 +117,38 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             AuthenLocalDataSource.saveCarts(cartString);
             emit(CartLoaded(cart: cart));
           }
+        }
+      } catch (e) {
+        emit(CartError(error: e.toString()));
+      }
+    }
+  }
+
+  Future<void> _onAddOneProduct(
+    AddOneProduct event,
+    Emitter<CartState> emit,
+  ) async {
+    if (this.state is CartLoaded) {
+      try {
+        var productInCart = (this.state as CartLoaded).cart.products;
+        Cart cart = (this.state as CartLoaded).cart;
+        int quantityInCart =
+            productInCart.where((p) => p.id == event.product.id).length;
+        if ((quantityInCart + event.quantity) > event.product.quantity) {
+          emit(
+            CartError(
+                error:
+                    "Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng",
+                cart: cart),
+          );
+        } else {
+          cart = Cart(
+            products: List.from((this.state as CartLoaded).cart.products)
+              ..add(event.product),
+          );
+          String cartString = jsonEncode(cart);
+          AuthenLocalDataSource.saveCarts(cartString);
+          emit(CartLoaded(cart: cart));
         }
       } catch (e) {
         emit(CartError(error: e.toString()));

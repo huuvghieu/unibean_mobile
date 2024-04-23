@@ -155,9 +155,9 @@ class ProductDetailScreen extends StatelessWidget {
                               onPressed: () async {
                                 final studentId =
                                     await AuthenLocalDataSource.getStudentId();
-                                Navigator.pushNamed(
-                                    context, ProfileCartScreen.routeName,
-                                    arguments: studentId);
+                                   Navigator.pushNamed(
+                                        context, ProfileCartScreen.routeName,
+                                        arguments: <dynamic>[studentId, true]);
                               },
                             ),
                             Positioned(
@@ -193,9 +193,12 @@ class ProductDetailScreen extends StatelessWidget {
                         color: Colors.white,
                         size: 25 * fem,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        final studentId =
+                            await AuthenLocalDataSource.getStudentId();
                         Navigator.pushNamed(
-                            context, ProfileCartScreen.routeName);
+                            context, ProfileCartScreen.routeName,
+                            arguments: studentId);
                       },
                     ),
                   );
@@ -310,8 +313,7 @@ class ProductDetailScreen extends StatelessWidget {
                               ));
                         },
                       );
-                    }
-                    else if (_ is AddSuccess) {
+                    } else if (_ is AddSuccess) {
                       return BlocBuilder<CounterCubit, CounterState>(
                         builder: (context, counter) {
                           return GestureDetector(
