@@ -86,6 +86,7 @@ class _BodyState extends State<Body> {
               .add(LoadStudentVouchers(id: widget.studentId));
         },
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           slivers: [
             SliverList(
@@ -345,11 +346,11 @@ class VoucherCard extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Ngày mua: ',
-                                         style: GoogleFonts.openSans(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.black)),
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                                color: Colors.black)),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -362,15 +363,16 @@ class VoucherCard extends StatelessWidget {
                                         ),
                                       )
                                     ],
-                                  ), Row(
+                                  ),
+                                  Row(
                                     children: [
                                       Text(
                                         'Hạn sử dụng: ',
-                                         style: GoogleFonts.openSans(
-                                              textStyle: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.black)),
+                                        style: GoogleFonts.openSans(
+                                            textStyle: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                                color: Colors.black)),
                                       ),
                                       Expanded(
                                         child: Text(

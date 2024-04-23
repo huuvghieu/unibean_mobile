@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 
 import '../../../data/models.dart';
 
@@ -22,8 +25,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   ) async {
     emit(CartLoading());
     try {
-      await Future<void>.delayed(const Duration(seconds: 1));
-      emit(CartLoaded());
+      var cart = await AuthenLocalDataSource.getCarts();
+      if (cart == null) {
+        cart = Cart();
+        String cartString = jsonEncode(cart);
+        AuthenLocalDataSource.saveCarts(cartString);
+        emit(CartLoaded(cart: cart));
+      } else {
+        emit(CartLoaded(cart: cart));
+      }
     } catch (e) {
       emit(CartError(error: e.toString()));
     }
@@ -69,9 +79,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               ...products,
               ...(this.state as CartLoaded).cart.products
             ];
+
+            final cart = Cart(products: results);
+            String cartString = jsonEncode(cart);
+            AuthenLocalDataSource.saveCarts(cartString);
+            emit(AddSuccess(cart: cart));
             emit(
               CartLoaded(
-                cart: Cart(products: results),
+                cart: cart,
               ),
             );
           }
@@ -88,12 +103,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                   cart: cart),
             );
           } else {
-            emit(CartLoaded(
+            emit(AddSuccess(
               cart: Cart(
                 products: List.from((this.state as CartLoaded).cart.products)
                   ..add(event.product),
               ),
             ));
+            cart = Cart(
+              products: List.from((this.state as AddSuccess).cart.products),
+            );
+            String cartString = jsonEncode(cart);
+            AuthenLocalDataSource.saveCarts(cartString);
+            emit(CartLoaded(cart: cart));
           }
         }
       } catch (e) {
@@ -101,11 +122,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
   }
-    Future<void> _onCartRefresh(
+
+  Future<void> _onCartRefresh(
       RefreshCart event, Emitter<CartState> emit) async {
     emit(CartLoading());
     try {
       await Future<void>.delayed(const Duration(seconds: 1));
+      AuthenLocalDataSource.removeCart();
       emit(CartLoaded(cart: Cart(products: [])));
     } catch (_) {
       emit(CartError(error: ''));
@@ -118,13 +141,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   ) async {
     if (this.state is CartLoaded) {
       try {
+        var cart = Cart(
+          products: List.from((this.state as CartLoaded).cart.products)
+            ..remove(event.product),
+        );
+        String cartString = jsonEncode(cart);
+        AuthenLocalDataSource.saveCarts(cartString);
         emit(
-          CartLoaded(
-            cart: Cart(
-              products: List.from((this.state as CartLoaded).cart.products)
-                ..remove(event.product),
-            ),
-          ),
+          CartLoaded(cart: cart),
         );
       } catch (e) {
         emit(CartError(error: e.toString()));
@@ -140,13 +164,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     if (state is CartLoaded) {
       try {
+        var cart = state.cart.copyWith(
+          products: List.from(state.cart.products)
+            ..removeWhere((product) => product == event.product),
+        );
+        String cartString = jsonEncode(cart);
+        AuthenLocalDataSource.saveCarts(cartString);
         emit(
-          CartLoaded(
-            cart: state.cart.copyWith(
-              products: List.from(state.cart.products)
-                ..removeWhere((product) => product == event.product),
-            ),
-          ),
+          CartLoaded(cart: cart),
         );
       } catch (_) {}
     }

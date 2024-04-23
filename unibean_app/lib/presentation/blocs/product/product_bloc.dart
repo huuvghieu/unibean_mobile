@@ -28,7 +28,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       var apiResponse = await productRepository.fetchProducts(
           page: event.page, limit: event.limit, search: event.search);
-      emit(ProductsLoaded(products: apiResponse!.result));
+      if (apiResponse!.totalCount < apiResponse.pageSize) {
+        emit(ProductsLoaded(products: apiResponse.result, hasReachedMax: true));
+      } else {
+        emit(ProductsLoaded(products: apiResponse.result));
+      }
     } catch (e) {
       emit(ProductFailed(error: e.toString()));
     }
@@ -55,20 +59,26 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        isLoadingMore = true;
-        page++;
-        var apiResponse = await productRepository.fetchProducts(
-            page: page, limit: event.limit);
-        if (apiResponse!.result.length == 0) {
+        if ((this.state as ProductsLoaded).hasReachedMax) {
           emit(ProductsLoaded(
-              products: List.from((this.state as ProductsLoaded).products)
-                ..addAll(apiResponse.result),
+              products: List.from((this.state as ProductsLoaded).products),
               hasReachedMax: true));
-          print(state);
         } else {
-          emit(ProductsLoaded(
-              products: List.from((this.state as ProductsLoaded).products)
-                ..addAll(apiResponse.result)));
+          isLoadingMore = true;
+          page++;
+          var apiResponse = await productRepository.fetchProducts(
+              page: page, limit: event.limit);
+          if (apiResponse!.result.length == 0) {
+            emit(ProductsLoaded(
+                products: List.from((this.state as ProductsLoaded).products)
+                  ..addAll(apiResponse.result),
+                hasReachedMax: true));
+            this.page = 1;
+          } else {
+            emit(ProductsLoaded(
+                products: List.from((this.state as ProductsLoaded).products)
+                  ..addAll(apiResponse.result)));
+          }
         }
       }
     } catch (e) {

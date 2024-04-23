@@ -188,9 +188,32 @@ class AuthenLocalDataSource {
     }
   }
 
+  static Future<void> saveCarts(String cartString) async {
+    final sf = await SharedPreferences.getInstance();
+    await sf.setString('cartString', cartString);
+  }
+
+  static Future<Cart?> getCarts() async {
+    final sf = await SharedPreferences.getInstance();
+    String? cartString = sf.getString('cartString');
+    if (cartString == null) {
+      return null;
+    } else {
+      Map<String, dynamic> json = jsonDecode(cartString);
+      Cart? cart = Cart.fromJson(json);
+      return cart;
+    }
+  }
+
   static Future<void> removeAuthen() async {
     final sf = await SharedPreferences.getInstance();
     sf.remove('authenString');
+  }
+
+  
+  static Future<void> removeCart() async {
+    final sf = await SharedPreferences.getInstance();
+    sf.remove('cartString');
   }
 
   static Future<void> clearAuthen() async {

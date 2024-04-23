@@ -424,7 +424,10 @@ class Body extends StatelessWidget {
                                               ffem: ffem,
                                               widthIcon: 16,
                                               heightIcon: 16,
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                context
+                                                    .read<ProductBloc>()
+                                                    .add(LoadProducts());
                                                 Navigator.pushNamed(context,
                                                     ProductScreen.routeName);
                                               },
@@ -653,7 +656,6 @@ class Body extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                     context.read<RoleAppBloc>().add(RoleAppEnd());
-                  
 
                     Navigator.pushNamedAndRemoveUntil(context,
                         LoginScreen.routeName, (Route<dynamic> route) => false);

@@ -82,6 +82,7 @@ class NotificationListScreen extends StatelessWidget {
               context.read<NotificationBloc>().add(LoadNotification());
             },
             child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([

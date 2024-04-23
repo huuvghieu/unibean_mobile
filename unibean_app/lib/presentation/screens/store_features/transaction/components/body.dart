@@ -122,19 +122,6 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                         color: Colors.white)),
               ),
             ),
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                    size: 25 * fem,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ],
             bottom: TabBar(
               controller: _controller,
               onTap: (value) {

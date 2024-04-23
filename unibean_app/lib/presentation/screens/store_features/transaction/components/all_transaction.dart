@@ -48,6 +48,7 @@ class _AllTransactionState extends State<AllTransaction> {
             .add(LoadStoreTransactions(id: widget.storeId));
       },
       child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: scrollTransactionController,
         slivers: [
           SliverList(
