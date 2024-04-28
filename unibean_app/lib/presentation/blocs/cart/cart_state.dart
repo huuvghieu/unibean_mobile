@@ -18,6 +18,15 @@ final class CartLoaded extends CartState {
   List<Object?> get props => [cart];
 }
 
+final class AddSuccess extends CartState {
+  final Cart cart;
+
+  AddSuccess({this.cart = const Cart()});
+
+  @override
+  List<Object?> get props => [cart];
+}
+
 // ignore: must_be_immutable
 final class CartError extends CartState {
   final String error;

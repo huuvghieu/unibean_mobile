@@ -84,7 +84,11 @@ class AuthenticationBloc
             AuthenticationFailed(error: 'Tài khoản hoặc mật khẩu không đúng!'));
       }
     } catch (e) {
-      emit(AuthenticationFailed(error: e.toString()));
+      if (e.toString() == 'Null check operator used on a null value') {
+        emit(AuthenticationFailed(error:'Đăng nhập thất bại!'));
+      } else {
+        emit(AuthenticationFailed(error: e.toString()));
+      }
     }
   }
 

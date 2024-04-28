@@ -146,6 +146,10 @@ class RedeemVoucherScreen extends StatelessWidget {
                     SuccessRedeemVoucherScreen.routeName,
                     (Route<dynamic> route) => false,
                     arguments: <dynamic>[voucherName, total]);
+              } else if (state is RedeemVoucherFailed) {
+                Navigator.pushNamedAndRemoveUntil(context,
+                    FailedBuyScreen.routeName, (Route<dynamic> route) => false,
+                    arguments: state.error);
               } else if (state is RedeemVoucherLoading) {
                 showDialog<String>(
                     context: context,

@@ -47,6 +47,7 @@ class _ChallengeTransactionState extends State<ChallengeTransaction> {
             .add(LoadStudentTransactions(id: widget.studentId, typeIds: 3));
       },
       child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: scrollController,
         slivers: [
           SliverList(

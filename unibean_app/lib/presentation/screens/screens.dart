@@ -49,6 +49,7 @@ export 'student_features/notification/notification_screen.dart';
 export 'student_features/store_list/store_list_screen.dart';
 export 'student_features/wishlist/wishlist_screen.dart';
 export 'student_features/notification/notification_list_screen.dart';
+export 'student_features/buy_failed/buy_failed_screen.dart';
 
 //store
 export 'store_features/transaction/transaction_store_screen.dart';

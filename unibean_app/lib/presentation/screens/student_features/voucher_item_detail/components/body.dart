@@ -36,7 +36,6 @@ class Body extends StatelessWidget {
             return buildCampaignVoucherShimmer(fem, hem);
           } else if (state is StudentVoucherItemLoaded) {
             var voucherItem = state.voucherStudentItemModel;
-            // var duration = getDuration(voucherItem.expireOn);
             return CustomScrollView(
               slivers: [
                 SliverList(

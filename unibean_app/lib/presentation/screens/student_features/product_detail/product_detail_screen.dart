@@ -50,7 +50,7 @@ class ProductDetailScreen extends StatelessWidget {
     double ffem = fem * 0.97;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return BlocListener<InternetBloc, InternetState>(
-   listener: (context, state) {
+      listener: (context, state) {
         if (state is Connected) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -132,12 +132,12 @@ class ProductDetailScreen extends StatelessWidget {
                             color: Colors.white,
                             size: 25 * fem,
                           ),
-                          onPressed: ()async {
-                           final studentId =
-                                    await AuthenLocalDataSource.getStudentId();
-                                Navigator.pushNamed(
-                                    context, ProfileCartScreen.routeName,
-                                    arguments: studentId);
+                          onPressed: () async {
+                            final studentId =
+                                await AuthenLocalDataSource.getStudentId();
+                            Navigator.pushNamed(
+                                context, ProfileCartScreen.routeName,
+                                arguments: studentId);
                           },
                         ),
                       );
@@ -155,9 +155,9 @@ class ProductDetailScreen extends StatelessWidget {
                               onPressed: () async {
                                 final studentId =
                                     await AuthenLocalDataSource.getStudentId();
-                                Navigator.pushNamed(
-                                    context, ProfileCartScreen.routeName,
-                                    arguments: studentId);
+                                   Navigator.pushNamed(
+                                        context, ProfileCartScreen.routeName,
+                                        arguments: <dynamic>[studentId, true]);
                               },
                             ),
                             Positioned(
@@ -193,9 +193,12 @@ class ProductDetailScreen extends StatelessWidget {
                         color: Colors.white,
                         size: 25 * fem,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        final studentId =
+                            await AuthenLocalDataSource.getStudentId();
                         Navigator.pushNamed(
-                            context, ProfileCartScreen.routeName);
+                            context, ProfileCartScreen.routeName,
+                            arguments: studentId);
                       },
                     ),
                   );
@@ -235,6 +238,20 @@ class ProductDetailScreen extends StatelessWidget {
                     ],
                   ),
                 );
+              } else if (state is AddSuccess) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(
+                    elevation: 0,
+                    duration: const Duration(milliseconds: 2000),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Thêm thành công!',
+                      message: 'Thêm vào giỏ hàng thành công!',
+                      contentType: ContentType.success,
+                    ),
+                  ));
               }
             },
             child: Body(),
@@ -273,21 +290,37 @@ class ProductDetailScreen extends StatelessWidget {
                                 context.read<CartBloc>().add(AddProduct(
                                     product: state.productDetail,
                                     quantity: counter.counterValue));
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(SnackBar(
-                                    elevation: 0,
-                                    duration:
-                                        const Duration(milliseconds: 2000),
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Thêm thành công!',
-                                      message:
-                                          'Thêm ${state.productDetail.productName} vào giỏ hàng thành công!',
-                                      contentType: ContentType.success,
-                                    ),
-                                  ));
+                              },
+                              child: Container(
+                                height: 45 * hem,
+                                width: 250 * fem,
+                                margin: EdgeInsets.only(
+                                    left: 40 * fem, right: 40 * fem),
+                                decoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    borderRadius:
+                                        BorderRadius.circular(10 * fem)),
+                                child: Center(
+                                  child: Text(
+                                    'Thêm vào giỏ hàng',
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 15 * ffem,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ),
+                                ),
+                              ));
+                        },
+                      );
+                    } else if (_ is AddSuccess) {
+                      return BlocBuilder<CounterCubit, CounterState>(
+                        builder: (context, counter) {
+                          return GestureDetector(
+                              onTap: () async {
+                                context.read<CartBloc>().add(AddProduct(
+                                    product: state.productDetail,
+                                    quantity: counter.counterValue));
                               },
                               child: Container(
                                 height: 45 * hem,

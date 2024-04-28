@@ -148,7 +148,7 @@ class CartProductCard extends StatelessWidget {
                               .read<CartBloc>()
                               .add(RemoveAllProduct(product: product));
                         },
-                        heroTag: 'add',
+                        heroTag: 'Removeall',
                         elevation: 0,
                         backgroundColor: Colors.white,
                         foregroundColor: kPrimaryColor,
@@ -228,7 +228,7 @@ class CartProductCard extends StatelessWidget {
                                   onPressed: () {
                                     context
                                         .read<CartBloc>()
-                                        .add(AddProduct(product: product));
+                                        .add(AddOneProduct(product: product));
                                   }),
                             ),
                           ],

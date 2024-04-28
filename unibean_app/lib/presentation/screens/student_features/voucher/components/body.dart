@@ -86,6 +86,7 @@ class _BodyState extends State<Body> {
               .add(LoadStudentVouchers(id: widget.studentId));
         },
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           slivers: [
             SliverList(

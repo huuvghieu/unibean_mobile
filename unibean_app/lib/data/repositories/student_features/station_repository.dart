@@ -29,7 +29,7 @@ class StationRepositoryImp implements StationRepository {
         page = this.page;
       }
       http.Response response = await http.get(
-          Uri.parse('$endPoint?state=$state&sort=$sort&page=$page&limit=100'),
+          Uri.parse('$endPoint?stateIds=1&sort=$sort&page=$page&limit=100'),
           headers: headers);
 
       if (response.statusCode == 200) {

@@ -23,6 +23,7 @@ class Body extends StatelessWidget {
         context.read<BonusBloc>().add(LoadBonus());
       },
       child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: context.read<BonusBloc>().scrollController,
         slivers: [
           SliverList(

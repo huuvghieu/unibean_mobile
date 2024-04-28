@@ -43,9 +43,12 @@ class _ActivityTransactionState extends State<ActivityTransaction> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<StudentBloc>().add(LoadStudentTransactions(id: widget.studentId, typeIds: 1));
+        context
+            .read<StudentBloc>()
+            .add(LoadStudentTransactions(id: widget.studentId, typeIds: 1));
       },
       child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: scrollController,
         slivers: [
           SliverList(

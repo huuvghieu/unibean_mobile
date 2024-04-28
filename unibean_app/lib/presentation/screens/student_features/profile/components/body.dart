@@ -77,8 +77,8 @@ class Body extends StatelessWidget {
               SliverList(
                   delegate: SliverChildListDelegate([
                 BlocBuilder<RoleAppBloc, RoleAppState>(
-                  builder: (context, state) {
-                    if (state is Verified) {
+                  builder: (context, stateRole) {
+                    if (stateRole is Verified) {
                       return Container(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height,
@@ -130,10 +130,12 @@ class Body extends StatelessWidget {
                                           );
                                         } else if (stateName == 'Rejected') {
                                           return RejectedCard(
-                                              hem: hem,
-                                              fem: fem,
-                                              ffem: ffem,
-                                              studentModel: state.studentMode);
+                                            hem: hem,
+                                            fem: fem,
+                                            ffem: ffem,
+                                            studentModel: state.studentMode,
+                                            authenModel: stateRole.authenModel,
+                                          );
                                         } else if (stateName == 'Active') {
                                           return VerifiedCard(
                                             hem: hem,
@@ -424,7 +426,10 @@ class Body extends StatelessWidget {
                                               ffem: ffem,
                                               widthIcon: 16,
                                               heightIcon: 16,
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                context
+                                                    .read<ProductBloc>()
+                                                    .add(LoadProducts());
                                                 Navigator.pushNamed(context,
                                                     ProductScreen.routeName);
                                               },
@@ -446,8 +451,8 @@ class Body extends StatelessWidget {
                                                     context,
                                                     ProfileTransactionHistoryScreen
                                                         .routeName,
-                                                    arguments:
-                                                        state.studentModel.id);
+                                                    arguments: stateRole
+                                                        .studentModel.id);
                                               },
                                               svgIcon:
                                                   'assets/icons/transaction-icon.svg',
@@ -495,7 +500,7 @@ class Body extends StatelessWidget {
                           ],
                         ),
                       );
-                    } else if (state is Unverified) {
+                    } else if (stateRole is Unverified) {
                       return Container(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height,
@@ -530,7 +535,7 @@ class Body extends StatelessWidget {
                                       hem: hem,
                                       fem: fem,
                                       ffem: ffem,
-                                      authenModel: state.authenModel),
+                                      authenModel: stateRole.authenModel),
 
                                   Positioned(
                                       left: 0 * fem,
@@ -653,7 +658,6 @@ class Body extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                     context.read<RoleAppBloc>().add(RoleAppEnd());
-                  
 
                     Navigator.pushNamedAndRemoveUntil(context,
                         LoginScreen.routeName, (Route<dynamic> route) => false);

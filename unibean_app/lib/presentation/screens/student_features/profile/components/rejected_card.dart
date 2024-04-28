@@ -14,12 +14,14 @@ class RejectedCard extends StatelessWidget {
       required this.hem,
       required this.fem,
       required this.ffem,
-      required this.studentModel});
+      required this.studentModel,
+      required this.authenModel});
 
   final double hem;
   final double fem;
   final double ffem;
   final StudentModel studentModel;
+  final AuthenModel authenModel;
 
   @override
   Widget build(BuildContext context) {
@@ -180,14 +182,30 @@ class RejectedCard extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text(
-                                'Vui lòng xác minh lại mã số sinh viên và thẻ sinh viên!',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        fontSize: 16,
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.w700)),
+                              title: Column(
+                                children: [
+                                  Text(
+                                    'Lý do: ${authenModel.userModel.description}',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 16,
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.w700)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Vui lòng xác minh lại mã số sinh viên và thẻ sinh viên!',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 16,
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.w500)),
+                                  ),
+                                ],
                               ),
                               actionsAlignment: MainAxisAlignment.spaceBetween,
                               actions: [

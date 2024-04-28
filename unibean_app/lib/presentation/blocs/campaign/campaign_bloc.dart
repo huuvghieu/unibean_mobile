@@ -104,7 +104,7 @@ class CampaignBloc extends Bloc<CampaignEvent, CampaignState> {
         emit(RedeemVoucherSuccess(text: 'Thành công'));
       }
     } catch (e) {
-      emit(RedeemVoucherFailed(error: e.toString()));
+      emit(RedeemVoucherFailed(error: 'Giao dịch thất bại!'));
     }
   }
 }

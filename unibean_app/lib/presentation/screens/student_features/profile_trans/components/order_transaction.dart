@@ -47,6 +47,7 @@ class _OrderTransactionState extends State<OrderTransaction> {
             .add(LoadStudentTransactions(id: widget.studentId, typeIds: 2));
       },
       child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: scrollController,
         slivers: [
           SliverList(

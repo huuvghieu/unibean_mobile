@@ -6,12 +6,12 @@ import 'components/body.dart';
 
 import '../../../config/constants.dart';
 
-class FailedScanVoucherScreen extends StatelessWidget {
-  static const String routeName = '/failed-scan-voucher-store';
+class FailedBuyScreen extends StatelessWidget {
+  static const String routeName = '/failed-student';
 
   static Route route({required String failed}) {
     return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => FailedScanVoucherScreen(failed: failed),
+        pageBuilder: (_, __, ___) => FailedBuyScreen(failed: failed),
         transitionDuration: Duration(milliseconds: 400),
         transitionsBuilder: (_, animation, __, child) {
           const begin = Offset(0.0, 1.0);
@@ -24,7 +24,7 @@ class FailedScanVoucherScreen extends StatelessWidget {
         settings: const RouteSettings(name: routeName));
   }
 
-  const FailedScanVoucherScreen({super.key, required this.failed});
+  const FailedBuyScreen({super.key, required this.failed});
 
   final String failed;
 
@@ -70,7 +70,7 @@ class FailedScanVoucherScreen extends StatelessWidget {
                 onPressed: () {
                   context.read<CampaignBloc>().add(LoadCampaigns());
                   Navigator.pushNamedAndRemoveUntil(context,
-                      '/landing-screen-store', (Route<dynamic> route) => false);
+                      '/landing-screen', (Route<dynamic> route) => false);
                 },
               ),
             ),
@@ -84,7 +84,7 @@ class FailedScanVoucherScreen extends StatelessWidget {
                 onTap: () {
                   context.read<CampaignBloc>().add(LoadCampaigns());
                   Navigator.pushNamedAndRemoveUntil(context,
-                      '/landing-screen-store', (Route<dynamic> route) => false);
+                      '/landing-screen', (Route<dynamic> route) => false);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

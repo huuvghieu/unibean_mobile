@@ -83,6 +83,7 @@ class _BodyState extends State<Body> {
           context.read<StudentBloc>().add(LoadStudentOrders(id: widget.id));
         },
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           slivers: [
             SliverList(
@@ -385,7 +386,8 @@ class _BodyState extends State<Body> {
                                                   style: GoogleFonts.openSans(
                                                       textStyle: TextStyle(
                                                     fontSize: 15 * ffem,
-                                                    color: colorOfState(order.currentStateName),
+                                                    color: colorOfState(
+                                                        order.currentStateName),
                                                     fontWeight: FontWeight.w600,
                                                   )))
                                             ],

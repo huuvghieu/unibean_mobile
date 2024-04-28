@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/data/models.dart';
+import 'package:unibean_app/presentation/screens/student_features/buy_failed/buy_failed_screen.dart';
 import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
 import '../screens/screens.dart';
 import '../screens/store_features/landing_screen/landing_store_screen.dart';
@@ -106,7 +107,9 @@ class AppRouter {
             studentModel: settings.arguments as StudentModel);
 
       case ProfileCartScreen.routeName:
-        return ProfileCartScreen.route(studentId: settings.arguments as String);
+        List<dynamic> args = settings.arguments as List<dynamic>;
+        return ProfileCartScreen.route(
+            studentId: args[0], fromProductDetail: args[1]);
 
       case UpdateVerificationScreen.routeName:
         return UpdateVerificationScreen.route(
@@ -198,6 +201,10 @@ class AppRouter {
         return FailedScanStudentScreen.route(
             failed: settings.arguments as String);
 
+      case FailedBuyScreen.routeName:
+        return FailedBuyScreen.route(
+            failed: settings.arguments as String);
+
       case QRScreen.routeName:
         return QRScreen.route(id: settings.arguments as String);
 
@@ -245,11 +252,11 @@ class AppRouter {
         return CampaignVoucherInformationScreen.route(
             campaginVoucherInformation:
                 settings.arguments as CampaignVoucherInformationModel);
-                
+
       case BonusScreen.routeName:
         return BonusScreen.route(storeModel: settings.arguments as StoreModel);
 
-       case BonusDetailScreen.routeName:
+      case BonusDetailScreen.routeName:
         return BonusDetailScreen.route(bonusId: settings.arguments as String);
 
       case CampaignDetailStoreScreen.routeName:

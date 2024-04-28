@@ -61,7 +61,7 @@ class OrderState1 extends StatelessWidget {
                                color: kPrimaryColor)),
                      ),
                      Text(
-                       '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[0].dateCreated))}',
+                       '${DateFormat('dd/MM/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[0].dateCreated).add(Duration(hours: 7)))}',
                        style: GoogleFonts.openSans(
                            textStyle: TextStyle(
                                fontSize: 15 * ffem,

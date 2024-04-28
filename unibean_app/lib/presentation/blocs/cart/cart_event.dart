@@ -19,6 +19,17 @@ final class AddProduct extends CartEvent {
   List<Object?> get props => [product, quantity];
 }
 
+final class AddOneProduct extends CartEvent {
+  final ProductDetailModel product;
+  final int quantity;
+
+  AddOneProduct({required this.product, this.quantity = 1});
+
+  @override
+  List<Object?> get props => [product, quantity];
+}
+
+
 final class RemoveProduct extends CartEvent {
   final ProductDetailModel product;
 
