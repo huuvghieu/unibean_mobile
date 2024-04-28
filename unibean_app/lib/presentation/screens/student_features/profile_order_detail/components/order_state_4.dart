@@ -62,7 +62,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[0].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[0].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -115,7 +115,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[1].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[1].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -162,7 +162,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[2].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[2].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -211,7 +211,7 @@ class OrderState4 extends StatelessWidget {
                                           .stateDetails[3].stateName))),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[3].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[3].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -274,7 +274,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[0].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[0].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -327,7 +327,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[1].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[1].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -374,7 +374,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[2].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[2].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,
@@ -421,7 +421,7 @@ class OrderState4 extends StatelessWidget {
                                       color: kPrimaryColor)),
                             ),
                             Text(
-                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[3].dateCreated))}',
+                              '${DateFormat('MM/dd/yyyy, hh:mm').format(DateTime.parse(orderDetail.stateDetails[3].dateCreated).add(Duration(hours: 7)))}',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       fontSize: 15 * ffem,

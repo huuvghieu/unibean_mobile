@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/domain/repositories.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
+import 'package:unibean_app/presentation/screens/screens.dart';
 import 'package:unibean_app/presentation/screens/student_features/success_create_order/success_create_order_screen.dart';
 
 import '../../../../data/models.dart';
@@ -264,6 +265,12 @@ class ProductConfirmScreen extends StatelessWidget {
                           SuccessCreateOrderScreen.routeName,
                           (Route<dynamic> route) => false,
                           arguments: state.orderModel);
+                    }else if(state is CheckoutFailed){
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          FailedBuyScreen.routeName,
+                          (Route<dynamic> route) => false,
+                          arguments: state.error);
                     }
                   },
                   builder: (context, state) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/data/models.dart';
+import 'package:unibean_app/presentation/screens/student_features/buy_failed/buy_failed_screen.dart';
 import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
 import '../screens/screens.dart';
 import '../screens/store_features/landing_screen/landing_store_screen.dart';
@@ -198,6 +199,10 @@ class AppRouter {
 
       case FailedScanStudentScreen.routeName:
         return FailedScanStudentScreen.route(
+            failed: settings.arguments as String);
+
+      case FailedBuyScreen.routeName:
+        return FailedBuyScreen.route(
             failed: settings.arguments as String);
 
       case QRScreen.routeName:

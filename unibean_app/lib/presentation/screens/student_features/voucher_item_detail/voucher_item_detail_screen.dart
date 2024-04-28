@@ -25,7 +25,6 @@ class VoucherItemDetailScreen extends StatelessWidget {
     double baseHeight = 812;
     double ffem = fem * 0.97;
     double hem = MediaQuery.of(context).size.height / baseHeight;
-    // final roleState = context.read<RoleAppBloc>().state;
     return SafeArea(
       child: Scaffold(
         backgroundColor: klighGreyColor,
@@ -59,7 +58,6 @@ class VoucherItemDetailScreen extends StatelessWidget {
                     color: Colors.white)),
           ),
           actions: [
-            // SvgPicture.asset('assets/icons/notification-icon.svg')
             Padding(
               padding: EdgeInsets.only(right: 20 * fem),
               child: IconButton(

@@ -7,7 +7,6 @@ import 'package:unibean_app/presentation/config/constants.dart';
 
 import '../../../blocs/blocs.dart';
 import 'components/body.dart';
-// import 'components/body.dart';
 
 class BonusDetailScreen extends StatelessWidget {
   static const String routeName = '/bonus-detail-store';

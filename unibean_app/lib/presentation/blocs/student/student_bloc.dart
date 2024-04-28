@@ -50,6 +50,8 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
       if (apiResponse!.totalCount == apiResponse.result.length) {
         var vouchers = apiResponse.result.toList();
         vouchers.sort((a, b) => a.isUsed ? 1 : -1);
+        // vouchers.sort((a, b) =>
+        //     b.dateBought.toString().compareTo(a.dateBought.toString()));
         emit(StudentVouchersLoaded(
             voucherModels: vouchers, hasReachedMax: true));
       } else {
