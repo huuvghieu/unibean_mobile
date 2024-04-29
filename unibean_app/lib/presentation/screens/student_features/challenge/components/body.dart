@@ -10,8 +10,63 @@ import 'in_process/in_process_challenge.dart';
 import 'is_claimed/is_claimed_challenge.dart';
 import 'is_completed/is_completed_challenge.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key});
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
+  late TabController _controller;
+
+  List<Widget> list = [
+    Tab(
+      text: 'Đang thực hiện',
+    ),
+    BlocBuilder<ChallengeBloc, ChallengeState>(
+      builder: (context, state) {
+        if (state is ChallengesLoaded) {
+          final challenges = state.challenge
+              .where((c) => (c.isCompleted && !c.isClaimed))
+              .toList();
+          if (challenges.isNotEmpty) {
+            return Stack(
+              children: [
+                Tab(text: 'Nhận thưởng'),
+                Positioned(
+                  top: 10,
+                  right: 0,
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(50)),
+                  ),
+                )
+              ],
+            );
+          } else {
+            return Tab(text: 'Nhận thưởng');
+          }
+        }
+        return Tab(text: 'Nhận thưởng');
+      },
+    ),
+    Tab(text: 'Đã hoàn thành'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: list.length, vsync: this);
+
+    _controller.addListener(() {
+      setState(() {
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +144,7 @@ class Body extends StatelessWidget {
               ),
               actions: [
                 Padding(
-                  padding: EdgeInsets.only(top: 10 * hem, right: 20 * fem),
+                  padding: EdgeInsets.only(top: 5*fem, right: 20 * fem),
                   child: BlocBuilder<NotificationBloc, NotificationState>(
                     builder: (context, state) {
                       if (state is NewNotification) {
@@ -134,66 +189,30 @@ class Body extends StatelessWidget {
                 ),
               ],
               bottom: TabBar(
-                // controller: tabController,
-
-                indicatorColor: Colors.white,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorWeight: 3,
-                // indicatorPadding: EdgeInsets.only(bottom: 1 * fem),
-                labelColor: Colors.white,
-                labelStyle: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                  fontSize: 12 * ffem,
-                  height: 1.3625 * ffem / fem,
-                  fontWeight: FontWeight.w700,
-                )),
-                unselectedLabelColor: Colors.white60,
-                unselectedLabelStyle: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                  fontSize: 12 * ffem,
-                  fontWeight: FontWeight.w700,
-                )),
-                tabs: [
-                  Tab(
-                    text: 'Đang thực hiện',
-                  ),
-                  BlocBuilder<ChallengeBloc, ChallengeState>(
-                    builder: (context, state) {
-                      if (state is ChallengesLoaded) {
-                        final challenges = state.challenge
-                            .where((c) => (c.isCompleted && !c.isClaimed))
-                            .toList();
-                        if (challenges.isNotEmpty) {
-                          return Stack(
-                            children: [
-                              Tab(text: 'Nhận thưởng'),
-                              Positioned(
-                                top: 10,
-                                right: 0,
-                                child: Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(50)),
-                                ),
-                              )
-                            ],
-                          );
-                        } else {
-                          return Tab(text: 'Nhận thưởng');
-                        }
-                      }
-                      return Tab(text: 'Nhận thưởng');
-                    },
-                  ),
-                  Tab(text: 'Đã hoàn thành'),
-                ],
-              ),
+                  controller: _controller,
+                  indicatorColor: Colors.white,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorWeight: 3,
+                  // indicatorPadding: EdgeInsets.only(bottom: 1 * fem),
+                  labelColor: Colors.white,
+                  labelStyle: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                    fontSize: 12 * ffem,
+                    height: 1.3625 * ffem / fem,
+                    fontWeight: FontWeight.w700,
+                  )),
+                  unselectedLabelColor: Colors.white60,
+                  unselectedLabelStyle: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                    fontSize: 12 * ffem,
+                    fontWeight: FontWeight.w700,
+                  )),
+                  tabs: list),
             )
           ];
         },
         body: TabBarView(
+          controller: _controller,
           children: [
             //In process Challenge
             InProcessChallenge(),

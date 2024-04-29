@@ -28,7 +28,7 @@ class _SignUp7ScreenState extends State<SignUp7Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 7/9';
+      title = 'Bước 8/9';
     } else {
       title = 'Bước 7/8';
     }

@@ -49,7 +49,7 @@ class StudentRepositoryImp implements StudentRepository {
 
   @override
   Future<ApiResponse<List<VoucherStudentModel>>?> fetchVoucherStudentId(
-      int? page, int? limit, String? search,
+      int? page, int? limit, String? search, bool? isUsed,
       {required String id}) async {
     try {
       token = await AuthenLocalDataSource.getToken();
@@ -58,10 +58,11 @@ class StudentRepositoryImp implements StudentRepository {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       };
+
       if (search != null) {
         http.Response response = await http.get(
             Uri.parse(
-                '$endPoint/$id/vouchers?sort=Id%2Casc&search=$search&page=$page&limit=$limit'),
+                '$endPoint/$id/vouchers?isUsed=$isUsed&state=$state&sort=$sort&search=$search&page=$page&limit=$limit'),
             headers: headers);
         if (response.statusCode == 200) {
           final result = jsonDecode(utf8.decode(response.bodyBytes));

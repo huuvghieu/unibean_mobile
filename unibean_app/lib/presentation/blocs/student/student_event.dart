@@ -9,13 +9,14 @@ final class LoadStudentVouchers extends StudentEvent {
   final int limit;
   final String id;
   final String search;
+  final bool isUsed;
 
-  LoadStudentVouchers({
-    this.page = 1,
-    this.limit = 10,
-    required this.id,
-    this.search = '',
-  });
+  LoadStudentVouchers(
+      {this.page = 1,
+      this.limit = 10,
+      required this.id,
+      this.search = '',
+      required this.isUsed});
 
   @override
   List<Object?> get props => [page, limit, id, search];
@@ -34,6 +35,7 @@ final class LoadMoreStudentVouchers extends StudentEvent {
   final int limit;
   final String search;
   final String id;
+  final bool isUsed;
   final ScrollController scrollController;
 
   LoadMoreStudentVouchers(
@@ -41,6 +43,7 @@ final class LoadMoreStudentVouchers extends StudentEvent {
     required this.id,
     this.page = 1,
     this.limit = 10,
+    required this.isUsed,
     this.search = '',
   });
   @override

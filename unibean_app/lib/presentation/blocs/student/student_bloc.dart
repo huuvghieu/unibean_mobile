@@ -46,19 +46,14 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     emit(StudentVoucherLoading());
     try {
       var apiResponse = await studentRepository.fetchVoucherStudentId(
-          event.page, event.limit, event.search,
+          event.page, event.limit, event.search, event.isUsed,
           id: event.id);
       if (apiResponse!.totalCount == apiResponse.result.length) {
         var vouchers = apiResponse.result.toList();
-        vouchers.sort((a, b) => a.isUsed ? 1 : -1);
-        // vouchers.sort((a, b) =>
-        //     b.dateBought.toString().compareTo(a.dateBought.toString()));
         emit(StudentVouchersLoaded(
             voucherModels: vouchers, hasReachedMax: true));
       } else {
         var vouchers = apiResponse.result.toList();
-        vouchers.sort((a, b) => a.isUsed ? 1 : -1);
-
         emit(StudentVouchersLoaded(voucherModels: vouchers));
       }
     } catch (e) {
@@ -86,20 +81,21 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
         if ((this.state as StudentVouchersLoaded).hasReachedMax) {
           List<VoucherStudentModel> vouchers =
               List.from((this.state as StudentVouchersLoaded).voucherModels);
-          vouchers.sort((a, b) => a.isUsed ? 1 : -1);
           emit(StudentVouchersLoaded(
               voucherModels: vouchers, hasReachedMax: true));
         } else {
           isLoadingMore = true;
           pageVouchers++;
           var apiResponse = await studentRepository.fetchVoucherStudentId(
-              pageVouchers, event.limit, event.search,
-              id: event.id);
+              pageVouchers,
+              event.limit,
+              event.search,
+              id: event.id,
+              event.isUsed);
           if (apiResponse!.result.length == 0) {
             List<VoucherStudentModel> vouchers =
                 List.from((this.state as StudentVouchersLoaded).voucherModels)
                   ..addAll(apiResponse.result);
-            vouchers.sort((a, b) => a.isUsed ? 1 : -1);
             emit(StudentVouchersLoaded(
                 voucherModels: vouchers, hasReachedMax: true));
             this.pageVouchers = 1;
@@ -107,7 +103,6 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
             List<VoucherStudentModel> vouchers =
                 List.from((this.state as StudentVouchersLoaded).voucherModels)
                   ..addAll(apiResponse.result);
-            vouchers.sort((a, b) => a.isUsed ? 1 : -1);
             emit(StudentVouchersLoaded(voucherModels: vouchers));
           }
         }

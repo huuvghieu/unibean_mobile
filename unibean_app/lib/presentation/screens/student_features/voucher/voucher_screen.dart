@@ -7,6 +7,7 @@ import 'package:unibean_app/presentation/screens/student_features/voucher/compon
 import 'package:unibean_app/presentation/widgets/card_for_unverified.dart';
 
 import '../../../config/constants.dart';
+import '../../../widgets/app_bar_campaign.dart';
 
 class VoucherScreen extends StatelessWidget {
   static const String routeName = '/voucher-student';
@@ -38,7 +39,8 @@ class VoucherScreen extends StatelessWidget {
       return BlocProvider(
         create: (context) =>
             StudentBloc(studentRepository: context.read<StudentRepository>())
-              ..add(LoadStudentVouchers(id: roleState.studentModel.id)),
+              ..add(LoadStudentVouchers(
+                  id: roleState.studentModel.id, isUsed: false)),
         child: _buildVerifiedStudent(fem, hem, ffem, roleState.studentModel.id),
       );
     }
@@ -62,9 +64,14 @@ class VoucherScreen extends StatelessWidget {
         if (state is StudentVouchersLoaded) {
           return Body(studentId: studentId);
         } else if (state is StudentVoucherLoading) {
-          return Center(
-            child: Container(
-                child: Lottie.asset('assets/animations/loading-screen.json')),
+          return SafeArea(
+            child: Scaffold(
+              backgroundColor: klighGreyColor,
+              appBar: AppBarCampaign(hem: hem, ffem: ffem, fem: fem),
+              body: Center(
+                child: Lottie.asset('assets/animations/loading-screen.json'),
+              ),
+            ),
           );
         }
         return Container();

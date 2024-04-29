@@ -6,6 +6,7 @@ abstract class StudentRepository {
 
   Future<ApiResponse<List<VoucherStudentModel>>?> fetchVoucherStudentId(
       int? page, int? limit, String? search,
+      bool? isUsed,
       {required String id});
 
   Future<ApiResponse<List<TransactionModel>>?> fetchTransactionsStudentId(

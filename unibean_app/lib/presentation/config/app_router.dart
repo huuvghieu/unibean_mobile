@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:unibean_app/data/models.dart';
-import 'package:unibean_app/presentation/screens/student_features/buy_failed/buy_failed_screen.dart';
 import 'package:unibean_app/presentation/widgets/unverified_screen.dart';
 import '../screens/screens.dart';
 import '../screens/store_features/landing_screen/landing_store_screen.dart';
@@ -66,9 +65,6 @@ class AppRouter {
       case ProfileTransactionHistoryScreen.routeName:
         return ProfileTransactionHistoryScreen.route(
             studentId: settings.arguments as String);
-
-      case ProfileVoucherScreen.routeName:
-        return ProfileVoucherScreen.route(id: settings.arguments as String);
 
       case ProfileUpdateDetailStoreScreen.routeName:
         return ProfileUpdateDetailStoreScreen.route(

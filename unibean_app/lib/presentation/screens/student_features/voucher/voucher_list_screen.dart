@@ -35,9 +35,9 @@ class VoucherListScreen extends StatelessWidget {
     double ffem = fem * 0.97;
     double hem = MediaQuery.of(context).size.height / baseHeight;
     return BlocProvider(
-      create: (context) =>
-          StudentBloc(studentRepository: context.read<StudentRepository>())
-            ..add(LoadStudentVouchers(search: search, id: studentId)),
+      create: (context) => StudentBloc(
+          studentRepository: context.read<StudentRepository>())
+        ..add(LoadStudentVouchers(search: search, id: studentId, isUsed: true)),
       child: SafeArea(
         child: Scaffold(
             backgroundColor: klighGreyColor,
@@ -127,7 +127,7 @@ class _BodyVoucherListState extends State<BodyVoucherList> {
   void initState() {
     scrollController.addListener(() {
       context.read<StudentBloc>().add(LoadMoreStudentVouchers(scrollController,
-          id: widget.studentId, search: widget.search));
+          id: widget.studentId, search: widget.search, isUsed: false));
     });
     super.initState();
   }
@@ -158,8 +158,8 @@ class _BodyVoucherListState extends State<BodyVoucherList> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          'assets/icons/empty.svg',
-                          width: 60 * widget.fem,
+                          'assets/icons/empty-icon.svg',
+                          width: 80 * widget.fem,
                           colorFilter:
                               ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
                         ),
@@ -167,7 +167,7 @@ class _BodyVoucherListState extends State<BodyVoucherList> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              'Không tìm thấy',
+                              'Không tìm thấy ưu đãi',
                               style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                 color: Colors.black,
