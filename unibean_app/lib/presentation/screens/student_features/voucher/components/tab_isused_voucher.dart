@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/data/models/student_features/voucher_student_model.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
@@ -318,7 +319,7 @@ class VoucherCard extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '${changeFormateDate(studentVoucher.dateBought)}',
+                                          '${_formatDatetime(studentVoucher.dateBought)}',
                                           style: GoogleFonts.openSans(
                                               textStyle: TextStyle(
                                                   fontSize: 12,
@@ -387,6 +388,13 @@ class VoucherCard extends StatelessWidget {
         ),
       ]),
     );
+  }
+
+  String _formatDatetime(String date) {
+    DateTime dateTime = DateTime.parse(date).add(Duration(hours: 7));
+
+    String formattedDatetime = DateFormat("dd/MM/yyyy").format(dateTime);
+    return formattedDatetime;
   }
 
   Widget buildButtonVoucher(

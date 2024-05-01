@@ -14,10 +14,6 @@ class ButtonSignUp8 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      // onPressed: () async {
-      //   // Navigator.pushReplacementNamed(context, SignUp7Screen.routeName);
-
-      // },
       onPressed: onPressed,
       child: Container(
         width: 300 * widget.fem,

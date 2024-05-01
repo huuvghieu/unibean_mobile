@@ -242,17 +242,18 @@ class _FormBody7State extends State<FormBody7> {
       BuildContext context, countryController, phoneNumberController) async {
     final authenModel = await AuthenLocalDataSource.getAuthen();
     if (authenModel == null) {
+      print('0${phoneNumberController.text}');
       context
           .read<ValidationCubit>()
-          .validatePhoneNumber(
-              '${countryController.text + phoneNumberController.text}')
+          .validatePhoneNumber('0${phoneNumberController.text}')
           .then((value) async {
         if (value == '') {
           await FirebaseAuth.instance.verifyPhoneNumber(
             phoneNumber:
                 '${countryController.text + phoneNumberController.text}',
+            timeout: const Duration(seconds: 60),
             verificationCompleted: (PhoneAuthCredential credential) {
-              Future.delayed(const Duration(seconds: 10), () {
+              Future.delayed(const Duration(seconds: 5), () {
                 Navigator.pushNamed(context, SignUp8Screen.routeName,
                     arguments: phoneNumberController.text);
               });
@@ -275,8 +276,7 @@ class _FormBody7State extends State<FormBody7> {
           //save phonenumber
           final createAuthenModel =
               await AuthenLocalDataSource.getCreateAuthen();
-          createAuthenModel!.phoneNumber =
-              '${countryController.text + phoneNumberController.text}';
+          createAuthenModel!.phoneNumber = '0${phoneNumberController.text}';
           String createAuthenString = jsonEncode(createAuthenModel);
           print(createAuthenString);
           AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
@@ -296,8 +296,7 @@ class _FormBody7State extends State<FormBody7> {
     } else {
       context
           .read<ValidationCubit>()
-          .validatePhoneNumber(
-              '${countryController.text + phoneNumberController.text}')
+          .validatePhoneNumber('0${phoneNumberController.text}')
           .then((value) async {
         if (value == '') {
           await FirebaseAuth.instance.verifyPhoneNumber(
@@ -305,7 +304,7 @@ class _FormBody7State extends State<FormBody7> {
                 '${countryController.text + phoneNumberController.text}',
             timeout: const Duration(seconds: 60),
             verificationCompleted: (PhoneAuthCredential credential) {
-              Future.delayed(const Duration(seconds: 2), () {
+              Future.delayed(const Duration(seconds: 5), () {
                 Navigator.pushNamed(context, SignUp8Screen.routeName,
                     arguments: phoneNumberController.text);
               });
@@ -328,13 +327,12 @@ class _FormBody7State extends State<FormBody7> {
           //save phonenumber
           final verifyAuthenModel =
               await AuthenLocalDataSource.getVerifyAuthen();
-          verifyAuthenModel!.phoneNumber =
-              '${countryController.text + phoneNumberController.text}';
+          verifyAuthenModel!.phoneNumber = '0${phoneNumberController.text}';
           String verifyAuthenString = jsonEncode(verifyAuthenModel);
           AuthenLocalDataSource.saveVerifyAuthen(verifyAuthenString);
 
           //go to next screen
-          Future.delayed(const Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 5), () {
             Navigator.pushNamed(context, SignUp8Screen.routeName,
                 arguments: phoneNumberController.text);
           });

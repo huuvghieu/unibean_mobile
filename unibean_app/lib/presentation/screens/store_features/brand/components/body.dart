@@ -2,7 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unibean_app/presentation/screens/student_features/brand_detail/components/brand_campaigns.dart';
+import 'package:unibean_app/presentation/screens/store_features/brand/components/brand_campaigns.dart';
 import '../../../../../domain/repositories.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../config/constants.dart';

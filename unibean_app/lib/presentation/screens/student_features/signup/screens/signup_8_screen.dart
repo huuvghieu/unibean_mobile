@@ -2,11 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/components/step_8/body_8.dart';
 import 'package:unibean_app/presentation/screens/student_features/signup/screens/signup_1_screen.dart';
-import 'package:unibean_app/presentation/widgets/app_bar_signup.dart';
 
 import '../../../../blocs/blocs.dart';
+import '../../../../config/constants.dart';
 
 class SignUp8Screen extends StatefulWidget {
   static const String routeName = '/signup_8';
@@ -30,7 +31,7 @@ class _SignUp8ScreenState extends State<SignUp8Screen> {
   @override
   void initState() {
     if (SignUp1Screen.defaultRegister == true) {
-      title = 'Bước 8/9';
+      title = 'Bước 9/9';
     } else {
       title = 'Bước 8/8';
     }
@@ -86,7 +87,23 @@ class _SignUp8ScreenState extends State<SignUp8Screen> {
       child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: AppBarSignUp(hem: hem, ffem: ffem, fem: fem, text: title),
+          appBar: AppBar(
+            toolbarHeight: 120 * hem,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: Text(
+              title,
+              style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                fontSize: 15 * ffem,
+                fontWeight: FontWeight.w900,
+                height: 1.3625 * ffem / fem,
+                color: kLowTextColor,
+              )),
+            ),
+          ),
           extendBodyBehindAppBar: true,
           backgroundColor: Colors.transparent,
           body: Body8(phoneNumber: widget.phoneNumber),

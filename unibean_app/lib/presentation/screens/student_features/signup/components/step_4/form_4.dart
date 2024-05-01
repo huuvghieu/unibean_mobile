@@ -42,7 +42,6 @@ class _FormBody4State extends State<FormBody4> {
         children: [
           BlocBuilder<ValidationCubit, ValidationState>(
             builder: (context, state) {
-              print(state);
               if (state is CheckStudentCodeFailed) {
                 return Container(
                   width: 318 * widget.fem,

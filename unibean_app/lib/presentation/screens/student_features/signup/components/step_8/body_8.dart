@@ -64,7 +64,7 @@ class Body8 extends StatelessWidget {
                       height: 10 * hem,
                     ),
                     Text(
-                      'Nhập mã số xác nhận đã được gửi đến\n số điện thoại +84$phoneNumber',
+                      'Nhập mã số xác nhận đã được gửi đến\n số điện thoại 0$phoneNumber',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(

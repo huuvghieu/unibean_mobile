@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:unibean_app/data/datasource/authen_local_datasource.dart';
 import 'package:unibean_app/data/models/student_features/student_model.dart';
-import 'package:unibean_app/presentation/blocs/campus/campus_bloc.dart';
 import 'package:unibean_app/presentation/config/constants.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/name_profile.dart';
 import 'package:unibean_app/presentation/screens/student_features/profile/components/student_code_profile.dart';

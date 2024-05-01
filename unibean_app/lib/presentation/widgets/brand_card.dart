@@ -5,6 +5,7 @@ import 'package:unibean_app/data/models.dart';
 import 'package:unibean_app/presentation/widgets/shimmer_widget.dart';
 import '../blocs/blocs.dart';
 import '../screens/screens.dart';
+import 'unverified_screen.dart';
 
 class BrandCard extends StatelessWidget {
   const BrandCard(
@@ -26,7 +27,7 @@ class BrandCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (roleState is Unverified) {
-          Navigator.pushNamed(context, LoginScreen.routeName);
+          Navigator.pushNamed(context, UnverifiedScreen.routeName);
         } else {
           Navigator.pushNamed(context, BrandDetailScreen.routeName,
               arguments: brandModel.id);
@@ -40,15 +41,6 @@ class BrandCard extends StatelessWidget {
             Container(
               width: 80 * fem,
               height: 80 * hem,
-              // decoration: BoxDecoration(
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: Colors.black26,
-              //       blurRadius: 5.0,
-              //       offset: Offset(2, 0), // Adjust the offset as needed
-              //     ),
-              //   ],
-              // ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10 * fem),
                 child: Image.network(

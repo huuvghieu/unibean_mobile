@@ -26,9 +26,6 @@ class FormBody2 extends StatefulWidget {
 class _FormBody2State extends State<FormBody2> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController campusController = TextEditingController();
-  // File? _selectedFrontCard;
-  // File? _selectedBackCard;
-  // String? errorCard;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -112,8 +109,6 @@ void _submitForm(BuildContext context, campusController) async {
   if (authenModel == null) {
     final createAuthenModel = await AuthenLocalDataSource.getCreateAuthen();
     createAuthenModel!.campusId = campusController.text;
-    // createAuthenModel.studentFrontCard = _selectedFrontCard!.path;
-    // createAuthenModel.studentBackCard = _selectedFrontCard!.path;
     String createAuthenString = jsonEncode(createAuthenModel);
     AuthenLocalDataSource.saveCreateAuthen(createAuthenString);
     Navigator.pushNamed(context, SignUp4Screen.routeName);

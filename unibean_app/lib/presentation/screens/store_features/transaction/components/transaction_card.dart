@@ -50,6 +50,8 @@ class TransactionCard extends StatelessWidget {
                       width: 200 * fem,
                       child: Text(
                           '${transaction.studentName}${transaction.activity}${transaction.storeName}',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.openSans(
                               fontSize: 14 * ffem,
                               fontWeight: FontWeight.w500,

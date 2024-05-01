@@ -77,19 +77,4 @@ class BrandListScreen extends StatelessWidget {
       ),
     );
   }
-
-  // void _filterModalBottomSheet(context) {
-  //   double baseWidth = 375;
-  //   double fem = MediaQuery.of(context).size.width / baseWidth;
-  //   double ffem = fem * 0.97;
-  //   double baseHeight = 812;
-  //   double hem = MediaQuery.of(context).size.height / baseHeight;
-
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (context) {
-  //       return FilterShowdalBottom(hem: hem, fem: fem, ffem: ffem);
-  //     },
-  //   );
-  // }
 }

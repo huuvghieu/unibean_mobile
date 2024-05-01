@@ -31,6 +31,7 @@ class DropDownCampus extends StatefulWidget {
 
 class _DropDownCampusState extends State<DropDownCampus> {
   List<CampusModel> campuses = List.empty();
+  List<CampusModel> campusesLoading = List.empty();
 
   @override
   void dispose() {
@@ -40,7 +41,6 @@ class _DropDownCampusState extends State<DropDownCampus> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 43 * widget.hem,
       width: 272 * widget.fem,
       child: BlocConsumer<CampusBloc, CampusState>(
         listener: (context, state) {
@@ -50,64 +50,52 @@ class _DropDownCampusState extends State<DropDownCampus> {
         },
         builder: (context, state) {
           if (state is CampusLoading) {
-            // return Center(
-            //     child: Lottie.asset('assets/animations/loading-screen.json',
-            //         width: 50 * widget.fem, height: 50 * widget.hem));
-            //  return _dropDownCampusLoaded();
-            return DropdownButtonFormField(
-              validator: widget.validator,
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15 * widget.ffem,
-                      fontWeight: FontWeight.w700)),
-              decoration: InputDecoration(
-                labelText: widget.labelText,
-                hintText: widget.hintText,
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelStyle: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15 * widget.ffem,
-                      fontWeight: FontWeight.w900),
-                ),
-                hintStyle: GoogleFonts.openSans(
+            return Container(
+              width: 272 * widget.fem,
+              child: TextFormField(
+                readOnly: true,
+                style: GoogleFonts.openSans(
                     textStyle: TextStyle(
-                        color: kLowTextColor,
+                        color: Colors.black,
                         fontSize: 15 * widget.ffem,
-                        fontWeight: FontWeight.w700)),
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: 26 * widget.fem, vertical: 10 * widget.hem),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28 * widget.fem),
-                    borderSide: BorderSide(
-                        width: 2,
-                        color: const Color.fromARGB(255, 220, 220, 220)),
-                    gapPadding: 10),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28 * widget.fem),
-                    borderSide: BorderSide(
-                        width: 2,
-                        color: const Color.fromARGB(255, 220, 220, 220)),
-                    gapPadding: 10),
-                errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28 * widget.fem),
-                    borderSide: BorderSide(
-                        width: 2,
-                        color: const Color.fromARGB(255, 220, 220, 220)),
-                    gapPadding: 10),
+                        fontWeight: FontWeight.bold)),
+                decoration: InputDecoration(
+                  labelText: 'CƠ SỞ *',
+                  hintText: 'Chọn cơ sở',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  labelStyle: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15 * widget.ffem,
+                        fontWeight: FontWeight.w900),
+                  ),
+                  hintStyle: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                          color: kLowTextColor,
+                          fontSize: 15 * widget.ffem,
+                          fontWeight: FontWeight.w700)),
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 26 * widget.fem, vertical: 10 * widget.hem),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28 * widget.fem),
+                      borderSide: BorderSide(
+                          width: 2,
+                          color: const Color.fromARGB(255, 220, 220, 220)),
+                      gapPadding: 10),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28 * widget.fem),
+                      borderSide: BorderSide(
+                          width: 2,
+                          color: const Color.fromARGB(255, 220, 220, 220)),
+                      gapPadding: 10),
+                  errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28 * widget.fem),
+                      borderSide: BorderSide(
+                          width: 2,
+                          color: const Color.fromARGB(255, 220, 220, 220)),
+                      gapPadding: 10),
+                ),
               ),
-              onChanged: (newValue) {
-                setState(() {
-                  widget.campusController.text = newValue!;
-                });
-              },
-              items: campuses.map((u) {
-                return DropdownMenuItem(
-                  child: Text(u.campusName.toString()),
-                  value: u.id,
-                );
-              }).toList(),
             );
           } else if (state is CampusLoaded) {
             campuses = state.campuses.toList();
