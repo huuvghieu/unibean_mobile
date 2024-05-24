@@ -60,7 +60,7 @@ class Body extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.only(top: 5),
                               child: Text(
-                                'Không có tặng đậu',
+                                'Không có danh sách tặng đậu!',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.openSans(
                                     textStyle: TextStyle(

@@ -24,7 +24,6 @@ class Body extends StatelessWidget {
             delegate: SliverChildListDelegate([
               Container(
                 width: MediaQuery.of(context).size.width,
-                // height: 900*hem,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   fit: BoxFit.cover,

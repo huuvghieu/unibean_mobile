@@ -20,7 +20,7 @@ class Body2 extends StatelessWidget {
       child: SingleChildScrollView(
         child: Container(
           width: double.infinity,
-          // height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
               image: DecorationImage(
             fit: BoxFit.cover,

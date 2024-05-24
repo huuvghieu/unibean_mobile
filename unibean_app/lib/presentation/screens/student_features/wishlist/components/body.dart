@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:unibean_app/domain/repositories.dart';
@@ -7,6 +8,7 @@ import 'package:unibean_app/presentation/blocs/blocs.dart';
 import 'package:unibean_app/presentation/screens/screens.dart';
 
 import '../../../../../data/models.dart';
+import '../../../../config/constants.dart';
 import '../../../../widgets/shimmer_widget.dart';
 
 class Body extends StatelessWidget {
@@ -30,27 +32,58 @@ class Body extends StatelessWidget {
           if (state is WishListLoading) {
             return buildWishListShimmer(hem, fem, context);
           } else if (state is WishListLoaded) {
-            return GridView.builder(
-              controller: context.read<BrandBloc>().scrollController,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 1),
-              shrinkWrap: true,
-              itemCount: state.wishList.length,
-              itemBuilder: (context, index) {
-                // if (index >= state.wishList.length) {
-                //   return Center(
-                //     child: CircularProgressIndicator(
-                //       color: kPrimaryColor,
-                //     ),
-                //   );
-                // }
-                return WishListCard(
-                    hem: hem,
-                    fem: fem,
-                    brandModel: state.wishList[index],
-                    ffem: ffem);
-              },
-            );
+            if (state.wishList.length == 0) {
+              return Container(
+                width: double.infinity,
+                margin:
+                    EdgeInsets.only(left: 15 * fem, right: 15 * fem, top: 20),
+                height: 220 * hem,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/empty-icon.svg',
+                      width: 80 * fem,
+                      colorFilter:
+                          ColorFilter.mode(kLowTextColor, BlendMode.srcIn),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          'Không có thương hiệu yêu thích',
+                          style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          )),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return GridView.builder(
+                controller: context.read<BrandBloc>().scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: 1),
+                shrinkWrap: true,
+                itemCount: state.wishList.length,
+                itemBuilder: (context, index) {
+                  return WishListCard(
+                      hem: hem,
+                      fem: fem,
+                      brandModel: state.wishList[index],
+                      ffem: ffem);
+                },
+              );
+            }
           }
           return Center(
             child: Lottie.asset('assets/animations/loading-screen.json'),
