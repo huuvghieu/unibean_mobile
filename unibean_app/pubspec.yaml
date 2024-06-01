@@ -22,7 +22,7 @@ dependencies:
   image_picker: ^1.0.4
   
   #dateformat
-  intl: ^0.18.1
+  intl: ^0.19.0
 
   #use otp 
   otp_text_field: ^1.1.3
